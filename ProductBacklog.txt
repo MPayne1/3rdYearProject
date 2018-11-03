@@ -23,19 +23,24 @@ Product Backlog
     []admins
       []captain
       []league admin
+    []different sports
   []Normalise
     []functional dependencies
     []3nf/bcnf
+
+[]join team
+
+[]join league
+
+[]create team
+
+[]create league
 
 []add new fixture
 
 []add result
 
 []update standings
-
-[]join team
-
-[]join league
 
 []view standings
 
@@ -44,3 +49,9 @@ Product Backlog
 []view upcoming fixtures
 
 []view player stats
+
+[]messaging
+
+[]reminders
+
+[]practice sessions

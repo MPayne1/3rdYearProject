@@ -6,7 +6,7 @@ Sprint Backlog
   []frontend
   []Backend
     []bcrypt passwords
-
+    []check with database
 []register
   []frontend
   []Backend
@@ -26,3 +26,8 @@ Sprint Backlog
   []Normalise
     []functional dependencies
     []3nf/bcnf
+  []setup Database
+    []mysql
+
+[]unit test everything
+  []use mocha and chai
