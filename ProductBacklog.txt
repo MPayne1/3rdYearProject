@@ -1,0 +1,46 @@
+Product Backlog
+[]UI designs
+  []general style
+
+[]Login
+  []frontend
+  []Backend
+    []bcrypt passwords
+
+[]register
+  []frontend
+  []Backend
+    []bcrypt passwords
+    []add new user to Database
+
+[]Database
+  []Schema
+    []players info
+    []team info
+    []league info
+    []players stats
+    []team stats
+    []admins
+      []captain
+      []league admin
+  []Normalise
+    []functional dependencies
+    []3nf/bcnf
+
+[]add new fixture
+
+[]add result
+
+[]update standings
+
+[]join team
+
+[]join league
+
+[]view standings
+
+[]view results
+
+[]view upcoming fixtures
+
+[]view player stats

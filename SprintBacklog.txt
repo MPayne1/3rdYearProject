@@ -1,0 +1,28 @@
+Sprint Backlog
+[]UI designs
+  []general style
+
+[]Login
+  []frontend
+  []Backend
+    []bcrypt passwords
+
+[]register
+  []frontend
+  []Backend
+    []bcrypt passwords
+    []add new user to Database
+
+[]Database
+  []Schema
+    []players info
+    []team info
+    []league info
+    []players stats
+    []team stats
+    []admins
+      []captain
+      []league admin
+  []Normalise
+    []functional dependencies
+    []3nf/bcnf
