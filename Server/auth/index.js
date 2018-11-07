@@ -1,6 +1,11 @@
+//Handles the backend of auth
+
 // require in modules
 const express = require('express');
 const joi = require('joi');
+const bcrypt = require('bcryptjs');
+
+const dbSelect = require('../db/select.js')
 
 const router = express.Router();
 const schema = joi.object().keys({
@@ -15,10 +20,23 @@ router.get('/', (req, res) => {
   });
 });
 
-router.post('/signup', (req, res) => {
+ router.post('/signup', async (req, res, next) => {
   console.log('body', req.body );
   const result = joi.validate(req.body, schema);
-  res.json(result);
+  if(result.error === null) {
+    var users =  await dbSelect(req.body.username);
+    //if always true -- need to fix
+    if(users === []) { // if users exists then not available
+      var err = new Error('duplicate username');
+      next(err);
+    } else {
+      res.json(req.body);
+      console.log("unique username");//if username is unique return the body
+    }
+  } else{
+      next(result.error); // forwards error to errorHandler
+  }
 });
+
 
 module.exports = router;

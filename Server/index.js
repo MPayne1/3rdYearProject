@@ -1,3 +1,5 @@
+//handles overall routing/processing of requiest for the app
+
 // require in modules
 const express = require('express');
 const volleyball = require('volleyball'); // shows req/res in node terminal
