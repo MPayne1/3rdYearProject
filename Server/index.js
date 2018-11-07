@@ -1,14 +1,14 @@
 // require in modules
 const express = require('express');
 const volleyball = require('volleyball'); // shows req/res in node terminal
-const bodyParser = require('body-parser');
+
 
 const port = process.env.PORT || 3000;
 var app = express();
 const auth = require('./auth/index.js');
 
 app.use(volleyball);
-app.use(bodyParser.json());
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({

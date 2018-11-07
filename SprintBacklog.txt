@@ -11,7 +11,9 @@ Sprint Backlog
   []frontend
   []Backend
     []create user with POST /auth/signup
-    []validate fields
+    [x]validate fields
+      []add regex for more secure password
+    []check username  and email is unique
     []bcrypt passwords
     []add new user to Database
 

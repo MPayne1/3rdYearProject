@@ -1,8 +1,12 @@
 // require in modules
 const express = require('express');
-const bodyparser = require('body-parser');
-const router = express.Router();
+const joi = require('joi');
 
+const router = express.Router();
+const schema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20).required(),
+  password: joi.string().min(8).required() // password must be 8 char long
+});
 // any route in here is pre-prended with /auth
 
 router.get('/', (req, res) => {
@@ -13,9 +17,8 @@ router.get('/', (req, res) => {
 
 router.post('/signup', (req, res) => {
   console.log('body', req.body );
-  res.json({
-    message: 'signed up'
-  });
+  const result = joi.validate(req.body, schema);
+  res.json(result);
 });
 
 module.exports = router;
