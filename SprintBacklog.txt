@@ -10,6 +10,8 @@ Sprint Backlog
 []register
   []frontend
   []Backend
+    []create user with POST /auth/signup
+    []validate fields
     []bcrypt passwords
     []add new user to Database
 
