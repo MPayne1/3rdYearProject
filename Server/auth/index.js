@@ -20,21 +20,24 @@ router.get('/', (req, res) => {
   });
 });
 
- router.post('/signup', async (req, res, next) => {
-  console.log('body', req.body );
+router.post('/signup', async (req, res, next) => {
+  //console.log('body', req.body );
+  var username = req.body.username;
   const result = joi.validate(req.body, schema);
   if(result.error === null) {
-    var users =  await dbSelect(req.body.username);
-    //if always true -- need to fix
-    if(users === []) { // if users exists then not available
-      var err = new Error('duplicate username');
-      next(err);
-    } else {
-      res.json(req.body);
-      console.log("unique username");//if username is unique return the body
-    }
+    var users = await dbSelect(username, function(err, result){
+      if(err) next(err);
+      // try to get the username from the sql query result, if it throws an error the username is free
+      try {
+        result[0].username;
+        var error = new Error("duplicate username");
+        next(error);
+      } catch(e) {
+        res.json(req.body);
+      }
+    });
   } else{
-      next(result.error); // forwards error to errorHandler
+    next(result.error); // forwards error to errorHandler
   }
 });
 
