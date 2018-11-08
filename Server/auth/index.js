@@ -5,12 +5,13 @@ const express = require('express');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 
-const dbSelect = require('../db/select.js')
+const dbSelect = require('../db/select.js');
+const dbInsert = require('../db/insert.js');
 
 const router = express.Router();
 const schema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
-  password: joi.string().min(8).required() // password must be 8 char long
+  password: joi.string().trim().min(8).required() // password must be 8 char long and not empty
 });
 // any route in here is pre-prended with /auth
 
@@ -32,8 +33,11 @@ router.post('/signup', async (req, res, next) => {
         result[0].username;
         var error = new Error("duplicate username");
         next(error);
-      } catch(e) {
-        res.json(req.body);
+      } catch(e) {// if username is free, then hash the passsword
+        bcrypt.hash(req.body.password, 12).then(hashedPassword => {
+          res.json({hashedPassword});
+            dbInsert(req.body.username, hashedPassword);
+        });
       }
     });
   } else{

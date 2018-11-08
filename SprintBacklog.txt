@@ -11,11 +11,11 @@ Sprint Backlog
   []frontend
   []Backend
     []create user with POST /auth/signup
-    [x]validate fields
-      []add regex for more secure password
-    []check username  and email is unique
-    []bcrypt passwords
-    []add new user to Database
+      [x]validate fields
+        []add regex for more secure password
+      [x]check username
+      [x]bcrypt passwords
+      []add new user to Database
 
 []Database
   []Schema
