@@ -35,8 +35,8 @@ router.post('/signup', async (req, res, next) => {
         next(error);
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, 12).then(hashedPassword => {
-          res.json({hashedPassword});
-            dbInsert(req.body.username, hashedPassword);
+          res.json({username});
+            dbInsert(username, hashedPassword);
         });
       }
     });

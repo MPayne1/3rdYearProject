@@ -3,13 +3,17 @@
 // require in modules
 const express = require('express');
 const volleyball = require('volleyball'); // shows req/res in node terminal
-
+const cors = require('cors');
 
 const port = process.env.PORT || 3000;
 var app = express();
 const auth = require('./auth/index.js');
 
 app.use(volleyball);
+// only allow client request from this origin
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => {

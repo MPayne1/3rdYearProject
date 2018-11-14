@@ -44,6 +44,9 @@
 
 <script>
 import joi from 'joi';
+
+const SIGNUP_URL = 'http://localhost:3000/auth/signup';
+
 const schema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   password: joi.string().trim().min(8).required(),
@@ -71,8 +74,28 @@ export default {
     signup() {
       console.log(this.user);
       if (this.validUser()) {
-        // send data to server
-        console.log('User is valid');
+        const body = {
+          username: this.user.username,
+          password: this.user.password
+        }
+        fetch(SIGNUP_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+          },
+        }).then((response) => {
+          if(response.ok) {
+            return response.json();
+          }
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+          }).then((user) => {
+            console.log(user);
+            }).catch((error) => {
+            console.log(error);
+        });
       }
     },
     validUser() {
