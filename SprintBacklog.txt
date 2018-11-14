@@ -2,6 +2,8 @@ Sprint Backlog
 []UI designs
   []general style
 
+[]attribute loading spinner to loading.io
+
 []Login
   []frontend
   []Backend
@@ -13,14 +15,14 @@ Sprint Backlog
       [x]link to signup page
     [x]create signup page
       [x]form
-        []verify password
-      [] submit form
-        []validate username
-          []display any error
-        []POST request to server
-          []display any errors
-          [] Signup
-            []redirect to login page
+        [x]verify password
+      [x] submit form
+        [x]validate username
+          [x]display any error
+        [x]POST request to server
+          [x]display any errors
+          [x] Signup
+            [x]redirect to login page
 
   []Backend
     []create user with POST /auth/signup

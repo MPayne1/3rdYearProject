@@ -4,10 +4,13 @@
   <div class="text-center">
     <h1>Sign Up</h1>
   </div>
+  <div v-if="signingUp" class="text-center">
+    <img src="../assets/loading_ring.svg"/>
+  </div>
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
   </div>
-  <form @submit.prevent="signup">
+  <form v-if="!signingUp" @submit.prevent="signup">
     <div class="form-group">
       <label for="username">Username</label>
       <input v-model="user.username" type="text" class="form-control" id="username"
@@ -55,6 +58,7 @@ const schema = joi.object().keys({
 
 export default {
   data: () => ({
+    signingUp: false,
     errorMessage: '',
     user: {
       username: '',
@@ -79,6 +83,7 @@ export default {
           password: this.user.password
         }
         // send the request to the backend
+        this.signingUp = true;
         fetch(SIGNUP_URL, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -86,16 +91,20 @@ export default {
             'content-type': 'application/json',
           },
         }).then((response) => {
-          if(response.ok) {
+          if (response.ok) {
             return response.json();
           }
           // handle any errors the server returns
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-          }).then((user) => {
-            console.log(user);
-          }).catch((error) => {
+          }).then((user) => { // if no errors then redirect to login page
+            setTimeout( () => { // wait so loading icon is shown, improves ui
+              this.signingUp = false;
+              this.$router.push('/Login');
+            },1000);
+          }).catch((error) => { // if any errors catch them any display error message
+            this.signingUp = false;
             this.errorMessage = error.message;
           });
       }
@@ -106,10 +115,10 @@ export default {
         return false;
       }
       const result = joi.validate(this.user, schema);
-      if (result.error === null){
+      if (result.error === null) {
         return true;
       }
-      if(result.error.message.includes('username')) {
+      if (result.error.message.includes('username')) {
         this.errorMessage = 'Username is invalid, must be at least 2 characters and not include any symbols';
       } else {
         this.errorMessage = 'Password is invalid, must be at least 8 characters';
