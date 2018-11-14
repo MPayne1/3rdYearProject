@@ -6,11 +6,17 @@ Sprint Backlog
 
 []Login
   []frontend
+    []create login form
   []Backend
+    []validate login details
+    []check if username in db
+      []compare password with hashed password in db
+      [] create and sign a JWT
+        []respond with JWT
     []bcrypt passwords
     []check with database
-[]register
-  []frontend
+[x]register
+  [x]frontend
     [x]create home page
       [x]link to signup page
     [x]create signup page
@@ -30,23 +36,23 @@ Sprint Backlog
         []add regex for more secure password
       [x]check username
       [x]bcrypt passwords
-      []add new user to Database
+      [x]add new user to Database
 
 []Database
   []Schema
-    []players info
-    []team info
-    []league info
+    [x]players info
+    [x]team info
+    [x]league info
     []players stats
     []team stats
-    []admins
-      []captain
-      []league admin
+    [x]admins
+      [x]captain
+      [x]league admin
   []Normalise
     []functional dependencies
     []3nf/bcnf
-  []setup Database
-    []mysql
+  [x]setup Database
+    [x]mysql
 
 []unit test everything
   []use mocha and chai

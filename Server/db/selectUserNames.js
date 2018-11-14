@@ -3,8 +3,10 @@
 const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 
-// select all users with the username, to check usernames when signup
-// return false if the username isn't currently in the db true otherwise
+/*
+  select all users with the username, to check usernames when signup
+  return false if the username isn't currently in the db true otherwise
+*/
 var selectUserNames  = async function(username, callback) {
   var res;
     var sql = `SELECT username FROM users WHERE username =  + ${mysql.escape(username)}`;
@@ -15,6 +17,5 @@ var selectUserNames  = async function(username, callback) {
     });
 
 }
-
 
 module.exports = selectUserNames;
