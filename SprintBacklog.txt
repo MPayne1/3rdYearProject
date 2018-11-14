@@ -11,8 +11,8 @@ Sprint Backlog
   []frontend
     [x]create home page
       [x]link to signup page
-    []create signup page
-      []form
+    [x]create signup page
+      [x]form
         []verify password
       [] submit form
         []validate username
