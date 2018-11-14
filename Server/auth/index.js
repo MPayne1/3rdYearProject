@@ -11,7 +11,10 @@ const dbInsert = require('../db/insert.js');
 const router = express.Router();
 const schema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
-  password: joi.string().trim().min(8).required() // password must be 8 char long and not empty
+  password: joi.string().trim().min(8).required(),
+  email: joi.string().email({minDomainAtoms: 2 }).required(),
+  FirstName: joi.string().alphanum().min(2).max(30).required(),
+  LastName: joi.string().alphanum().min(2).max(30).required() // password must be 8 char long and not empty
 });
 // any route in here is pre-prended with /auth
 
@@ -37,7 +40,7 @@ router.post('/signup', async (req, res, next) => {
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, 12).then(hashedPassword => {
           res.json({username});
-            dbInsert(username, hashedPassword);
+          dbInsert(username, hashedPassword, req.body.email, req.body.FirstName, req.body.LastName);
         });
       }
     });
