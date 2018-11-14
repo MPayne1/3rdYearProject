@@ -78,6 +78,7 @@ export default {
           username: this.user.username,
           password: this.user.password
         }
+        // send the request to the backend
         fetch(SIGNUP_URL, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -88,18 +89,18 @@ export default {
           if(response.ok) {
             return response.json();
           }
+          // handle any errors the server returns
           return response.json().then((error) => {
             throw new Error(error.message);
           });
           }).then((user) => {
             console.log(user);
-            }).catch((error) => {
-            console.log(error);
-        });
+          }).catch((error) => {
+            this.errorMessage = error.message;
+          });
       }
     },
     validUser() {
-      this.errorMessage = '';
       if (this.user.password !== this.user.confirmPassword) {
         this.errorMessage = 'Passwords must match';
         return false;

@@ -31,7 +31,8 @@ router.post('/signup', async (req, res, next) => {
       // try to get the username from the sql query result, if it throws an error the username is free
       try {
         result[0].username;
-        var error = new Error("duplicate username");
+        var error = new Error("That username is taken, please choose another.");
+        res.status(409); // status code for conflicts e.g. duplicate username
         next(error);
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, 12).then(hashedPassword => {
@@ -41,6 +42,7 @@ router.post('/signup', async (req, res, next) => {
       }
     });
   } else{
+    res.status(422); // status code for not processable input
     next(result.error); // forwards error to errorHandler
   }
 });
