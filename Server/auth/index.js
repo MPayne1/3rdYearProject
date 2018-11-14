@@ -68,25 +68,25 @@ router.post('/login', async(req, res, next) => {
     var users = await dbSelectPassword(username, function(err, result){
       if(err) next(err);
       try {
-        bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
-          res.json({passwordResult});
-        });
+        var p = result[0].password;
       } catch(e) { // if no matching username then invalid login attempt
-          var error = new Error(invalidLogin);
-          res.status(422);
-          next(error);
+          invalidLoginAttempt(res, next);
       }
+      bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
+        res.json({passwordResult});
+      });
     });
   } else{
-    res.status(422); // status code for not processable input
-    const error = new Error(invalidLogin);
-    next(error); // forwards error to errorHandler
+    invalidLoginAttempt(res, next);
   }
-
-
 });
 
 
-
+// function to set status code and error message for invalid login attempt
+function invalidLoginAttempt(res, next) {
+  res.status(422); // status code for not processable input
+  const error = new Error(invalidLogin);
+  next(error); // forwards error to errorHandler
+}
 
 module.exports = router;
