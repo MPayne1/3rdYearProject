@@ -465,6 +465,7 @@
       "resolved": "https://registry.npmjs.org/dot-prop/-/dot-prop-4.2.0.tgz",
       "version": "4.2.0"
     },
+    "dotenv": "^6.1.0",
     "duplexer": {
       "integrity": "sha1-rOb/gIwc5mtX0ev5eXessCM0z8E=",
       "resolved": "http://registry.npmjs.org/duplexer/-/duplexer-0.1.1.tgz",
@@ -1532,6 +1533,7 @@
       "version": "3.0.1"
     },
     "joi": "^14.0.4",
+    "jsonwebtoken": "^8.4.0",
     "kind-of": {
       "integrity": "sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==",
       "resolved": "https://registry.npmjs.org/kind-of/-/kind-of-6.0.2.tgz",

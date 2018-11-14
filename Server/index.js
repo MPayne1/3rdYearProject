@@ -5,6 +5,8 @@ const express = require('express');
 const volleyball = require('volleyball'); // shows req/res in node terminal
 const cors = require('cors');
 
+require('dotenv').config();
+
 const port = process.env.PORT || 3000;
 var app = express();
 const auth = require('./auth/index.js');

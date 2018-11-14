@@ -4,8 +4,9 @@
 const express = require('express');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
-const dbSelectPassword = require('../db/selectPassword.js');
+const dbSelectUser = require('../db/selectUser.js');
 const dbSelectUserNames = require('../db/selectUserNames.js');
 const dbInsert = require('../db/insert.js');
 
@@ -65,7 +66,7 @@ router.post('/login', async(req, res, next) => {
   const result = joi.validate(req.body, loginSchema);
   if(result.error === null) {
     const username = req.body.username;
-    var users = await dbSelectPassword(username, function(err, result){
+    var users = await dbSelectUser(username, function(err, result){
       if(err) next(err);
       try {
         var p = result[0].password;
@@ -73,7 +74,24 @@ router.post('/login', async(req, res, next) => {
           invalidLoginAttempt(res, next);
       }
       bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
-        res.json({passwordResult});
+        if(passwordResult) { //password was correct
+          const payload = {
+            UserID: result[0].UserID,
+            usernames: result[0].username
+          };
+          console.log(process.env.TOKEN_SECRET);
+          jwt.sign(payload, process.env.TOKEN_SECRET, {
+            expiresIn: '1h'
+          }, (err, token) => {
+            if(err){
+              next(err);
+            } else {
+              res.json({token});
+            }
+          });
+        } else {
+          invalidLoginAttempt(res, next);
+        }
       });
     });
   } else{

@@ -7,14 +7,14 @@ Sprint Backlog
 []Login
   []frontend
     []create login form
-  []Backend
-    []validate login details
-    []check if username in db
-      []compare password with hashed password in db
-      [] create and sign a JWT
-        []respond with JWT
-    []bcrypt passwords
-    []check with database
+  [x]Backend
+    [x]validate login details
+    [x]check if username in db
+      [x]compare password with hashed password in db
+      [x] create and sign a JWT
+        [x]respond with JWT
+    [x]bcrypt passwords
+    [x]check with database
 [x]register
   [x]frontend
     [x]create home page
