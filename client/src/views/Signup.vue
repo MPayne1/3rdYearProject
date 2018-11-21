@@ -125,11 +125,12 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-          }).then((user) => { // if no errors then redirect to login page
+          }).then((result) => { // if no errors then redirect to login page
+            localStorage.token = result.token;
             setTimeout( () => { // wait so loading icon is shown, improves ui
               this.signingUp = false;
-              this.$router.push('/Login');
-            },1000);
+              this.$router.push('/Dashboard');
+            },700);
           }).catch((error) => { // if any errors catch them any display error message
             this.signingUp = false;
             this.errorMessage = error.message;

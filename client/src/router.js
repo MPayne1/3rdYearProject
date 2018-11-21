@@ -18,7 +18,7 @@ function loggedInRedirectDashboard(to, from, next) {
 
 // if user is logged in, has a token, then let them continue
 function isLoggedIn(to, from, next) {
-  if(localStorage.token) {
+  if (localStorage.token) {
     next();
   } else {
     next('/login');

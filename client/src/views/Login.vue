@@ -90,7 +90,7 @@ export default {
             setTimeout( () => { // wait so loading icon is shown, improves ui
               this.loggingIn = false;
               this.$router.push('/dashboard');
-            },1000);
+            },700);
           }).catch((error) => { // if any errors catch them any display error message
             this.loggingIn = false;
             this.errorMessage = error.message;

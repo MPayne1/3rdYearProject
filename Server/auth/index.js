@@ -51,7 +51,9 @@ router.post('/signup', async (req, res, next) => {
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, 12).then(hashedPassword => {
           res.json({username});
-          dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
+          dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email).then(newUser => {
+            createTokenSendResponse(newUser, res, next);
+          });
         });
       }
     });
@@ -73,20 +75,10 @@ router.post('/login', async(req, res, next) => {
         var u = result[0].username;
         bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
           if(passwordResult) { //password was correct
-            const payload = {
-              UserID: result[0].UserID,
-              usernames: result[0].username
-            };
+
             console.log(process.env.TOKEN_SECRET);
-            jwt.sign(payload, process.env.TOKEN_SECRET, {
-              expiresIn: '1h'
-            }, (err, token) => {
-              if(err){
-                next(err);
-              } else {
-                res.json({token});
-              }
-            });
+            var r = result[0];
+            createTokenSendResponse(r, res, next);
           } else {
             invalidLoginAttempt(res, next);
           }
@@ -108,5 +100,23 @@ function invalidLoginAttempt(res, next) {
   const error = new Error(invalidLogin);
   next(error); // forwards error to errorHandler
 }
+
+// function to make the jwt and send the response to client
+function createTokenSendResponse(result, res, next) {
+  const payload = {
+    UserID: result.UserID,
+    usernames: result.username
+  };
+  jwt.sign(payload, process.env.TOKEN_SECRET, {
+    expiresIn: '1h'
+  }, (err, token) => {
+    if(err){
+      next(err);
+    } else {
+      res.json({token});
+    }
+  });
+}
+
 
 module.exports = router;

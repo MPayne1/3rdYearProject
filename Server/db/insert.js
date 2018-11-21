@@ -12,7 +12,9 @@ var insertUser  = async function(username, password, LastName, FirstName, Email,
 	  await dbCon.query(sql , (err, result) => {
 		    if(err) throw err;
         console.log('user added');
+        callback(null, result);
     });
+    
 }
 
 module.exports = insertUser;
