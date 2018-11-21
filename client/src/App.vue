@@ -1,23 +1,25 @@
+
 <template>
   <div id="app">
       <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-      <a class="navbar-brand" href="#">SportsBook</a>
+      <router-link class="navbar-brand" :to="{name: 'home'}">SportsBook</router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse"
           data-target="#navbarColor01" aria-controls="navbarColor01"
           aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
+        <span class="navbar-toggler-icon">(current)</span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+            <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard<span class="sr-only">
+            (current)</span></router-link>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">Teams</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" href="#">Profile</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>
