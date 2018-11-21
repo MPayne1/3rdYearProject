@@ -10,7 +10,7 @@
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
   </div>
-    <form @submit.prevent="login()">
+    <form v-if="!loggingIn" @submit.prevent="login()">
       <div class="form-group">
         <label for="username">Username</label>
         <input v-model="user.username" type="text" class="form-control" id="username"
@@ -54,6 +54,14 @@ export default {
       password: '',
     },
   }),
+  watch: {
+    user: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+  },
   methods: {
     login() {
       this.errorMessage = '';

@@ -25,6 +25,7 @@ const loginSchema = joi.object().keys({
 });
 
 const invalidLogin = 'Invalid Login Attempt.';
+
 // any route in here is pre-prended with /auth
 
 router.get('/', (req, res) => {
@@ -50,7 +51,7 @@ router.post('/signup', async (req, res, next) => {
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, 12).then(hashedPassword => {
           res.json({username});
-          dbInsert(username, hashedPassword, req.body.email, req.body.FirstName, req.body.LastName);
+          dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
         });
       }
     });
@@ -69,30 +70,31 @@ router.post('/login', async(req, res, next) => {
     var users = await dbSelectUser(username, function(err, result){
       if(err) next(err);
       try {
-        var p = result[0].password;
+        var u = result[0].username;
+        bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
+          if(passwordResult) { //password was correct
+            const payload = {
+              UserID: result[0].UserID,
+              usernames: result[0].username
+            };
+            console.log(process.env.TOKEN_SECRET);
+            jwt.sign(payload, process.env.TOKEN_SECRET, {
+              expiresIn: '1h'
+            }, (err, token) => {
+              if(err){
+                next(err);
+              } else {
+                res.json({token});
+              }
+            });
+          } else {
+            invalidLoginAttempt(res, next);
+          }
+        });
       } catch(e) { // if no matching username then invalid login attempt
           invalidLoginAttempt(res, next);
       }
-      bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
-        if(passwordResult) { //password was correct
-          const payload = {
-            UserID: result[0].UserID,
-            usernames: result[0].username
-          };
-          console.log(process.env.TOKEN_SECRET);
-          jwt.sign(payload, process.env.TOKEN_SECRET, {
-            expiresIn: '1h'
-          }, (err, token) => {
-            if(err){
-              next(err);
-            } else {
-              res.json({token});
-            }
-          });
-        } else {
-          invalidLoginAttempt(res, next);
-        }
-      });
+
     });
   } else{
     invalidLoginAttempt(res, next);
