@@ -12,8 +12,7 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard<span class="sr-only">
-            (current)</span></router-link>
+            <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard</router-link>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Teams</a>
