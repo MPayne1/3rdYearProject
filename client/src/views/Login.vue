@@ -86,10 +86,10 @@ export default {
             throw new Error(error.message);
           });
           }).then((result) => {
-            console.log(result);
+            localStorage.token = result.token; // store the token in the browsers local storage
             setTimeout( () => { // wait so loading icon is shown, improves ui
               this.loggingIn = false;
-            // this.$router.push('/Home');
+              this.$router.push('/dashboard');
             },1000);
           }).catch((error) => { // if any errors catch them any display error message
             this.loggingIn = false;

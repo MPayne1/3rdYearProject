@@ -11,12 +11,13 @@ Sprint Backlog
     [x]validate password
     [x]display any errors
     []POST request to /auth/login
-      []diplay errors
-      []if succesful login
-        []store token in local storage
-        []redirect to homepage
-  []if user visits login/signup page, redirect to homepage
-  []if not logged in user goes to homepage, redirect to login page
+      [x]diplay errors
+      [x]if succesful login
+        [x]store token in local storage
+        [x]redirect to dashboard
+  []if user visits login/signup page, redirect to dashboard
+  [] show username on dashboard
+  []if not logged in user goes to dashboard, redirect to login page
   []after signup, login automatically
 
   [x]Backend
