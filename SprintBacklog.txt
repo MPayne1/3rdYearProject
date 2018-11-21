@@ -4,21 +4,21 @@ Sprint Backlog
 
 []attribute loading spinner to loading.io
 
-[]Login
-  []frontend
+[x]Login
+  [x]frontend
     [x]create login form
     [x] vlaidate username
     [x]validate password
     [x]display any errors
-    []POST request to /auth/login
+    [x]POST request to /auth/login
       [x]diplay errors
       [x]if succesful login
         [x]store token in local storage
         [x]redirect to dashboard
   [x]if user visits login/signup page, redirect to dashboard
   [] show username on dashboard
-  []if not logged in user goes to dashboard, redirect to login page
-  []after signup, login automatically
+  [x]if not logged in user goes to dashboard, redirect to login page
+  [x]after signup, login automatically
 
   [x]Backend
     [x]validate login details
@@ -68,6 +68,16 @@ Sprint Backlog
     []3nf/bcnf
   [x]setup Database
     [x]mysql
+
+[]authorise
+  []checktoken middleware
+    []get token from auth header
+      []if defined
+        []verify token
+        [] set req.user to be the decoded payload
+  []is logged in middleware
+    []if req.user is set continue
+    []else send error message
 
 []unit test everything
   []use mocha and chai

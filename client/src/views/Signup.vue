@@ -69,12 +69,15 @@ import joi from 'joi';
 const SIGNUP_URL = 'http://localhost:3000/auth/signup';
 
 const schema = joi.object().keys({
-  username: joi.string().alphanum().min(2).max(20).required(),
+  username: joi.string().alphanum().min(2).max(20)
+    .required(),
   password: joi.string().trim().min(8).required(),
   confirmPassword: joi.string().trim().min(8).required(),
-  email: joi.string().email({minDomainAtoms: 2 }).required(),
-  FirstName: joi.string().alphanum().min(2).max(30).required(),
-  LastName: joi.string().alphanum().min(2).max(30).required()
+  email: joi.string().email({ minDomainAtoms: 2 }).required(),
+  FirstName: joi.string().alphanum().min(2).max(30)
+    .required(),
+  LastName: joi.string().alphanum().min(2).max(30)
+    .required(),
 });
 
 export default {
@@ -107,7 +110,7 @@ export default {
           LastName: this.user.LastName,
           FirstName: this.user.FirstName,
           email: this.user.email,
-        }
+        };
         console.log(this.user.username, this.user.email);
         // send the request to the backend
         this.signingUp = true;
@@ -125,16 +128,16 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-          }).then((result) => { // if no errors then redirect to login page
-            localStorage.token = result.token;
-            setTimeout( () => { // wait so loading icon is shown, improves ui
-              this.signingUp = false;
-              this.$router.push('/Dashboard');
-            },700);
-          }).catch((error) => { // if any errors catch them any display error message
+        }).then((result) => { // if no errors then set the token and redirect to dashboard page
+          localStorage.token = result.token;
+          setTimeout(() => { // wait so loading icon is shown, improves ui
             this.signingUp = false;
-            this.errorMessage = error.message;
-          });
+            this.$router.push('/Dashboard');
+          }, 700);
+        }).catch((error) => { // if any errors catch them any display error message
+          this.signingUp = false;
+          this.errorMessage = error.message;
+        });
       }
     },
     validUser() {
@@ -154,8 +157,7 @@ export default {
       }
       if (result.error.message.includes('FirstName') || result.error.message.includes('LastName')) {
         this.errorMessage = 'Names can only contain letters.';
-      }
-      else {
+      } else {
         this.errorMessage = 'Password is invalid, must be at least 8 characters';
       }
       return false;

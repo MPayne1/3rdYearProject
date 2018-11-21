@@ -1,4 +1,5 @@
 //handles overall routing/processing of requiest for the app
+// the middlewares are used in the order theyre in
 
 // require in modules
 const express = require('express');

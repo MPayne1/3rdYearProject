@@ -42,13 +42,14 @@ import joi from 'joi';
 const LOGIN_URL = 'http://localhost:3000/auth/login';
 
 const schema = joi.object().keys({
-  username: joi.string().alphanum().min(2).max(20).required(),
+  username: joi.string().alphanum().min(2).max(20)
+    .required(),
   password: joi.string().trim().min(8).required(),
 });
 export default {
   data: () => ({
     loggingIn: false,
-  errorMessage: '',
+    errorMessage: '',
     user: {
       username: '',
       password: '',
@@ -65,7 +66,7 @@ export default {
   methods: {
     login() {
       this.errorMessage = '';
-      if(this.validUser()) {
+      if (this.validUser()) {
         const body = {
           username: this.user.username,
           password: this.user.password,
@@ -85,17 +86,16 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-          }).then((result) => {
-            localStorage.token = result.token; // store the token in the browsers local storage
-            setTimeout( () => { // wait so loading icon is shown, improves ui
-              this.loggingIn = false;
-              this.$router.push('/dashboard');
-            },700);
-          }).catch((error) => { // if any errors catch them any display error message
+        }).then((result) => {
+          localStorage.token = result.token; // store the token in the browsers local storage
+          setTimeout(() => { // wait so loading icon is shown, improves ui
             this.loggingIn = false;
-            this.errorMessage = error.message;
-          });
-
+            this.$router.push('/dashboard');
+          }, 700);
+        }).catch((error) => { // if any errors catch them any display error message
+          this.loggingIn = false;
+          this.errorMessage = error.message;
+        });
       }
     },
     validUser() {
@@ -107,7 +107,7 @@ export default {
         this.errorMessage = 'Invalid Login Attempt';
       }
       if (result.error.message.includes('password')) {
-        this.errorMessage = 'Invalid Login Attempt'
+        this.errorMessage = 'Invalid Login Attempt';
       }
       return false;
     },
