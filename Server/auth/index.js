@@ -102,7 +102,7 @@ function invalidLoginAttempt(res, next) {
 function createTokenSendResponse(result, res, next) {
   const payload = {
     UserID: result.UserID,
-    usernames: result.username
+    username: result.username
   };
 
   jwt.sign(payload, process.env.TOKEN_SECRET, {

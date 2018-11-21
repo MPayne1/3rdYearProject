@@ -15,10 +15,9 @@ Sprint Backlog
       [x]if succesful login
         [x]store token in local storage
         [x]redirect to dashboard
-  [x]if user visits login/signup page, redirect to dashboard
+  [x]if logged in user visits login/signup page, redirect to dashboard
   [] show username on dashboard
   [x]if not logged in user goes to dashboard, redirect to login page
-  [x]after signup, login automatically
 
   [x]Backend
     [x]validate login details
@@ -70,14 +69,16 @@ Sprint Backlog
     [x]mysql
 
 []authorise
-  []checktoken middleware
-    []get token from auth header
-      []if defined
-        []verify token
-        [] set req.user to be the decoded payload
-  []is logged in middleware
-    []if req.user is set continue
-    []else send error message
+  [x]checktoken middleware
+    [x]get token from auth header
+      [x]if defined
+        [x]verify token
+        [x] set req.user to be the decoded payload
+  [x]is logged in middleware
+    [x]if req.user is set continue
+    [x]else send error message
+  []on homepage show dashboard instead of signup button
+  []protected routes
 
 []unit test everything
   []use mocha and chai
