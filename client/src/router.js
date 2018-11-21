@@ -36,7 +36,6 @@ export default new Router({
       path: '/Signup',
       name: 'signup',
       component: Signup,
-      beforeEnter: loggedInRedirectDashboard,
     },
     {
       path: '/Login',

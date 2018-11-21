@@ -128,11 +128,10 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-        }).then((result) => { // if no errors then set the token and redirect to dashboard page
-          localStorage.token = result.token;
+        }).then(() => { // if no errors redirect to login page
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.signingUp = false;
-            this.$router.push('/Dashboard');
+            this.$router.push('/login');
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message
           this.signingUp = false;

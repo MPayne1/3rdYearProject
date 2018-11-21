@@ -49,11 +49,9 @@ router.post('/signup', async (req, res, next) => {
         res.status(409); // status code for conflicts e.g. duplicate username
         next(error);
       } catch(e) {// if username is free, then hash the passsword
-        bcrypt.hash(req.body.password, 12).then(hashedPassword => {
+        bcrypt.hash(req.body.password, 12).then(async hashedPassword => {
           res.json({username});
-          dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email).then(newUser => {
-            createTokenSendResponse(newUser, res, next);
-          });
+          await dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
         });
       }
     });
@@ -75,7 +73,6 @@ router.post('/login', async(req, res, next) => {
         var u = result[0].username;
         bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
           if(passwordResult) { //password was correct
-
             console.log(process.env.TOKEN_SECRET);
             var r = result[0];
             createTokenSendResponse(r, res, next);
@@ -107,6 +104,7 @@ function createTokenSendResponse(result, res, next) {
     UserID: result.UserID,
     usernames: result.username
   };
+
   jwt.sign(payload, process.env.TOKEN_SECRET, {
     expiresIn: '1h'
   }, (err, token) => {
