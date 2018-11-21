@@ -4,6 +4,9 @@
   <div class="text-center">
     <h1>Login</h1>
   </div>
+  <div v-if="loggingIn" class="text-center">
+    <img src="../assets/loading_ring.svg"/>
+  </div>
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
   </div>
@@ -36,12 +39,15 @@
 <script>
 import joi from 'joi';
 
+const LOGIN_URL = 'http://localhost:3000/auth/login';
+
 const schema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   password: joi.string().trim().min(8).required(),
 });
 export default {
   data: () => ({
+    loggingIn: false,
   errorMessage: '',
     user: {
       username: '',
@@ -56,7 +62,31 @@ export default {
           username: this.user.username,
           password: this.user.password,
         };
-        
+        this.loggingIn = true;
+        fetch(LOGIN_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+          },
+          body: JSON.stringify(body),
+        }).then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+          // handle any errors the server returns
+          return response.json().then((error) => {
+            throw new Error(error.message);
+          });
+          }).then((result) => {
+            console.log(result);
+            setTimeout( () => { // wait so loading icon is shown, improves ui
+              this.loggingIn = false;
+            // this.$router.push('/Home');
+            },1000);
+          }).catch((error) => { // if any errors catch them any display error message
+            this.loggingIn = false;
+            this.errorMessage = error.message;
+          });
 
       }
     },
