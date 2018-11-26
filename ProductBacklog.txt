@@ -2,28 +2,29 @@ Product Backlog
 []UI designs
   []general style
 
-[]Login
-  []frontend
-  []Backend
-    []bcrypt passwords
+[x]Login
+  [x]frontend
+  [x]Backend
+    [x]bcrypt passwords
 
-[]register
-  []frontend
-  []Backend
-    []bcrypt passwords
-    []add new user to Database
+[x]register
+  [x]frontend
+  [x]Backend
+    [x]bcrypt passwords
+    [x]add new user to Database
 
 []Database
   []Schema
     [x]players info
     [x]team info
     [x]league info
-    []players stats
-    []team stats
-    []admins
-      []captain
-      []league admin
     []different sports
+      []players stats
+      []team stats
+    [x]admins
+      [x]captain
+      [x]league admin
+
   []Normalise
     []functional dependencies
     []3nf/bcnf
@@ -35,7 +36,7 @@ Product Backlog
     [] displaye league info
   []add players
   [] join league
-
+  []league admin
 []create team
   [] create tean form
   [] add team to db
@@ -43,13 +44,13 @@ Product Backlog
     []diplay team info
   [] add players
   [] join league
+  []team admin (captain)
+
+
 
 []join team
 
-	
 []join league
-
-
 
 []add new fixture
   [] league admin can automatically generate fixture list for the league
@@ -66,6 +67,7 @@ Product Backlog
 
 []view player stats
 
+-- Extra Features --
 []messaging
 
 []reminders

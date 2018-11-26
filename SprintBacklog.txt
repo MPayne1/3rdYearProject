@@ -4,81 +4,34 @@ Sprint Backlog
 
 []attribute loading spinner to loading.io
 
-[x]Login
-  [x]frontend
-    [x]create login form
-    [x] vlaidate username
-    [x]validate password
-    [x]display any errors
-    [x]POST request to /auth/login
-      [x]diplay errors
-      [x]if succesful login
-        [x]store token in local storage
-        [x]redirect to dashboard
-  [x]if logged in user visits login/signup page, redirect to dashboard
-  [] show username on dashboard
-  [x]if not logged in user goes to dashboard, redirect to login page
-
-  [x]Backend
-    [x]validate login details
-    [x]check if username in db
-      [x]compare password with hashed password in db
-      [x] create and sign a JWT
-        [x]respond with JWT
-    [x]bcrypt passwords
-    [x]check with database
-    []authorise user with token
-
-[x]Register
-  [x]frontend
-    [x]create home page
-      [x]link to signup page
-    [x]create signup page
-      [x]form
-        [x]verify password
-      [x] submit form
-        [x]validate username
-          [x]display any error
-        [x]POST request to server
-          [x]display any errors
-          [x] Signup
-            [x]redirect to login page
-
-  [x]Backend
-    [x]create user with POST /auth/signup
-      [x]validate fields
-        [x]add regex for more secure password
-      [x]check username
-      [x]bcrypt passwords
-      [x]add new user to Database
+[]create league
+  []frontend
+    [] create league form
+      []validate form
+  []backend
+    []validate form
+    [] add league to db
+  [] add league homepage
+    [] display league info
+  []add players
+  [] join league
+  []league admin
+[]create team
+  [] create tean form
+  [] add team to db
+  [] add team homepage
+    []diplay team info
+  [] add players
+  [] join league
+  []team admin (captain)
 
 []Database
   []Schema
-    [x]players info
-    [x]team info
-    [x]league info
     []players stats
     []team stats
-    [x]admins
-      [x]captain
-      [x]league admin
   []Normalise
     []functional dependencies
     []3nf/bcnf
-  [x]setup Database
-    [x]mysql
-
-[]authorise
-  [x]checktoken middleware
-    [x]get token from auth header
-      [x]if defined
-        [x]verify token
-        [x] set req.user to be the decoded payload
-  [x]is logged in middleware
-    [x]if req.user is set continue
-    [x]else send error message
-  []on homepage show dashboard instead of signup button
-  []protected routes
 
 []unit test everything
   []use mocha and chai
