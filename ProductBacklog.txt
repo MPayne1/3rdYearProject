@@ -15,9 +15,9 @@ Product Backlog
 
 []Database
   []Schema
-    []players info
-    []team info
-    []league info
+    [x]players info
+    [x]team info
+    [x]league info
     []players stats
     []team stats
     []admins
@@ -28,15 +28,31 @@ Product Backlog
     []functional dependencies
     []3nf/bcnf
 
-[]join team
-
-[]join league
+[]create league
+  [] create league form
+  [] add league to db
+  [] add league homepage
+    [] displaye league info
+  []add players
+  [] join league
 
 []create team
+  [] create tean form
+  [] add team to db
+  [] add team homepage
+    []diplay team info
+  [] add players
+  [] join league
 
-[]create league
+[]join team
+
+	
+[]join league
+
+
 
 []add new fixture
+  [] league admin can automatically generate fixture list for the league
 
 []add result
 

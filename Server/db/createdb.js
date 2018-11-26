@@ -3,6 +3,12 @@
 const db  = require('./connection.js');
 const mysql = require('mysql');
 
+const dotenv = require('dotenv').config();
+if (dotenv.error) {
+  console.log(dotenv.error)
+}
+console.log(dotenv.parsed)
+
 // create users table
 async function createUsersTable(err) {
 	if(err) throw err;
@@ -11,7 +17,7 @@ async function createUsersTable(err) {
 	" FirstName VARCHAR(255), Email VARCHAR(50), PRIMARY KEY (UserID))";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
-		console.log("Table created");
+		console.log("Users Table created");
 	});
 };
 
@@ -23,7 +29,7 @@ async function createLeagueTable(err) {
 	"FOREIGN KEY (LeagueAdmin) REFERENCES Users(UserID))";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
-		console.log("Table created");
+		console.log("League Table created");
 	});
 };
 
@@ -36,12 +42,28 @@ async function createTeamTable(err) {
 	"FOREIGN KEY (TeamAdmin) REFERENCES Users(UserID))";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
-		console.log("Table created");
+		console.log("Team Table created");
 	});
 };
 
-createUsersTable();
-createLeagueTable();
-createTeamTable();
+// create Plays for Table
+async function createPlaysForTable(err) {
+	if(err) throw err;
+	var sql = "CREATE TABLE PlaysFor(TeamID int, UserID int, LeagueID int, " +
+	"PRIMARY KEY (TeamID, UserID, LeagueID), " +
+	"FOREIGN KEY (UserID) REFERENCES Users(UserID), " +
+	"FOREIGN KEY (TeamID) REFERENCES Team(TeamID), " +
+	"FOREIGN KEY (LeagueID) REFERENCES League(LeagueID));";
+	await db.query(sql, function(err, result) {
+		if(err) throw err;
+		console.log("PlaysFor Table Created");
+	});
 
-console.log('Tables createed');
+}
+
+
+
+// createUsersTable();
+// createLeagueTable();
+// createTeamTable();
+// createPlaysForTable();
