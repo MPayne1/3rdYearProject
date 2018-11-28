@@ -11,8 +11,11 @@
 
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item">
             <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard</router-link>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Leagues</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Teams</a>

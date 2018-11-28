@@ -28,7 +28,7 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/auth',auth);
+app.use('/auth', auth);
 app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
 
 function notFound(req, res, next) {
@@ -47,7 +47,6 @@ function errorHandler(err, req, res, next) {
 
 app.use(notFound);
 app.use(errorHandler);
-
 
 
 app.listen(port, () => {

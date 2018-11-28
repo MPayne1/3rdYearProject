@@ -3,8 +3,16 @@
 // require in modules
 const express = require('express');
 const jwt = require('jsonwebtoken');
-
 const router = express.Router();
+const joi = require('joi');
+const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
+const dbInsert = require('../db/createLeague.js');
+
+
+const leagueSchema = joi.object().keys({
+  leagueName: joi.string().min(2).max(20).required(),
+  leagueAdmin: joi.required(),
+});
 
 // all paths are prepended with /league
 router.get('/', (req, res) => {
@@ -13,5 +21,29 @@ router.get('/', (req, res) => {
   });
 });
 
+
+// handle create league request
+router.post('/create',async (req, res, next) => {
+  console.log(req.body.leagueName)
+  var leagueName = req.body.leagueName;
+  const result = joi.validate(req.body, leagueSchema);
+  if(result.error == null) {
+    var league = await dbSelectLeagueNames(leagueName, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].leagueName;
+        var error = new Error("That league name is taken please choose another");
+        res.status(409);
+        next(error);
+      } catch(e) {
+          await dbInsert(leagueName, req.body.leagueAdmin);
+          res.json({leagueName});
+      }
+    })
+  } else{
+    res.status(422); // status code for not processable input
+    next(result.error); // forwards error to errorHandler
+  }
+});
 
 module.exports = router;
