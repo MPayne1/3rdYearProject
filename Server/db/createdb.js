@@ -25,8 +25,8 @@ async function createUsersTable(err) {
 async function createLeagueTable(err) {
 	if(err) throw err;
 	var sql = "CREATE TABLE League(LeagueID int NOT NULL AUTO_INCREMENT,"+
-	"LeagueName VARCHAR(20), LeagueAdmin int, PRIMARY KEY (LeagueID), "+
-	"FOREIGN KEY (LeagueAdmin) REFERENCES Users(UserID))";
+	"LeagueName VARCHAR(20), LeagueAdmin int, Sport VARCHAR(30), PRIMARY KEY (LeagueID), "+
+	"FOREIGN KEY (LeagueAdmin) REFERENCES Users(UserID));";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
 		console.log("League Table created");
@@ -58,7 +58,6 @@ async function createPlaysForTable(err) {
 		if(err) throw err;
 		console.log("PlaysFor Table Created");
 	});
-
 }
 
 

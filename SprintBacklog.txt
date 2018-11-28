@@ -11,13 +11,15 @@ Sprint Backlog
   []backend
     [x]must be logged in to access /league route
     []validate form
-    [] add league to db
+      []check duplicate Name
+      [] add sport
+    [x] add league to db
   [] add league homepage
     [] display league info
   []add players
   [] join league
   []league admin
-  
+
 []create team
   [] create tean form
   [] add team to db
