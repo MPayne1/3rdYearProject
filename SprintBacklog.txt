@@ -9,6 +9,7 @@ Sprint Backlog
     [] create league form
       []validate form
   []backend
+    [x]must be logged in to access /league route
     []validate form
     [] add league to db
   [] add league homepage
@@ -16,6 +17,7 @@ Sprint Backlog
   []add players
   [] join league
   []league admin
+  
 []create team
   [] create tean form
   [] add team to db

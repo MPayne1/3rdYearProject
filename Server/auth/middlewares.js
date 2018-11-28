@@ -20,9 +20,21 @@ function checkTokenSetUser(req, res, next) {
   } else {
     next();
   }
-
 }
+
+function isLoggedIn(req, res, next) {
+  if(req.user) {
+    next();
+  } else{
+    const error = new Error('unauthorized');
+    res.status(401);
+    next(error);
+  }
+}
+
+
 
 module.exports = {
   checkTokenSetUser,
+  isLoggedIn,
 };

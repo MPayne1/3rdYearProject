@@ -11,6 +11,7 @@ require('dotenv').config();
 const port = process.env.PORT || 3000;
 var app = express();
 const auth = require('./auth/index.js');
+const league = require('./league/index.js');
 
 app.use(volleyball);
 // only allow client request from this origin
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth',auth);
+app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
 
 function notFound(req, res, next) {
   res.status(404);
