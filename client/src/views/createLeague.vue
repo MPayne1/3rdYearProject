@@ -11,15 +11,23 @@
     {{errorMessage}}
   </div>
   <form v-if="!creating" @submit.prevent="create()">
-    <div class="form-row">
-      <div class="form-group col-md-6">
+      <div class="form-group ">
         <label for="LeagueName">League Name</label>
         <input v-model="league.name" type="text" class="form-control"
           id="LeagueName" placeholder="League Name" required>
       </div>
-    </div>
+      <div class="form-group">
+       <label for="sportSelect">Select Sport</label>
+       <select v-model="league.sport" class="form-control" placeholder="Please Choose a Sport">
+         <option disabled value="">Please Choose a Sport</option>
+         <option value="Football">Football</option>
+         <option value="Rugby">Rugby</option>
+         <option value="Tennis">Tennis</option>
+         <option value="Basketball">Basketball</option>
+       </select>
+       </div>
     <div class="text-center">
-      <button type="submit" class="btn btn-primary btn-lg">Create</button>
+      <button type="submit" class="btn btn-primary btn-lg">Create League</button>
     </div>
   </form>
 </div>
@@ -30,19 +38,26 @@
 import joi from 'joi';
 
 const CREATE_LEAGUE_URL = 'http://localhost:3000/league/create';
+const API_URL = 'http://localhost:3000/';
 
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)
     .required(),
+  sport:  joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
+  admin: joi.required()
 });
 
 export default {
   data: () => ({
     creating: false,
     errorMessage: '',
+      user: {},
     league: {
       name: '',
+      sport: '',
+      admin: '',
     },
+
   }),
   watch: {
     league: {
@@ -54,7 +69,7 @@ export default {
   },
   mounted() {
     // get the authorization header
-    fetch(CREATE_LEAGUE_URL, {
+    fetch(API_URL, {
       headers: {
         Authorization: `Bearer ${localStorage.token}`,
       },
@@ -75,8 +90,9 @@ export default {
       if (this.validLeague()) {
         const body = {
           leagueName: this.league.name,
+          Sport: this.league.sport,
+          leagueAdmin: this.user.UserID,
         };
-        console.log(this.league.name);
         // send the request to the backend
         this.creating = true;
         fetch(CREATE_LEAGUE_URL, {
@@ -110,8 +126,11 @@ export default {
       if (result.error === null) {
         return true;
       }
-      if (result.error.message.includes('name')) {
+      if (result.error.message.includes('leagueName')) {
         this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
+      }
+      if (result.error.message.includes('sport')) {
+        this.errorMessage = 'Sport is invalid please select a sport';
       }
       return false;
     },
