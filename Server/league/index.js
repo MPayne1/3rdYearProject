@@ -49,7 +49,7 @@ router.post('/create',async (req, res, next) => {
         next(error);
       } catch(e) {
           await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw, win);
-        res.json(req.body);
+          res.json(req.body);
       }
     })
   } else{

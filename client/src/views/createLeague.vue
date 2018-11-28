@@ -10,25 +10,55 @@
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
   </div>
+  <div v-if="MoreThanWin" class="alert alert-warning">
+    <h4 class="alert-heading">Warning!</h4>
+    {{MoreThanWin}}
+  </div>
   <form v-if="!creating" @submit.prevent="create()">
-      <div class="form-group ">
-        <label for="LeagueName">League Name</label>
-        <input v-model="league.name" type="text" class="form-control"
-          id="LeagueName" placeholder="League Name" required>
-      </div>
-      <div class="form-group">
-       <label for="sportSelect">Select Sport</label>
-       <select v-model="league.sport" class="form-control" placeholder="Please Choose a Sport">
-         <option disabled value="">Please Choose a Sport</option>
-         <option value="Football">Football</option>
-         <option value="Rugby">Rugby</option>
-         <option value="Tennis">Tennis</option>
-         <option value="Basketball">Basketball</option>
-       </select>
+      <div class="form-row">
+        <div class="form-group col-md-6">
+          <label for="LeagueName">League Name</label>
+          <input v-model="league.name" type="text" class="form-control"
+            id="LeagueName" placeholder="League Name" required>
+        </div>
+        <div class="form-group col-md-6">
+         <label for="sportSelect">Select Sport</label>
+         <select v-model="league.sport" class="form-control" placeholder="Please Choose a Sport">
+           <option disabled value="">Please Choose a Sport</option>
+           <option value="Football">Football</option>
+           <option value="Rugby">Rugby</option>
+           <option value="Tennis">Tennis</option>
+           <option value="Basketball">Basketball</option>
+         </select>
+         </div>
        </div>
-    <div class="text-center">
-      <button type="submit" class="btn btn-primary btn-lg">Create League</button>
-    </div>
+       <div class="form-row">
+         <div class="form-group col-md-4">
+           <label for="maxTeams">Maximum no. of Teams</label>
+           <input v-model.number="league.maxTeams" type="text" class="form-control"
+             id="maxTeams" placeholder="Maximum no. of Teams" required>
+         </div>
+       </div>
+       <div class="form-row">
+         <div class="form-group col-md-4">
+           <label for="loss">Points for a Loss</label>
+           <input v-model.number="league.loss" type="text" class="form-control"
+             id="loss" placeholder="Points for a Loss" required>
+         </div>
+         <div class="form-group col-md-4">
+           <label for="draw">Points for a Draw</label>
+           <input v-model.number="league.draw" type="text" class="form-control"
+             id="draw" placeholder="Points for a Draw" required>
+         </div>
+         <div class="form-group col-md-4">
+           <label for="loss">Points for a Win</label>
+           <input v-model.number="league.win" type="text" class="form-control"
+             id="win" placeholder="Points for a Win" required>
+         </div>
+        </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary btn-lg">Create League</button>
+      </div>
   </form>
 </div>
 </div>
@@ -36,26 +66,34 @@
 
 <script>
 import joi from 'joi';
-
 const CREATE_LEAGUE_URL = 'http://localhost:3000/league/create';
 const API_URL = 'http://localhost:3000/';
 
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)
     .required(),
-  sport:  joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
-  admin: joi.required()
+  sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
+  admin: joi.required(),
+  maxTeams: joi.number().positive().required(),
+  loss: joi.number().min(0).required(),
+  draw: joi.number().positive().required(),
+  win: joi.number().positive().required(),
 });
 
 export default {
   data: () => ({
     creating: false,
     errorMessage: '',
-      user: {},
+    MoreThanWin: '',
+    user: {},
     league: {
       name: '',
       sport: '',
       admin: '',
+      maxTeams: '',
+      draw: '',
+      loss: '',
+      win: '',
     },
 
   }),
@@ -78,6 +116,7 @@ export default {
         // if there's no user object in the response then remove the token
         if (result.user) {
           this.user = result.user;
+          this.admin = this.user.UserID;
           console.log(result);
         } else {
           localStorage.removeItem('token');
@@ -92,6 +131,10 @@ export default {
           leagueName: this.league.name,
           Sport: this.league.sport,
           leagueAdmin: this.user.UserID,
+          maxTeams: this.league.maxTeams,
+          loss: this.league.loss,
+          draw: this.league.draw,
+          win: this.league.win,
         };
         // send the request to the backend
         this.creating = true;
@@ -100,7 +143,7 @@ export default {
           body: JSON.stringify(body),
           headers: {
             'content-type': 'application/json',
-            'authorization': `Bearer ${localStorage.token}`,
+            authorization: `Bearer ${localStorage.token}`,
           },
         }).then((response) => {
           if (response.ok) {
@@ -127,11 +170,30 @@ export default {
       if (result.error === null) {
         return true;
       }
+      console.log(result.error);
       if (result.error.message.includes('leagueName')) {
         this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
       }
       if (result.error.message.includes('sport')) {
         this.errorMessage = 'Sport is invalid please select a sport';
+      }
+      if (result.error.message.includes('maxTeams')) {
+        this.errorMessage = 'You must enter a maximum number of teams allowed in the league.';
+      }
+      if (result.error.message.includes('loss')) {
+        this.errorMessage = 'You must number of points scored for a loss';
+      }
+      if (result.error.message.includes('draw')) {
+        this.errorMessage = 'You must number of points scored for a draw';
+      }
+      if (result.error.message.includes('win')) {
+        this.errorMessage = 'You must number of points scored for a win';
+      }
+      if(this.loss > this.win) {
+        this.MoreThanWin = 'You will award a loss more points than a win';
+      }
+      if(this.draw > this.win) {
+        this.MoreThanWin = 'You will award a draw more points than a win';
       }
       return false;
     },
