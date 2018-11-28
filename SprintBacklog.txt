@@ -27,6 +27,8 @@ Sprint Backlog
   [] join league
   []team admin (captain)
 
+[x]remove flatmap-stream as was found to be malicous
+
 []Database
   []Schema
     []players stats
