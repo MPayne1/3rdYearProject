@@ -37,27 +37,32 @@
          </div>
        </div>
        <div class="form-row">
-         <div class="form-group col-md-4">
-           <label for="maxTeams">Maximum no. of Teams</label>
+         <div class="form-group col-md-6">
+           <label for="maxTeams">Maximum no. of teams</label>
            <input v-model.number="league.maxTeams" type="text" class="form-control"
-             id="maxTeams" placeholder="Maximum no. of Teams" required>
+             id="maxTeams" placeholder="Maximum no. of teams" required>
+         </div>
+         <div class="form-group col-md-6">
+           <label for="games">Number of times each team plays each other per season</label>
+           <input v-model.number="league.games" type="text" class="form-control"
+             id="games" placeholder="No. of times" required>
          </div>
        </div>
        <div class="form-row">
          <div class="form-group col-md-4">
-           <label for="loss">Points for a Loss</label>
+           <label for="loss">Points for a loss</label>
            <input v-model.number="league.loss" type="text" class="form-control"
-             id="loss" placeholder="Points for a Loss" required>
+             id="loss" placeholder="Points for a loss" required>
          </div>
          <div class="form-group col-md-4">
-           <label for="draw">Points for a Draw</label>
+           <label for="draw">Points for a draw</label>
            <input v-model.number="league.draw" type="text" class="form-control"
-             id="draw" placeholder="Points for a Draw" required>
+             id="draw" placeholder="Points for a draw" required>
          </div>
          <div class="form-group col-md-4">
-           <label for="loss">Points for a Win</label>
+           <label for="loss">Points for a win</label>
            <input v-model.number="league.win" type="text" class="form-control"
-             id="win" placeholder="Points for a Win" required>
+             id="win" placeholder="Points for a win" required>
          </div>
         </div>
       <div class="text-center">
@@ -82,6 +87,7 @@ const schema = joi.object().keys({
   loss: joi.number().min(0).required(),
   draw: joi.number().min(0).required(),
   win: joi.number().positive().required(),
+  games: joi.number().positive().required(),
 });
 
 export default {
@@ -98,6 +104,7 @@ export default {
       draw: '',
       loss: '',
       win: '',
+      games: '',
     },
 
   }),
@@ -139,6 +146,7 @@ export default {
           loss: this.league.loss,
           draw: this.league.draw,
           win: this.league.win,
+          games: this.league.games,
         };
         // send the request to the backend
         this.creating = true;
@@ -174,6 +182,7 @@ export default {
       if (result.error === null) {
         return true;
       }
+      console.log(result.errorMessage);
       if (result.error.message.includes('leagueName')) {
         this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
       }
@@ -182,6 +191,9 @@ export default {
       }
       if (result.error.message.includes('maxTeams')) {
         this.errorMessage = 'You must enter a maximum number of teams allowed in the league.';
+      }
+      if(result.error.message.includes('games')) {
+        this.error.message = 'You must enter a number of games to play each team per season';
       }
       if(this.loss > this.win) {
         this.MoreThanWin = 'You will award a loss more points than a win';

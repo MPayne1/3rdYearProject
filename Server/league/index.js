@@ -16,7 +16,8 @@ const leagueSchema = joi.object().keys({
   maxTeams: joi.number().positive().required(),
   loss: joi.number().min(0).required(),
   draw: joi.number().min(0).required(),
-  win: joi.number().positive().required()
+  win: joi.number().positive().required(),
+  games: joi.number().positive().required()
 });
 
 // all paths are prepended with /league
@@ -37,6 +38,7 @@ router.post('/create',async (req, res, next) => {
   var loss = req.body.loss;
   var draw = req.body.draw;
   var win = req.body.win;
+  var games = req.body.games;
 
   const result = joi.validate(req.body, leagueSchema);
   if(result.error == null) {
@@ -48,7 +50,8 @@ router.post('/create',async (req, res, next) => {
         res.status(409);
         next(error);
       } catch(e) {
-          await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw, win);
+          await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw, 
+            win, games);
           res.json(req.body);
       }
     })
