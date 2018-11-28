@@ -15,7 +15,7 @@ const leagueSchema = joi.object().keys({
   Sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
   maxTeams: joi.number().positive().required(),
   loss: joi.number().min(0).required(),
-  draw: joi.number().positive().required(),
+  draw: joi.number().min(0).required(),
   win: joi.number().positive().required()
 });
 

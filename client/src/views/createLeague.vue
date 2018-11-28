@@ -2,7 +2,11 @@
 <div home>
 <div class="jumbotron">
   <div class="text-center">
-    <h1>Create Legue</h1>
+    <h1>Create League</h1>
+  </div>
+  <div class="text-center">
+    <p>Enter in the details for the new league, including the; name, sport,
+       no. of teams and how points allocated </p>
   </div>
   <div v-if="creating" class="text-center">
     <img src="../assets/loading_ring.svg"/>
@@ -76,7 +80,7 @@ const schema = joi.object().keys({
   admin: joi.required(),
   maxTeams: joi.number().positive().required(),
   loss: joi.number().min(0).required(),
-  draw: joi.number().positive().required(),
+  draw: joi.number().min(0).required(),
   win: joi.number().positive().required(),
 });
 
@@ -170,7 +174,6 @@ export default {
       if (result.error === null) {
         return true;
       }
-      console.log(result.error);
       if (result.error.message.includes('leagueName')) {
         this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
       }
@@ -179,15 +182,6 @@ export default {
       }
       if (result.error.message.includes('maxTeams')) {
         this.errorMessage = 'You must enter a maximum number of teams allowed in the league.';
-      }
-      if (result.error.message.includes('loss')) {
-        this.errorMessage = 'You must number of points scored for a loss';
-      }
-      if (result.error.message.includes('draw')) {
-        this.errorMessage = 'You must number of points scored for a draw';
-      }
-      if (result.error.message.includes('win')) {
-        this.errorMessage = 'You must number of points scored for a win';
       }
       if(this.loss > this.win) {
         this.MoreThanWin = 'You will award a loss more points than a win';
