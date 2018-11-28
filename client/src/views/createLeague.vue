@@ -110,7 +110,7 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-        }).then(() => { // if no errors redirect to login page
+        }).then(() => { // if no errors redirect to dashboard
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.creating = false;
             this.$router.push('/dashboard');
@@ -121,6 +121,7 @@ export default {
         });
       }
     },
+    // check if inputted league is valid
     validLeague() {
       const result = joi.validate(this.league, schema);
       if (result.error === null) {
