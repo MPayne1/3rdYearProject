@@ -47,7 +47,11 @@
              id="games" placeholder="No. of times" required>
          </div>
        </div>
-       <div class="form-row">
+         <hr class="my-4">
+       <div class="text-center">
+           <h5 for="points">How will points be allocated</h5>
+       </div>
+       <div id="points" class="form-row">
          <div class="form-group col-md-4">
            <label for="loss">Points for a loss</label>
            <input v-model.number="league.loss" type="text" class="form-control"
@@ -64,6 +68,27 @@
              id="win" placeholder="Points for a win" required>
          </div>
         </div>
+          <hr class="my-4">
+          <div class="text-center">
+              <h5 for="location">Where league games will be played</h5>
+          </div>
+        <div id="location" class="form-row">
+          <div class="form-group col-md-4">
+            <label for="city">City/Town</label>
+            <input v-model.number="league.city" type="text" class="form-control"
+              id="city" placeholder="City" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="county">State/County</label>
+            <input v-model.number="league.county" type="text" class="form-control"
+              id="county" placeholder="State/County" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="country">Country</label>
+            <input v-model.number="league.country" type="text" class="form-control"
+              id="country" placeholder="Country" required>
+          </div>
+         </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary btn-lg">Create League</button>
       </div>
@@ -86,6 +111,9 @@ const schema = joi.object().keys({
   loss: joi.number().min(0).required(),
   draw: joi.number().min(0).required(),
   win: joi.number().positive().required(),
+  city: joi.string().min(2).max(30).required(),
+  county: joi.string().min(2).max(30).required(),
+  country: joi.string().min(2).max(30).required(),
   games: joi.number().positive().required(),
 });
 
@@ -103,6 +131,9 @@ export default {
       draw: '',
       loss: '',
       win: '',
+      city: '',
+      county: '',
+      country: '',
       games: '',
     },
 
@@ -145,6 +176,9 @@ export default {
           loss: this.league.loss,
           draw: this.league.draw,
           win: this.league.win,
+          city: this.league.city,
+          county: this.league.county,
+          country: this.league.country,
           games: this.league.games,
         };
         // send the request to the backend
@@ -192,7 +226,16 @@ export default {
         this.errorMessage = 'You must enter a maximum number of teams allowed in the league.';
       }
       if(result.error.message.includes('games')) {
-        this.error.message = 'You must enter a number of games to play each team per season';
+        this.errorMessage = 'You must enter a number of games to play each team per season';
+      }
+      if(result.error.message.includes('city')) {
+        this.errorMessage = 'City name can only contain letters';
+      }
+      if(result.error.message.includes('county')) {
+        this.errorMessage = 'State/County name can only contain letters';
+      }
+      if(result.error.message.includes('country')) {
+        this.errorMessage = 'Country name can only contain letters';
       }
       if(this.loss > this.win) {
         this.MoreThanWin = 'You will award a loss more points than a win';
