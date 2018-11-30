@@ -19,13 +19,24 @@ Sprint Backlog
   [x] league admin
 
 []create team
-  [] create team form
-  [] add team to db
+  [x] backend
+    [x] add team to db
+    [x]validate inputs
+    [x] team admin (captain)
+    [x] no duplicate teamnames
+  []frontend
+    [] first choose which sport play and league want to join
+      [] create team form
+      [] validate form
+      [] send req to backend
+      [] redirect to team homepage
+
+
   [] add team homepage
     []diplay team info
   [] add players
   [] join league
-  [] team admin (captain)
+
 
 [x] remove flatmap-stream as was found to be malicous
 [] populate league dropdown with all leagues the user is in
