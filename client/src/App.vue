@@ -14,9 +14,15 @@
           <li class="nav-item">
             <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard</router-link>
           </li>
-          <li class="nav-item">
-                <router-link class="nav-link" :to="{name: 'createLeague'}">
-                Leagues</router-link>
+          <li class="nav-item dropdown show"  :class="{'open': open}">
+            <a class="nav-link dropdown-toggle" @click="open = !open"
+            role="button" aria-haspopup="true" aria-expanded="false">League</a>
+              <div class="dropdown-menu show" v-if="open" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
+                  <a class="dropdown-item" href="#" @click="open = !open">Something else here</a>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#/create" @click="open = !open">Create League</a>
+
+              </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Teams</a>
@@ -34,6 +40,14 @@
   </div>
 </template>
 
+<script>
+export default {
+  data: () => ({
+    open: false,
+  }),
+};
+
+</script>
 
 <style>
 
