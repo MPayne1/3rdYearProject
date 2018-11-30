@@ -17,6 +17,9 @@ const leagueSchema = joi.object().keys({
   loss: joi.number().min(0).required(),
   draw: joi.number().min(0).required(),
   win: joi.number().positive().required(),
+  city: joi.string().min(2).max(30).required(),
+  county: joi.string().min(2).max(30).required(),
+  country: joi.string().min(2).max(30).required(),
   games: joi.number().positive().required()
 });
 
@@ -39,6 +42,9 @@ router.post('/create',async (req, res, next) => {
   var draw = req.body.draw;
   var win = req.body.win;
   var games = req.body.games;
+  var city = req.body.city;
+  var county = req.body.county;
+  var country = req.body.country;
 
   const result = joi.validate(req.body, leagueSchema);
   if(result.error == null) {
@@ -50,8 +56,8 @@ router.post('/create',async (req, res, next) => {
         res.status(409);
         next(error);
       } catch(e) {
-          await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw, 
-            win, games);
+          await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw,
+            win, city, county, country, games);
           res.json(req.body);
       }
     })

@@ -1,41 +1,41 @@
 Sprint Backlog
-[x]UI designs
-  [x]general style
+[x] UI designs
+  [x] general style
 
-[]attribute loading spinner to loading.io
+[] attribute loading spinner to loading.io
 
-[]create league
-  [x]frontend
+[] create league
+  [x] frontend
     [x] create league form
-      [x]validate form
-  [x]backend
-    [x]must be logged in to access /league route
-    [x]validate form
+      [x] validate form
+  [x] backend
+    [x] must be logged in to access /league route
+    [x] validate form
       [x]check duplicate Name
       [x] add sport
     [x] add league to db
   [] add league homepage
     [] display league info
-  [x]league admin
+  [x] league admin
 
 []create team
-  [] create tean form
+  [] create team form
   [] add team to db
   [] add team homepage
     []diplay team info
   [] add players
   [] join league
-  []team admin (captain)
+  [] team admin (captain)
 
-[x]remove flatmap-stream as was found to be malicous
+[x] remove flatmap-stream as was found to be malicous
+[] populate league dropdown with all leagues the user is in
+[] Database
+  [] Schema
+    [] players stats
+    [] team stats
+  [] Normalise
+    [] functional dependencies
+    [] 3nf/bcnf
 
-[]Database
-  []Schema
-    []players stats
-    []team stats
-  []Normalise
-    []functional dependencies
-    []3nf/bcnf
-
-[]unit test everything
-  []use mocha and chai
+[] unit test everything
+  [] use mocha and chai

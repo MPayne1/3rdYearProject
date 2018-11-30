@@ -5,8 +5,7 @@
     <h1>Create League</h1>
   </div>
   <div class="text-center">
-    <p>Enter in the details for the new league, including the; name, sport,
-       no. of teams and how points allocated </p>
+    <p>Enter in the details for the new league, take care as these can't be changed once the league is created.</p>
   </div>
   <div v-if="creating" class="text-center">
     <img src="../assets/loading_ring.svg"/>
