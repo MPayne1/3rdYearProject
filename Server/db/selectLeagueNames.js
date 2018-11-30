@@ -8,7 +8,7 @@ const dbCon  = require('./connection.js');
 */
 var selectLeagueNames  = async function(name, callback) {
   var res;
-    var sql = `SELECT LeagueName FROM League WHERE LeagueName =  + ${mysql.escape(name)}`;
+    var sql = `SELECT LeagueName FROM League WHERE LeagueName = ${mysql.escape(name)}`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;

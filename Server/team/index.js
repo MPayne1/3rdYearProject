@@ -48,7 +48,6 @@ router.post('/create', async(req, res, next) => {
 });
 
 /*
-
 // handle create league request
 router.post('/create',async (req, res, next) => {
   console.log(req.body.leagueName)
