@@ -7,7 +7,7 @@ const router = express.Router();
 const joi = require('joi');
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
-
+const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -22,6 +22,15 @@ const leagueSchema = joi.object().keys({
   country: joi.string().min(2).max(30).required(),
   games: joi.number().positive().required()
 });
+
+
+const findLeagueSchema  = joi.object().keys({
+  city: joi.string().min(2).max(30).required(),
+  county: joi.string().min(2).max(30).required(),
+  country: joi.string().min(2).max(30).required(),
+  sport: joi.string().min(2).max(30).required()
+});
+
 
 // all paths are prepended with /league
 router.get('/', (req, res) => {
@@ -66,5 +75,39 @@ router.post('/create',async (req, res, next) => {
     next(result.error); // forwards error to errorHandler
   }
 });
+
+// find all league for a sport, city, county, country
+router.get('/find', async (req, res, next) => {
+  var city = req.body.city;
+  var county = req.body.county;
+  var country = req.body.country;
+  var sport = req.body.sport;
+
+  const result = joi.validate(req.body, findLeagueSchema);
+  if(result.error == null) {
+    var league = await dbSelectLeagues(city, county, country, sport,  async (err, result) => {
+      if(err) next(err);
+      try{
+        if(result[0] != null) {
+            res.json(result);
+        } else {
+          res.json({
+            mesage: "no leagues found"
+          })
+        }
+
+      } catch(e) {
+        res.json({
+          message: "no leagues found"
+        });
+      }
+    })
+  } else{
+    next(result.error);
+  }
+});
+
+
+
 
 module.exports = router;

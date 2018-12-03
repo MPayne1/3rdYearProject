@@ -38,7 +38,7 @@ Sprint Backlog
   [] join league
 
 
-[x] remove flatmap-stream as was found to be malicous
+[x] remove flatmap-stream as was found to be malicous, didn't need anyway
 [] populate league dropdown with all leagues the user is in
 [] Database
   [] Schema
