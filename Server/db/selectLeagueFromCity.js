@@ -19,3 +19,13 @@ var selectLeagues  = async function(city, county, country, sport, callback) {
 }
 
 module.exports = selectLeagues;
+
+/*
+
+(SELECT LeagueName, Sport FROM League WHERE city = "Swansea" and county = "county"  and country = "country" and Sport = "sport") ;
+
+Select leagueName, foundLeagues.sport from
+(SELECT LeagueName, Sport, leagueID, maxTeams FROM League WHERE city = "Swansea" and county = "county"  and country = "country" and Sport = "sport") as foundLeagues,
+team where team.LeagueId = foundLeagues.LeagueID and count(teamName)> foundLeagues.maxTeams;
+
+*/
