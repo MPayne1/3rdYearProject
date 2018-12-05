@@ -5,6 +5,7 @@ import Signup from './views/Signup.vue';
 import Login from './views/Login.vue';
 import Dashboard from './views/Dashboard.vue';
 import createLeague from './views/createLeague.vue';
+import findLeague from './views/findLeague.vue';
 
 Vue.use(Router);
 
@@ -22,7 +23,7 @@ function isLoggedIn(to, from, next) {
   if (localStorage.token) {
     next();
   } else {
-    next('/login');
+    next('/auth/login');
   }
 }
 
@@ -34,13 +35,13 @@ export default new Router({
       component: Home,
     },
     {
-      path: '/Signup',
+      path: '/auth/signup',
       name: 'signup',
       component: Signup,
       beforeEnter: loggedInRedirectDashboard,
     },
     {
-      path: '/Login',
+      path: '/auth/login',
       name: 'login',
       component: Login,
       beforeEnter: loggedInRedirectDashboard,
@@ -52,9 +53,15 @@ export default new Router({
       beforeEnter: isLoggedIn,
     },
     {
-      path: '/create',
+      path: '/league/create',
       name: 'createLeague',
       component: createLeague,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/league/find',
+      name: 'findLeague',
+      component: findLeague,
       beforeEnter: isLoggedIn,
     },
   ],

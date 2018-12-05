@@ -18,9 +18,9 @@
             <a class="nav-link dropdown-toggle" @click="open = !open"
             role="button" aria-haspopup="true" aria-expanded="false">League</a>
               <div class="dropdown-menu show" v-if="open" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
-                  <a class="dropdown-item" href="#" @click="open = !open">Something else here</a>
+                  <a class="dropdown-item" href="#/league/find" @click="open = !open">Find a league to join</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#/create" @click="open = !open">Create League</a>
+                  <a class="dropdown-item" href="#/league/create" @click="open = !open">Create League</a>
 
               </div>
           </li>

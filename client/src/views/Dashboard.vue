@@ -29,14 +29,14 @@ export default {
           console.log(result);
         } else {
           localStorage.removeItem('token');
-          this.$router.push('/login');
+          this.$router.push('/auth/login');
         }
       });
   },
   methods: {
     logout() {
       localStorage.removeItem('token');
-      this.$router.push('/login');
+      this.$router.push('/auth/login');
     },
   },
 };
