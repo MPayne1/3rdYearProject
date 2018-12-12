@@ -6,6 +6,7 @@ import Login from './views/Login.vue';
 import Dashboard from './views/Dashboard.vue';
 import createLeague from './views/createLeague.vue';
 import findLeague from './views/findLeague.vue';
+import createTeam from './views/createTeam.vue';
 
 Vue.use(Router);
 
@@ -62,6 +63,12 @@ export default new Router({
       path: '/league/find',
       name: 'findLeague',
       component: findLeague,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/team/create/:leagueID',
+      name: 'createTeam',
+      component: createTeam,
       beforeEnter: isLoggedIn,
     },
   ],

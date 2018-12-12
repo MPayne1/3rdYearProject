@@ -40,7 +40,9 @@
   </div>
   <div class="jumbotron" v-if="foundLeagues">
     <h4>League Name</h4>
-    <a v-for="league in Leagues">{{ league.LeagueName }}</a>
+    <router-link v-for="league in Leagues" :to="{ name: 'createTeam', params: {leagueID: league.leagueID} }">
+      {{ league.LeagueName }}</router-link>
+    <!--  <a href=`team/create/?=${league.LeagueName}` v-for="league in Leagues">{{ league.LeagueName }}</a> -->
   </div>
   </div>
 </template>
@@ -70,6 +72,7 @@ export default {
     Leagues: [{
       LeagueName: '',
       Sport: '',
+      LeagueID: '',
     }],
     foundLeagues: false,
   }),
