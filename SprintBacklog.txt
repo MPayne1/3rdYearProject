@@ -30,6 +30,9 @@ Sprint Backlog
       [x] create team form
       [x] validate form
       [x] send req to backend
+      [x]add league id and sport as url params/query
+        [x]error checking for url params/query
+        [x]redirect if not there
       [] show only leagues with space
       [] redirect to team homepage
 
