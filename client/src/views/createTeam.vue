@@ -64,6 +64,12 @@ export default {
   },
   mounted() {
     this.team.league = this.$route.params.leagueID;
+    if(this.$route.query.Sport) {
+      this.team.sport = this.$route.query.Sport;
+    } else{
+      this.$router.push('/league/find');
+    }
+
     // get the authorization header
     fetch(API_URL, {
       headers: {
@@ -81,13 +87,14 @@ export default {
           this.$router.push('/auth/login');
         }
       });
+
   },
   methods: {
     create() {
       if (this.validLeague()) {
         const body = {
           TeamName: this.team.name,
-          Sport: 'Football',//this.team.sport,
+          Sport: this.team.sport,
           TeamAdmin: this.user.UserID,
           LeagueID: this.team.league,
         };
@@ -130,7 +137,7 @@ export default {
         this.errorMessage = 'Team name is invalid, must be between 2 and 20 characters and not include any symbols';
       }
       if (result.error.message.includes('sport')) {
-        this.errorMessage = 'Sport is invalid please select a sport';
+        this.errorMessage = 'Please find a league to join first';
       }
       return false;
     },

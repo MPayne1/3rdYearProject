@@ -40,7 +40,8 @@
   </div>
   <div class="jumbotron" v-if="foundLeagues">
     <h4>League Name</h4>
-    <router-link v-for="league in Leagues" :to="{ name: 'createTeam', params: {leagueID: league.leagueID} }">
+    <router-link v-for="league in Leagues" :to="{ name: 'createTeam',
+      params: {leagueID: league.leagueID}, query:{Sport: league.Sport}}">
       {{ league.LeagueName }}</router-link>
     <!--  <a href=`team/create/?=${league.LeagueName}` v-for="league in Leagues">{{ league.LeagueName }}</a> -->
   </div>
@@ -117,7 +118,7 @@ export default {
             this.foundLeagues= true;
             this.Leagues = result;
           }, 700);
-// show leagues here
+         // show leagues here
         }).catch((error) => { // if any errors catch them any display error message
           this.loggingIn = false;
           this.errorMessage = error.message;
