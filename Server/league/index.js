@@ -77,7 +77,7 @@ router.post('/create',async (req, res, next) => {
 });
 
 // find all league for a sport, city, county, country
-router.get('/find', async (req, res, next) => {
+router.post('/find', async (req, res, next) => {
   var city = req.body.city;
   var county = req.body.county;
   var country = req.body.country;
