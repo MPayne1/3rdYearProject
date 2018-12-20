@@ -29,22 +29,22 @@ Product Backlog
     []functional dependencies
     []3nf/bcnf
 
-[]create league
-  [] create league form
-  [] add league to db
+[x]create league
+  [x] create league form
+  [x] add league to db
   [] add league homepage
     [] displaye league info
   []add players
   [] join league
-  []league admin
-[]create team
-  [] create tean form
-  [] add team to db
+  [x]league admin
+[x]create team
+  [x] create tean form
+  [x] add team to db
   [] add team homepage
     []diplay team info
   [] add players
   [] join league
-  []team admin (captain)
+  [x]team admin (captain)
 
 [] db on upate cascade
 [] db on delete cascade

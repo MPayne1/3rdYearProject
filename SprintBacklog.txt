@@ -24,7 +24,8 @@ Sprint Backlog
     [x]validate inputs
     [x] team admin (captain)
     [x] no duplicate teamnames
-    [] check space in league
+    [x] check space in league
+    [x] only return leagues with space
   []frontend
     [x] first choose which sport play and league want to join
       [x] create team form
@@ -33,7 +34,7 @@ Sprint Backlog
       [x]add league id and sport as url params/query
         [x]error checking for url params/query
         [x]redirect if not there
-      [] show only leagues with space
+      [x] show only leagues with space
       [] redirect to team homepage
 
 
