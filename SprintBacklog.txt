@@ -41,6 +41,9 @@ Sprint Backlog
   [] add team homepage
     []diplay team info
   [] add players
+    [] Backend
+      [x] add player by username and teamID 
+    [] frontend
   [] join league
 
 

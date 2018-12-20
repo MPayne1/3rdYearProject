@@ -12,8 +12,9 @@ var selectUser  = async function(username, callback) {
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;
-        callback(null, result);
+          callback(null, res);
     });
+
 }
 
 module.exports = selectUser;

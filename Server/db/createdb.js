@@ -50,11 +50,10 @@ async function createTeamTable(err) {
 // create Plays for Table
 async function createPlaysForTable(err) {
 	if(err) throw err;
-	var sql = "CREATE TABLE PlaysFor(TeamID int, UserID int, LeagueID int, " +
-	"PRIMARY KEY (TeamID, UserID, LeagueID), " +
+	var sql = "CREATE TABLE PlaysFor(TeamID int, UserID int, " +
+	"PRIMARY KEY (TeamID, UserID), " +
 	"FOREIGN KEY (UserID) REFERENCES Users(UserID), " +
-	"FOREIGN KEY (TeamID) REFERENCES Team(TeamID), " +
-	"FOREIGN KEY (LeagueID) REFERENCES League(LeagueID));";
+	"FOREIGN KEY (TeamID) REFERENCES Team(TeamID));";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
 		console.log("PlaysFor Table Created");
@@ -66,4 +65,4 @@ async function createPlaysForTable(err) {
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
-// createPlaysForTable();
+createPlaysForTable();

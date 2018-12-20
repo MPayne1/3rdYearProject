@@ -7,12 +7,19 @@ const router = express.Router();
 const joi = require('joi');
 const dbSelectTeamNames = require('../db/selectTeamNames.js');
 const dbInsert = require('../db/createTeam.js');
+const dbSelectPlayer = require('../db/selectPlayers.js');
+const dbInsertPlayer = require('../db/addPlayers.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
   TeamAdmin: joi.number().positive().required(),
   Sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
   LeagueID: joi.number().positive().required(),
+});
+
+const addplayerSchema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20).required(),
+  teamID: joi.number().positive().required(),
 });
 
 // all paths are prepended with /team
@@ -46,5 +53,30 @@ router.post('/create', async(req, res, next) => {
     })
   }
 });
+
+
+// handle add player
+router.post('/addPlayer', async (req, res, next) => {
+  var username = req.body.username;
+  var teamID = req.body.teamID;
+
+  const result = joi.validate(req.body, addplayerSchema);
+  if(result.error == null) {
+    var player = await dbSelectPlayer(username, teamID, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].userId;
+        var error = new Error("User is already in the team");
+        res.status(422);
+        next(error);
+      } catch(e) {
+        await dbInsertPlayer(username, teamID);
+        res.json(req.body);
+      }
+    });
+  }
+});
+
+
 
 module.exports = router;
