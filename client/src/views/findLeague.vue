@@ -40,6 +40,7 @@
   </div>
   <div class="jumbotron" v-if="foundLeagues">
     <h4>League Name</h4>
+    <h6>{{ errorMessage }}</h6>
     <router-link v-for="league in Leagues" :to="{ name: 'createTeam',
       params: {leagueID: league.leagueID}, query:{Sport: league.Sport}}">
       {{ league.LeagueName }}</router-link>
@@ -54,10 +55,10 @@ import joi from 'joi';
 const FIND_URL = 'http://localhost:3000/league/find';
 
 const schema = joi.object().keys({
-  city: joi.string().min(2).max(30).required(),
-  county: joi.string().min(2).max(30).required(),
-  country: joi.string().min(2).max(30).required(),
-  sport: joi.string().min(2).max(30).required(),
+  city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  county: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
+  country: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
+  sport: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
 });
 
 export default {
@@ -109,18 +110,20 @@ export default {
           }
           // handle any errors the server returns
           return response.json().then((error) => {
+            this.foundLeagues = false;
+            this.errorMessage = error.message;
             throw new Error(error.message);
           });
         }).then((result) => {
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.finding = false;
             console.log(result);
-            this.foundLeagues= true;
+            this.foundLeagues = true;
             this.Leagues = result;
           }, 700);
-         // show leagues here
         }).catch((error) => { // if any errors catch them any display error message
-          this.loggingIn = false;
+          this.finding = false;
+          this.foundLeagues = false;
           this.errorMessage = error.message;
         });
       }
@@ -130,17 +133,17 @@ export default {
       if (result.error === null) {
         return true;
       }
+      if (result.error.message.includes('country')) {
+        this.errorMessage = 'Please enter a valid country';
+      }
       if (result.error.message.includes('city')) {
-        this.errorMessage = 'Please select a city';
+        this.errorMessage = 'Please enter a valid city';
       }
       if (result.error.message.includes('county')) {
-        this.errorMessage = 'Please select a state/county';
-      }
-      if (result.error.message.includes('country')) {
-        this.errorMessage = 'Please select a country';
+        this.errorMessage = 'Please enter a valid state/county';
       }
       if (result.error.message.includes('sport')) {
-        this.errorMessage = 'Please select a sport';
+        this.errorMessage = 'Please enter a valid sport';
       }
       return false;
     },

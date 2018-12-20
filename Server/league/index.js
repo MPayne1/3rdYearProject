@@ -25,10 +25,10 @@ const leagueSchema = joi.object().keys({
 
 
 const findLeagueSchema  = joi.object().keys({
-  city: joi.string().min(2).max(30).required(),
-  county: joi.string().min(2).max(30).required(),
-  country: joi.string().min(2).max(30).required(),
-  sport: joi.string().min(2).max(30).required()
+  city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  county: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
+  country: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
+  sport: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required()
 });
 
 
@@ -91,23 +91,20 @@ router.post('/find', async (req, res, next) => {
         if(result[0] != null) {
             res.json(result);
         } else {
-          res.json({
-            mesage: "no leagues found"
-          })
+          res.status(422);
+          var error = new Error('No leagues found');
+          next(error);
         }
 
       } catch(e) {
-        res.json({
-          message: "no leagues found"
-        });
+        res.status(422);
+        var error = new Error('No leagues found');
+        next(error);
       }
     })
   } else{
     next(result.error);
   }
 });
-
-
-
 
 module.exports = router;

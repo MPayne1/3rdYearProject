@@ -46,7 +46,8 @@ Product Backlog
   [] join league
   []team admin (captain)
 
-
+[] db on upate cascade
+[] db on delete cascade
 
 []join team
 
