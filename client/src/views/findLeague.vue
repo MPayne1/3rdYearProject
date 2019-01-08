@@ -70,6 +70,7 @@ export default {
   data: () => ({
     finding: false,
     errorMessage: '',
+    user: {},
     league: {
       city: '',
       county: '',
@@ -90,6 +91,24 @@ export default {
       },
       deep: true,
     },
+  },
+  mounted() {
+    // get the authorization header
+    fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    }).then(res => res.json())
+      .then((result) => {
+        // if there's no user object in the response then remove the token
+        if (result.user) {
+          this.user = result.user;
+          console.log(result);
+        } else {
+          localStorage.removeItem('token');
+          this.$router.push('/auth/login');
+        }
+      });
   },
   methods: {
     find() {
