@@ -36,6 +36,8 @@ Sprint Backlog
       [] only allow if team captain
   [] join league
 
+[] update webpack-dev-server as was found to have a vulnerability
+
 
 [] populate league dropdown with all leagues the user is in
 [] Database
