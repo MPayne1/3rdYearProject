@@ -23,8 +23,15 @@
                   <a class="dropdown-item" href="#/league/create" @click="open = !open">Create League</a>
               </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Teams</a>
+
+          <li class="nav-item dropdown show" :class="{'teamOpen': teamOpen}">
+            <a class="nav-link dropdown-toggle" @click="teamOpen = !teamOpen"
+            role="button" aria-haspopup="true" aria-expanded="false">Teams</a>
+            <div class="dropdown-menu show" v-if="teamOpen" v-model="teams"
+              x-placement="bottom-start" style="position: absolute;
+              will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
+              <a href="#" v-for="team in teams" class="dropdown-item"@click="teamOpen = !teamOpen" >{{team.teamName}}</a>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Profile</a>
@@ -41,9 +48,12 @@
 
 <script>
 const API_URL = 'http://localhost:3000/';
+const TEAMS_URL = 'http://localhost:3000/team/playsfor';
 export default {
   data: () => ({
     open: false,
+    teamOpen: false,
+    teams: [],
     user: {},
   }),
   mounted() {
@@ -61,7 +71,26 @@ export default {
         } else {
           localStorage.removeItem('token');
         }
-      });
+      }).then(res => {
+    // get teams user playsFor
+    var body = {
+      userID: this.user.UserID,
+    }
+    fetch(TEAMS_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+      body: JSON.stringify(body),
+    }).then(res => res.json())
+      .then((result) => {
+        if(result){
+          this.teams = result.result;
+          console.log(this.teams);
+        }
+      })
+    });
   },
 };
 

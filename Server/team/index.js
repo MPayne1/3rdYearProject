@@ -10,6 +10,7 @@ const dbInsert = require('../db/createTeam.js');
 const dbSelectPlayer = require('../db/selectPlayers.js');
 const dbInsertPlayer = require('../db/addPlayers.js');
 const dbSelectCaptain = require('../db/selectTeamCaptain.js');
+const dbSelectPlaysFor = require('../db/selectPlaysFor.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
@@ -30,6 +31,19 @@ router.get('/', (req, res) => {
     message: 'team router works'
   });
 });
+
+// handle request for teams a user playsfor
+router.post('/playsfor', async (req, res) => {
+  var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
+    try {
+      result[0].teamName;
+      res.json({result});
+      console.log(result);
+    } catch(e) {
+      res.json({message: "no teams"});
+    }
+  })
+})
 
 
 // handle create team request
