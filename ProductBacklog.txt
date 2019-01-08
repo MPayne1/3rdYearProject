@@ -35,7 +35,7 @@ Product Backlog
   [] add league homepage
     [] displaye league info
   []add players
-  [] join league
+  [x] join league
   [x]league admin
 [x]create team
   [x] create tean form
@@ -43,15 +43,17 @@ Product Backlog
   [] add team homepage
     []diplay team info
   [] add players
-  [] join league
+  [x] join league
   [x]team admin (captain)
 
 [] db on upate cascade
 [] db on delete cascade
 
+[]join league
+
 []join team
 
-[]join league
+
 
 []add new fixture
   [] league admin can automatically generate fixture list for the league

@@ -21,7 +21,6 @@
                   <a class="dropdown-item" href="#/league/find" @click="open = !open">Find a league to join</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#/league/create" @click="open = !open">Create League</a>
-
               </div>
           </li>
           <li class="nav-item">
@@ -41,10 +40,29 @@
 </template>
 
 <script>
+const API_URL = 'http://localhost:3000/';
 export default {
   data: () => ({
     open: false,
+    user: {},
   }),
+  mounted() {
+    // get the authorization header
+    fetch(API_URL, {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    }).then(res => res.json())
+      .then((result) => {
+        // if there's no user object in the response then remove the token
+        if (result.user) {
+          this.user = result.user;
+          console.log(result);
+        } else {
+          localStorage.removeItem('token');
+        }
+      });
+  },
 };
 
 </script>
