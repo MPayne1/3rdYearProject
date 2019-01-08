@@ -9,6 +9,7 @@ const dbSelectTeamNames = require('../db/selectTeamNames.js');
 const dbInsert = require('../db/createTeam.js');
 const dbSelectPlayer = require('../db/selectPlayers.js');
 const dbInsertPlayer = require('../db/addPlayers.js');
+const dbSelectCaptain = require('../db/selectTeamCaptain.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
@@ -20,6 +21,7 @@ const teamSchema = joi.object().keys({
 const addplayerSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   teamID: joi.number().positive().required(),
+  user: joi.number().positive().required(),
 });
 
 // all paths are prepended with /team
@@ -51,6 +53,10 @@ router.post('/create', async(req, res, next) => {
         res.json(req.body);
       }
     })
+  } else {
+    res.status(409);
+    var error = new Error("invlaid inputs");
+    next(error);
   }
 });
 
@@ -58,12 +64,27 @@ router.post('/create', async(req, res, next) => {
 // handle add player
 router.post('/addPlayer', async (req, res, next) => {
   var username = req.body.username;
+  var user = req.body.user;
   var teamID = req.body.teamID;
 
   const result = joi.validate(req.body, addplayerSchema);
+
   if(result.error == null) {
+    // check user adding new player is captain
+    var captain = await dbSelectCaptain(user, teamID, async function(er, result2) {
+      if(er) next(er);
+      try {
+        result2[0].TeamAdmin;
+      } catch(e) {
+        var error = new Error("Only the teamAdmin/captain can add new players");
+        next(error);
+        res.status(409);
+      }
+    });
+
     var player = await dbSelectPlayer(username, teamID, async function(err, result){
       if(err) next(err);
+      // if they are then add the new player, if not already in team
       try{
         result[0].userId;
         var error = new Error("User is already in the team");
@@ -74,6 +95,10 @@ router.post('/addPlayer', async (req, res, next) => {
         res.json(req.body);
       }
     });
+  } else {
+    res.status(409);
+    var error = new Error("invlaid inputs");
+    next(error);
   }
 });
 

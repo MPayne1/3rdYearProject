@@ -26,6 +26,7 @@ Sprint Backlog
     [x] no duplicate teamnames
     [x] check space in league
     [x] only return leagues with space
+    [x] add teamadmin to playsfor as well
   []frontend
     [x] first choose which sport play and league want to join
       [x] create team form
@@ -42,7 +43,8 @@ Sprint Backlog
     []diplay team info
   [] add players
     [] Backend
-      [x] add player by username and teamID 
+      [] add player by username and teamID
+      []check person adding player is captain
     [] frontend
   [] join league
 

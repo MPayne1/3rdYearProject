@@ -28,10 +28,15 @@
             placeholder="Enter City" required>
         </div>
         <div class="form-group col-md-3">
-          <label for="sport">Sport</label>
-          <input v-model="league.sport" type="text" class="form-control" id="sport"
-            placeholder="Enter Sport" required>
-        </div>
+         <label for="sport">Select Sport</label>
+         <select v-model="league.sport" class="form-control" placeholder="Please Choose a Sport" id ="sport">
+           <option disabled value="">Please Choose a Sport</option>
+           <option value="Football">Football</option>
+           <option value="Rugby">Rugby</option>
+           <option value="Tennis">Tennis</option>
+           <option value="Basketball">Basketball</option>
+         </select>
+         </div>
       </div>
       <div class="text-center">
         <button type="submit" class="btn btn-primary btn-lg">Find League</button>
@@ -56,9 +61,9 @@ const FIND_URL = 'http://localhost:3000/league/find';
 
 const schema = joi.object().keys({
   city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
-  county: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
-  country: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
-  sport: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
+  county: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  country: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
 });
 
 export default {

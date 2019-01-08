@@ -26,9 +26,9 @@ const leagueSchema = joi.object().keys({
 
 const findLeagueSchema  = joi.object().keys({
   city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
-  county: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
-  country: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required(),
-  sport: joi.string().regex(/^[a-zA-Z ]{2,30}$/).required()
+  county: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  country: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
+  sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required()
 });
 
 
