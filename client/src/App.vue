@@ -104,12 +104,6 @@ export default {
 </script>
 
 <style>
-a:not(href):not(tabindex):hover, a:not(href):not(tabindex)
-, a:not(href):not(tabindex):focus, .dropdown-item:hover, .dropdown-item:focus {
-  background-color: #2C3E50;
-  color: #fff;
-  text-decoration: none;
-}
 
 #teamInfo:hover{
   background-color: #2C3E50;

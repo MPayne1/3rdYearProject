@@ -5,10 +5,15 @@
       <h4>{{teamName}}</h4>
     </div>
 
-    <div class="jumbotron">
-      <div class="">
-        <router-link v-for="player in players">
-          {{ player.username }}</router-link>
+    <div class="card text-white bg-secondary mb-3" style="max-width: 20rem;">
+      <div class="card-header">Players</div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
+          <router-link :to="{ name: 'playerInfo', params: {} }">
+            {{ player.username }}</router-link>
+        </li>
+      </ul>
+      <div class="card-footer">
         <button @click="AddPlayer()" class="btn btn-primary btn-lg"
           type="submit">Add a player</button>
       </div>
@@ -52,11 +57,32 @@ export default {
       });
 
     // get the players in the team
-    fetch(PLAYERS_URL, {
-
-    })
+    if(this.teamName) {
+      const body = {
+        teamName: this.teamName,
+      }
+      fetch(PLAYERS_URL, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+      .then((result) => {
+        if(result) {
+          this.players = result.result;
+          console.log(this.players);
+        }
+      })
+  }
   },
   methods: {
+    AddPlayer() {
+      if(this.teamName) {
+          this.$router.push({ path: '/team/addPlayer/', query:{teamName: this.teamName}});
+      }
+    },
   },
 };
 </script>
