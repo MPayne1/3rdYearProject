@@ -20,7 +20,7 @@
 
 <script>
 const API_URL = 'http://localhost:3000/';
-const PLAYERS_URL = 'http://localhost:3000/';
+const PLAYERS_URL = 'http://localhost:3000/team/allplayers';
 export default {
   data: () => ({
     user: {},

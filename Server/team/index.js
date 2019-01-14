@@ -27,7 +27,7 @@ const addplayerSchema = joi.object().keys({
 });
 
 const allPlayersSchema = joi.object().keys({
-  teamID: joi.number().positive().required(),
+  teamName: joi.string().min(2).max(20).required(),
 });
 
 const playsForSchema = joi.object().keys({
@@ -45,7 +45,7 @@ router.get('/', (req, res) => {
 router.post('/allplayers', async(req, res, next) => {
   const result  = joi.validate(req.body, allPlayersSchema);
   if(result.error == null) {
-    var players  = await dbSelectAllPlayers(req.body.teamID, async function(err, result){
+    var players  = await dbSelectAllPlayers(req.body.teamName, async function(err, result){
       if(err) next(err);
       try{
         result[0].username;
