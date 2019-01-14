@@ -24,13 +24,13 @@
               </div>
           </li>
 
-          <li class="nav-item dropdown show" :class="{'teamOpen': teamOpen}">
+          <li class="nav-item dropdown show" :class="{'open': open}">
             <a class="nav-link dropdown-toggle" @click="teamOpen = !teamOpen"
             role="button" aria-haspopup="true" aria-expanded="false">Teams</a>
             <div class="dropdown-menu show" v-if="teamOpen" v-model="teams"
               x-placement="bottom-start" style="position: absolute;
               will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
-              <a v-for="team in teams" v-on:click="teamPage(team.teamName)" class="dropdown-item"@click="teamOpen = !teamOpen" >{{team.teamName}}</a>
+              <a class="dropdown-item" id="teamInfo" v-for="team in teams" v-on:click="teamPage(team.teamName)" @click="teamOpen = !teamOpen" >{{team.teamName}}</a>
             </div>
           </li>
           <li class="nav-item">
@@ -104,5 +104,21 @@ export default {
 </script>
 
 <style>
+a:not(href):not(tabindex):hover, a:not(href):not(tabindex)
+, a:not(href):not(tabindex):focus, .dropdown-item:hover, .dropdown-item:focus {
+  background-color: #2C3E50;
+  color: #fff;
+  text-decoration: none;
+}
 
+#teamInfo:hover{
+  background-color: #2C3E50;
+  color: #fff;
+  text-decoration: none;
+}
+
+#teamInfo{
+  color: #7b8a8b;
+  text-decoration: none;
+}
 </style>
