@@ -38,6 +38,15 @@ router.get('/info', (req, res) => {
 });
 
 
+// handle reuest to get all players of a team
+router.post('/allplayers', async(req, res) => {
+  var players  = await dbSelectAllPlayers(req.body.teamID, async function(err, result){
+    
+  });
+});
+
+
+
 
 // handle request for teams a user playsfor
 router.post('/playsfor', async (req, res) => {
@@ -50,7 +59,7 @@ router.post('/playsfor', async (req, res) => {
       res.json({message: "no teams"});
     }
   })
-})
+});
 
 
 

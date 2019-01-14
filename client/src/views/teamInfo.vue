@@ -1,15 +1,30 @@
 <template>
-  <div class="jumbotron">
-    <h2>TeamInfo</h2>
-    <h4>{{teamName}}</h4>
+  <div class="home text-center">
+    <div class="jumbotron">
+      <h2>TeamInfo</h2>
+      <h4>{{teamName}}</h4>
+    </div>
+
+    <div class="jumbotron">
+      <div class="">
+        <router-link v-for="player in players">
+          {{ player.username }}</router-link>
+        <button @click="AddPlayer()" class="btn btn-primary btn-lg"
+          type="submit">Add a player</button>
+      </div>
+    </div>
+
   </div>
+
 </template>
 
 <script>
 const API_URL = 'http://localhost:3000/';
+const PLAYERS_URL = 'http://localhost:3000/';
 export default {
   data: () => ({
     user: {},
+    players: [],
     teamName: '',
   }),
   mounted() {
@@ -35,6 +50,11 @@ export default {
           this.$router.push('/auth/login');
         }
       });
+
+    // get the players in the team
+    fetch(PLAYERS_URL, {
+
+    })
   },
   methods: {
   },
