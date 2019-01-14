@@ -11,6 +11,7 @@ const dbSelectPlayer = require('../db/selectPlayers.js');
 const dbInsertPlayer = require('../db/addPlayers.js');
 const dbSelectCaptain = require('../db/selectTeamCaptain.js');
 const dbSelectPlaysFor = require('../db/selectPlaysFor.js');
+const dbSelectAllPlayers = require('../db/selectAllPlayers.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
@@ -25,6 +26,13 @@ const addplayerSchema = joi.object().keys({
   user: joi.number().positive().required(),
 });
 
+const allPlayersSchema = joi.object().keys({
+  teamID: joi.number().positive().required(),
+});
+
+const playsForSchema = joi.object().keys({
+  userID: joi.number().positive().required(),
+})
 // all paths are prepended with /team
 router.get('/', (req, res) => {
   res.json({
@@ -32,33 +40,48 @@ router.get('/', (req, res) => {
   });
 });
 
-// handle request for team info page
-router.get('/info', (req, res) => {
-
-});
-
 
 // handle reuest to get all players of a team
-router.post('/allplayers', async(req, res) => {
-  var players  = await dbSelectAllPlayers(req.body.teamID, async function(err, result){
-    
-  });
+router.post('/allplayers', async(req, res, next) => {
+  const result  = joi.validate(req.body, allPlayersSchema);
+  if(result.error == null) {
+    var players  = await dbSelectAllPlayers(req.body.teamID, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].username;
+        res.json({result});
+        console.log(result);
+      } catch(e) {
+        res.json({message: "There are no players in this team yet."});
+      }
+    });
+  } else{
+    invalidInput(res, next);
+  }
+
 });
 
 
 
 
 // handle request for teams a user playsfor
-router.post('/playsfor', async (req, res) => {
-  var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
-    try {
-      result[0].teamName;
-      res.json({result});
-      console.log(result);
-    } catch(e) {
-      res.json({message: "no teams"});
-    }
-  })
+router.post('/playsfor', async (req, res, next) => {
+  const result = joi.validate(req.body, playsForSchema);
+  if(result.error == null) {
+    var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
+      if(err) next(err);
+      try {
+        result[0].teamName;
+        res.json({result});
+        console.log(result);
+      } catch(e) {
+        res.json({message: "no teams"});
+      }
+    });
+  } else{
+    invalidInput(res, next);
+  }
+
 });
 
 
@@ -85,9 +108,7 @@ router.post('/create', async(req, res, next) => {
       }
     })
   } else {
-    res.status(409);
-    var error = new Error("invlaid inputs");
-    next(error);
+    invalidInput(res, next);
   }
 });
 
@@ -108,8 +129,8 @@ router.post('/addPlayer', async (req, res, next) => {
         result2[0].TeamAdmin;
       } catch(e) {
         var error = new Error("Only the teamAdmin/captain can add new players");
-        next(error);
         res.status(409);
+        next(error);
       }
     });
 
@@ -127,12 +148,14 @@ router.post('/addPlayer', async (req, res, next) => {
       }
     });
   } else {
-    res.status(409);
-    var error = new Error("invlaid inputs");
-    next(error);
+  invalidInput(res, next);
   }
 });
 
-
+function invalidInput(res, next) {
+  res.status(409);
+  var error = new Error("invlaid inputs");
+  next(error);
+}
 
 module.exports = router;
