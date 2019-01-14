@@ -72,24 +72,24 @@ export default {
           localStorage.removeItem('token');
         }
       }).then(res => {
-    // get teams user playsFor
-    var body = {
-      userID: this.user.UserID,
-    }
-    fetch(TEAMS_URL, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-      body: JSON.stringify(body),
-    }).then(res => res.json())
-      .then((result) => {
-        if(result){
-          this.teams = result.result;
-          console.log(this.teams);
+        // get teams user playsFor
+        var body = {
+          userID: this.user.UserID,
         }
-      })
+        fetch(TEAMS_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(body),
+        }).then(res => res.json())
+          .then((result) => {
+            if(result){
+              this.teams = result.result;
+              console.log(this.teams);
+            }
+          })
     });
   },
   methods: {

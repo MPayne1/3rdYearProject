@@ -12,12 +12,17 @@ const dbInsertPlayer = require('../db/addPlayers.js');
 const dbSelectCaptain = require('../db/selectTeamCaptain.js');
 const dbSelectPlaysFor = require('../db/selectPlaysFor.js');
 const dbSelectAllPlayers = require('../db/selectAllPlayers.js');
+const dbSelectTeamID = require('../db/selectTeamID.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
   TeamAdmin: joi.number().positive().required(),
   Sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
   LeagueID: joi.number().positive().required(),
+});
+
+const teamIDSchema = joi.object().keys({
+  teamName: joi.string().min(2).max(20).required(),
 });
 
 const addplayerSchema = joi.object().keys({
@@ -32,7 +37,8 @@ const allPlayersSchema = joi.object().keys({
 
 const playsForSchema = joi.object().keys({
   userID: joi.number().positive().required(),
-})
+});
+
 // all paths are prepended with /team
 router.get('/', (req, res) => {
   res.json({
@@ -58,7 +64,6 @@ router.post('/allplayers', async(req, res, next) => {
   } else{
     invalidInput(res, next);
   }
-
 });
 
 
@@ -151,6 +156,27 @@ router.post('/addPlayer', async (req, res, next) => {
   invalidInput(res, next);
   }
 });
+
+
+// handle reuest to get all players of a team
+router.post('/teamID', async(req, res, next) => {
+  const result  = joi.validate(req.body, teamIDSchema);
+  if(result.error == null) {
+    var players  = await dbSelectTeamID(req.body.teamName, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].teamID;
+        res.json({result});
+        console.log(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else{
+    invalidInput(res, next);
+  }
+});
+
 
 function invalidInput(res, next) {
   res.status(409);
