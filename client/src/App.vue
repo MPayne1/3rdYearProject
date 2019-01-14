@@ -30,7 +30,7 @@
             <div class="dropdown-menu show" v-if="teamOpen" v-model="teams"
               x-placement="bottom-start" style="position: absolute;
               will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
-              <a href="#" v-for="team in teams" class="dropdown-item"@click="teamOpen = !teamOpen" >{{team.teamName}}</a>
+              <a v-for="team in teams" v-on:click="teamPage(team.teamName)" class="dropdown-item"@click="teamOpen = !teamOpen" >{{team.teamName}}</a>
             </div>
           </li>
           <li class="nav-item">
@@ -91,6 +91,13 @@ export default {
         }
       })
     });
+  },
+  methods: {
+    teamPage(teamName) {
+      if(this.teams) {
+          this.$router.push({ path: '/team/info/', query:{teamName: teamName}});
+      }
+    },
   },
 };
 

@@ -32,6 +32,13 @@ router.get('/', (req, res) => {
   });
 });
 
+// handle request for team info page
+router.get('/info', (req, res) => {
+
+});
+
+
+
 // handle request for teams a user playsfor
 router.post('/playsfor', async (req, res) => {
   var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
@@ -44,6 +51,7 @@ router.post('/playsfor', async (req, res) => {
     }
   })
 })
+
 
 
 // handle create team request

@@ -49,7 +49,6 @@
     <router-link v-for="league in Leagues" :to="{ name: 'createTeam',
       params: {leagueID: league.leagueID}, query:{Sport: league.Sport}}">
       {{ league.LeagueName }}</router-link>
-    <!--  <a href=`team/create/?=${league.LeagueName}` v-for="league in Leagues">{{ league.LeagueName }}</a> -->
   </div>
   </div>
 </template>

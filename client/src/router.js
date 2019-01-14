@@ -7,6 +7,7 @@ import Dashboard from './views/Dashboard.vue';
 import createLeague from './views/createLeague.vue';
 import findLeague from './views/findLeague.vue';
 import createTeam from './views/createTeam.vue';
+import teamInfo from './views/teamInfo.vue';
 
 Vue.use(Router);
 
@@ -69,6 +70,12 @@ export default new Router({
       path: '/team/create/:leagueID',
       name: 'createTeam',
       component: createTeam,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/team/info',
+      name: 'teamInfo',
+      component: teamInfo,
       beforeEnter: isLoggedIn,
     },
   ],
