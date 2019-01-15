@@ -8,6 +8,7 @@ const joi = require('joi');
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
 const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
+const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -32,7 +33,7 @@ const findLeagueSchema  = joi.object().keys({
 });
 
 const startSeasonSchema = joi.object().keys({
-  LeagueID: joi.number().positive().required()
+  leagueID: joi.number().positive().required()
 })
 
 // all paths are prepended with /league
@@ -118,6 +119,8 @@ router.post('/startSeason', async(req, res, next) => {
   var leagueID = req.body.leagueID;
   var leagueAdmin = req.user.UserID;
 
+const result = joi.validate(req.body, startSeasonSchema);
+if(result.error === null) {
 
   // check user is leagueAdmin
   var admin = await dbSelectLeagueAdmin(leagueAdmin, leagueID, async function(err, result) {
@@ -131,12 +134,19 @@ router.post('/startSeason', async(req, res, next) => {
     }
   });
 
-
   // get list of teams in league
 
   // generate fixture list
 
   // add fixtures to db
+
+
+ } else {
+  next(result.error);
+ }
+
+
+
 
 });
 
