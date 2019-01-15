@@ -1,0 +1,18 @@
+Sprint Backlog
+[x] UI designs
+  [x] general style
+
+  [x] add team homepage
+    [x]diplay team info
+  [x] add players
+    [x] Backend
+      [x] add player by username and teamID
+      [x]check person adding player is captain
+    [x] frontend
+      [x] add by username
+      [x] only allow if team captain
+
+[x] update webpack-dev-server as was found to have a vulnerability
+
+[] unit test everything
+  [] use mocha and chai

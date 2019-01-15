@@ -60,9 +60,22 @@ async function createPlaysForTable(err) {
 	});
 }
 
-
+async function createFixturesTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE FIXTURE(FixtureID int NOT NULL AUTO_INCREMENT" +
+    " ,LeagueID int, HomeTeamID int, AwayTeamID int, Date DATETIME" +
+    ", latitude DECIMAL(10,8) , Longitude(11, 8)" +
+    ", PRIMARY KEY(FixtureID), FOREIGN KEY (LeagueID) REFERENCES League(LeagueID)" +
+    ", FOREIGN KEY (HomeTeamID) REFERENCES Team(TeamID)" +
+    ", FOREIGN KEY (AwayTeamID) REFERENCES Team(TeamID));";
+    await db.query(sql, function(err, result) {
+      if(err) throw err;
+      console.log("Fixtures Table Created");
+    });
+}
 
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
-createPlaysForTable();
+// createPlaysForTable();
+createFixturesTable()

@@ -3,47 +3,16 @@ Sprint Backlog
   [x] general style
 
 [] attribute loading spinner to loading.io
-
-[]create team
-  [x] backend
-    [x] add team to db
-    [x]validate inputs
-    [x] team admin (captain)
-    [x] no duplicate teamnames
-    [x] check space in league
-    [x] only return leagues with space
-    [x] add teamadmin to playsfor as well
-  []frontend
-    [x] first choose which sport play and league want to join
-      [x] create team form
-      [x] validate form
-      [x] send req to backend
-      [x]add league id and sport as url params/query
-        [x]error checking for url params/query
-        [x]redirect if not there
-      [x] show only leagues with space
-      [] redirect to team homepage
-      [] show teams captain of in navbar
-
-  [] add team homepage
-    []diplay team info
-  [] add players
-    [] Backend
-      [x] add player by username and teamID
-      [x]check person adding player is captain
-    [] frontend
-      [] add by username
-      [] only allow if team captain
-  [] join league
-
-[] update webpack-dev-server as was found to have a vulnerability
-
-
 [] populate league dropdown with all leagues the user is in
-[] Database
-  [] Schema
-    [] players stats
-    [] team stats
+
+[] add fixtures
+  [] Database
+    [] table
+      [] schema: FixtureID, LeagueID, HomeTeamID, AwayTeamID, Date, Lat, Lng
+  [] Backend
+    [] league admin starts a season
+    [] fixtures automatically generated, based on teams and no. of times play each other
+  [] frontend
   [] Normalise
     [] functional dependencies
     [] 3nf/bcnf
