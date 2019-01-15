@@ -31,6 +31,9 @@ const findLeagueSchema  = joi.object().keys({
   sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required()
 });
 
+const startSeasonSchema = joi.object().keys({
+  LeagueID: joi.number().positive().required()
+})
 
 // all paths are prepended with /league
 router.get('/', (req, res) => {
@@ -114,6 +117,26 @@ router.post('/find', async (req, res, next) => {
 router.post('/startSeason', async(req, res, next) => {
   var leagueID = req.body.leagueID;
   var leagueAdmin = req.user.UserID;
+
+
+  // check user is leagueAdmin
+  var admin = await dbSelectLeagueAdmin(leagueAdmin, leagueID, async function(err, result) {
+    if(err) next(err);
+    try {
+      result[0].LeagueAdmin;
+    } catch(e) {
+      var error = new Error("Only the League Admin can start a new season");
+      res.status(409);
+      next(error);
+    }
+  });
+
+
+  // get list of teams in league
+
+  // generate fixture list
+
+  // add fixtures to db
 
 });
 
