@@ -40,6 +40,11 @@
             <a class="nav-link" href="#">About</a>
           </li>
         </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <router-link class="nav-link">{{user.username}}</router-link>
+          </li>
+        </ul>
       </div>
     </nav>
     <router-view class="container pt-2" />
@@ -85,7 +90,7 @@ export default {
           body: JSON.stringify(body),
         }).then(res => res.json())
           .then((result) => {
-            if(result){
+            if (result){
               this.teams = result.result;
               console.log(this.teams);
             }
@@ -94,8 +99,8 @@ export default {
   },
   methods: {
     teamPage(teamName) {
-      if(this.teams) {
-          this.$router.push({ path: '/team/info/', query:{teamName: teamName}});
+      if (this.teams) {
+        this.$router.push({ path: '/team/info/', query: { teamName: teamName } });
       }
     },
   },

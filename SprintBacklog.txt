@@ -4,13 +4,16 @@ Sprint Backlog
 
 [] attribute loading spinner to loading.io
 [] populate league dropdown with all leagues the user is in
+[x] add login button to dashboard
+  [x] only show logout/login when appropriate
+[x] show username in top right of navbar
 
 [] add fixtures
   [x] Database
     [x] table
       [x] schema: FixtureID, LeagueID, HomeTeamID, AwayTeamID, Date, Lat, Lng
   [] Backend
-    [] league admin starts a season
+    [x] check is league admin making request
     [] fixtures automatically generated
       [] based on teams and no. of times play each other
       [] add fixtures to db
