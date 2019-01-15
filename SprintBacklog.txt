@@ -6,13 +6,17 @@ Sprint Backlog
 [] populate league dropdown with all leagues the user is in
 
 [] add fixtures
-  [] Database
-    [] table
-      [] schema: FixtureID, LeagueID, HomeTeamID, AwayTeamID, Date, Lat, Lng
+  [x] Database
+    [x] table
+      [x] schema: FixtureID, LeagueID, HomeTeamID, AwayTeamID, Date, Lat, Lng
   [] Backend
     [] league admin starts a season
-    [] fixtures automatically generated, based on teams and no. of times play each other
+    [] fixtures automatically generated
+      [] based on teams and no. of times play each other
+      [] add fixtures to db
   [] frontend
+    [] only show for league admin
+    [] show list of Fixtures
   [] Normalise
     [] functional dependencies
     [] 3nf/bcnf

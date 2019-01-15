@@ -50,7 +50,7 @@ router.get('/', (req, res) => {
 // handle reuest to get all players of a team
 router.post('/allplayers', async(req, res, next) => {
   const result  = joi.validate(req.body, allPlayersSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var players  = await dbSelectAllPlayers(req.body.teamName, async function(err, result){
       if(err) next(err);
       try{
@@ -72,13 +72,12 @@ router.post('/allplayers', async(req, res, next) => {
 // handle request for teams a user playsfor
 router.post('/playsfor', async (req, res, next) => {
   const result = joi.validate(req.body, playsForSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
       if(err) next(err);
       try {
         result[0].teamName;
         res.json({result});
-        console.log(result);
       } catch(e) {
         res.json({message: "no teams"});
       }
@@ -94,12 +93,13 @@ router.post('/playsfor', async (req, res, next) => {
 // handle create team request
 router.post('/create', async(req, res, next) => {
   var TeamName = req.body.TeamName;
-  var TeamAdmin = req.body.TeamAdmin;
+  // set teamadmin to be the user making request, from the jwt
+  var TeamAdmin = req.user.UserID;
   var LeagueID = req.body.LeagueID;
   var Sport = req.body.Sport;
 
   const result = joi.validate(req.body, teamSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var team = await dbSelectTeamNames(TeamName, async function (err, result){
       if(err) next(err);
       try{
@@ -121,12 +121,12 @@ router.post('/create', async(req, res, next) => {
 // handle add player
 router.post('/addPlayer', async (req, res, next) => {
   var username = req.body.username;
-  var user = req.body.user;
+  var user = req.user.UserID;
   var teamID = req.body.teamID;
 
   const result = joi.validate(req.body, addplayerSchema);
 
-  if(result.error == null) {
+  if(result.error === null) {
     // check user adding new player is captain
     var captain = await dbSelectCaptain(user, teamID, async function(er, result2) {
       if(er) next(er);
@@ -158,10 +158,10 @@ router.post('/addPlayer', async (req, res, next) => {
 });
 
 
-// handle reuest to get all players of a team
+// handle request to get teamID based on teamname
 router.post('/teamID', async(req, res, next) => {
   const result  = joi.validate(req.body, teamIDSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var players  = await dbSelectTeamID(req.body.teamName, async function(err, result){
       if(err) next(err);
       try{

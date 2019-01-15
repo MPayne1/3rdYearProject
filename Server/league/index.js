@@ -45,7 +45,8 @@ router.post('/create',async (req, res, next) => {
   console.log(req.body.leagueName)
   var leagueName = req.body.leagueName;
   var Sport = req.body.Sport;
-  var leagueAdmin = req.body.leagueAdmin;
+  // get leagueadmin from user making request based on their jwt
+  var leagueAdmin = req.user.UserID;
   var maxTeams = req.body.maxTeams;
   var loss = req.body.loss;
   var draw = req.body.draw;
@@ -56,7 +57,7 @@ router.post('/create',async (req, res, next) => {
   var country = req.body.country;
 
   const result = joi.validate(req.body, leagueSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var league = await dbSelectLeagueNames(leagueName, async function(err, result){
       if(err) next(err);
       try{
@@ -84,7 +85,7 @@ router.post('/find', async (req, res, next) => {
   var sport = req.body.sport;
 
   const result = joi.validate(req.body, findLeagueSchema);
-  if(result.error == null) {
+  if(result.error === null) {
     var league = await dbSelectLeagues(city, county, country, sport,  async (err, result) => {
       if(err) next(err);
       try{
@@ -106,5 +107,18 @@ router.post('/find', async (req, res, next) => {
     next(result.error);
   }
 });
+
+
+
+// generate the fixtures at start of season
+router.post('/startSeason', async(req, res, next) => {
+  var leagueID = req.body.leagueID;
+  var leagueAdmin = req.user.UserID;
+
+});
+
+
+
+
 
 module.exports = router;
