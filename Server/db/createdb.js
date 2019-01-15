@@ -60,11 +60,12 @@ async function createPlaysForTable(err) {
 	});
 }
 
+// create fixtures table
 async function createFixturesTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE FIXTURE(FixtureID int NOT NULL AUTO_INCREMENT" +
     " ,LeagueID int, HomeTeamID int, AwayTeamID int, Date DATETIME" +
-    ", latitude DECIMAL(10,8) , Longitude(11, 8)" +
+    ", latitude DECIMAL(10,8) , Longitude DECIMAL(11, 8)" +
     ", PRIMARY KEY(FixtureID), FOREIGN KEY (LeagueID) REFERENCES League(LeagueID)" +
     ", FOREIGN KEY (HomeTeamID) REFERENCES Team(TeamID)" +
     ", FOREIGN KEY (AwayTeamID) REFERENCES Team(TeamID));";
