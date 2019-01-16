@@ -150,7 +150,7 @@ if(result.error === null) {
         if(er) next(er);
         try{
           seasonID = result2[result2.length-1].seasonID;
-          generateFixtures(result, seasonID);
+          await generateFixtures(result, seasonID, leagueID);
         } catch(e) {
           next(e);
         }
@@ -172,12 +172,38 @@ if(result.error === null) {
  }
 
 });
+/*
+fixture = {
+  leageID: '',
+  seasonID: '',
+  HomeTeam: '',
+  AwayTema: '',
+}
+*/
+// generate a list of fixtures, each team plays each other once
+function generateFixtures(teamList, seasonID, leagueID) {
 
+  var fixtures = [];
+  // add a Bye team if odd no of teams
+  if(teamList.length % 2 == 1) {
+    teamList.push({teamID: 0});
+  }
+  var numTeams = teamList.length;
 
-// generate a list of fixtures
-function generateFixtures(teamList, seasonID) {
-  console.log(teamList);
-  console.log(seasonID);
+// for each round/matchday
+for(j = 0; j < numTeams-1; j++) {
+  // for each home team
+  for(i = 0; i < numTeams / 2; i++) {
+    // insert teams as a fixture
+    fixtures.push({
+      leagueID: leagueID,
+      seasonID: seasonID,
+      HomeTeamID: teamList[i].teamID,
+      AwayTeamID: teamList[numTeams-1-i].teamID});
+  }
+  teamList.splice(1,0, teamList.pop());
+}
+console.log(fixtures);
 }
 
 module.exports = router;

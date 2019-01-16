@@ -10,19 +10,25 @@ Sprint Backlog
 
 [] add fixtures
   [x] Database
-    [x] table
-      [x] schema: FixtureID, LeagueID, HomeTeamID, AwayTeamID, Date, Lat, Lng
+    [x] fixture table
+      [x] schema: FixtureID, LeagueID, seaosnID, HomeTeamID, AwayTeamID, Date, Lat, Lng
+    [x] season table
+      [x] schema: seasonID, leagueID
   [] Backend
     [x] check is league admin making request
     [] fixtures automatically generated
-      [] based on teams and no. of times play each other
+      [x] add new season to db
+      [x] generate fixture list for 1 round
+      [] repeat for no. times play each other
       [] add fixtures to db
   [] frontend
     [] only show for league admin
     [] show list of Fixtures
-  [] Normalise
-    [] functional dependencies
-    [] 3nf/bcnf
+  [] sort how add dates and locations  
+
+[] Normalise
+  [] functional dependencies
+  [] 3nf/bcnf
 
 [] unit test everything
   [] use mocha and chai
