@@ -10,6 +10,8 @@ const dbInsert = require('../db/createLeague.js');
 const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
 const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
 const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
+const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
+
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -119,7 +121,8 @@ router.post('/find', async (req, res, next) => {
 router.post('/startSeason', async(req, res, next) => {
   var leagueID = req.body.leagueID;
   var leagueAdmin = req.user.UserID;
-  var teamsList = [];
+  var seasonID = '';
+
 const result = joi.validate(req.body, startSeasonSchema);
 if(result.error === null) {
 
@@ -135,26 +138,31 @@ if(result.error === null) {
     }
   });
 
-  // insert new season into season table, also getting the seasonID jsut created
-
-
 
   // get list of teams in league
   var teams = await dbSelectTeamsInLeague(leagueID, async function(err, result) {
     if(err) next(err);
     try {
-      generateFixtures(result);
+      result = result;
+
+      // insert new season into season table, also getting the seasonID jsut created
+      var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
+        if(er) next(er);
+        try{
+          seasonID = result2[result2.length-1].seasonID;
+          generateFixtures(result, seasonID);
+        } catch(e) {
+          next(e);
+        }
+      });
+
       res.json(result);
     } catch(e) {
-      console.log(e);
       var error = new Error("No teams in the league yet.");
       res.status(422);
       next(error);
     }
   });
-
-//console.log(teamsList);
-  // generate fixture list
 
   // add fixtures to db
 
@@ -166,9 +174,10 @@ if(result.error === null) {
 });
 
 
-
-function generateFixtures(teamList) {
+// generate a list of fixtures
+function generateFixtures(teamList, seasonID) {
   console.log(teamList);
+  console.log(seasonID);
 }
 
 module.exports = router;
