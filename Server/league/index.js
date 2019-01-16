@@ -9,6 +9,7 @@ const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
 const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
 const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
+const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -118,7 +119,7 @@ router.post('/find', async (req, res, next) => {
 router.post('/startSeason', async(req, res, next) => {
   var leagueID = req.body.leagueID;
   var leagueAdmin = req.user.UserID;
-
+  var teamsList = [];
 const result = joi.validate(req.body, startSeasonSchema);
 if(result.error === null) {
 
@@ -134,8 +135,25 @@ if(result.error === null) {
     }
   });
 
-  // get list of teams in league
+  // insert new season into season table, also getting the seasonID jsut created
 
+
+
+  // get list of teams in league
+  var teams = await dbSelectTeamsInLeague(leagueID, async function(err, result) {
+    if(err) next(err);
+    try {
+      generateFixtures(result);
+      res.json(result);
+    } catch(e) {
+      console.log(e);
+      var error = new Error("No teams in the league yet.");
+      res.status(422);
+      next(error);
+    }
+  });
+
+//console.log(teamsList);
   // generate fixture list
 
   // add fixtures to db
@@ -145,13 +163,12 @@ if(result.error === null) {
   next(result.error);
  }
 
-
-
-
 });
 
 
 
-
+function generateFixtures(teamList) {
+  console.log(teamList);
+}
 
 module.exports = router;

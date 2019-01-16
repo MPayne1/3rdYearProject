@@ -4,11 +4,11 @@ const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 
 /*
-  select teamID for a teamname
+  select teams from a league
 */
-var selectTeamID  = async function(name, callback) {
+var selectTeamsInLeague  = async function(leagueID, callback) {
   var res;
-    var sql = `SELECT teamID FROM team WHERE TeamName = ${mysql.escape(name)}`;
+    var sql = `SELECT teamID FROM team WHERE LeagueID = ${mysql.escape(leagueID)}`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;
@@ -16,4 +16,4 @@ var selectTeamID  = async function(name, callback) {
     });
 }
 
-module.exports = selectTeamID;
+module.exports = selectTeamsInLeague;
