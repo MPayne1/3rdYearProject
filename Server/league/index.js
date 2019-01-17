@@ -11,7 +11,7 @@ const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
 const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
 const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
 const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
-
+const dbInsertFixture = require('../db/insertFixture.js');
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -122,15 +122,17 @@ router.post('/startSeason', async(req, res, next) => {
   var leagueID = req.body.leagueID;
   var leagueAdmin = req.user.UserID;
   var seasonID = '';
+  var numTimes = '';
 
 const result = joi.validate(req.body, startSeasonSchema);
 if(result.error === null) {
 
-  // check user is leagueAdmin
+  // check user is leagueAdmin, also get the no.of times each team plays each other
   var admin = await dbSelectLeagueAdmin(leagueAdmin, leagueID, async function(err, result) {
     if(err) next(err);
     try {
       result[0].LeagueAdmin;
+      numTimes = result[0].games;
     } catch(e) {
       var error = new Error("Only the League Admin can start a new season");
       res.status(409);
@@ -150,7 +152,16 @@ if(result.error === null) {
         if(er) next(er);
         try{
           seasonID = result2[result2.length-1].seasonID;
-          await generateFixtures(result, seasonID, leagueID);
+
+          await generateFixtures(result, seasonID, leagueID, async (fixtures) => {
+            console.log(fixtures);
+            // then insert fixtures into db, for each time the teams play each other
+            for(i = 0; i < numTimes; i++) {
+              for(j = 0; j < fixtures.length; j++) {
+                await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
+              }
+            }
+          });
         } catch(e) {
           next(e);
         }
@@ -181,7 +192,7 @@ fixture = {
 }
 */
 // generate a list of fixtures, each team plays each other once
-function generateFixtures(teamList, seasonID, leagueID) {
+function generateFixtures(teamList, seasonID, leagueID, callback) {
 
   var fixtures = [];
   // add a Bye team if odd no of teams
@@ -203,7 +214,7 @@ for(j = 0; j < numTeams-1; j++) {
   }
   teamList.splice(1,0, teamList.pop());
 }
-console.log(fixtures);
+  callback(fixtures);
 }
 
 module.exports = router;
