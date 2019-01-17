@@ -12,6 +12,7 @@ const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
 const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
 const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
 const dbInsertFixture = require('../db/insertFixture.js');
+const dbSelectLeaguesPlayIn = require('../db/selectLeaguesPlayIn.js');
 
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
@@ -114,6 +115,22 @@ router.post('/find', async (req, res, next) => {
     next(result.error);
   }
 });
+
+// get leagues user plays in
+router.post('/playsIn', async (req, res, next) => {
+  var userID = req.user.UserID;
+
+  var leagues = await dbSelectLeaguesPlayIn(userID, async function(err, result) {
+    if(err) next(err);
+    try {
+      result[0].leagueName;
+      res.json({result});
+    } catch(e) {
+      res.json({message: "no teams"});
+    }
+  });
+});
+
 
 
 

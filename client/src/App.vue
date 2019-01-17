@@ -60,6 +60,7 @@ export default {
     teamOpen: false,
     teams: [],
     user: {},
+    leagues: [],
   }),
   mounted() {
     // get the authorization header

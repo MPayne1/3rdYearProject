@@ -73,7 +73,7 @@ router.post('/allplayers', async(req, res, next) => {
 router.post('/playsfor', async (req, res, next) => {
   const result = joi.validate(req.body, playsForSchema);
   if(result.error === null) {
-    var playsfor = await dbSelectPlaysFor(req.body.userID, async function (err, result) {
+    var playsfor = await dbSelectPlaysFor(req.user.UserID, async function (err, result) {
       if(err) next(err);
       try {
         result[0].teamName;
