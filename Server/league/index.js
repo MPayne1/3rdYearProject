@@ -126,7 +126,7 @@ router.post('/playsIn', async (req, res, next) => {
       result[0].leagueName;
       res.json({result});
     } catch(e) {
-      res.json({message: "no teams"});
+      res.json({message: "no leagues"});
     }
   });
 });

@@ -53,7 +53,7 @@ router.post('/allplayers', async(req, res, next) => {
       try{
         result[0].username;
         res.json({result});
-        console.log(result);
+      //  console.log(result);
       } catch(e) {
         res.json({message: "There are no players in this team yet."});
       }
@@ -158,7 +158,7 @@ router.post('/teamID', async(req, res, next) => {
       try{
         result[0].teamID;
         res.json({result});
-        console.log(result);
+        //console.log(result);
       } catch(e) {
         invalidInput(res, next);
       }

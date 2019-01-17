@@ -36,7 +36,7 @@ export default {
     // get the teamName query
     if(this.$route.query.teamName) {
       this.teamName = this.$route.query.teamName;
-    } else{
+    } else {
       this.$router.push('/dashboard/');
     }
     // get the authorization header

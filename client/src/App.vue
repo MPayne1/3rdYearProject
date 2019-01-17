@@ -17,9 +17,12 @@
           <li class="nav-item dropdown show"  :class="{'open': open}">
             <a class="nav-link dropdown-toggle" @click="open = !open"
             role="button" aria-haspopup="true" aria-expanded="false">League</a>
-              <div class="dropdown-menu show" v-if="open" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
-                  <a class="dropdown-item" href="#/league/find" @click="open = !open">Find a league to join</a>
+              <div class="dropdown-menu show" v-if="open" v-model="leagues"
+              x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
+                  <a class="dropdown-item" id="leaguesIn" v-for="league in leagues"
+                  v-on:click="leaguePage(league.leagueName)" @click="open = !open">{{ league.leagueName }}</a>
                   <div class="dropdown-divider"></div>
+                  <a class="dropdown-item" href="#/league/find" @click="open = !open">Find a league to join</a>
                   <a class="dropdown-item" href="#/league/create" @click="open = !open">Create League</a>
               </div>
           </li>
@@ -42,7 +45,7 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link">{{user.username}}</router-link>
+            <router-link class="nav-link">{{user.username}}</router-link> <!--needs :to property -->
           </li>
         </ul>
       </div>
@@ -54,7 +57,7 @@
 <script>
 const API_URL = 'http://localhost:3000/';
 const TEAMS_URL = 'http://localhost:3000/team/playsfor';
-const lEAGUES_URL = 'http://localhost:3000/league/playsIn';
+const LEAGUES_URL = 'http://localhost:3000/league/playsIn';
 
 export default {
   data: () => ({
@@ -91,12 +94,11 @@ export default {
           .then((result) => {
             if (result){
               this.teams = result.result;
-              console.log(this.teams);
             }
           })
     }).then(res => {
       // get leagues user plays in
-      fetch(TEAMS_URL, {
+      fetch(LEAGUES_URL, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
@@ -105,8 +107,7 @@ export default {
       }).then(res => res.json())
         .then((result) => {
           if (result){
-            this.teams = result.result;
-            console.log(this.teams);
+            this.leagues = result.result;
           }
         })
     });
@@ -117,6 +118,9 @@ export default {
         this.$router.push({ path: '/team/info/', query: { teamName: teamName } });
       }
     },
+    leaguePage(leagueName) {
+      this.$router.push({path: '/league/info', query: { leagueName: leagueName } })
+    }
   },
 };
 
@@ -124,13 +128,13 @@ export default {
 
 <style>
 
-#teamInfo:hover{
+#leaguesIn:hover, #teamInfo:hover{
   background-color: #2C3E50;
   color: #fff;
   text-decoration: none;
 }
 
-#teamInfo{
+#leaguesIn, #teamInfo {
   color: #7b8a8b;
   text-decoration: none;
 }
