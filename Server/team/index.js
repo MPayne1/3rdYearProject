@@ -35,9 +35,6 @@ const allPlayersSchema = joi.object().keys({
   teamName: joi.string().min(2).max(20).required(),
 });
 
-const playsForSchema = joi.object().keys({
-  userID: joi.number().positive().required(),
-});
 
 // all paths are prepended with /team
 router.get('/', (req, res) => {
@@ -71,21 +68,15 @@ router.post('/allplayers', async(req, res, next) => {
 
 // handle request for teams a user playsfor
 router.post('/playsfor', async (req, res, next) => {
-  const result = joi.validate(req.body, playsForSchema);
-  if(result.error === null) {
-    var playsfor = await dbSelectPlaysFor(req.user.UserID, async function (err, result) {
-      if(err) next(err);
-      try {
-        result[0].teamName;
-        res.json({result});
-      } catch(e) {
-        res.json({message: "no teams"});
-      }
-    });
-  } else{
-    invalidInput(res, next);
-  }
-
+  var playsfor = await dbSelectPlaysFor(req.user.UserID, async function (err, result) {
+    if(err) next(err);
+    try {
+      result[0].teamName;
+      res.json({result});
+    } catch(e) {
+      res.json({message: "no teams"});
+    }
+  });
 });
 
 

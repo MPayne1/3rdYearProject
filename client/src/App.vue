@@ -54,6 +54,8 @@
 <script>
 const API_URL = 'http://localhost:3000/';
 const TEAMS_URL = 'http://localhost:3000/team/playsfor';
+const lEAGUES_URL = 'http://localhost:3000/league/playsIn';
+
 export default {
   data: () => ({
     open: false,
@@ -79,16 +81,12 @@ export default {
         }
       }).then(res => {
         // get teams user playsFor
-        var body = {
-          userID: this.user.UserID,
-        }
         fetch(TEAMS_URL, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
             Authorization: `Bearer ${localStorage.token}`,
           },
-          body: JSON.stringify(body),
         }).then(res => res.json())
           .then((result) => {
             if (result){
@@ -96,6 +94,21 @@ export default {
               console.log(this.teams);
             }
           })
+    }).then(res => {
+      // get leagues user plays in
+      fetch(TEAMS_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          if (result){
+            this.teams = result.result;
+            console.log(this.teams);
+          }
+        })
     });
   },
   methods: {
