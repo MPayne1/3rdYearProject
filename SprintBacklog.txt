@@ -19,8 +19,8 @@ Sprint Backlog
     [] fixtures automatically generated
       [x] add new season to db
       [x] generate fixture list for 1 round
-      [] repeat for no. times play each other
-      [] add fixtures to db
+      [x] repeat for no. times play each other
+      [x] add fixtures to db
   [] frontend
     [] only show for league admin
     [] show list of Fixtures
