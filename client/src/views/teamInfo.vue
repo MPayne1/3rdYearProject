@@ -14,8 +14,19 @@
         </li>
       </ul>
       <div class="card-footer">
-        <button @click="AddPlayer()" class="btn btn-primary btn-lg"
-          type="submit">Add a player</button>
+        <form  @submit.prevent="addPlayer()">
+        <div class="form-group">
+          <div v-if="errorMessage" class="alert alert-danger" role="alert">
+            {{errorMessage}}
+          </div>
+          <label for="username">Player's Username</label>
+          <input v-model="username" type="text" class="form-control"
+            id="username" placeholder="Username" required>
+            <br>
+          <button @click="addPlayer()" class="btn btn-primary btn-lg"
+            type="submit">Add a player</button>
+        </div>
+      </form>
       </div>
     </div>
 
@@ -24,14 +35,47 @@
 </template>
 
 <script>
+import joi from 'joi';
 const API_URL = 'http://localhost:3000/';
 const PLAYERS_URL = 'http://localhost:3000/team/allplayers';
+const TEAMID_URL = 'http://localhost:3000/team/teamID';
+const ADDPLAYER_URL = 'http://localhost:3000/team/addPlayer';
+
+const addPlayerSchema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20)
+    .required(),
+  teamID: joi.number().positive().required(),
+});
+
 export default {
   data: () => ({
     user: {},
     players: [],
     teamName: '',
+    username: '',
+    errorMessage: '',
+    teamID: '',
   }),
+  watch: {
+    username: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+    teamID: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+    teamName: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+  },
   mounted() {
     // get the teamName query
     if(this.$route.query.teamName) {
@@ -55,33 +99,93 @@ export default {
           this.$router.push('/auth/login');
         }
       });
-
-    // get the players in the team
-    if(this.teamName) {
-      const body = {
+      var teamName ={
         teamName: this.teamName,
       }
-      fetch(PLAYERS_URL, {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      }).then(res => res.json())
+    // get the teamID
+    fetch(TEAMID_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+      body: JSON.stringify(teamName),
+    }).then(res => res.json())
       .then((result) => {
-        if(result) {
-          this.players = result.result;
-          console.log(this.players);
+        if(result){
+          this.teamID = result.result[0].teamID;
+          //console.log(this.teamID);
         }
-      })
-  }
+      });
+
+    // get the players in the team
+    this.playerList();
   },
   methods: {
-    AddPlayer() {
+    playerList() {
       if(this.teamName) {
-          this.$router.push({ path: '/team/addPlayer/', query:{teamName: this.teamName}});
+        const body = {
+          teamName: this.teamName,
+        }
+        fetch(PLAYERS_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+        .then((result) => {
+          if(result) {
+            this.players = result.result;
+          }
+        });
       }
+    },
+    addPlayer() {
+        this.errorMessage = '';
+        const body = {
+          username: this.username,
+          teamID: this.teamID,
+        };
+        if(this.validAddPlayer(body)) {
+
+          // send the request to the backend
+          this.adding = true;
+          fetch(ADDPLAYER_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            // handle any errors the server returns
+            return response.json().then((error) => {
+              throw new Error(error.message);
+            });
+          }).then(() => { //if no errors refresh players list
+            this.playerList();
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
+          });
+        }
+    },
+    validAddPlayer(body) {
+      const result = joi.validate(body, addPlayerSchema);
+      if (result.error === null) {
+        return true;
+      }
+      if (result.error.message.includes('username')) {
+        this.errorMessage = 'Invalid username';
+      }
+      if(result.error.message.includes('teamID')) {
+        this.errorMessage = 'Invlaid team, please go back to previous page';
+      }
+      return false;
     },
   },
 };

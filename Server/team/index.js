@@ -28,7 +28,6 @@ const teamIDSchema = joi.object().keys({
 const addplayerSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   teamID: joi.number().positive().required(),
-  user: joi.number().positive().required(),
 });
 
 const allPlayersSchema = joi.object().keys({
@@ -52,6 +51,7 @@ router.post('/allplayers', async(req, res, next) => {
       if(err) next(err);
       try{
         result[0].username;
+        console.log(result);
         res.json({result});
       //  console.log(result);
       } catch(e) {
@@ -139,8 +139,14 @@ router.post('/addPlayer', async (req, res, next) => {
         res.status(422);
         next(error);
       } catch(e) {
-        await dbInsertPlayer(username, teamID);
-        res.json(req.body);
+        await dbInsertPlayer(username, teamID, async function(err, result) {
+          if(err) {
+            var error = new Error("Username doesn't exist");
+            next(error);
+          } else {
+            res.json(req.body);
+          }
+        });
       }
     });
   } else {
@@ -158,7 +164,6 @@ router.post('/teamID', async(req, res, next) => {
       try{
         result[0].teamID;
         res.json({result});
-        //console.log(result);
       } catch(e) {
         invalidInput(res, next);
       }
@@ -171,7 +176,7 @@ router.post('/teamID', async(req, res, next) => {
 
 function invalidInput(res, next) {
   res.status(409);
-  var error = new Error("invlaid inputs");
+  var error = new Error("Invlaid Input");
   next(error);
 }
 
