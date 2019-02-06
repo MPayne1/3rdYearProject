@@ -1,0 +1,1 @@
+[] teaminfo page, players list card, title same size as upcoming fixtures on league info page

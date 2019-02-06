@@ -49,14 +49,16 @@ Product Backlog
 [] db on upate cascade
 [] db on delete cascade
 
-[]join league
+[x]join league
 
-[]join team
+[x]join team
 
 
 
-[]add new fixture
-  [] league admin can automatically generate fixture list for the league
+[x] add new fixture
+  [x] league admin can automatically generate fixture list for the league
+
+[x] view upcoming fixtures
 
 []add result
 
@@ -66,7 +68,7 @@ Product Backlog
 
 []view results
 
-[]view upcoming fixtures
+
 
 []view player stats
 

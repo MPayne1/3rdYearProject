@@ -1,6 +1,3 @@
-// Get all leagues based on City
-
-
 const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 

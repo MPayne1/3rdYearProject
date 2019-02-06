@@ -31,7 +31,7 @@ const leagueSchema = joi.object().keys({
   games: joi.number().positive().required()
 });
 
-
+// schema for searching for a league
 const findLeagueSchema  = joi.object().keys({
   city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
   county: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
@@ -277,6 +277,7 @@ for(j = 0; j < numTeams-1; j++) {
   callback(fixtures);
 }
 
+// create/format response for invalid inputs
 function invalidInput(res, next) {
   res.status(409);
   var error = new Error("Invlaid Input");

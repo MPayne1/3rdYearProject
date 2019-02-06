@@ -14,12 +14,17 @@ const auth = require('./auth/index.js');
 const league = require('./league/index.js');
 const team = require('./team/index.js');
 
+// shows req/res nicely in terminal
 app.use(volleyball);
+
 // only allow client request from this origin
 app.use(cors({
   origin: 'http://localhost:8080'
 }));
+
 app.use(express.json());
+
+// check the users jwt
 app.use(middlewares.checkTokenSetUser);
 
 app.get('/', (req, res) => {
@@ -46,7 +51,7 @@ function errorHandler(err, req, res, next) {
     stack: err.stack
   });
 }
-
+// order of middlewares matters, so error handlers go last
 app.use(notFound);
 app.use(errorHandler);
 

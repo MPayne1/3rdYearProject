@@ -23,7 +23,7 @@ Sprint Backlog
       [x] add fixtures to db
   [x] frontend
     [x] start season button
-    [] only show button if no more fixtures left in current season
+    [x] only show button if no more fixtures left in current season
 
 
 [] upcoming Fixtures
@@ -31,7 +31,7 @@ Sprint Backlog
     [x] db query for getting all upcoming fixtures for a league
     [x] route for upcomingFixtures
   [] frontend
-    [] display list of upcoming Fixtures
+    [x] display list of upcoming Fixtures
       [] show 10 to start, expand list for all of them
 
 [] add dates, times and locations

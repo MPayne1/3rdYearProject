@@ -1,5 +1,4 @@
 // adds new league to db
-
 const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 

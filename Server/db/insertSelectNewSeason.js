@@ -1,5 +1,3 @@
-// handles all mysql insert queries
-
 const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 

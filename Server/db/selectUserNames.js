@@ -1,5 +1,3 @@
-// handles all mysql select queries
-
 const mysql = require('mysql');
 const dbCon  = require('./connection.js');
 

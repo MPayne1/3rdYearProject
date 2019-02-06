@@ -91,6 +91,7 @@ router.post('/create', async(req, res, next) => {
 
   const result = joi.validate(req.body, teamSchema);
   if(result.error === null) {
+    // check teamname isn't taken
     var team = await dbSelectTeamNames(TeamName, async function (err, result){
       if(err) next(err);
       try{
@@ -132,7 +133,7 @@ router.post('/addPlayer', async (req, res, next) => {
 
     var player = await dbSelectPlayer(username, teamID, async function(err, result){
       if(err) next(err);
-      // if they are then add the new player, if not already in team
+      // if they are captain then add the new player, if not already in team
       try{
         result[0].userId;
         var error = new Error("User is already in the team");
@@ -173,7 +174,7 @@ router.post('/teamID', async(req, res, next) => {
   }
 });
 
-
+// create response for invalid inputs
 function invalidInput(res, next) {
   res.status(409);
   var error = new Error("Invlaid Input");
