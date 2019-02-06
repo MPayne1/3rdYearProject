@@ -47,6 +47,7 @@ export default {
     fixtures: [],
     user: {},
     leagueName: '',
+    leagueID: '',
   }),
   mounted() {
     // get the leagueName query
@@ -71,6 +72,24 @@ export default {
           this.$router.push('/auth/login');
         }
       });
+      var leagueName ={
+        leagueName: this.leagueName,
+      }
+      // get the leagueID
+      fetch(LEAGUEID_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueName),
+      }).then(res => res.json())
+        .then((result) => {
+          if(result){
+            this.leagueID = result.result[0].leagueID;
+          }
+        });
+
   },
   methods: {
     startSeason() {

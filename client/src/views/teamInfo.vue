@@ -114,7 +114,7 @@ export default {
       .then((result) => {
         if(result){
           this.teamID = result.result[0].teamID;
-          //console.log(this.teamID);
+          console.log(this.teamID);
         }
       });
 

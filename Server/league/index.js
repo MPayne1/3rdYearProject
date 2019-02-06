@@ -64,7 +64,7 @@ router.post('/leagueID', async(req, res, next) => {
       if(err) next(err);
       try{
         result[0].leagueID;
-        res.json(result);
+        res.json({result});
       } catch(e) {
         invalidInput(res, next);
       }
