@@ -15,7 +15,7 @@
             <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard</router-link>
           </li>
           <li class="nav-item dropdown show"  :class="{'open': open}">
-            <a class="nav-link dropdown-toggle" @click="open = !open"
+            <a class="nav-link dropdown-toggle" @click="open = !open, teamOpen = false"
             role="button" aria-haspopup="true" aria-expanded="false">League</a>
               <div class="dropdown-menu show" v-if="open" v-model="leagues"
               x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
@@ -28,7 +28,7 @@
           </li>
 
           <li class="nav-item dropdown show" :class="{'open': open}">
-            <a class="nav-link dropdown-toggle" @click="teamOpen = !teamOpen"
+            <a class="nav-link dropdown-toggle" @click="teamOpen = !teamOpen ,open = false"
             role="button" aria-haspopup="true" aria-expanded="false">Teams</a>
             <div class="dropdown-menu show" v-if="teamOpen" v-model="teams"
               x-placement="bottom-start" style="position: absolute;

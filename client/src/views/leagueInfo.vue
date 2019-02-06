@@ -11,7 +11,7 @@
       <div class="col-md-4">
         <h4>show upcoming fixtures here</h4>
       </div>
-      </div>
+    </div>
   </div>
 
 </template>

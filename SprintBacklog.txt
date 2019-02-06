@@ -14,7 +14,7 @@ Sprint Backlog
       [x] schema: FixtureID, LeagueID, seaosnID, HomeTeamID, AwayTeamID, Date, Lat, Lng
     [x] season table
       [x] schema: seasonID, leagueID
-  [] Backend
+  [x] Backend
     [x] check is league admin making request
     [x] fixtures automatically generated
       [x] add new season to db
@@ -26,7 +26,7 @@ Sprint Backlog
     [] show list of Fixtures
   [] sort how add dates and locations
 
-[] move add player from its own page to part of the playerslist card on team info page
+[x] move add player from its own page to part of the playerslist card on team info page
 
 [] Normalise
   [] functional dependencies
