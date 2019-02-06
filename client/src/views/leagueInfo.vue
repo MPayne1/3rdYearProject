@@ -4,12 +4,33 @@
       <h2>{{this.leagueName}}</h2>
     </div>
     <div class="text-center row">
-      <div class="col-md-6 jumbotron">
+      <div class="col-md-8 jumbotron">
         <h4>show table here</h4>
       </div>
 
       <div class="col-md-4">
-        <h4>show upcoming fixtures here</h4>
+        <div class="card text-white bg-secondary">
+          <div class="card-header"><h4>Upcoming Fixtures</h4></div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between
+              align-items-center card-body" v-for="fixture in fixtures">
+              <a>{{ fixture.HomeTeam }} vs {{ fixture.AwayTeam}}</a>
+            </li>
+          </ul>
+          <div class="card-footer" v-if="fixtures[0] == null">
+            <form  @submit.prevent="startSeason()">
+            <div class="form-group">
+              <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                {{errorMessage}}
+              </div>
+                <h5>No upcoming fixtures</h5>
+              <button @click="startSeason()" class="btn btn-primary btn-lg"
+                type="submit">Start a new Season</button>
+            </div>
+          </form>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -20,6 +41,7 @@
 const API_URL = 'http://localhost:3000/';
 export default {
   data: () => ({
+    fixtures: [],
     user: {},
     leagueName: '',
   }),
@@ -27,7 +49,7 @@ export default {
     // get the leagueName query
     if (this.$route.query.leagueName) {
       this.leagueName = this.$route.query.leagueName;
-      console.log(this.leagueName);
+      // console.log(this.leagueName);
     } else {
       this.$router.push('/dashboard/');
     }
@@ -48,6 +70,9 @@ export default {
       });
   },
   methods: {
+    startSeason() {
+
+    },
   },
 };
 </script>

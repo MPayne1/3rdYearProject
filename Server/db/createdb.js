@@ -66,6 +66,7 @@ async function createFixturesTable(err) {
   var sql = "CREATE TABLE FIXTURE(FixtureID int NOT NULL AUTO_INCREMENT" +
     " ,LeagueID int, SeasonID int, HomeTeamID int, AwayTeamID int, Date DATETIME" +
     ", latitude DECIMAL(10,8) , Longitude DECIMAL(11, 8)" +
+    ", Played ENUM('false', 'true') NOT NULL DEFAULT 'false'" +
     ", PRIMARY KEY(FixtureID), FOREIGN KEY (LeagueID) REFERENCES League(LeagueID)" +
     ", FOREIGN KEY (HomeTeamID) REFERENCES Team(TeamID)" +
     ", FOREIGN KEY (SeasonID) REFERENCES Season(SeasonID)" +
@@ -80,9 +81,10 @@ async function createFixturesTable(err) {
 // create season table
 async function createSeasonsTable(err) {
 	if(err) throw err;
-	var sql = "CREATE TABLE Season(SeasonID int NOT NULL AUTO_INCREMENT, LeagueID int, " +
-	"PRIMARY KEY (SeasonID), " +
-	"FOREIGN KEY (LeagueID) REFERENCES League(LeagueID));";
+	var sql = "CREATE TABLE Season(SeasonID int NOT NULL AUTO_INCREMENT," +
+    "LeagueID int, Finished  ENUM('false', 'true') NOT NULL DEFAULT 'false'," +
+	  "PRIMARY KEY (SeasonID), " +
+	  "FOREIGN KEY (LeagueID) REFERENCES League(LeagueID));";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
 		console.log("Seasons Table Created");

@@ -13,7 +13,9 @@ const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
 const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
 const dbInsertFixture = require('../db/insertFixture.js');
 const dbSelectLeaguesPlayIn = require('../db/selectLeaguesPlayIn.js');
+const dbSelectUpcomingFixtures = require('../db/selectUpcomingFixtures.js');
 
+// schema for input validation
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
   leagueAdmin: joi.number().positive().required(),
@@ -36,9 +38,11 @@ const findLeagueSchema  = joi.object().keys({
   sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required()
 });
 
+// both startSeason and upcoming fixtures schema
 const startSeasonSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
-})
+});
+
 
 // all paths are prepended with /league
 router.get('/', (req, res) => {
@@ -131,7 +135,25 @@ router.post('/playsIn', async (req, res, next) => {
   });
 });
 
+router.post('/upcomingFixtures', async (req, res, next) => {
+  var userID = req.user.UserID;
+  var leagueID = req.body.leagueID
+  const result = joi.validate(req.body, startSeasonSchema);
+  if(result.error === null) {
+    var fixtures = await dbSelectUpcomingFixtures(leagueID, async function(err, result) {
+      if(err) next(err);
+      try {
+        result[0].fixtureID;
+        res.json({result});
+      } catch(e) {
+        res.json({message: "no upcoming fixtures"});
+      }
+    });
+  }  else{
+    next(result.error);
+  }
 
+});
 
 
 // generate the fixtures at start of season
@@ -191,15 +213,12 @@ if(result.error === null) {
       next(error);
     }
   });
-
-  // add fixtures to db
-
-
  } else {
   next(result.error);
  }
-
 });
+
+
 /*
 fixture = {
   leageID: '',

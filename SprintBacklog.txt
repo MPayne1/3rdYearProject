@@ -22,9 +22,20 @@ Sprint Backlog
       [x] repeat for no. times play each other
       [x] add fixtures to db
   [] frontend
-    [] only show for league admin
-    [] show list of Fixtures
-  [] sort how add dates and locations
+    [] start season button
+
+
+[] upcoming Fixtures
+  [x] Backend
+    [x] db query for getting all upcoming fixtures for a league
+    [x] route for upcomingFixtures
+  [] frontend
+    [] display list of upcoming Fixtures
+      [] show 10 to start, expand list for all of them
+
+[] add dates, times and locations
+  [] for each fixture in the upcoming list
+
 
 [x] move add player from its own page to part of the playerslist card on team info page
 
