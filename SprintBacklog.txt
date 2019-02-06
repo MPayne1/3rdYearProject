@@ -21,8 +21,9 @@ Sprint Backlog
       [x] generate fixture list for 1 round
       [x] repeat for no. times play each other
       [x] add fixtures to db
-  [] frontend
-    [] start season button
+  [x] frontend
+    [x] start season button
+    [] only show button if no more fixtures left in current season
 
 
 [] upcoming Fixtures
@@ -35,6 +36,7 @@ Sprint Backlog
 
 [] add dates, times and locations
   [] for each fixture in the upcoming list
+  [] dropdown to reveal form
 
 
 [x] move add player from its own page to part of the playerslist card on team info page

@@ -11,7 +11,7 @@ var insertFixture  = async function(leagueID, seasonID, HomeTeamID, AwayTeamID) 
        ${mysql.escape(HomeTeamID)},  ${mysql.escape(AwayTeamID)});`;
 	  await dbCon.query(sql , (err, result) => {
 		    if(err) throw err;
-        console.log('fixture added');
+        //console.log('fixture added');
     });
 }
 

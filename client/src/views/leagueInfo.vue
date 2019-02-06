@@ -18,7 +18,6 @@
             </li>
           </ul>
           <div class="card-footer" v-if="fixtures[0] == null">
-            <form  @submit.prevent="startSeason()">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
                 {{errorMessage}}
@@ -27,7 +26,6 @@
               <button @click="startSeason()" class="btn btn-primary btn-lg"
                 type="submit">Start a new Season</button>
             </div>
-          </form>
           </div>
         </div>
 
@@ -92,8 +90,24 @@ export default {
 
   },
   methods: {
+    // start a new season
     startSeason() {
-
+      var leagueID = {
+        leagueID: this.leagueID,
+      }
+      fetch(START_SEASON_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueID)
+      }).then(res => res.json())
+        .then((result) => {
+          if(result){
+            console.log(result);
+          }
+        });
     },
   },
 };

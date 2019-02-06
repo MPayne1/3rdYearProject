@@ -218,20 +218,19 @@ if(result.error === null) {
           seasonID = result2[result2.length-1].seasonID;
 
           await generateFixtures(result, seasonID, leagueID, async (fixtures) => {
-            console.log(fixtures);
             // then insert fixtures into db, for each time the teams play each other
             for(i = 0; i < numTimes; i++) {
               for(j = 0; j < fixtures.length; j++) {
                 await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
               }
             }
+            console.log(fixtures);
+            res.json(fixtures);
           });
         } catch(e) {
           next(e);
         }
       });
-
-      res.json(result);
     } catch(e) {
       var error = new Error("No teams in the league yet.");
       res.status(422);
