@@ -43,7 +43,7 @@ router.get('/', (req, res) => {
 });
 
 
-// handle reuest to get all players of a team
+// handle request to get all players of a team
 router.post('/allplayers', async(req, res, next) => {
   const result  = joi.validate(req.body, allPlayersSchema);
   if(result.error === null) {
