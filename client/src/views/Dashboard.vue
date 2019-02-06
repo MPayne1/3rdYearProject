@@ -46,7 +46,7 @@ export default {
     login() {
       localStorage.removeItem('token');
       this.$router.push('/auth/login');
-    }
+    },
   },
 };
 </script>

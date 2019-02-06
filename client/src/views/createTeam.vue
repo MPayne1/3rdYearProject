@@ -30,6 +30,7 @@
 <script>
 import joi from 'joi';
 import router from '../router.js';
+
 const CREATE_TEAM_URL = 'http://localhost:3000/team/create';
 const API_URL = 'http://localhost:3000/';
 
@@ -64,9 +65,9 @@ export default {
   },
   mounted() {
     this.team.league = this.$route.params.leagueID;
-    if(this.$route.query.Sport) {
+    if (this.$route.query.Sport) {
       this.team.sport = this.$route.query.Sport;
-    } else{
+    } else {
       this.$router.push('/league/find');
     }
 

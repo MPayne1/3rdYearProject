@@ -1,7 +1,7 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>{{this.leagueName}}</h2>
+      <h2>{{ this.leagueName }}</h2>
     </div>
     <div class="text-center row">
       <div class="col-md-8 jumbotron">
@@ -9,20 +9,21 @@
       </div>
 
       <div class="col-md-4">
-        <div class="card text-white bg-secondary">
-          <div class="card-header"><h4>Upcoming Fixtures</h4></div>
+        <div class="card bg-secondary border-secondary ">
+          <div class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
-              align-items-center card-body" v-for="fixture in fixtures">
-              <a>{{ fixture.HomeTeam }} vs {{ fixture.AwayTeam}}</a>
+              align-items-center card-body" v-for="fixture in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen">
+              <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
+              <h5 v-if="fixtureInfoOpen">Open</h5>
             </li>
           </ul>
-          <div class="card-footer" v-if="fixtures[0] == null">
+          <div class="text-white card-footer" v-if="fixtures[0] === null">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
                 {{errorMessage}}
               </div>
-                <h5>No upcoming fixtures</h5>
+                <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
                 type="submit">Start a new Season</button>
             </div>
@@ -39,6 +40,7 @@
 const API_URL = 'http://localhost:3000/';
 const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
+const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
 
 export default {
   data: () => ({
@@ -46,6 +48,7 @@ export default {
     user: {},
     leagueName: '',
     leagueID: '',
+    fixtureInfoOpen: false,
   }),
   mounted() {
     // get the leagueName query
@@ -70,41 +73,59 @@ export default {
           this.$router.push('/auth/login');
         }
       });
-      var leagueName ={
-        leagueName: this.leagueName,
-      }
-      // get the leagueID
-      fetch(LEAGUEID_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueName),
-      }).then(res => res.json())
-        .then((result) => {
-          if(result){
-            this.leagueID = result.result[0].leagueID;
-          }
-        });
-
+    const leagueName = {
+      leagueName: this.leagueName,
+    };
+    // get the leagueID
+    fetch(LEAGUEID_URL, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+      body: JSON.stringify(leagueName),
+    }).then(res => res.json())
+      .then((result) => {
+        if (result) {
+          this.leagueID = result.result[0].leagueID;
+        }
+      }).then((res) => {
+        // get upcoming Fixtures
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        fetch(UPCOMING_FIXTURES_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(leagueID),
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              this.fixtures = result.result;
+              console.log(this.fixtures[0].AwayTeamName);
+            }
+          });
+      });
   },
   methods: {
     // start a new season
     startSeason() {
-      var leagueID = {
+      const leagueID = {
         leagueID: this.leagueID,
-      }
+      };
       fetch(START_SEASON_URL, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
           Authorization: `Bearer ${localStorage.token}`,
         },
-        body: JSON.stringify(leagueID)
+        body: JSON.stringify(leagueID),
       }).then(res => res.json())
         .then((result) => {
-          if(result){
+          if (result) {
             console.log(result);
           }
         });

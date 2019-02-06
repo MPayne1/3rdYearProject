@@ -99,6 +99,7 @@
 
 <script>
 import joi from 'joi';
+
 const CREATE_LEAGUE_URL = 'http://localhost:3000/league/create';
 const API_URL = 'http://localhost:3000/';
 
@@ -225,22 +226,22 @@ export default {
       if (result.error.message.includes('maxTeams')) {
         this.errorMessage = 'You must enter a maximum number of teams allowed in the league.';
       }
-      if(result.error.message.includes('games')) {
+      if (result.error.message.includes('games')) {
         this.errorMessage = 'You must enter a number of games to play each team per season';
       }
-      if(result.error.message.includes('city')) {
+      if (result.error.message.includes('city')) {
         this.errorMessage = 'City name can only contain letters';
       }
-      if(result.error.message.includes('county')) {
+      if (result.error.message.includes('county')) {
         this.errorMessage = 'State/County name can only contain letters';
       }
-      if(result.error.message.includes('country')) {
+      if (result.error.message.includes('country')) {
         this.errorMessage = 'Country name can only contain letters';
       }
-      if(this.loss > this.win) {
+      if (this.loss > this.win) {
         this.MoreThanWin = 'You will award a loss more points than a win';
       }
-      if(this.draw > this.win) {
+      if (this.draw > this.win) {
         this.MoreThanWin = 'You will award a draw more points than a win';
       }
       return false;

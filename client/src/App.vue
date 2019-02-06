@@ -82,7 +82,7 @@ export default {
         } else {
           localStorage.removeItem('token');
         }
-      }).then(res => {
+      }).then((res) => {
         // get teams user playsFor
         fetch(TEAMS_URL, {
           method: 'POST',
@@ -92,35 +92,36 @@ export default {
           },
         }).then(res => res.json())
           .then((result) => {
-            if (result){
+            if (result) {
               this.teams = result.result;
             }
-          })
-    }).then(res => {
+          });
+      })
+      .then((res) => {
       // get leagues user plays in
-      fetch(LEAGUES_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      }).then(res => res.json())
-        .then((result) => {
-          if (result){
-            this.leagues = result.result;
-          }
-        })
-    });
+        fetch(LEAGUES_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              this.leagues = result.result;
+            }
+          });
+      });
   },
   methods: {
     teamPage(teamName) {
       if (this.teams) {
-        this.$router.push({ path: '/team/info/', query: { teamName: teamName } });
+        this.$router.push({ path: '/team/info/', query: { teamName } });
       }
     },
     leaguePage(leagueName) {
-      this.$router.push({path: '/league/info', query: { leagueName: leagueName } })
-    }
+      this.$router.push({ path: '/league/info', query: { leagueName } });
+    },
   },
 };
 
