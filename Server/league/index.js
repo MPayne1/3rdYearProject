@@ -14,6 +14,7 @@ const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
 const dbInsertFixture = require('../db/insertFixture.js');
 const dbSelectLeaguesPlayIn = require('../db/selectLeaguesPlayIn.js');
 const dbSelectUpcomingFixtures = require('../db/selectUpcomingFixtures.js');
+const dbSelectLeagueID = require('../db/selectLeagueID.js');
 
 // schema for input validation
 const leagueSchema = joi.object().keys({
@@ -43,12 +44,34 @@ const startSeasonSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
 });
 
+// schema for getting leagueID from leagueName
+const leagueIDSchema = joi.object().keys({
+  leagueName: joi.string().min(2).max(20).required()
+});
 
 // all paths are prepended with /league
 router.get('/', (req, res) => {
   res.json({
     message: 'league router works'
   });
+});
+
+// handle get leagueID from leagueName request
+router.post('/leagueID', async(req, res, next) => {
+  const result  = joi.validate(req.body, leagueIDSchema);
+  if(result.error === null) {
+    var players  = await dbSelectLeagueID(req.body.leagueName, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].leagueID;
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else{
+    invalidInput(res, next);
+  }
 });
 
 
@@ -135,6 +158,8 @@ router.post('/playsIn', async (req, res, next) => {
   });
 });
 
+
+// handle request for all upcoming fixtures in a league
 router.post('/upcomingFixtures', async (req, res, next) => {
   var userID = req.user.UserID;
   var leagueID = req.body.leagueID
@@ -252,5 +277,14 @@ for(j = 0; j < numTeams-1; j++) {
 }
   callback(fixtures);
 }
+
+function invalidInput(res, next) {
+  res.status(409);
+  var error = new Error("Invlaid Input");
+  next(error);
+}
+
+
+
 
 module.exports = router;

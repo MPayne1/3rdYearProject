@@ -39,6 +39,9 @@
 
 <script>
 const API_URL = 'http://localhost:3000/';
+const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
+const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
+
 export default {
   data: () => ({
     fixtures: [],
