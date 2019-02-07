@@ -190,7 +190,8 @@ export default {
   },
 };
 </script>
-<style media="screen">
+
+<style>
   #playerList {
     background-color: #2C3E50
   }
