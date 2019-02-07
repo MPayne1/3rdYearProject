@@ -3,12 +3,12 @@ Sprint Backlog
   [x] general style
 
 [] attribute loading spinner to loading.io
-[] populate league dropdown with all leagues the user is in
+[x] populate league dropdown with all leagues the user is in
 [x] add login button to dashboard
   [x] only show logout/login when appropriate
 [x] show username in top right of navbar
 
-[] add fixtures
+[x] add fixtures
   [x] Database
     [x] fixture table
       [x] schema: FixtureID, LeagueID, seaosnID, HomeTeamID, AwayTeamID, Date, Lat, Lng
@@ -35,9 +35,9 @@ Sprint Backlog
       [] show 10 to start, expand list for all of them
 
 [] add dates, times and locations
-  [] for each fixture in the upcoming list
-  [] dropdown to reveal form
-
+  [x] for each fixture in the upcoming list
+  [x] dropdown to reveal form
+  [] send req to backend to update fixture
 
 [x] move add player from its own page to part of the playerslist card on team info page
 

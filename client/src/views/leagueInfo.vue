@@ -10,38 +10,49 @@
 
       <div class="col-md-4">
         <div class="card bg-secondary border-secondary ">
-          <div class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
+          <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="showDatePicker(), fixtureIndex=index">
-              <div class="align-items-center">
+              <div id="fixtureInfo" class="align-items-center">
                 <div>
-                  <router-link  :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
+                  <router-link :to="{ name: '', params: {} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
                 </div>
                 <div v-if="fixtureInfoOpen && index == fixtureIndex">
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
-                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
-                  <form @submit.prevent="updateFixture(fixture.fixtureID)">
-                        <div class="form-group">
-                          <input v-model="location.Address" type="text" class="form-control"
-                            id="address" placeholder="Address" required>
-                        </div>
-                      <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Update Fixture</button>
-                      </div>
+                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <form @submit.prevent="updateFixture(fixtureIndex)">
+                    <div class="form-group">
+                      <input v-model="location" type="text" class="form-control"
+                        id="address" placeholder="Address" required>
+                    </div>
+                    <div class="form-group">
+                      <input v-model="location" type="text" class="form-control"
+                        placeholder="City" required>
+                    </div>
+                    <div class="form-group">
+                      <input v-model="location" type="text" class="form-control"
+                        placeholder="County/State" required>
+                    </div>
+                    <div class="form-group">
+                      <input v-model="location" type="text" class="form-control"
+                        placeholder="Postcode/ZIP code" required>
+                    </div>
+                    <div class="text-center">
+                      <button type="submit" class="btn btn-primary">Update Fixture</button>
+                    </div>
                   </form>
                 </div>
               </div>
             </li>
-
           </ul>
           <div class="text-white card-footer" v-if="fixtures[0] === undefined">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
                 {{errorMessage}}
               </div>
-                <h5>No Upcoming Fixtures</h5>
+              <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
                 type="submit">Start a new Season</button>
             </div>
@@ -139,6 +150,11 @@ export default {
         this.fixtureInfoOpen = true;
       }
     },
+    //update fixture info
+    updateFixture(index) {
+      console.log(index);
+      console.log(this.fixtures[index].Date);
+    },
     // start a new season
     startSeason() {
       const leagueID = {
@@ -161,3 +177,19 @@ export default {
   },
 };
 </script>
+
+<style>
+  #address {
+    margin-top: 15px;
+  }
+  #fixtureInfo {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #dateTimePicker {
+    margin-top: 5px;
+  }
+  #fixList{
+    background-color: #2C3E50
+  }
+</style>
