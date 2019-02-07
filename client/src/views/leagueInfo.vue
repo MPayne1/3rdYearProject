@@ -16,7 +16,6 @@
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen, fixtureIndex=index">
               <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
               <div v-if="fixtureInfoOpen && index == fixtureIndex">
-                Open
               </div>
             </li>
           </ul>
