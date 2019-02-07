@@ -13,11 +13,13 @@
           <div class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
-              align-items-center card-body" v-for="(fixture,index) in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen, fixtureIndex=index">
+              align-items-center card-body" v-for="(fixture,index) in fixtures" @click="showDatePicker(), fixtureIndex=index">
               <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
               <div v-if="fixtureInfoOpen && index == fixtureIndex">
                 <p>Show date and latlng here</p>
-                <VueCtkDateTimePicker id="dateTimePicker" label="Date" v-model="fixtureDate" color="#2C3E50"> </VueCtkDateTimePicker>
+                <!--Show data picker with appropiate label, depending on if date has been entered or not -->
+                <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker"  @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
+                <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker"  @click="fixtureInfoOpen=true" label="Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
               </div>
             </li>
           </ul>
@@ -117,6 +119,12 @@ export default {
       });
   },
   methods: {
+    // show date picker without closing FixtureInfo
+    showDatePicker() {
+      if(this.fixtureInfoOpen != true) {
+        this.fixtureInfoOpen = true;
+      }
+    },
     // start a new season
     startSeason() {
       const leagueID = {
