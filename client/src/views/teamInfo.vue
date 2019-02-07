@@ -6,7 +6,7 @@
     </div>
 
     <div class="card text-white bg-secondary border-secondary mb-3" style="max-width: 20rem;">
-      <div class="card-header">Players</div>
+      <div id="playerList" class="card-header"><h4>Players</h4></div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
           <router-link :to="{ name: 'playerInfo', params: {} }">
@@ -190,3 +190,8 @@ export default {
   },
 };
 </script>
+<style media="screen">
+  #playerList {
+    background-color: #2C3E50
+  }
+</style>
