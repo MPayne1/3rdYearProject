@@ -13,12 +13,14 @@
           <div class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
-              align-items-center card-body" v-for="fixture in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen">
+              align-items-center card-body" v-for="(fixture,index) in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen, fixtureIndex=index">
               <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
-              <h5 v-if="fixtureInfoOpen">Open</h5>
+              <div v-if="fixtureInfoOpen && index == fixtureIndex">
+                Open
+              </div>
             </li>
           </ul>
-          <div class="text-white card-footer" v-if="fixtures[0] === null">
+          <div class="text-white card-footer" v-if="fixtures[0] === undefined">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
                 {{errorMessage}}
@@ -29,11 +31,9 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
@@ -49,6 +49,7 @@ export default {
     leagueName: '',
     leagueID: '',
     fixtureInfoOpen: false,
+    fixtureIndex: '',
   }),
   mounted() {
     // get the leagueName query
@@ -105,7 +106,7 @@ export default {
           .then((result) => {
             if (result) {
               this.fixtures = result.result;
-              console.log(this.fixtures[0].AwayTeamName);
+              //console.log(this.fixtures[0].AwayTeamName);
             }
           });
       });
