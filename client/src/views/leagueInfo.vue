@@ -16,6 +16,8 @@
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="fixtureInfoOpen = !fixtureInfoOpen, fixtureIndex=index">
               <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
               <div v-if="fixtureInfoOpen && index == fixtureIndex">
+                <p>Show date and latlng here</p>
+                <VueCtkDateTimePicker label="Date" v-model="fixtureDate"> </VueCtkDateTimePicker>
               </div>
             </li>
           </ul>
@@ -34,8 +36,13 @@
     </div>
   </div>
 </template>
-
+<script src="client\node_modules\vue-ctk-date-time-picker\dist\vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
 <script>
+import Vue from 'vue';
+import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+
 const API_URL = 'http://localhost:3000/';
 const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
@@ -49,12 +56,12 @@ export default {
     leagueID: '',
     fixtureInfoOpen: false,
     fixtureIndex: '',
+    fixtureDate: '',
   }),
   mounted() {
     // get the leagueName query
     if (this.$route.query.leagueName) {
       this.leagueName = this.$route.query.leagueName;
-      // console.log(this.leagueName);
     } else {
       this.$router.push('/dashboard/');
     }
@@ -105,7 +112,6 @@ export default {
           .then((result) => {
             if (result) {
               this.fixtures = result.result;
-              //console.log(this.fixtures[0].AwayTeamName);
             }
           });
       });
