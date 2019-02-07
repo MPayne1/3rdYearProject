@@ -7,19 +7,25 @@
       <hr class="my-4">
       <p>Sign up and start today!</p>
       <p class="lead">
-        <router-link class="btn btn-primary btn-lg" :to="{name: 'signup'}"
+        <router-link id="signupBtn" class="btn btn-primary btn-lg" :to="{name: 'signup'}"
           role="button">Sign Up</router-link>
+        <router-link id="loginBtn" class="btn btn-primary btn-lg" :to="{name: 'login'}"
+          role="button">Login</router-link>
       </p>
     </div>
   </div>
 </template>
 
 <script>
-
-
 export default {
   name: 'home',
   components: {
   },
 };
 </script>
+
+<style>
+  #signupBtn, #loginBtn {
+    margin: 5px;
+  }
+</style>
