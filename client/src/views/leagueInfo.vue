@@ -14,14 +14,27 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="showDatePicker(), fixtureIndex=index">
-              <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
-              <div v-if="fixtureInfoOpen && index == fixtureIndex">
-                <p>Show date and latlng here</p>
-                <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker"  @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
-                <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker"  @click="fixtureInfoOpen=true" label="Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
+              <div class="align-items-center">
+                <div>
+                  <router-link  :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
+                </div>
+                <div v-if="fixtureInfoOpen && index == fixtureIndex">
+                  <!--Show data picker with appropiate label, depending on if date has been entered or not -->
+                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixtureDate" color="#2C3E50"></VueCtkDateTimePicker>
+                  <form @submit.prevent="updateFixture(fixture.fixtureID)">
+                        <div class="form-group">
+                          <input v-model="location.Address" type="text" class="form-control"
+                            id="address" placeholder="Address" required>
+                        </div>
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Update Fixture</button>
+                      </div>
+                  </form>
+                </div>
               </div>
             </li>
+
           </ul>
           <div class="text-white card-footer" v-if="fixtures[0] === undefined">
             <div class="form-group">
@@ -59,6 +72,7 @@ export default {
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
+    location: '',
   }),
   mounted() {
     // get the leagueName query
@@ -121,7 +135,7 @@ export default {
   methods: {
     // show date picker without closing FixtureInfo
     showDatePicker() {
-      if(this.fixtureInfoOpen != true) {
+      if(this.fixtureInfoOpen !== true) {
         this.fixtureInfoOpen = true;
       }
     },
