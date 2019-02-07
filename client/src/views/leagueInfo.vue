@@ -17,7 +17,7 @@
               <router-link :to="{ name: '', params: {} }">{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</router-link>
               <div v-if="fixtureInfoOpen && index == fixtureIndex">
                 <p>Show date and latlng here</p>
-                <VueCtkDateTimePicker label="Date" v-model="fixtureDate"> </VueCtkDateTimePicker>
+                <VueCtkDateTimePicker id="dateTimePicker" label="Date" v-model="fixtureDate" color="#2C3E50"> </VueCtkDateTimePicker>
               </div>
             </li>
           </ul>
@@ -36,7 +36,7 @@
     </div>
   </div>
 </template>
-<script src="client\node_modules\vue-ctk-date-time-picker\dist\vue-ctk-date-time-picker.umd.min.js" charset="utf-8"></script>
+
 <script>
 import Vue from 'vue';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
