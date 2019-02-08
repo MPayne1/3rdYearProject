@@ -199,7 +199,8 @@ router.post('/upcomingFixtures', async (req, res, next) => {
 router.post('/updateFixture', async (req, res, next) => {
   var userID = req.user.UserID;
   var fixtureID  = req.body.fixtureID;
-  var date = req.body.date;
+  // format date for adding to db
+  var date = req.body.date.slice(0,-3);
   var address  = req.body.address;
   var city = req.body.city;
   var county = req.body.county;
@@ -219,7 +220,6 @@ router.post('/updateFixture', async (req, res, next) => {
         next(error);
       }
     });
-
     // if user is allowed, update the fixture info
     var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
     res.json(req.body);
