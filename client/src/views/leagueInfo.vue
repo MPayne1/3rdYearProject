@@ -23,7 +23,7 @@
                     {{ errorMessage }}
                   </div>
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10) + fixture.date.slice(11,16)" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10) + fixture.date.slice(11,16)" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <form @submit.prevent="updateFixture(fixtureIndex)">
                     <div class="form-group">
