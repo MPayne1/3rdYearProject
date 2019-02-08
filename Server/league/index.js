@@ -5,6 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
+// db operations
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
 const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
@@ -15,6 +16,10 @@ const dbInsertFixture = require('../db/insertFixture.js');
 const dbSelectLeaguesPlayIn = require('../db/selectLeaguesPlayIn.js');
 const dbSelectUpcomingFixtures = require('../db/selectUpcomingFixtures.js');
 const dbSelectLeagueID = require('../db/selectLeagueID.js');
+const dbSelectUpdateFixtureAdmin = require('../db/selectUpdateFixtureAdmin.js');
+const dbUpdateFixtureInfo = require('../db/updateFixtureInfo.js');
+
+//schemas
 
 // schema for input validation
 const leagueSchema = joi.object().keys({
@@ -37,6 +42,16 @@ const findLeagueSchema  = joi.object().keys({
   county: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
   country: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),
   sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required()
+});
+
+// schema for updating date/location of fixture
+const updateFixtureSchema = joi.object().keys({
+  fixtureID: joi.number().positive().required(),
+  date: joi.string().min(2).max(30).required(),
+  address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
 });
 
 // both startSeason and upcoming fixtures schema
@@ -180,6 +195,39 @@ router.post('/upcomingFixtures', async (req, res, next) => {
 
 });
 
+// handle req for updatingfixture info
+router.post('/updateFixture', async (req, res, next) => {
+  var userID = req.user.UserID;
+  var fixtureID  = req.body.fixtureID;
+  var date = req.body.date;
+  var address  = req.body.address;
+  var city = req.body.city;
+  var county = req.body.county;
+  var postcode = req.body.postcode;
+
+  const result = joi.validate(req.body, updateFixtureSchema);
+  if(result.error === null) {
+    // check user is captain of one of the teams or the league admin
+    var admin = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next(err);
+      // if result doesn't have league/team Admin then user can't update fixture
+      try {
+        result[0].leagueAdmin;
+      } catch(e) {
+        var error = new Error("Only league admins and team captains can update fixture information");
+        res.status(403);
+        next(error);
+      }
+    });
+
+    // if user is allowed, update the fixture info
+    var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
+    res.json(req.body);
+  } else {
+    next(result.error);
+  }
+});
+
 
 // generate the fixtures at start of season
 router.post('/startSeason', async(req, res, next) => {
@@ -199,7 +247,7 @@ if(result.error === null) {
       numTimes = result[0].games;
     } catch(e) {
       var error = new Error("Only the League Admin can start a new season");
-      res.status(409);
+      res.status(403);
       next(error);
     }
   });

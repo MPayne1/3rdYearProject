@@ -77,7 +77,7 @@ const API_URL = 'http://localhost:3000/';
 const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
-const UPDATE_FIXTURES_URL = 'http://localhost:3000/league/updateFixtures';
+const UPDATE_FIXTURES_URL = 'http://localhost:3000/league/updateFixture';
 
 const updateFixtureSchema = joi.object().keys({
   date: joi.string().min(2).max(30).required(),
