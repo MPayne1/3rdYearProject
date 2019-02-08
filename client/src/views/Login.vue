@@ -38,6 +38,7 @@
 
 <script>
 import joi from 'joi';
+import App from '../App.vue';
 
 const LOGIN_URL = 'http://localhost:3000/auth/login';
 
@@ -90,6 +91,7 @@ export default {
           localStorage.token = result.token; // store the token in the browsers local storage
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.loggingIn = false;
+            location.reload();
             this.$router.push('/dashboard');
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message

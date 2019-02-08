@@ -84,33 +84,11 @@ export default {
         }
       }).then((res) => {
         // get teams user playsFor
-        fetch(TEAMS_URL, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        }).then(res => res.json())
-          .then((result) => {
-            if (result) {
-              this.teams = result.result;
-            }
-          });
+        this.loadTeams();
       })
       .then((res) => {
       // get leagues user plays in
-        fetch(LEAGUES_URL, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        }).then(res => res.json())
-          .then((result) => {
-            if (result) {
-              this.leagues = result.result;
-            }
-          });
+        this.loadLeagues();
       });
   },
   methods: {
@@ -122,6 +100,36 @@ export default {
     leaguePage(leagueName) {
       this.$router.push({ path: '/league/info', query: { leagueName } });
     },
+    // leagues user playsin
+    loadLeagues() {
+      fetch(LEAGUES_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.leagues = result.result;
+          }
+        });
+    },
+    // teams user playsin
+    loadTeams() {
+      fetch(TEAMS_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.teams = result.result;
+          }
+        });
+    }
   },
 };
 

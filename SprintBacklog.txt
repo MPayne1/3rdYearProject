@@ -6,7 +6,7 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 [x] teaminfo page, players list card, title same size as upcoming fixtures on league info page
 [] refactor code, add more methods, put db files into folders
-[] reload app.vue after logging in
+[x] reload app.vue after logging in
 [] go over http status codes
 [] fix navbar when screen small e.g on mobile.
 
@@ -15,7 +15,7 @@ Sprint Backlog
   [] html encoding of all user inputs
   [] js encoding of all user inputs
   [] anyother security issues
-  
+
 
 [] unit test everything
   [] use mocha and chai
