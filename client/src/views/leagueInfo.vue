@@ -170,6 +170,21 @@ export default {
           postcode: this.fixtures[index].postcode,
         };
         console.log(body);
+        /*
+        fetch(UPDATE_FIXTURES_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(body),
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              console.log(result);
+            }
+          });
+        */
       }
 
     },
