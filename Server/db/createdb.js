@@ -98,4 +98,4 @@ async function createSeasonsTable(err) {
 // createTeamTable();
 // createPlaysForTable();
 // createSeasonsTable();
-createFixturesTable();
+// createFixturesTable();
