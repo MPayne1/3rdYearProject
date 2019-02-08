@@ -36,16 +36,17 @@ Sprint Backlog
 
 [] add dates, times and locations
   [x] for each fixture in the upcoming list
-  [] frontend
+  [x] frontend
     [x] dropdown to reveal form
       [x] dateTimePicker
       [x] address form
       [x] update fixture btn
-    [] send req to backend to update fixture
+    [x] send req to backend to update fixture
+      [x] validate input
   [] backend
-    [] check user is captain of one of the teams
+    [] check user is captain of one of the teams or league Admin
       [] update db
-    
+
 [x] move add player from its own page to part of the playerslist card on team info page
 
 [] Normalise
