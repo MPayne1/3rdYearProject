@@ -10,6 +10,8 @@ Sprint Backlog
 [] go over http status codes
 [] fix navbar when screen small e.g on mobile.
 
+[x] update webpack-dev-server as was found to have another vulnerability
+
 [] security
   [] https
   [] html encoding of all user inputs
