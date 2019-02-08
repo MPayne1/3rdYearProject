@@ -2,3 +2,4 @@
 [] refactor code, add more methods, put db files into folders
 [] reload app.vue after logging in
 [] go over http status codes
+[] fix navbar when screen small e.g on mobile.

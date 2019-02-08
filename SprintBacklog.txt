@@ -1,57 +1,21 @@
+
 Sprint Backlog
 [x] UI designs
   [x] general style
 
 [] attribute loading spinner to loading.io
-[x] populate league dropdown with all leagues the user is in
-[x] add login button to dashboard
-  [x] only show logout/login when appropriate
-[x] show username in top right of navbar
+[x] teaminfo page, players list card, title same size as upcoming fixtures on league info page
+[] refactor code, add more methods, put db files into folders
+[] reload app.vue after logging in
+[] go over http status codes
+[] fix navbar when screen small e.g on mobile.
 
-[x] add fixtures
-  [x] Database
-    [x] fixture table
-      [x] schema: FixtureID, LeagueID, seaosnID, HomeTeamID, AwayTeamID, Date, Address, City, County, Postcode
-    [x] season table
-      [x] schema: seasonID, leagueID
-  [x] Backend
-    [x] check is league admin making request
-    [x] fixtures automatically generated
-      [x] add new season to db
-      [x] generate fixture list for 1 round
-      [x] repeat for no. times play each other
-      [x] add fixtures to db
-  [x] frontend
-    [x] start season button
-    [x] only show button if no more fixtures left in current season
-
-
-[] upcoming Fixtures
-  [x] Backend
-    [x] db query for getting all upcoming fixtures for a league
-    [x] route for upcomingFixtures
-  [] frontend
-    [x] display list of upcoming Fixtures
-      [] show 10 to start, expand list for all of them
-
-[] add dates, times and locations
-  [x] for each fixture in the upcoming list
-  [x] frontend
-    [x] dropdown to reveal form
-      [x] dateTimePicker
-      [x] address form
-      [x] update fixture btn
-    [x] send req to backend to update fixture
-      [x] validate input
-  [] backend
-    [] check user is captain of one of the teams or league Admin
-      [] update db
-
-[x] move add player from its own page to part of the playerslist card on team info page
-
-[] Normalise
-  [] functional dependencies
-  [] 3nf/bcnf
+[] security
+  [] https
+  [] html encoding of all user inputs
+  [] js encoding of all user inputs
+  [] anyother security issues
+  
 
 [] unit test everything
   [] use mocha and chai

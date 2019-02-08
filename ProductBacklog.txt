@@ -1,72 +1,71 @@
 Product Backlog
-[]UI designs
-  []general style
+[x] UI designs
+  [x] general style
 
-[x]Login
-  [x]frontend
-  [x]Backend
-    [x]bcrypt passwords
+[x] Login
+  [x] frontend
+  [x] Backend
+    [x] bcrypt passwords
 
-[x]register
-  [x]frontend
-  [x]Backend
-    [x]bcrypt passwords
-    [x]add new user to Database
+[x] register
+  [x] frontend
+  [x] Backend
+    [x] bcrypt passwords
+    [x] add new user to Database
 
-[]Database
-  []Schema
-    [x]players info
-    [x]team info
-    [x]league info
-    []different sports
-      []players stats
-      []team stats
-    [x]admins
-      [x]captain
-      [x]league admin
+[] Database
+  [] Schema
+    [x] players info
+    [x] team info
+    [x] league info
+    [] different sports
+      [] players stats
+      [] team stats
+    [x] admins
+      [x] captain
+      [x] league admin
 
-  []Normalise
-    []functional dependencies
-    []3nf/bcnf
+  [x] Normalise
+    [x] functional dependencies
+    [x] 3nf/bcnf
 
-[x]create league
+[x] create league
   [x] create league form
   [x] add league to db
-  [] add league homepage
-    [] displaye league info
-  []add players
+  [x] add league homepage
+    [x] displaye league info
+  [x] add players
   [x] join league
-  [x]league admin
-[x]create team
+  [x] league admin
+[x] create team
   [x] create tean form
   [x] add team to db
-  [] add team homepage
-    []diplay team info
-  [] add players
+  [x] add team homepage
+    [x] diplay team info
+  [x] add players
   [x] join league
-  [x]team admin (captain)
+  [x] team admin (captain)
 
-[] db on upate cascade
+[] db on update cascade
 [] db on delete cascade
 
-[x]join league
+[x] join league
 
-[x]join team
-
-
+[x] join team
 
 [x] add new fixture
   [x] league admin can automatically generate fixture list for the league
 
+
 [x] view upcoming fixtures
 
-[]add result
+[] add result
 
-[]update standings
+[] update standings
 
-[]view standings
+[] view standings
 
-[]view results
+[] view results
 
 
 
