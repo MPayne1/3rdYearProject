@@ -146,22 +146,7 @@ export default {
         }
       }).then((res) => {
         // get upcoming Fixtures
-        const leagueID = {
-          leagueID: this.leagueID,
-        };
-        fetch(UPCOMING_FIXTURES_URL, {
-          method: 'POST',
-          headers: {
-            'content-type': 'application/json',
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-          body: JSON.stringify(leagueID),
-        }).then(res => res.json())
-          .then((result) => {
-            if (result) {
-              this.fixtures = result.result;
-            }
-          });
+        this.upcomingFixtures();
       });
   },
   methods: {
@@ -212,6 +197,25 @@ export default {
       return false;
     },
 
+    // load upcoming Fixtures
+    upcomingFixtures() {
+      const leagueID = {
+        leagueID: this.leagueID,
+      };
+      fetch(UPCOMING_FIXTURES_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueID),
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.fixtures = result.result;
+          }
+        });
+    },
     // start a new season
     startSeason() {
       const leagueID = {
@@ -228,6 +232,7 @@ export default {
         .then((result) => {
           if (result) {
             console.log(result);
+            this.upcomingFixtures();
           }
         });
     },
