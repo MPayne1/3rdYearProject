@@ -23,23 +23,23 @@
                     {{ errorMessage }}
                   </div>
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureUpdate.date" color="#2C3E50"></VueCtkDateTimePicker>
-                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixtureUpdate.date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <form @submit.prevent="updateFixture(fixtureIndex)">
                     <div class="form-group">
-                      <input v-model="fixtureUpdate.address" type="text" class="form-control"
+                      <input v-model="fixture.address" type="text" class="form-control"
                         id="address" placeholder="Address" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="fixtureUpdate.city" type="text" class="form-control"
+                      <input v-model="fixture.city" type="text" class="form-control"
                         placeholder="City" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="fixtureUpdate.county" type="text" class="form-control"
+                      <input v-model="fixture.county" type="text" class="form-control"
                         placeholder="County/State" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="fixtureUpdate.postcode" type="text" class="form-control"
+                      <input v-model="fixture.postcode" type="text" class="form-control"
                         placeholder="Postcode/ZIP code" required>
                     </div>
                     <div class="text-center">
@@ -77,9 +77,10 @@ const API_URL = 'http://localhost:3000/';
 const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
+const UPDATE_FIXTURES_URL = 'http://localhost:3000/league/updateFixtures';
 
 const updateFixtureSchema = joi.object().keys({
-  date: joi.string().min(2).max(20).required(),
+  date: joi.string().min(2).max(30).required(),
   address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
@@ -95,17 +96,10 @@ export default {
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
-    fixtureUpdate:{
-      date: '',
-      address: '',
-      city: '',
-      county: '',
-      postcode: '',
-    },
     errorMessage: '',
   }),
   watch: {
-    fixtureUpdate: {
+    fixtures: {
       handler() {
         this.errorMessage = '';
       },
@@ -180,21 +174,23 @@ export default {
 
     //update fixture info
     updateFixture(index) {
-      if(this.validFixtureUpdate()) {
+      console.log(this.fixtures[index]);
+      if(this.validFixtureUpdate(index)) {
         const body = {
-          date: this.fixtureUpdate.date,
-          address: this.fixtureUpdate.address,
-          city: this.fixtureUpdate.city,
-          county: this.fixtureUpdate.county,
-          postcode: this.fixtureUpdate.postcode,
+          fixtureID: this.fixtures[index].fixtureID,
+          date: this.fixtures[index].date,
+          address: this.fixtures[index].address,
+          city: this.fixtures[index].city,
+          county: this.fixtures[index].county,
+          postcode: this.fixtures[index].postcode,
         };
         console.log(body);
       }
 
     },
     // check entered info is valid
-    validFixtureUpdate() {
-      const result = joi.validate(this.fixtureUpdate, updateFixtureSchema);
+    validFixtureUpdate(index) {
+      const result = joi.validate(this.fixtures[index], updateFixtureSchema);
       if (result.error === null) {
         return true;
       }

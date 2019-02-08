@@ -65,7 +65,7 @@ async function createPlaysForTable(err) {
 async function createFixturesTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE FIXTURE(FixtureID int NOT NULL AUTO_INCREMENT" +
-    " ,LeagueID int, SeasonID int, HomeTeamID int, AwayTeamID int, Date DATETIME" +
+    " ,LeagueID int, SeasonID int, HomeTeamID int, AwayTeamID int, date DATETIME" +
     ", address VARCHAR(30), city VARCHAR(30), county VARCHAR(30), postcode VARCHAR(30) " +
     ", Played ENUM('false', 'true') NOT NULL DEFAULT 'false'" +
     ", PRIMARY KEY(FixtureID), FOREIGN KEY (LeagueID) REFERENCES League(LeagueID)" +
