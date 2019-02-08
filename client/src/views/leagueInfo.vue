@@ -23,7 +23,7 @@
                     {{ errorMessage }}
                   </div>
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10) + fixture.date.slice(11,16)" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
                   <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <form @submit.prevent="updateFixture(fixtureIndex)">
                     <div class="form-group">
@@ -80,6 +80,7 @@ const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
 const UPDATE_FIXTURES_URL = 'http://localhost:3000/league/updateFixture';
 
 const updateFixtureSchema = joi.object().keys({
+  fixtureID: joi.number().positive().required(),
   date: joi.string().min(2).max(30).required(),
   address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
@@ -159,18 +160,15 @@ export default {
 
     //update fixture info
     updateFixture(index) {
-      console.log(this.fixtures[index]);
-      if(this.validFixtureUpdate(index)) {
-        const body = {
-          fixtureID: this.fixtures[index].fixtureID,
-          date: this.fixtures[index].date,
-          address: this.fixtures[index].address,
-          city: this.fixtures[index].city,
-          county: this.fixtures[index].county,
-          postcode: this.fixtures[index].postcode,
-        };
-        console.log(body);
-        /*
+      const body = {
+        fixtureID: this.fixtures[index].fixtureID,
+        date: this.fixtures[index].date,
+        address: this.fixtures[index].address,
+        city: this.fixtures[index].city,
+        county: this.fixtures[index].county,
+        postcode: this.fixtures[index].postcode,
+      };
+      if(this.validFixtureUpdate(body)) {
         fetch(UPDATE_FIXTURES_URL, {
           method: 'POST',
           headers: {
@@ -184,13 +182,12 @@ export default {
               console.log(result);
             }
           });
-        */
       }
 
     },
     // check entered info is valid
-    validFixtureUpdate(index) {
-      const result = joi.validate(this.fixtures[index], updateFixtureSchema);
+    validFixtureUpdate(body) {
+      const result = joi.validate(body, updateFixtureSchema);
       if (result.error === null) {
         return true;
       }
@@ -209,6 +206,7 @@ export default {
       if (result.error.message.includes('postcode')) {
         this.errorMessage = 'Please enter a valid Postcode/ZIP code';
       }
+      console.log(result.error.message);
       return false;
     },
 
