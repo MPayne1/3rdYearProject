@@ -19,24 +19,27 @@
                   <router-link :to="{ name: '', params: {} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
                 </div>
                 <div v-if="fixtureInfoOpen && index == fixtureIndex">
+                  <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                    {{ errorMessage }}
+                  </div>
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
-                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.Date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.Date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.Date" v-model="fixtureUpdate.date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.Date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixtureUpdate.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <form @submit.prevent="updateFixture(fixtureIndex)">
                     <div class="form-group">
-                      <input v-model="location" type="text" class="form-control"
+                      <input v-model="fixtureUpdate.address" type="text" class="form-control"
                         id="address" placeholder="Address" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="location" type="text" class="form-control"
+                      <input v-model="fixtureUpdate.city" type="text" class="form-control"
                         placeholder="City" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="location" type="text" class="form-control"
+                      <input v-model="fixtureUpdate.county" type="text" class="form-control"
                         placeholder="County/State" required>
                     </div>
                     <div class="form-group">
-                      <input v-model="location" type="text" class="form-control"
+                      <input v-model="fixtureUpdate.postcode" type="text" class="form-control"
                         placeholder="Postcode/ZIP code" required>
                     </div>
                     <div class="text-center">
@@ -50,7 +53,7 @@
           <div class="text-white card-footer" v-if="fixtures[0] === undefined">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
-                {{errorMessage}}
+                {{ errorMessage }}
               </div>
               <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
@@ -68,11 +71,20 @@ import Vue from 'vue';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+import joi from 'joi';
 
 const API_URL = 'http://localhost:3000/';
 const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
+
+const updateFixtureSchema = joi.object().keys({
+  date: joi.string().min(2).max(20).required(),
+  address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+});
 
 export default {
   data: () => ({
@@ -83,8 +95,23 @@ export default {
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
-    location: '',
+    fixtureUpdate:{
+      date: '',
+      address: '',
+      city: '',
+      county: '',
+      postcode: '',
+    },
+    errorMessage: '',
   }),
+  watch: {
+    fixtureUpdate: {
+      handler() {
+        this.errorMessage = '';
+      },
+      deep: true,
+    },
+  },
   mounted() {
     // get the leagueName query
     if (this.$route.query.leagueName) {
@@ -150,11 +177,45 @@ export default {
         this.fixtureInfoOpen = true;
       }
     },
+
     //update fixture info
     updateFixture(index) {
-      console.log(index);
-      console.log(this.fixtures[index].Date);
+      if(this.validFixtureUpdate()) {
+        const body = {
+          date: this.fixtureUpdate.date,
+          address: this.fixtureUpdate.address,
+          city: this.fixtureUpdate.city,
+          county: this.fixtureUpdate.county,
+          postcode: this.fixtureUpdate.postcode,
+        };
+        console.log(body);
+      }
+
     },
+    // check entered info is valid
+    validFixtureUpdate() {
+      const result = joi.validate(this.fixtureUpdate, updateFixtureSchema);
+      if (result.error === null) {
+        return true;
+      }
+      if (result.error.message.includes('date')) {
+        this.errorMessage = 'Please enter a valid Date';
+      }
+      if (result.error.message.includes('address')) {
+        this.errorMessage = 'Please enter a valid Address';
+      }
+      if (result.error.message.includes('city')) {
+        this.errorMessage = 'Please enter a valid city';
+      }
+      if (result.error.message.includes('county')) {
+        this.errorMessage = 'Please enter a valid county';
+      }
+      if (result.error.message.includes('postcode')) {
+        this.errorMessage = 'Please enter a valid Postcode/ZIP code';
+      }
+      return false;
+    },
+
     // start a new season
     startSeason() {
       const leagueID = {
