@@ -66,7 +66,7 @@
 <script>
 import joi from 'joi';
 
-const SIGNUP_URL = 'http://localhost:3000/auth/signup';
+const SIGNUP_URL = 'https://localhost:3000/auth/signup';
 
 const schema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20)

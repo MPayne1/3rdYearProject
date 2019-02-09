@@ -3,6 +3,9 @@
 
 // require in modules
 const express = require('express');
+const https = require('https');
+const fs = require('fs');
+
 const volleyball = require('volleyball'); // shows req/res in node terminal
 const cors = require('cors');
 const middlewares = require('./auth/middlewares');
@@ -10,6 +13,12 @@ require('dotenv').config();
 
 const port = process.env.PORT || 3000;
 var app = express();
+var options = {
+  key: fs.readFileSync('server/certificate/hostkey.pem').toString(),
+  cert: fs.readFileSync('server/certificate/hostcert.pem').toString()
+};
+
+
 const auth = require('./auth/index.js');
 const league = require('./league/index.js');
 const team = require('./team/index.js');
@@ -55,7 +64,6 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
-
-app.listen(port, () => {
+https.createServer(options, app).listen(port, () => {
   console.log(`Listening on ${port}`);
 })

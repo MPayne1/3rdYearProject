@@ -100,8 +100,8 @@
 <script>
 import joi from 'joi';
 
-const CREATE_LEAGUE_URL = 'http://localhost:3000/league/create';
-const API_URL = 'http://localhost:3000/';
+const CREATE_LEAGUE_URL = 'https://localhost:3000/league/create';
+const API_URL = 'https://localhost:3000/';
 
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)

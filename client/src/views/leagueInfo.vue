@@ -73,11 +73,11 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 import joi from 'joi';
 
-const API_URL = 'http://localhost:3000/';
-const START_SEASON_URL = 'http://localhost:3000/league/startSeason';
-const LEAGUEID_URL = 'http://localhost:3000/league/leagueID';
-const UPCOMING_FIXTURES_URL = 'http://localhost:3000/league/upcomingFixtures';
-const UPDATE_FIXTURES_URL = 'http://localhost:3000/league/updateFixture';
+const API_URL = 'https://localhost:3000/';
+const START_SEASON_URL = 'https://localhost:3000/league/startSeason';
+const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
+const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/upcomingFixtures';
+const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/updateFixture';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),

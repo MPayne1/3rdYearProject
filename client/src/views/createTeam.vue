@@ -31,8 +31,8 @@
 import joi from 'joi';
 import router from '../router.js';
 
-const CREATE_TEAM_URL = 'http://localhost:3000/team/create';
-const API_URL = 'http://localhost:3000/';
+const CREATE_TEAM_URL = 'https://localhost:3000/team/create';
+const API_URL = 'https://localhost:3000/';
 
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)

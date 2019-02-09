@@ -56,8 +56,8 @@
 <script>
 import joi from 'joi';
 
-const FIND_URL = 'http://localhost:3000/league/find';
-const API_URL = 'http://localhost:3000/';
+const FIND_URL = 'https://localhost:3000/league/find';
+const API_URL = 'https://localhost:3000/';
 
 const schema = joi.object().keys({
   city: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required(),

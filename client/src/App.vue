@@ -55,9 +55,9 @@
 </template>
 
 <script>
-const API_URL = 'http://localhost:3000/';
-const TEAMS_URL = 'http://localhost:3000/team/playsfor';
-const LEAGUES_URL = 'http://localhost:3000/league/playsIn';
+const API_URL = 'https://localhost:3000/';
+const TEAMS_URL = 'https://localhost:3000/team/playsfor';
+const LEAGUES_URL = 'https://localhost:3000/league/playsIn';
 
 export default {
   data: () => ({

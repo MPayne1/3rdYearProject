@@ -37,10 +37,10 @@
 <script>
 import joi from 'joi';
 
-const API_URL = 'http://localhost:3000/';
-const PLAYERS_URL = 'http://localhost:3000/team/allplayers';
-const TEAMID_URL = 'http://localhost:3000/team/teamID';
-const ADDPLAYER_URL = 'http://localhost:3000/team/addPlayer';
+const API_URL = 'https://localhost:3000/';
+const PLAYERS_URL = 'https://localhost:3000/team/allplayers';
+const TEAMID_URL = 'https://localhost:3000/team/teamID';
+const ADDPLAYER_URL = 'https://localhost:3000/team/addPlayer';
 
 const addPlayerSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20)

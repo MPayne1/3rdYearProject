@@ -13,7 +13,7 @@
 </template>
 
 <script>
-const API_URL = 'http://localhost:3000/';
+const API_URL = 'https://localhost:3000/';
 export default {
   data: () => ({
     user: {},

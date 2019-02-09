@@ -13,7 +13,10 @@ Sprint Backlog
 [x] update webpack-dev-server as was found to have another vulnerability
 
 [] security
-  [] https
+  [x] https
+    [x] generate keys
+    [x] reconfigure express()
+    [x] change urls to https
   [] html encoding of all user inputs
   [] js encoding of all user inputs
   [] anyother security issues
