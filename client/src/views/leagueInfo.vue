@@ -1,5 +1,5 @@
 <template>
-  <div class="home text-center">
+  <div class="home text-center" @click="fixtureUpdated=false">
     <div class="jumbotron">
       <h2>{{ this.leagueName }}</h2>
     </div>
@@ -44,6 +44,11 @@
                     </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Update Fixture</button>
+                    </div>
+                    <div id="fixtureUpdatedDiv" v-if="fixtureUpdated" class="alert alert-success">
+                      <h6 class="text-center">
+                        Fixture Updated
+                     </h6>
                     </div>
                   </form>
                 </div>
@@ -98,6 +103,7 @@ export default {
     fixtureIndex: '',
     fixtureDate: '',
     errorMessage: '',
+    fixtureUpdated: false,
   }),
   watch: {
     fixtures: {
@@ -180,6 +186,7 @@ export default {
           .then((result) => {
             if (result) {
               console.log(result);
+              this.fixtureUpdated = true;
             }
           });
       }
@@ -260,6 +267,10 @@ export default {
   #fixtureInfo {
     margin-left: auto;
     margin-right: auto;
+  }
+  #fixtureUpdatedDiv {
+    margin: 8px;
+    padding: 3px;
   }
   #dateTimePicker {
     margin-top: 5px;
