@@ -27,8 +27,9 @@ Sprint Backlog
   [x] X-frame-options header set to 'deny', so my application can't be loaded inside a frame
   [x] contentSecurityPolicy
     [x] only allow trusted sources, 'self'
+  [x] HTTP Strict Transport Security (HSTS),
+    [x] browser only make https req
+  [x] enforce all req to be from https 
 
-
-    
 [] unit test everything
   [] use mocha and chai

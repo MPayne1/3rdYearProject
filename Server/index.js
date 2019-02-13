@@ -7,7 +7,7 @@ const https = require('https');
 const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
-
+const enforceSSL = require('express-sslify');
 
 const volleyball = require('volleyball'); // shows req/res info in node terminal
 const cors = require('cors');
@@ -22,6 +22,7 @@ var options = {
 };
 
 // important if behind a proxy to ensure client IP is passed to req.ip
+// used when/if i deploy my application
 app.enable('trust proxy');
 
 const auth = require('./auth/index.js');
@@ -45,6 +46,15 @@ app.use(cors({
 }));
 
 // ---------  Security Middleswares  ---------
+
+// enforce https
+app.use(enforceSSL.HTTPS());
+//app.use(enforceSSL.HTTPS({ trustProtoHeader: true }); use this when deployin application
+
+app.use(helmet.hsts({
+  maxAge: 7776000000,
+  includeSubdomains: true
+}));
 
 // limit the size of the body for requests
 app.use(express.json({limit: '100kb'}));

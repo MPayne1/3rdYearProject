@@ -392,7 +392,6 @@
       "resolved": "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-1.0.0.tgz",
       "version": "1.0.0"
     },
-    "csurf": "^1.9.0",
     "debug": {
       "integrity": "sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==",
       "requires": {
@@ -564,6 +563,7 @@
     },
     "express": "^4.16.4",
     "express-rate-limit": "^3.3.2",
+    "express-sslify": "^1.2.0",
     "extend-shallow": {
       "dependencies": {
         "is-extendable": {
