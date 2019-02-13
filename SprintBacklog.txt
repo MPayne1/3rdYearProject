@@ -14,13 +14,16 @@ Sprint Backlog
 
 [] security
   [x] https
-    [x] generate keys
+    [x] generate keys using openssl
     [x] reconfigure express()
     [x] change urls to https
   [] html encoding of all user inputs
   [] js encoding of all user inputs
-  [] anyother security issues
-
+  [] any other security issues
+  [] hide error details e.g. stack trace
+  [] rate limiting
+    [] login route
+  [] body size limit
 
 [] unit test everything
   [] use mocha and chai
