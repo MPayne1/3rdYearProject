@@ -5,6 +5,7 @@
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
+const rateLimiter = require('express-rate-limit');
 
 const volleyball = require('volleyball'); // shows req/res in node terminal
 const cors = require('cors');
@@ -18,10 +19,19 @@ var options = {
   cert: fs.readFileSync('server/certificate/hostcert.pem').toString()
 };
 
+// important if behind a proxy to ensure client IP is passed to req.ip
+app.enable('trust proxy');
 
 const auth = require('./auth/index.js');
 const league = require('./league/index.js');
 const team = require('./team/index.js');
+
+// don't allow more than 10 reqs in 15 mins
+var apiAuthLimiter = new rateLimiter({
+  windowMs: 15*60*1000, // 15 mins
+  max: 2,
+  message: "Too many login attempts, please try again later"
+});
 
 // shows req/res nicely in terminal
 app.use(volleyball);
@@ -43,6 +53,7 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/auth/login', apiAuthLimiter);   // rate limit the login route
 app.use('/auth', auth);
 app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
 app.use('/team', middlewares.isLoggedIn, team);
