@@ -19,10 +19,10 @@ Sprint Backlog
     [x] change urls to https
   [] html encoding of all user inputs
   [] js encoding of all user inputs
-  [] any other security issues
-  [] hide error details e.g. stack trace
-  [] rate limiting
-    [] login route
+  [x] hide error details e.g. stack trace
+    [x] need stack trace for development though, so do after development finished
+  [x] rate limiting
+    [x] login route
   [] body size limit
 
 [] unit test everything
