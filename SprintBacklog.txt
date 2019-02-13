@@ -17,13 +17,18 @@ Sprint Backlog
     [x] generate keys using openssl
     [x] reconfigure express()
     [x] change urls to https
-  [] html encoding of all user inputs
-  [] js encoding of all user inputs
+  [x] html encoding of all user inputs
+  [x] js encoding of all user inputs
   [x] hide error details e.g. stack trace
     [x] need stack trace for development though, so do after development finished
   [x] rate limiting
     [x] login route
-  [] body size limit
+  [x] body size limit
+  [x] X-frame-options header set to 'deny', so my application can't be loaded inside a frame
+  [x] contentSecurityPolicy
+    [x] only allow trusted sources, 'self'
 
+
+    
 [] unit test everything
   [] use mocha and chai

@@ -8,6 +8,7 @@ const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
 
+
 const volleyball = require('volleyball'); // shows req/res info in node terminal
 const cors = require('cors');
 const middlewares = require('./auth/middlewares');
@@ -48,6 +49,7 @@ app.use(cors({
 // limit the size of the body for requests
 app.use(express.json({limit: '100kb'}));
 
+app.use(helmet());
 // only allow content from trusted sources
 app.use(helmet.contentSecurityPolicy({
   directives: {
