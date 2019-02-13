@@ -1285,6 +1285,7 @@
       "resolved": "https://registry.npmjs.org/has-values/-/has-values-1.0.0.tgz",
       "version": "1.0.0"
     },
+    "helmet": "^3.15.1",
     "http-errors": {
       "integrity": "sha1-i1VoC7S+KDoLW/TqLjhYC+HZMg0=",
       "requires": {

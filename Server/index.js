@@ -1,13 +1,14 @@
 //handles overall routing/processing of requiest for the app
 // the middlewares are used in the order theyre in
 
-// require in modules
+// ---------  require in modules  ---------
 const express = require('express');
 const https = require('https');
 const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
+const helmet = require('helmet');
 
-const volleyball = require('volleyball'); // shows req/res in node terminal
+const volleyball = require('volleyball'); // shows req/res info in node terminal
 const cors = require('cors');
 const middlewares = require('./auth/middlewares');
 require('dotenv').config();
@@ -29,9 +30,10 @@ const team = require('./team/index.js');
 // don't allow more than 10 reqs in 15 mins
 var apiAuthLimiter = new rateLimiter({
   windowMs: 15*60*1000, // 15 mins
-  max: 2,
+  max: 10,
   message: 'Too many login attempts, please try again later.',
 });
+
 
 // shows req/res nicely in terminal
 app.use(volleyball);
@@ -41,7 +43,30 @@ app.use(cors({
   origin: 'http://localhost:8080'
 }));
 
-app.use(express.json());
+// ---------  Security Middleswares  ---------
+
+// limit the size of the body for requests
+app.use(express.json({limit: '100kb'}));
+
+// only allow content from trusted sources
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    scriptSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'"],
+    connectSrc: ["'none'"],
+    fontSrc: ["'none'"],
+    objectSrc: ["'none'"],
+    mediaSrc: ["'none'"],
+    frameSrc: ["'none'"]
+ }
+}));
+
+// don't allow my application to be used inside frames, only for supported browsers
+app.use(helmet.frameguard({action: 'deny'}));
+
+// ---------  Routes  ---------
 
 // check the users jwt
 app.use(middlewares.checkTokenSetUser);
