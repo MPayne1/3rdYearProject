@@ -30,7 +30,7 @@ const team = require('./team/index.js');
 var apiAuthLimiter = new rateLimiter({
   windowMs: 15*60*1000, // 15 mins
   max: 2,
-  message: "Too many login attempts, please try again later"
+  message: 'Too many login attempts, please try again later.',
 });
 
 // shows req/res nicely in terminal

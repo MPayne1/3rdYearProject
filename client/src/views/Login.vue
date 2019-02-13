@@ -89,9 +89,10 @@ export default {
           });
         }).then((result) => {
           localStorage.token = result.token; // store the token in the browsers local storage
+          location.reload();
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.loggingIn = false;
-            location.reload();
+
             this.$router.push('/dashboard');
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message
