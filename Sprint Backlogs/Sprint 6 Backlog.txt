@@ -1,0 +1,35 @@
+
+Sprint Backlog
+[x] UI designs
+  [x] general style
+
+[] attribute loading spinner to loading.io
+[x] teaminfo page, players list card, title same size as upcoming fixtures on league info page
+[] refactor code, add more methods, put db files into folders
+[x] reload app.vue after logging in
+[] go over http status codes
+[] fix navbar when screen small e.g on mobile.
+
+[x] update webpack-dev-server as was found to have another vulnerability
+
+[x] security
+  [x] https
+    [x] generate keys using openssl
+    [x] reconfigure express()
+    [x] change urls to https
+  [x] html encoding of all user inputs
+  [x] js encoding of all user inputs
+  [x] hide error details e.g. stack trace
+    [x] need stack trace for development though, so do after development finished
+  [x] rate limiting
+    [x] login route
+  [x] body size limit
+  [x] X-frame-options header set to 'deny', so my application can't be loaded inside a frame
+  [x] contentSecurityPolicy
+    [x] only allow trusted sources, 'self'
+  [x] HTTP Strict Transport Security (HSTS),
+    [x] browser only make https req
+  [x] enforce all req to be from https
+
+[] unit test everything
+  [] use mocha and chai
