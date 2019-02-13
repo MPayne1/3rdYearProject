@@ -83,7 +83,10 @@ export default {
           if (response.ok) {
             return response.json();
           }
-          // handle any errors the server returns
+          if(response.status === 429) {
+            throw new Error('Too many login attempts, please try again later.');
+          }
+          // handle any other errors the server returns
           return response.json().then((error) => {
             throw new Error(error.message);
           });
