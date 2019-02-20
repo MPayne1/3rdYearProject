@@ -24,6 +24,21 @@ const updateFootballResultsSchema  = joi.object().keys({
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
+// schema for inserting american football results
+const updateAmericanFootballResultsSchema  = joi.object().keys({
+  FixtureID: joi.number().positive().required(),
+  HomePointsScoredQ1: joi.number().min(0).required(),
+  AwayPointsScoredQ1: joi.number().min(0).required(),
+  HomePointsScoredHT: joi.number().min(0).required(),
+  AwayPointsScoredHT: joi.number().min(0).required(),
+  HomePointsScoredQ3: joi.number().min(0).required(),
+  AwayPointsScoredQ3: joi.number().min(0).required(),
+  HomePointsScoredFT: joi.number().min(0).required(),
+  AwayPointsScoredFT: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+});
+
+
 // all paths are prepended with /league/results
 router.get('/', (req, res) => {
   res.json({
@@ -32,9 +47,10 @@ router.get('/', (req, res) => {
 });
 
 
-// handle request to update football results
+// handle request to insert football results
 router.post('/football', async(req, res, next) => {
   var userID = req.user.UserID;
+  console.log(userID);
   var fixtureID  = req.body.FixtureID;
   var HomeGoalsScoredHT = req.body.HomeGoalsScoredHT;
   var AwayGoalsScoredHT = req.body.AwayGoalsScoredHT;
@@ -44,34 +60,40 @@ router.post('/football', async(req, res, next) => {
 
   const result = joi.validate(req.body, updateFootballResultsSchema);
   if(result.error === null) {
-    // check user is captain of one of the teams or the league admin
-    var admin = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+    // check user is admin/captain
+    var update = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
       if(err) next(err);
       // if result doesn't have league/team Admin then user can't update resuts
       try {
         result[0].leagueAdmin;
+        // if user is allowed, update the results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertFootballResult(fixtureID, HomeGoalsScoredHT,
+          AwayGoalsScoredHT, HomeGoalsScoredFT, AwayGoalsScoredFT, MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
       } catch(e) {
-        var error = new Error("Only league admins and team captains can update fixture information");
+        var error = new Error("Only league admins and team captains can update reuslts");
         res.status(403);
         next(error);
       }
     });
-
-    // if user is allowed, update the results
-    var insert = await dbInsertFootballResult(fixtureID, HomeGoalsScoredHT,
-      AwayGoalsScoredHT, HomeGoalsScoredFT, AwayGoalsScoredFT, MatchDescription, (err) => {
-        if(err) next(err);
-    });
-
-    updateFixturePlayed(fixtureID);
-    res.json(req.body);
   }
   else {
     next(result.error);
   }
 });
 
-// american Football
+// american Football results
+router.post('/americanFootball', async(req,res, next) => {
+  var userID = req.user.UserID;
+  var fixtureID  = req.body.FixtureID;
+})
+
+
+// handle req to insert tennis results
+
 // Rugby
 // Tennis
 // tableTennis

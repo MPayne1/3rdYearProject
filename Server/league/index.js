@@ -65,6 +65,8 @@ const leagueIDSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required()
 });
 
+router.use('/results', resultsRoute);
+
 // all paths are prepended with /league
 router.get('/', (req, res) => {
   res.json({
@@ -72,7 +74,6 @@ router.get('/', (req, res) => {
   });
 });
 
-router.use('/results', resultsRoute);
 
 // handle get leagueID from leagueName request
 router.post('/leagueID', async(req, res, next) => {
@@ -217,15 +218,16 @@ router.post('/updateFixture', async (req, res, next) => {
       // if result doesn't have league/team Admin then user can't update fixture
       try {
         result[0].leagueAdmin;
+        // if user is allowed, update the fixture info
+        var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
+        res.json(req.body);
       } catch(e) {
         var error = new Error("Only league admins and team captains can update fixture information");
         res.status(403);
         next(error);
       }
     });
-    // if user is allowed, update the fixture info
-    var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
-    res.json(req.body);
+
   } else {
     next(result.error);
   }
