@@ -215,12 +215,14 @@ async function createHockeyResultsTable(err) {
 // createSeasonsTable();
 // createFixturesTable();
 
-// ------  create Results tables  ------
-// createFootballResultsTable();
-// createRugbyResultsTable();
-// createAmericanFootballResultsTable();
-// createBasketballResultsTable();
-// createTennisResultsTable();
-// createCricketResultsTable();
-// createVolleyballResultsTable();
-// createHockeyResultsTable();
+/*
+------  create Results tables  ------
+  createFootballResultsTable();
+  createRugbyResultsTable();
+  createAmericanFootballResultsTable();
+  createBasketballResultsTable();
+  createTennisResultsTable();
+  createCricketResultsTable();
+  createVolleyballResultsTable();
+  createHockeyResultsTable();
+*/
