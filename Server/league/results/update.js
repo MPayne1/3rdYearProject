@@ -63,10 +63,7 @@ router.post('/football', async(req, res, next) => {
         if(err) next(err);
       });
 
-    // update fixture.played to true
-    var update = await dbUpdateFixturePlayed(fixtureID, 'true', (err) => {
-      if(err) next(err);
-    });
+    updateFixturePlayed(fixtureID);
 
     res.json(req.body);
   }
@@ -74,5 +71,14 @@ router.post('/football', async(req, res, next) => {
     next(result.error);
   }
 });
+
+
+// call db to update fixture played to true
+async function updateFixturePlayed (fixtureID) {
+  // update fixture.played to true
+  var update = await dbUpdateFixturePlayed(fixtureID, 'true', (err) => {
+    if(err)next(err);
+  });
+}
 
 module.exports = router;
