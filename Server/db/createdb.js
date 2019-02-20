@@ -92,6 +92,33 @@ async function createSeasonsTable(err) {
 	});
 }
 
+// ------  create results tables  ------
+
+// create Football result table
+async function createFootballResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE FootballResults(FixtureID int, HomeGoalsScoredHT int,"+
+  " AwayGoalsScoredHT int,HomeGoalsScoredFT int, AwayGoalsScoredFT int, " +
+  "PRIMARY KEY (FixtureID), FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("FootballResults table created");
+  });
+}
+
+// create Rugby result table
+async function createRugbyResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE RugbyResults(FixtureID int, HomePointsScoredHT int,"+
+  " AwayPointsScoredHT int,HomePointsScoredFT int, AwayPointsScoredFT int, " +
+  "PRIMARY KEY (FixtureID), FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("FootballResults table created");
+  });
+}
+
+
 
 // createUsersTable();
 // createLeagueTable();

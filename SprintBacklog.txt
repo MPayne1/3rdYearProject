@@ -4,13 +4,24 @@ Sprint Backlog
   [x] general style
 
 [] attribute loading spinner to loading.io
-[x] teaminfo page, players list card, title same size as upcoming fixtures on league info page
 [] refactor code, add more methods, put db files into folders
-[x] reload app.vue after logging in
 [] go over http status codes
 [] fix navbar when screen small e.g on mobile.
+[] add league description
+[] add team description
+
 
 [] results
+  [] backend
+    [] db results table for each sport
+    [] add results to correct Table
+    [] update fixture to have been played
+
+  [] frontend
+    [] form for each sport
+    [] send req with results
+    [] redirect to league homepage
+
 
 [] rankings
 
