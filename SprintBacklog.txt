@@ -11,6 +11,8 @@ Sprint Backlog
 [] add team description
 [] routing better
 
+[] add team with teamID 0 for any bye weeks
+
 [] results
   [] backend
     [x] db results table for each sport
