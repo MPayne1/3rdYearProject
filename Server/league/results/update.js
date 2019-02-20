@@ -9,17 +9,19 @@ const joi = require('joi');
 // ------  db operations  ------
 
 const dbSelectUpdateFixtureAdmin = require('../../db/selectUpdateFixtureAdmin.js');
-
+const dbInsertFootballResult = require('../../db/insert/insertFootballResults.js');
+const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
 
 // ------ Schemas ------
 
 // schema for updating football results
 const updateFootballResultsSchema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
-  HomeTeamScoreHT: joi.number().min(0).required(),
-  AwayTeamScoreHT: joi.number().min(0).required(),
-  HomeTeamScoreFT: joi.number().min(0).required(),
-  AwayTeamScoreFT: joi.number().min(0).required()
+  HomeGoalsScoredHT: joi.number().min(0).required(),
+  AwayGoalsScoredHT: joi.number().min(0).required(),
+  HomeGoalsScoredFT: joi.number().min(0).required(),
+  AwayGoalsScoredFT: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
 // all paths are prepended with /league/results
@@ -34,6 +36,11 @@ router.get('/', (req, res) => {
 router.post('/football', async(req, res, next) => {
   var userID = req.user.UserID;
   var fixtureID  = req.body.FixtureID;
+  var HomeGoalsScoredHT = req.body.HomeGoalsScoredHT;
+  var AwayGoalsScoredHT = req.body.AwayGoalsScoredHT;
+  var HomeGoalsScoredFT = req.body.HomeGoalsScoredFT;
+  var AwayGoalsScoredFT = req.body.AwayGoalsScoredFT;
+  var MatchDescription = req.body.MatchDescription;
 
   const result = joi.validate(req.body, updateFootballResultsSchema);
   if(result.error === null) {
@@ -49,10 +56,18 @@ router.post('/football', async(req, res, next) => {
         next(error);
       }
     });
-    // success
-    // update results
+
+    // if user is allowed, update the results
+    var insert = await dbInsertFootballResult(fixtureID, HomeGoalsScoredHT,
+      AwayGoalsScoredHT, HomeGoalsScoredFT, AwayGoalsScoredFT, MatchDescription, (err) => {
+        if(err) next(err);
+      });
 
     // update fixture.played to true
+    var update = await dbUpdateFixturePlayed(fixtureID, 'true', (err) => {
+      if(err) next(err);
+    });
+
     res.json(req.body);
   }
   else {
@@ -60,23 +75,4 @@ router.post('/football', async(req, res, next) => {
   }
 });
 
-/*
-// handle get leagueID from leagueName request
-router.post('/leagueID', async(req, res, next) => {
-  const result  = joi.validate(req.body, leagueIDSchema);
-  if(result.error === null) {
-    var players  = await dbSelectLeagueID(req.body.leagueName, async function(err, result){
-      if(err) next(err);
-      try{
-        result[0].leagueID;
-        res.json({result});
-      } catch(e) {
-        invalidInput(res, next);
-      }
-    });
-  } else{
-    invalidInput(res, next);
-  }
-});
-*/
 module.exports = router;
