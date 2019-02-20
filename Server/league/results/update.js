@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
+// ------  db operations  ------
+
+const dbSelectUpdateFixtureAdmin = require('../../db/selectUpdateFixtureAdmin.js');
+
 
 // ------ Schemas ------
 
@@ -28,12 +32,31 @@ router.get('/', (req, res) => {
 
 // handle request to update football results
 router.post('/football', async(req, res, next) => {
+  var userID = req.user.UserID;
+  var fixtureID  = req.body.FixtureID;
+
   const result = joi.validate(req.body, updateFootballResultsSchema);
   if(result.error === null) {
+    // check user is captain of one of the teams or the league admin
+    var admin = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next(err);
+      // if result doesn't have league/team Admin then user can't update resuts
+      try {
+        result[0].leagueAdmin;
+      } catch(e) {
+        var error = new Error("Only league admins and team captains can update fixture information");
+        res.status(403);
+        next(error);
+      }
+    });
+    // success
+    // update results
+
+    // update fixture.played to true
     res.json(req.body);
   }
   else {
-    res.json(result.error);
+    next(result.error);
   }
 });
 
