@@ -9,7 +9,7 @@ Sprint Backlog
 [] fix navbar when screen small e.g on mobile.
 [] add league description
 [] add team description
-
+[] routing better
 
 [] results
   [] backend

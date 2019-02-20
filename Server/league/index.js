@@ -5,7 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
-const resultsRoute = require('./results.js');
+const resultsRoute = require('./results/index.js');
 // db operations
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
@@ -20,7 +20,7 @@ const dbSelectLeagueID = require('../db/selectLeagueID.js');
 const dbSelectUpdateFixtureAdmin = require('../db/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../db/updateFixtureInfo.js');
 
-//schemas
+//------  schemas  ------
 
 // schema for input validation
 const leagueSchema = joi.object().keys({
