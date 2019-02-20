@@ -13,8 +13,9 @@ Sprint Backlog
 
 [] results
   [] backend
-    [] db results table for each sport
+    [x] db results table for each sport
     [] add results to correct Table
+      [] check user can update results
     [] update fixture to have been played
 
   [] frontend
@@ -22,6 +23,7 @@ Sprint Backlog
     [] send req with results
     [] redirect to league homepage
 
+  [] update list of sports when searching for league
 
 [] rankings
 
