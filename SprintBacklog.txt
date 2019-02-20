@@ -4,7 +4,8 @@ Sprint Backlog
   [x] general style
 
 [] attribute loading spinner to loading.io
-[] refactor code, add more methods, put db files into folders
+[] refactor code, add more methods
+[] put db files into folders
 [] go over http status codes
 [] fix navbar when screen small e.g on mobile.
 [] add league description
@@ -12,20 +13,20 @@ Sprint Backlog
 [] routing better
 
 [] add team with teamID 0 for any bye weeks
+  [] might have to change joi schemas
 
 [] results
-  [] backend
+  [] backend, for each sport
     [x] db results table for each sport
-    [] add results to correct Table
-      [] check user can update results
-    [] update fixture to have been played
+    [x] add results to correct Table
+      [x] check user can update results
+    [x] update fixture to have been played
 
   [] frontend
     [] form for each sport
     [] send req with results
     [] redirect to league homepage
-
-  [] update list of sports when searching for league
+    [] update list of sports when searching for league
 
 [] rankings
 

@@ -158,7 +158,6 @@ router.post('/tennis', async(req, res, next) => {
 
 
 // Rugby
-// Tennis
 // tableTennis
 // cricket
 // hockey
