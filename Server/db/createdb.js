@@ -114,7 +114,7 @@ async function createRugbyResultsTable(err) {
   "PRIMARY KEY (FixtureID), FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
   await db.query(sql, function(err, result){
     if(err) throw err;
-    console.log("FootballResults table created");
+    console.log("RugbyResults table created");
   });
 }
 
@@ -128,11 +128,23 @@ async function createAmericanFootballResultsTable(err) {
   "FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
   await db.query(sql, function(err, result){
     if(err) throw err;
-    console.log("FootballResults table created");
+    console.log("AmericanFootballResults table created");
   });
 }
 
-
+// create basketball results table
+async function createBasketballResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE BasketballResults(FixtureID int, HomePointsScoredQ1 int,"+
+  " AwayPointsScoredQ1 int, HomePointsScoredHT int, AwayPointsScoredHT int,"+
+  " HomePointsScoredQ3 int, AwayPointsScoredQ3 int, HomePointsScoredFT int, "+
+  "AwayPointsScoredFT int, PRIMARY KEY (FixtureID), "+
+  "FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("BasketballResults table created");
+  });
+}
 
 
 
@@ -146,3 +158,4 @@ async function createAmericanFootballResultsTable(err) {
 createFootballResultsTable();
 createRugbyResultsTable();
 createAmericanFootballResultsTable();
+createBasketballResultsTable();
