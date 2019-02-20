@@ -194,6 +194,17 @@ async function createVolleyballResultsTable(err) {
 }
 
 // create hockey result table
+async function createHockeyResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE HockeyyResults(FixtureID int, HomePointsScoredHT int,"+
+  " AwayPointsScoredHT int,HomePointsScoredFT int, AwayPointsScoredFT int, " +
+  "MatchDescription VARCHAR(300), PRIMARY KEY (FixtureID), "+
+  "FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("HockeyResults table created");
+  });
+}
 
 
 
@@ -212,3 +223,4 @@ async function createVolleyballResultsTable(err) {
 // createTennisResultsTable();
 // createCricketResultsTable();
 // createVolleyballResultsTable();
+// createHockeyResultsTable();
