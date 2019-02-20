@@ -118,6 +118,23 @@ async function createRugbyResultsTable(err) {
   });
 }
 
+// create Rugby result table
+async function createAmericanFootballResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE AmericanFootballResults(FixtureID int, HomePointsScoredQ1 int,"+
+  " AwayPointsScoredQ1 int, HomePointsScoredHT int, AwayPointsScoredHT int,"+
+  " HomePointsScoredQ3 int, AwayPointsScoredQ3 int, HomePointsScoredFT int, "+
+  "AwayPointsScoredFT int, PRIMARY KEY (FixtureID), "+
+  "FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("FootballResults table created");
+  });
+}
+
+
+
+
 
 
 // createUsersTable();
@@ -126,3 +143,6 @@ async function createRugbyResultsTable(err) {
 // createPlaysForTable();
 // createSeasonsTable();
 // createFixturesTable();
+createFootballResultsTable();
+createRugbyResultsTable();
+createAmericanFootballResultsTable();
