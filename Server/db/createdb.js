@@ -146,7 +146,19 @@ async function createBasketballResultsTable(err) {
   });
 }
 
-
+// create tennis results table
+async function createTennisResultsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE TennisResults(FixtureID int, HomePointsScoredS1 int,"+
+  " AwayPointsScoredS1 int, HomePointsScoredS2 int, AwayPointsScoredS2 int,"+
+  " HomePointsScoredS3 int, AwayPointsScoredS3 int, HomePointsScoredS4 int, "+
+  "AwayPointsScoredS4 int, HomePointsScoredS5 int, AwayPointsScoredS5 int, " +
+  "PRIMARY KEY (FixtureID), FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("BasketballResults table created");
+  });
+}
 
 
 // createUsersTable();
@@ -155,7 +167,10 @@ async function createBasketballResultsTable(err) {
 // createPlaysForTable();
 // createSeasonsTable();
 // createFixturesTable();
-createFootballResultsTable();
-createRugbyResultsTable();
-createAmericanFootballResultsTable();
-createBasketballResultsTable();
+
+// ------  create Results tables  ------
+// createFootballResultsTable();
+// createRugbyResultsTable();
+// createAmericanFootballResultsTable();
+// createBasketballResultsTable();
+createTennisResultsTable();
