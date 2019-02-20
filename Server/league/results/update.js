@@ -61,10 +61,9 @@ router.post('/football', async(req, res, next) => {
     var insert = await dbInsertFootballResult(fixtureID, HomeGoalsScoredHT,
       AwayGoalsScoredHT, HomeGoalsScoredFT, AwayGoalsScoredFT, MatchDescription, (err) => {
         if(err) next(err);
-      });
+    });
 
     updateFixturePlayed(fixtureID);
-
     res.json(req.body);
   }
   else {
@@ -72,10 +71,18 @@ router.post('/football', async(req, res, next) => {
   }
 });
 
+// american Football
+// Rugby
+// Tennis
+// tableTennis
+// cricket
+// hockey
+// volleyball
+// basketball
+
 
 // call db to update fixture played to true
 async function updateFixturePlayed (fixtureID) {
-  // update fixture.played to true
   var update = await dbUpdateFixturePlayed(fixtureID, 'true', (err) => {
     if(err)next(err);
   });

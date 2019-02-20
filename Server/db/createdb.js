@@ -230,8 +230,6 @@ async function createTableTennisResultsTable(err) {
 // createPlaysForTable();
 // createSeasonsTable();
 // createFixturesTable();
-
-
 // ------  create Results tables  ------
 //createFootballResultsTable();
 //createRugbyResultsTable();
