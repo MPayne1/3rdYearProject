@@ -5,6 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
+const resultsRoute = require('./results.js');
 // db operations
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
 const dbInsert = require('../db/createLeague.js');
@@ -70,6 +71,8 @@ router.get('/', (req, res) => {
     message: 'league router works'
   });
 });
+
+router.use('/results', resultsRoute);
 
 // handle get leagueID from leagueName request
 router.post('/leagueID', async(req, res, next) => {
