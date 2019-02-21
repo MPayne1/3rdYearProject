@@ -1,3 +1,4 @@
 node_modules/
 .env
 Server/certificate/
+Server/testinformation.txt

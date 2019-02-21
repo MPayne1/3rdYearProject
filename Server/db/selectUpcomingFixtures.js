@@ -19,7 +19,7 @@ var selectUpcomingFixtures  = async function(leagueID, callback) {
 module.exports = selectUpcomingFixtures;
 
 /*
-select Distinct fixtureID, HomeTeamID, AwayTeamID, HomeTeamName, AwayTeamName
+select distinct fixtureID, HomeTeamID, AwayTeamID, HomeTeamName, AwayTeamName
 FROM fixture, Season,
 (select teamName as HomeTeamName From Team,fixture WHERE HomeTeamID = teamID)as HomeTeam,
 (select teamName as AwayTeamName From team,fixture WHERE AwayTeamID = teamID)as AwayTeam
