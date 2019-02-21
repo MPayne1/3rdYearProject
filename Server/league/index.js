@@ -19,7 +19,7 @@ const dbSelectUpcomingFixtures = require('../db/selectUpcomingFixtures.js');
 const dbSelectLeagueID = require('../db/selectLeagueID.js');
 const dbSelectUpdateFixtureAdmin = require('../db/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../db/updateFixtureInfo.js');
-
+const dbUpdateSeasonFinished = require('../db/update/updateFinishPreviousSeason.js');
 //------  schemas  ------
 
 // schema for input validation
@@ -256,6 +256,9 @@ if(result.error === null) {
         try {
           result[0];
 
+          // set last season finished true
+          await dbUpdateSeasonFinished(leagueID, 'true');
+          
           // insert new season into season table, also getting the seasonID jsut created
           var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
             if(er) next(er);
@@ -336,8 +339,6 @@ function invalidInput(res, next) {
   var error = new Error("Invlaid Input");
   next(error);
 }
-
-
 
 
 module.exports = router;
