@@ -258,7 +258,7 @@ if(result.error === null) {
 
           // set last season finished true
           await dbUpdateSeasonFinished(leagueID, 'true');
-          
+
           // insert new season into season table, also getting the seasonID jsut created
           var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
             if(er) next(er);
