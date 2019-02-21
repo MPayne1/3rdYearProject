@@ -12,6 +12,8 @@ Sprint Backlog
 [] add team description
 [] routing better
 [] add user into playsfor once theyve created a new team
+[] when start new season set last season finished to true
+
 
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas

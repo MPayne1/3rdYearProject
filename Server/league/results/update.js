@@ -12,7 +12,7 @@ const dbSelectUpdateFixtureAdmin = require('../../db/selectUpdateFixtureAdmin.js
 const dbInsertFootballResult = require('../../db/insert/insertFootballResults.js');
 const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
 const dbInsertTennisResult = require('../../db/insert/insertTennisResults.js');
-
+const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFootballResults.js');
 // ------ Schemas ------
 
 // schema for updating football results
@@ -91,9 +91,7 @@ router.post('/football', async(req, res, next) => {
         });
         res.json(req.body);
       } catch(e) {
-        var error = new Error("Only league admins and team captains can update reuslts");
-        res.status(403);
-        next(error);
+        unauthorisedUser(res, next)
       }
     });
   }
@@ -104,9 +102,44 @@ router.post('/football', async(req, res, next) => {
 
 // american Football results
 router.post('/americanFootball', async(req, res, next) => {
-  var userID = req.user.UserID;
-  var fixtureID = req.body.FixtureID;
-})
+  const result  = joi.validate(req.body, updateAmericanFootballResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomePointsScoredQ1 = req.body.HomePointsScoredQ1;
+    var AwayPointsScoredQ1 = req.body.AwayPointsScoredQ1;
+    var HomePointsScoredHT = req.body.HomePointsScoredHT;
+    var AwayPointsScoredHT = req.body.AwayPointsScoredHT;
+    var HomePointsScoredQ3 = req.body.HomePointsScoredQ3;
+    var AwayPointsScoredQ3 = req.body.AwayPointsScoredQ3;
+    var HomePointsScoredFT = req.body.HomePointsScoredFT;
+    var AwayPointsScoredFT = req.body.AwayPointsScoredFT;
+    var MatchDescription = req.body.MatchDescription;
+
+    // check user is admin/team captain
+    var update = dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next (err);
+      // if results doesn'thave leagueAdmin user cant update results
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed update results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertAmericanFootballResult(fixtureID, HomePointsScoredS1
+          , AwayPointsScoredS1, HomePointsScoredS2, AwayPointsScoredS2
+          , HomePointsScoredS3, AwayPointsScoredS3, HomePointsScoredS4
+          , AwayPointsScoredS4,  HomePointsScoredS5, AwayPointsScoredS5
+          ,MatchDescription, (err) => {
+            if(err) next(err);
+        });
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  } else {
+    next(result.error);
+  }
+
+});
 
 
 // handle req to insert tennis results
@@ -144,9 +177,7 @@ router.post('/tennis', async(req, res, next) => {
         });
         res.json(req.body);
       } catch(e) {
-        var error = new Error("Only league admins and team captains can update reuslts");
-        res.status(403);
-        next(error);
+        unauthorisedUser(res, next)
       }
     });
   }
@@ -171,5 +202,13 @@ async function updateFixturePlayed (fixtureID) {
     if(err)next(err);
   });
 }
+
+// create/format response for unauthorised user
+function unauthorisedUser(res, next) {
+  var error = new Error("Only league admins and team captains can update reuslts");
+  res.status(403);
+  next(error);
+}
+
 
 module.exports = router;
