@@ -35,6 +35,11 @@
            <option value="Rugby">Rugby</option>
            <option value="Tennis">Tennis</option>
            <option value="Basketball">Basketball</option>
+           <option value="American Football">American Football</option>
+           <option value="Volleyball">Volleyball</option>
+           <option value="Table Tennis">Table Tennis</option>
+           <option value="Cricket">Cricket</option>
+           <option value="Hockey">Hockey</option>
          </select>
          </div>
       </div>

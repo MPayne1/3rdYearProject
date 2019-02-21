@@ -26,7 +26,7 @@ const dbUpdateSeasonFinished = require('../db/update/updateFinishPreviousSeason.
 const leagueSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required(),
   leagueAdmin: joi.number().positive().required(),
-  Sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
+  Sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   maxTeams: joi.number().positive().required(),
   loss: joi.number().min(0).required(),
   draw: joi.number().min(0).required(),
