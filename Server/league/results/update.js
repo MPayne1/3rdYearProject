@@ -124,13 +124,13 @@ router.post('/americanFootball', async(req, res, next) => {
         result[0].leagueAdmin;
         // if user is allowed update results
         updateFixturePlayed(fixtureID);
-        var insert = await dbInsertAmericanFootballResult(fixtureID, HomePointsScoredS1
-          , AwayPointsScoredS1, HomePointsScoredS2, AwayPointsScoredS2
-          , HomePointsScoredS3, AwayPointsScoredS3, HomePointsScoredS4
-          , AwayPointsScoredS4,  HomePointsScoredS5, AwayPointsScoredS5
-          ,MatchDescription, (err) => {
+        var insert = await dbInsertAmericanFootballResult(fixtureID, HomePointsScoredQ1
+          , AwayPointsScoredQ1, HomePointsScoredHT, AwayPointsScoredHT
+          , HomePointsScoredQ3, AwayPointsScoredQ3, HomePointsScoredFT
+          , AwayPointsScoredFT, MatchDescription, (err) => {
             if(err) next(err);
         });
+        res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
       }

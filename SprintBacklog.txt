@@ -12,7 +12,11 @@ Sprint Backlog
 [] add team description
 [] routing better
 [] add user into playsfor once theyve created a new team
-[] when start new season set last season finished to true
+[] remove sport field from team table
+[] fix searching for leagues when there's no teams in them
+
+[x] when start new season set last season finished to true
+
 
 
 [] add team with teamID 0 for any bye weeks

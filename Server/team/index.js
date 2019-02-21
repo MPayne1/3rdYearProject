@@ -17,7 +17,7 @@ const dbSelectTeamID = require('../db/selectTeamID.js');
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
   TeamAdmin: joi.number().positive().required(),
-  Sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
+  Sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   LeagueID: joi.number().positive().required(),
 });
 

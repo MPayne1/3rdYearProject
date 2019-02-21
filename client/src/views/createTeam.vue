@@ -37,7 +37,7 @@ const API_URL = 'https://localhost:3000/';
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)
     .required(),
-  sport: joi.string().regex(/^[a-zA-Z]{3,30}$/).max(30).required(),
+  sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   admin: joi.required(),
   league: joi.required(),
 });
