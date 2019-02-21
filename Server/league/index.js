@@ -250,6 +250,38 @@ if(result.error === null) {
     try {
       result[0].LeagueAdmin;
       numTimes = result[0].games;
+      // get list of teams in league
+      var teams = await dbSelectTeamsInLeague(leagueID, async function(err, result) {
+        if(err) next(err);
+        try {
+          result[0];
+
+          // insert new season into season table, also getting the seasonID jsut created
+          var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
+            if(er) next(er);
+            try{
+              seasonID = result2[result2.length-1].seasonID;
+
+              await generateFixtures(result, seasonID, leagueID, async (fixtures) => {
+                // then insert fixtures into db, for each time the teams play each other
+                for(i = 0; i < numTimes; i++) {
+                  for(j = 0; j < fixtures.length; j++) {
+                    await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
+                  }
+                }
+                console.log(fixtures);
+                res.json(fixtures);
+              });
+            } catch(e) {
+              next(e);
+            }
+          });
+        } catch(e) {
+          var error = new Error("No teams in the league yet.");
+          res.status(422);
+          next(error);
+        }
+      });
     } catch(e) {
       var error = new Error("Only the League Admin can start a new season");
       res.status(403);
@@ -258,38 +290,6 @@ if(result.error === null) {
   });
 
 
-  // get list of teams in league
-  var teams = await dbSelectTeamsInLeague(leagueID, async function(err, result) {
-    if(err) next(err);
-    try {
-      result = result;
-
-      // insert new season into season table, also getting the seasonID jsut created
-      var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
-        if(er) next(er);
-        try{
-          seasonID = result2[result2.length-1].seasonID;
-
-          await generateFixtures(result, seasonID, leagueID, async (fixtures) => {
-            // then insert fixtures into db, for each time the teams play each other
-            for(i = 0; i < numTimes; i++) {
-              for(j = 0; j < fixtures.length; j++) {
-                await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
-              }
-            }
-            console.log(fixtures);
-            res.json(fixtures);
-          });
-        } catch(e) {
-          next(e);
-        }
-      });
-    } catch(e) {
-      var error = new Error("No teams in the league yet.");
-      res.status(422);
-      next(error);
-    }
-  });
  } else {
   next(result.error);
  }

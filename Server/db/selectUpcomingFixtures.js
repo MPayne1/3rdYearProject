@@ -5,10 +5,15 @@ const dbCon  = require('./connection.js');
 var selectUpcomingFixtures  = async function(leagueID, callback) {
   var res;
     var sql = `SELECT DISTINCT fixtureID, HomeTeamID, AwayTeamID, HomeTeamName,
-     AwayTeamName, date, address, city, county, postcode FROM fixture, Season,
-    (SELECT teamName as HomeTeamName FROM team, fixture WHERE HomeTeamID = teamID)as HomeTeam,
-    (SELECT teamName as AwayTeamName FROM team, fixture WHERE AwayTeamID = teamID)as AwayTeam
-    WHERE fixture.LeagueID = ${mysql.escape(leagueID)}  AND Season.SeasonID = fixture.SeasonID AND Finished = 'false' AND Played = 'false';`;
+     AwayTeamName, date, address, city, county, postcode
+     FROM fixture, Season,
+    (SELECT teamName as HomeTeamName FROM team, fixture WHERE HomeTeamID = teamID
+      and team.leagueID = fixture.leagueID and team.leagueID = ${mysql.escape(leagueID)})as HomeTeam,
+    (SELECT teamName as AwayTeamName FROM team, fixture WHERE AwayTeamID = teamID
+      and team.leagueID = fixture.leagueID and team.leagueID = ${mysql.escape(leagueID)})as AwayTeam
+    WHERE fixture.LeagueID = ${mysql.escape(leagueID)}
+    AND Season.SeasonID = fixture.SeasonID
+    AND Finished = 'false' AND Played = 'false';`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;
@@ -19,7 +24,7 @@ var selectUpcomingFixtures  = async function(leagueID, callback) {
 module.exports = selectUpcomingFixtures;
 
 /*
-select distinct fixtureID, HomeTeamID, AwayTeamID, HomeTeamName, AwayTeamName
+select fixtureID, HomeTeamID, AwayTeamID, HomeTeamName, AwayTeamName
 FROM fixture, Season,
 (select teamName as HomeTeamName From Team,fixture WHERE HomeTeamID = teamID)as HomeTeam,
 (select teamName as AwayTeamName From team,fixture WHERE AwayTeamID = teamID)as AwayTeam
