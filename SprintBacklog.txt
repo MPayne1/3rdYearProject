@@ -28,6 +28,16 @@ Sprint Backlog
     [x] add results to correct Table
       [x] check user can update results
     [x] update fixture to have been played
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [] volleyball
+      [] Hockey
+      [] table Tennis
+      [] cricket
+      [] Basketball
+      [] rugby
+
 
   [] frontend
     [] form for each sport
