@@ -6,7 +6,7 @@ const dbCon  = require('../connection.js');
 var insertHockeyResults  = async function(fixtureID, HomePointsScoredHT
   , AwayPointsScoredHT, HomePointsScoredFT, AwayPointsScoredFT
   , MatchDescription, callback) {
-    var sql = `INSERT INTO AmericanFootballResults(fixtureID, HomePointsScoredHT
+    var sql = `INSERT INTO HockeyResults(fixtureID, HomePointsScoredHT
       , AwayPointsScoredHT, HomePointsScoredFT, AwayPointsScoredFT, MatchDescription)
       VALUES(${mysql.escape(fixtureID)}, ${mysql.escape(HomePointsScoredHT)},
        ${mysql.escape(AwayPointsScoredHT)}, ${mysql.escape(HomePointsScoredFT)},
