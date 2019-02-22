@@ -14,6 +14,7 @@ Sprint Backlog
 [] add user into playsfor once theyve created a new team
 [] remove sport field from team table
 [] fix searching for leagues when there's no teams in them
+  [] creating league redirects to create team.
 
 [x] when start new season set last season finished to true
 

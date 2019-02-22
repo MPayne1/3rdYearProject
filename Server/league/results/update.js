@@ -13,6 +13,7 @@ const dbInsertFootballResult = require('../../db/insert/insertFootballResults.js
 const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
 const dbInsertTennisResult = require('../../db/insert/insertTennisResults.js');
 const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFootballResults.js');
+const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResults.js');
 // ------ Schemas ------
 
 // schema for updating football results
@@ -200,6 +201,52 @@ router.post('/tennis', async(req, res, next) => {
     next(result.error);
   }
 });
+
+
+// handle req to insert tennis results
+router.post('/volleyball', async(req, res, next) => {
+  const result = joi.validate(req.body, updateVolleyballResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomePointsScoredG1 = req.body.HomePointsScoredG1;
+    var AwayPointsScoredG1 = req.body.AwayPointsScoredG1;
+    var HomePointsScoredG2 = req.body.HomePointsScoredG2;
+    var AwayPointsScoredG2 = req.body.AwayPointsScoredG2;
+    var HomePointsScoredG3 = req.body.HomePointsScoredG3;
+    var AwayPointsScoredG3 = req.body.AwayPointsScoredG3;
+    var HomePointsScoredG4 = req.body.HomePointsScoredG4;
+    var AwayPointsScoredG4 = req.body.AwayPointsScoredG4;
+    var HomePointsScoredG5 = req.body.HomePointsScoredG5;
+    var AwayPointsScoredG5 = req.body.AwayPointsScoredG5;
+    var MatchDescription = req.body.MatchDescription;
+
+    // check user is admin/captain
+    var update = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next(err);
+      // if result doesn't have league/team Admin then user can't update resuts
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed, update the results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertVolleyballResult(fixtureID, HomePointsScoredG1
+          , AwayPointsScoredG1, HomePointsScoredG2, AwayPointsScoredG2
+          , HomePointsScoredG3, AwayPointsScoredG3, HomePointsScoredG4
+          , AwayPointsScoredG4,  HomePointsScoredG5, AwayPointsScoredG5
+          ,MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  }
+  else {
+    next(result.error);
+  }
+});
+
 
 
 
