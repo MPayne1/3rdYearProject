@@ -15,6 +15,8 @@ const dbInsertTennisResult = require('../../db/insert/insertTennisResults.js');
 const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFootballResults.js');
 const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResults.js');
 const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResults.js');
+const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
+
 // ------ Schemas ------
 
 // schema for updating football results
@@ -74,7 +76,15 @@ const updateVolleyballResultsSchema =  joi.object().keys({
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
-
+// schema for inserting american football results
+const updateHockeyResultsSchema  = joi.object().keys({
+  FixtureID: joi.number().positive().required(),
+  HomePointsScoredHT: joi.number().min(0).required(),
+  AwayPointsScoredHT: joi.number().min(0).required(),
+  HomePointsScoredFT: joi.number().min(0).required(),
+  AwayPointsScoredFT: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+});
 
 // all paths are prepended with /league/results
 router.get('/', (req, res) => {
@@ -294,6 +304,45 @@ router.post('/tableTennis', async(req, res, next) => {
     next(result.error);
   }
 });
+
+
+
+// hockey results
+router.post('/hockey', async(req, res, next) => {
+  const result  = joi.validate(req.body, updateHockeyResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomePointsScoredHT = req.body.HomePointsScoredHT;
+    var AwayPointsScoredHT = req.body.AwayPointsScoredHT;
+    var HomePointsScoredFT = req.body.HomePointsScoredFT;
+    var AwayPointsScoredFT = req.body.AwayPointsScoredFT;
+    var MatchDescription = req.body.MatchDescription;
+
+    // check user is admin/team captain
+    var update = dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next (err);
+      // if results doesn'thave leagueAdmin user cant update results
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed update results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertHockeyResult(fixtureID, HomePointsScoredHT,
+          AwayPointsScoredHT, HomePointsScoredFT, AwayPointsScoredFT
+          , MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  } else {
+    next(result.error);
+  }
+
+});
+
 
 
 // Rugby
