@@ -14,7 +14,7 @@ const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
 const dbInsertTennisResult = require('../../db/insert/insertTennisResults.js');
 const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFootballResults.js');
 const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResults.js');
-const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResult.js');
+const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResults.js');
 // ------ Schemas ------
 
 // schema for updating football results
@@ -206,7 +206,7 @@ router.post('/tennis', async(req, res, next) => {
 });
 
 
-// handle req to insert tennis results
+// handle req to insert volleyball results
 router.post('/volleyball', async(req, res, next) => {
   const result = joi.validate(req.body, updateVolleyballResultsSchema);
   if(result.error === null) {
@@ -251,7 +251,7 @@ router.post('/volleyball', async(req, res, next) => {
 });
 
 
-// handle req to insert tennis results
+// handle req to insert table tennis results
 router.post('/tableTennis', async(req, res, next) => {
   const result = joi.validate(req.body, updateVolleyballResultsSchema);
   if(result.error === null) {
@@ -297,10 +297,8 @@ router.post('/tableTennis', async(req, res, next) => {
 
 
 // Rugby
-// tableTennis
 // cricket
 // hockey
-// volleyball
 // basketball
 
 
