@@ -18,7 +18,7 @@ const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResu
 const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
 const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
 const dbInsertRugbyResult = require('../../db/insert/insertRugbyResults.js');
-
+const dbInsertCricketResult = require('../../db/insert/insertCricketResults.js');
 // ------ Schemas ------
 
 // schema for updating football results
@@ -87,6 +87,21 @@ const updateHockeyResultsSchema  = joi.object().keys({
   AwayPointsScoredFT: joi.number().min(0).required(),
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
+
+// schema for inserting cricket results
+const updateCricketResultsSchema  = joi.object().keys({
+  FixtureID: joi.number().positive().required(),
+  HomeRunsI1: joi.number().min(0).required(),
+  AwayRunsI1: joi.number().min(0).required(),
+  HomeWicketsLostI1: joi.number().min(0).required(),
+  AwayWicketsLostI1: joi.number().min(0).required(),
+  HomeRunsI2: joi.number().min(0).required(),
+  AwayRunsI2: joi.number().min(0).required(),
+  HomeWicketsLostI2: joi.number().min(0).required(),
+  AwayWicketsLostI2: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+});
+
 
 // all paths are prepended with /league/results
 router.get('/', (req, res) => {
@@ -424,9 +439,49 @@ router.post('/rugby', async(req, res, next) => {
 });
 
 
+// cricket results
+router.post('/cricket', async(req, res, next) => {
+  const result  = joi.validate(req.body, updateCricketResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomeRunsI1 = req.body.HomeRunsI1;
+    var AwayRunsI1 = req.body.AwayRunsI1;
+    var HomeWicketsLostI1 = req.body.HomeWicketsLostI1;
+    var AwayWicketsLostI1 = req.body.AwayWicketsLostI1;
+    var HomeRunsI2 = req.body.HomeRunsI2;
+    var AwayRunsI2 = req.body.AwayRunsI2;
+    var HomeWicketsLostI2 = req.body.HomeWicketsLostI2;
+    var AwayWicketsLostI2 = req.body.AwayWicketsLostI2;
+    var MatchDescription = req.body.MatchDescription;
 
-// Rugby
-// cricket
+    // check user is admin/team captain
+    var update = dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next (err);
+      // if results doesn'thave leagueAdmin user cant update results
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed update results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertCricketResult(fixtureID, HomeRunsI1
+          , AwayRunsI1, HomeWicketsLostI1, AwayWicketsLostI1
+          , HomeRunsI2, AwayRunsI2, HomeWicketsLostI2
+          , AwayWicketsLostI2, MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+
+
+
 
 
 // call db to update fixture played to true
