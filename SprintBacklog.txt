@@ -32,7 +32,7 @@ Sprint Backlog
       [x] Football
       [x] Tennis
       [x] american Football
-      [] volleyball
+      [x] volleyball
       [] Hockey
       [] table Tennis
       [] cricket
