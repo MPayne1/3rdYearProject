@@ -13,6 +13,7 @@ const dbSelectCaptain = require('../db/selectTeamCaptain.js');
 const dbSelectPlaysFor = require('../db/selectPlaysFor.js');
 const dbSelectAllPlayers = require('../db/selectAllPlayers.js');
 const dbSelectTeamID = require('../db/selectTeamID.js');
+const dbInsertPlayerTeamname = require('../db/insert/insertPlayerTeamName.js');
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
@@ -101,6 +102,7 @@ router.post('/create', async(req, res, next) => {
           next(error);
       } catch(e) {
         await dbInsert(TeamName, TeamAdmin, LeagueID, Sport);
+        await dbInsertPlayerTeamname(TeamAdmin, TeamName);
         res.json(req.body);
       }
     })

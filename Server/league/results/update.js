@@ -29,7 +29,7 @@ const updateFootballResultsSchema  = joi.object().keys({
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
-// schema for inserting american football results
+// schema for inserting tennis results
 const updateTennisResultsSchema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredS1: joi.number().min(0).max(7).required(),
@@ -60,7 +60,7 @@ const updateAmericanFootballResultsSchema  = joi.object().keys({
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
-// schema for inserting volleyball/tabletennis  results
+// schema for inserting volleyball / tabletennis  results
 const updateVolleyballResultsSchema =  joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredG1: joi.number().min(0).required(),
@@ -76,7 +76,7 @@ const updateVolleyballResultsSchema =  joi.object().keys({
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
-// schema for inserting american football results
+// schema for inserting hockey / rugby results
 const updateHockeyResultsSchema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredHT: joi.number().min(0).required(),
@@ -167,7 +167,6 @@ router.post('/americanFootball', async(req, res, next) => {
   } else {
     next(result.error);
   }
-
 });
 
 
@@ -340,7 +339,6 @@ router.post('/hockey', async(req, res, next) => {
   } else {
     next(result.error);
   }
-
 });
 
 
@@ -388,10 +386,45 @@ router.post('/basketball', async(req, res, next) => {
 
 
 
+// rugby results
+router.post('/rugby', async(req, res, next) => {
+  const result  = joi.validate(req.body, updateHockeyResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomePointsScoredHT = req.body.HomePointsScoredHT;
+    var AwayPointsScoredHT = req.body.AwayPointsScoredHT;
+    var HomePointsScoredFT = req.body.HomePointsScoredFT;
+    var AwayPointsScoredFT = req.body.AwayPointsScoredFT;
+    var MatchDescription = req.body.MatchDescription;
+
+    // check user is admin/team captain
+    var update = dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next (err);
+      // if results doesn'thave leagueAdmin user cant update results
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed update results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertRugbyResult(fixtureID, HomePointsScoredHT,
+          AwayPointsScoredHT, HomePointsScoredFT, AwayPointsScoredFT
+          , MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+
 
 // Rugby
 // cricket
-// basketball
 
 
 // call db to update fixture played to true
