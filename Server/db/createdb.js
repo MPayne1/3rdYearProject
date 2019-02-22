@@ -196,7 +196,7 @@ async function createVolleyballResultsTable(err) {
 // create hockey result table
 async function createHockeyResultsTable(err) {
   if(err) throw err;
-  var sql = "CREATE TABLE HockeyyResults(FixtureID int, HomePointsScoredHT int,"+
+  var sql = "CREATE TABLE HockeyResults(FixtureID int, HomePointsScoredHT int,"+
   " AwayPointsScoredHT int,HomePointsScoredFT int, AwayPointsScoredFT int, " +
   "MatchDescription VARCHAR(300), PRIMARY KEY (FixtureID), "+
   "FOREIGN KEY (FixtureID) REFERENCES Fixture(FixtureID));";
@@ -238,5 +238,5 @@ async function createTableTennisResultsTable(err) {
 //createTennisResultsTable();
 //createCricketResultsTable();
 //createVolleyballResultsTable();
-//createHockeyResultsTable();
+createHockeyResultsTable();
 //createTableTennisResultsTable();
