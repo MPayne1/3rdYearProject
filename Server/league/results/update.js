@@ -16,7 +16,7 @@ const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFo
 const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResults.js');
 const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResults.js');
 const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
-
+const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
 // ------ Schemas ------
 
 // schema for updating football results
@@ -46,7 +46,7 @@ const updateTennisResultsSchema  = joi.object().keys({
 });
 
 
-// schema for inserting american football results
+// schema for inserting american football / basketball results
 const updateAmericanFootballResultsSchema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredQ1: joi.number().min(0).required(),
@@ -345,9 +345,52 @@ router.post('/hockey', async(req, res, next) => {
 
 
 
+// basketball results
+router.post('/basketball', async(req, res, next) => {
+  const result  = joi.validate(req.body, updateAmericanFootballResultsSchema);
+  if(result.error === null) {
+    var userID = req.user.UserID;
+    var fixtureID = req.body.FixtureID;
+    var HomePointsScoredQ1 = req.body.HomePointsScoredQ1;
+    var AwayPointsScoredQ1 = req.body.AwayPointsScoredQ1;
+    var HomePointsScoredHT = req.body.HomePointsScoredHT;
+    var AwayPointsScoredHT = req.body.AwayPointsScoredHT;
+    var HomePointsScoredQ3 = req.body.HomePointsScoredQ3;
+    var AwayPointsScoredQ3 = req.body.AwayPointsScoredQ3;
+    var HomePointsScoredFT = req.body.HomePointsScoredFT;
+    var AwayPointsScoredFT = req.body.AwayPointsScoredFT;
+    var MatchDescription = req.body.MatchDescription;
+
+    // check user is admin/team captain
+    var update = dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
+      if(err) next (err);
+      // if results doesn'thave leagueAdmin user cant update results
+      try {
+        result[0].leagueAdmin;
+        // if user is allowed update results
+        updateFixturePlayed(fixtureID);
+        var insert = await dbInsertBasketballResult(fixtureID, HomePointsScoredQ1
+          , AwayPointsScoredQ1, HomePointsScoredHT, AwayPointsScoredHT
+          , HomePointsScoredQ3, AwayPointsScoredQ3, HomePointsScoredFT
+          , AwayPointsScoredFT, MatchDescription, (err) => {
+            if(err) next(err);
+        });
+        res.json(req.body);
+      } catch(e) {
+        unauthorisedUser(res, next)
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+
+
+
+
 // Rugby
 // cricket
-// hockey
 // basketball
 
 
