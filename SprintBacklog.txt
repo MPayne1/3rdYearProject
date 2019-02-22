@@ -33,8 +33,8 @@ Sprint Backlog
       [x] Tennis
       [x] american Football
       [x] volleyball
+      [x] table Tennis
       [] Hockey
-      [] table Tennis
       [] cricket
       [] Basketball
       [] rugby
