@@ -107,6 +107,8 @@ import joi from 'joi';
 
 const CREATE_LEAGUE_URL = 'https://localhost:3000/league/create';
 const API_URL = 'https://localhost:3000/';
+const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
+
 
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)
@@ -142,7 +144,7 @@ export default {
       country: '',
       games: '',
     },
-
+    leagueID: '',
   }),
   watch: {
     league: {
@@ -204,11 +206,33 @@ export default {
           return response.json().then((error) => {
             throw new Error(error.message);
           });
-        }).then(() => { // if no errors redirect to dashboard
-          setTimeout(() => { // wait so loading icon is shown, improves ui
-            this.creating = false;
-            this.$router.push('/dashboard');
-          }, 700);
+        }).then(() => { // if no errors redirect to createTeam
+          // first get leagueID
+          var leagueIDName = {
+            leagueName: this.league.name,
+          };
+          fetch(LEAGUEID_URL, {
+            method: 'POST',
+            body: JSON.stringify(leagueIDName),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(res => res.json())
+            .then((result) => {
+              // if there's no leagueID object then redirect to dashboard
+              if (result) {
+                console.log(result);
+                this.leagueID = result.result[0].leagueID;
+                //this.leagueID = result[0].leagueID;
+              } else {
+                this.$router.push('/dashboard');
+              }
+              setTimeout(() => { // wait so loading icon is shown, improves ui
+                this.creating = false;
+              }, 500);
+                this.$router.push({name: "createTeam", params: {leagueID: this.leagueID}, query: {Sport: this.league.sport}});
+            });
         }).catch((error) => { // if any errors catch them any display error message
           this.creating = false;
           this.errorMessage = error.message;

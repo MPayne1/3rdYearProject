@@ -13,9 +13,9 @@ Sprint Backlog
   [] add team description
   [] routing better
 [] need to do
-  [] add user into playsfor once theyve created a new team
-  [] fix searching for leagues when there's no teams in them
-    [] creating league redirects to create team.
+  [x] add user into playsfor once theyve created a new team
+  [x] fix searching for leagues when there's no teams in them
+    [x] creating league redirects to create team.
   [x] when start new season set last season finished to true
 
   [] think about remove sport field from team table
@@ -37,8 +37,9 @@ Sprint Backlog
       [x] table Tennis
       [x] Hockey
       [x] Basketball
+      [x] rugby
       [] cricket
-      [] rugby
+
 
 
   [] frontend
