@@ -17,6 +17,8 @@ const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResult
 const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResults.js');
 const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
 const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
+const dbInsertRugbyResult = require('../../db/insert/insertRugbyResults.js');
+
 // ------ Schemas ------
 
 // schema for updating football results
