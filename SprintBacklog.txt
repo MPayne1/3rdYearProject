@@ -12,7 +12,7 @@ Sprint Backlog
   [] add league description
   [] add team description
   [] routing better
-[] need to do
+[x] need to do
   [x] add user into playsfor once theyve created a new team
   [x] fix searching for leagues when there's no teams in them
     [x] creating league redirects to create team.
@@ -24,8 +24,8 @@ Sprint Backlog
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
 
-[] results
-  [] backend, for each sport
+[x] results
+  [x] backend, for each sport
     [x] db results table for each sport
     [x] add results to correct Table
       [x] check user can update results
@@ -38,15 +38,14 @@ Sprint Backlog
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
-
+      [x] cricket
 
 
   [] frontend
     [] form for each sport
-    [] send req with results
-    [] redirect to league homepage
-    [] update list of sports when searching for league
+      [] send req with results to backend
+      [] redirect to league homepage after submitting results
+    [x] update list of sports when searching for league
 
 [] rankings
 
