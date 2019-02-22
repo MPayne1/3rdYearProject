@@ -222,7 +222,7 @@ export default {
         return true;
       }
       console.log(result.errorMessage);
-      if (result.error.message.includes('leagueName')) {
+      if (result.error.message.includes('name')) {
         this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
       }
       if (result.error.message.includes('sport')) {
