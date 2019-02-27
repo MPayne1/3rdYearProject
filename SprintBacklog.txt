@@ -50,7 +50,7 @@ Sprint Backlog
         [x] Tennis
         [x] american Football
         [x] volleyball
-        [] table Tennis
+        [x] table Tennis
         [] Hockey
         [] Basketball
         [] rugby

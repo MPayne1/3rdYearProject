@@ -14,7 +14,7 @@ import FootballResults from './views/results/FootballResults.vue';
 import TennisResults from './views/results/TennisResults.vue';
 import VolleyballResults from './views/results/VolleyballResults.vue';
 import TableTennisResults from './views/results/TableTennisResults.vue';
-
+import HockeyResults from './views/results/HockeyResults.vue';
 Vue.use(Router);
 
 // if user has a token theyre already logged in so redirect to dashboard
@@ -118,6 +118,12 @@ export default new Router({
       path: '/league/results/update/TableTennisResults/:fixtureID',
       name: 'Table TennisResults',
       component: TableTennisResults,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/league/results/update/HockeyResults/:fixtureID',
+      name: 'HockeyResults',
+      component: HockeyResults,
       beforeEnter: isLoggedIn,
     },
   ],
