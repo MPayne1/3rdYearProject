@@ -4,7 +4,10 @@
   <div class="text-center">
     <h1>Results</h1>
     <div class="text-center">
-      <p>Enter in the results for the fixutre, take care as these can't be changed once they're uploaded.</p>
+      <p>Enter in the results for the match, take care as these can't be changed once they're uploaded.
+        <br>
+        <small>For any sets you didn't play enter the score as 0.</small>
+      </p>
     </div>
   </div>
   <div v-if="updatingResults" class="text-center">
