@@ -84,7 +84,6 @@ const START_SEASON_URL = 'https://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/upcomingFixtures';
 const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/updateFixture';
-const LEAGUE_SPORT_URL = 'https://localhost:3000/league/sport';
 
 
 const updateFixtureSchema = joi.object().keys({
@@ -102,7 +101,6 @@ export default {
     user: {},
     leagueName: '',
     leagueID: '',
-    Sport: '',
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
@@ -156,8 +154,6 @@ export default {
           this.leagueID = result.result[0].leagueID;
         }
       }).then((res) => {
-        // get the sport, so can redirect to correct results page
-        this.leagueSport();
         // get upcoming Fixtures
         this.upcomingFixtures();
       });
@@ -258,26 +254,6 @@ export default {
           if (result) {
             console.log(result);
             this.upcomingFixtures();
-          }
-        });
-    },
-
-    // get the sport so can redirect to correct results page
-    leagueSport() {
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      fetch(LEAGUE_SPORT_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          if (result) {
-            this.fixtures.Sport = result.result[0].Sport;
           }
         });
     },
