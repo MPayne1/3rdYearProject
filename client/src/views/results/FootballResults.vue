@@ -156,23 +156,23 @@ export default {
         return true;
       }
       if (result.error.message.includes('HomeGoalsScoredHT')) {
-        this.errorMessage = "Home team's score for half-time is invalid.";
+        this.errorMessage = "Home team's score for half-time is invalid, can only contain numbers.";
         return false;
       }
       if (result.error.message.includes('HomeGoalsScoredFT')) {
-        this.errorMessage = "Home team's score for full-time is invalid.";
+        this.errorMessage = "Home team's score for full-time is invalid, can only contain numbers.";
         return false;
       }
       if (result.error.message.includes('AwayGoalsScoredHT')) {
-        this.errorMessage = "Away team's score for half-time is invalid.";
+        this.errorMessage = "Away team's score for half-time is invalid, can only contain numbers.";
         return false;
       }
       if (result.error.message.includes('AwayGoalsScoredFT')) {
-        this.errorMessage = "Away team's score for full-time is invalid.";
+        this.errorMessage = "Away team's score for full-time is invalid, can only contain numbers.";
         return false;
       }
       if (result.error.message.includes('MatchDescription')) {
-        this.errorMessage = 'Match Description is invlaid.';
+        this.errorMessage = 'Match Description is invlaid, can only contain letters or numbers.';
         return false;
       }
       return false;

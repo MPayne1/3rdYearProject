@@ -202,31 +202,31 @@ export default {
         return true;
       }
       if (result.error.message.includes('HomePointsScoredQ1')) {
-        this.errorMessage = "Home team's score for the first quater is invalid.";
+        this.errorMessage = "Home team's score for the first quater is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('HomePointsScoredQ3')) {
-        this.errorMessage = "Home team's score for the third quater is invalid.";
+        this.errorMessage = "Home team's score for the third quater is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('HomePointsScoredHT')) {
-        this.errorMessage = "Home team's score for the half-time is invalid.";
+        this.errorMessage = "Home team's score for the half-time is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('HomePointsScoredFT')) {
-        this.errorMessage = "Home team's score for the full-time is invalid.";
+        this.errorMessage = "Home team's score for the full-time is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('AwayPointsScoredQ1')) {
-        this.errorMessage = "Away team's score for the first quater is invalid.";
+        this.errorMessage = "Away team's score for the first quater is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('AwayPointsScoredQ3')) {
-        this.errorMessage = "Away team's score for the third quater is invalid.";
+        this.errorMessage = "Away team's score for the third quater is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('AwayPointsScoredHT')) {
-        this.errorMessage = "Away team's score for the half-time is invalid.";
+        this.errorMessage = "Away team's score for the half-time is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('AwayPointsScoredFT')) {
-        this.errorMessage = "Away team's score for the full-time is invalid.";
+        this.errorMessage = "Away team's score for the full-time is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('MatchDescription')) {
-        this.errorMessage = 'Match Description is invlaid.';
+        this.errorMessage = 'Match Description is invlaid, can only contain letters or numbers.';
       }
       return false;
     },
