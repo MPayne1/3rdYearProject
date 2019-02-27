@@ -12,8 +12,10 @@ Sprint Backlog
   [] add league description
   [] add team description
   [] routing better
+    [] league
+    [] team
   [] update regex to include special characters for match description
-  
+
 [x] need to do
   [x] add user into playsfor once theyve created a new team
   [x] fix searching for leagues when there's no teams in them

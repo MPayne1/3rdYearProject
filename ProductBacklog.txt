@@ -59,9 +59,9 @@ Product Backlog
 
 [x] view upcoming fixtures
 
-[] add result
+[x] add result
   [x] Backend
-  [] frontend
+  [x] frontend
 
 [] update standings
 
