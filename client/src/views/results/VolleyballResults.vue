@@ -65,7 +65,7 @@
 
       <hr class="my-4">
       <div class="text-center">
-        <h5>Third Set</h5>
+        <h5>Third Game</h5>
       </div>
       <br>
       <div class="form-row">
@@ -89,7 +89,7 @@
 
       <hr class="my-4">
       <div class="text-center">
-        <h5>Fourth Set</h5>
+        <h5>Fourth Game</h5>
       </div>
       <br>
       <div class="form-row">
@@ -113,7 +113,7 @@
 
       <hr class="my-4">
       <div class="text-center">
-        <h5>Fifth Set</h5>
+        <h5>Fifth Game</h5>
       </div>
       <br>
       <div class="form-row">
