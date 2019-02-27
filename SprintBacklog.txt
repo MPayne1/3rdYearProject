@@ -45,6 +45,15 @@ Sprint Backlog
     [] form for each sport
       [] send req with results to backend
       [] redirect to league homepage after submitting results
+        [] Football
+        [] Tennis
+        [] american Football
+        [] volleyball
+        [] table Tennis
+        [] Hockey
+        [] Basketball
+        [] rugby
+        [] cricket
     [x] update list of sports when searching for league
 
 [] rankings
