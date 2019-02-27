@@ -20,7 +20,7 @@ Sprint Backlog
   [x] when start new season set last season finished to true
   [] refresh app.vue when logout
   [] think about remove sport field from team table
-
+  [] start season show unauth error message
 
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
@@ -49,7 +49,7 @@ Sprint Backlog
         [x] Football
         [x] Tennis
         [x] american Football
-        [] volleyball
+        [x] volleyball
         [] table Tennis
         [] Hockey
         [] Basketball

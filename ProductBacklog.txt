@@ -60,14 +60,18 @@ Product Backlog
 [x] view upcoming fixtures
 
 [] add result
+  [x] Backend
+  [] frontend
 
 [] update standings
 
 [] view standings
 
-[] view results
+[] view past results
 
+[] user profile page
 
+[] fill out team page
 
 []view player stats
 
