@@ -14,23 +14,7 @@
     {{errorMessage}}
   </div>
     <form v-if="!updatingResults" @submit.prevent="updateResults()">
-      <div class="text-center">
-        <h5>First Quater</h5>
-      </div>
-      <br>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ1">Home Team Q1</label>
-          <input v-model="results.HomePointsScoredQ1" type="text" class="form-control" id="HomePointsScoredQ1"
-            placeholder="Home team score after the first quater." required>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ1">Away Team Q1</label>
-          <input v-model="results.AwayPointsScoredQ1" type="text" class="form-control" id="AwayPointsScoredQ1"
-            placeholder="Away team score after the first quater." required>
-        </div>
-      </div>
-      <hr class="my-4">
+
       <div class="text-center">
         <h5>Half-Time</h5>
       </div>
@@ -45,24 +29,6 @@
           <label for="AwayPointsScoredHT">Away Team HT</label>
           <input v-model="results.AwayPointsScoredHT" type="text" class="form-control" id="AwayPointsScoredHT"
             placeholder="Away team score at half-time." required>
-        </div>
-      </div>
-
-      <hr class="my-4">
-      <div class="text-center">
-        <h5>Third Quater</h5>
-      </div>
-      <br>
-      <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ3">Home Team Q3</label>
-          <input v-model="results.HomePointsScoredQ3" type="text" class="form-control" id="HomePointsScoredQ3"
-            placeholder="Home team score after the third quater." required>
-        </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ3">Away Team Q3</label>
-          <input v-model="results.AwayPointsScoredQ3" type="text" class="form-control" id="AwayPointsScoredQ3"
-            placeholder="Away team score after the third quater." required>
         </div>
       </div>
 
@@ -108,16 +74,16 @@
 import joi from 'joi';
 import App from '../../App.vue';
 
-const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
+const RESULTS_URL = 'https://localhost:3000/league/results/update/football';
 
 // schema for inserting american football results
 const schema  = joi.object().keys({
-  FixtureID: joi.number().positive().required(),
-  HomePointsScoredHT: joi.number().min(0).required(),
-  AwayPointsScoredHT: joi.number().min(0).required(),
-  HomePointsScoredFT: joi.number().min(0).required(),
-  AwayPointsScoredFT: joi.number().min(0).required(),
-  MatchDescription: joi.string().trim().regex(/^[\w\-\s]{0,300}$/).required(),
+    FixtureID: joi.number().positive().required(),
+    HomeGoalsScoredHT: joi.number().min(0).required(),
+    AwayGoalsScoredHT: joi.number().min(0).required(),
+    HomeGoalsScoredFT: joi.number().min(0).required(),
+    AwayGoalsScoredFT: joi.number().min(0).required(),
+    MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
 export default {
@@ -126,14 +92,10 @@ export default {
     errorMessage: '',
     results: {
       FixtureID: '',
-      HomePointsScoredQ1: '',
-      AwayPointsScoredQ1: '',
-      HomePointsScoredHT: '',
-      AwayPointsScoredHT: '',
-      HomePointsScoredQ3: '',
-      AwayPointsScoredQ3: '',
-      HomePointsScoredFT: '',
-      AwayPointsScoredFT: '',
+      HomeGoalsScoredHT: '',
+      AwayGoalsScoredHT: '',
+      HomeGoalsScoredFT: '',
+      AwayGoalsScoredFT: '',
       MatchDescription: '',
     },
   }),
@@ -154,14 +116,10 @@ export default {
       if (this.validResults()) {
         const body = {
           FixtureID: this.results.FixtureID,
-          HomePointsScoredQ1: this.results.HomePointsScoredQ1,
-          AwayPointsScoredQ1: this.results.AwayPointsScoredQ1,
-          HomePointsScoredHT: this.results.HomePointsScoredHT,
-          AwayPointsScoredHT: this.results.AwayPointsScoredHT,
-          HomePointsScoredQ3: this.results.HomePointsScoredQ3,
-          AwayPointsScoredQ3: this.results.AwayPointsScoredQ3,
-          HomePointsScoredFT: this.results.HomePointsScoredFT,
-          AwayPointsScoredFT: this.results.AwayPointsScoredFT,
+          HomeGoalsScoredHT: this.results.HomeGoalsScoredHT,
+          AwayGoalsScoredHT: this.results.AwayGoalsScoredHT,
+          HomeGoalsScoredFT: this.results.HomeGoalsScoredFT,
+          AwayGoalsScoredFT: this.results.AwayGoalsScoredFT,
           MatchDescription: this.results.MatchDescription,
         };
         this.updatingResults = true;
@@ -197,28 +155,16 @@ export default {
       if (result.error === null) {
         return true;
       }
-      if (result.error.message.includes('HomePointsScoredQ1')) {
-        this.errorMessage = "Home team's score for the first quater is invalid.";
-      }
-      if (result.error.message.includes('HomePointsScoredQ3')) {
-        this.errorMessage = "Home team's score for the third quater is invalid.";
-      }
-      if (result.error.message.includes('HomePointsScoredHT')) {
+      if (result.error.message.includes('HomeGoalsScoredHT')) {
         this.errorMessage = "Home team's score for the half-time is invalid.";
       }
-      if (result.error.message.includes('HomePointsScoredFT')) {
+      if (result.error.message.includes('HomeGoalsScoredFT')) {
         this.errorMessage = "Home team's score for the full-time is invalid.";
       }
-      if (result.error.message.includes('AwayPointsScoredQ1')) {
-        this.errorMessage = "Away team's score for the first quater is invalid.";
-      }
-      if (result.error.message.includes('AwayPointsScoredQ3')) {
-        this.errorMessage = "Away team's score for the third quater is invalid.";
-      }
-      if (result.error.message.includes('AwayPointsScoredHT')) {
+      if (result.error.message.includes('AwayGoalsScoredHT')) {
         this.errorMessage = "Away team's score for the half-time is invalid.";
       }
-      if (result.error.message.includes('AwayPointsScoredFT')) {
+      if (result.error.message.includes('AwayGoalsScoredFT')) {
         this.errorMessage = "Away team's score for the full-time is invalid.";
       }
       if (result.error.message.includes('MatchDescription')) {
