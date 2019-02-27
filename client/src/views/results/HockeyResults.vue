@@ -24,16 +24,16 @@
 
         </div>
         <div class="form-group col-md-4">
-          <label for="HomeGoalsScoredHT">Home Team HT</label>
-          <input v-model="results.HomeGoalsScoredHT" type="text" class="form-control" id="HomeGoalsScoredHT"
+          <label for="HomePointsScoredHT">Home Team HT</label>
+          <input v-model="results.HomePointsScoredHT" type="text" class="form-control" id="HomePointsScoredHT"
             placeholder="Home team score at half-time." required>
         </div>
         <div class="form-group col-md-2">
 
         </div>
         <div class="form-group col-md-4">
-          <label for="AwayGoalsScoredHT">Away Team HT</label>
-          <input v-model="results.AwayGoalsScoredHT" type="text" class="form-control" id="AwayGoalsScoredHT"
+          <label for="AwayPointsScoredHT">Away Team HT</label>
+          <input v-model="results.AwayPointsScoredHT" type="text" class="form-control" id="AwayPointsScoredHT"
             placeholder="Away team score at half-time." required>
         </div>
       </div>
@@ -48,16 +48,16 @@
 
         </div>
         <div class="form-group col-md-4">
-          <label for="HomeGoalsScoredFT">Home Team FT</label>
-          <input v-model="results.HomeGoalsScoredFT" type="text" class="form-control" id="HomeGoalsScoredFT"
+          <label for="HomePointsScoredFT">Home Team FT</label>
+          <input v-model="results.HomePointsScoredFT" type="text" class="form-control" id="HomePointsScoredFT"
             placeholder="Home team score at full-time." required>
         </div>
         <div class="form-group col-md-2">
 
         </div>
         <div class="form-group col-md-4">
-          <label for="AwayGoalsScoredFT">Away Team FT</label>
-          <input v-model="results.AwayGoalsScoredFT" type="text" class="form-control" id="AwayGoalsScoredFT"
+          <label for="AwayPointsScoredFT">Away Team FT</label>
+          <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
             placeholder="Away team score at full-time." required>
         </div>
       </div>
@@ -87,13 +87,13 @@ import joi from 'joi';
 
 const RESULTS_URL = 'https://localhost:3000/league/results/update/hockey';
 
-// schema for inserting football results
+// schema for inserting hockey results
 const schema = joi.object().keys({
   FixtureID: joi.number().positive().required(),
-  HomeGoalsScoredHT: joi.number().min(0).required(),
-  AwayGoalsScoredHT: joi.number().min(0).required(),
-  HomeGoalsScoredFT: joi.number().min(0).required(),
-  AwayGoalsScoredFT: joi.number().min(0).required(),
+  HomePointsScoredHT: joi.number().min(0).required(),
+  AwayPointsScoredHT: joi.number().min(0).required(),
+  HomePointsScoredFT: joi.number().min(0).required(),
+  AwayPointsScoredFT: joi.number().min(0).required(),
   MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
@@ -103,10 +103,10 @@ export default {
     errorMessage: '',
     results: {
       FixtureID: '',
-      HomeGoalsScoredHT: '',
-      AwayGoalsScoredHT: '',
-      HomeGoalsScoredFT: '',
-      AwayGoalsScoredFT: '',
+      HomePointsScoredHT: '',
+      AwayPointsScoredHT: '',
+      HomePointsScoredFT: '',
+      AwayPointsScoredFT: '',
       MatchDescription: '',
     },
   }),
@@ -127,10 +127,10 @@ export default {
       if (this.validResults()) {
         const body = {
           FixtureID: this.results.FixtureID,
-          HomeGoalsScoredHT: this.results.HomeGoalsScoredHT,
-          AwayGoalsScoredHT: this.results.AwayGoalsScoredHT,
-          HomeGoalsScoredFT: this.results.HomeGoalsScoredFT,
-          AwayGoalsScoredFT: this.results.AwayGoalsScoredFT,
+          HomePointsScoredHT: this.results.HomePointsScoredHT,
+          AwayPointsScoredHT: this.results.AwayPointsScoredHT,
+          HomePointsScoredFT: this.results.HomePointsScoredFT,
+          AwayPointsScoredFT: this.results.AwayPointsScoredFT,
           MatchDescription: this.results.MatchDescription,
         };
         this.updatingResults = true;
@@ -166,19 +166,19 @@ export default {
       if (result.error === null) {
         return true;
       }
-      if (result.error.message.includes('HomeGoalsScoredHT')) {
+      if (result.error.message.includes('HomePointsScoredHT')) {
         this.errorMessage = "Home team's score for half-time is invalid, can only contain numbers.";
         return false;
       }
-      if (result.error.message.includes('HomeGoalsScoredFT')) {
+      if (result.error.message.includes('HomePointsScoredFT')) {
         this.errorMessage = "Home team's score for full-time is invalid, can only contain numbers.";
         return false;
       }
-      if (result.error.message.includes('AwayGoalsScoredHT')) {
+      if (result.error.message.includes('AwayPointsScoredHT')) {
         this.errorMessage = "Away team's score for half-time is invalid, can only contain numbers.";
         return false;
       }
-      if (result.error.message.includes('AwayGoalsScoredFT')) {
+      if (result.error.message.includes('AwayPointsScoredFT')) {
         this.errorMessage = "Away team's score for full-time is invalid, can only contain numbers.";
         return false;
       }
