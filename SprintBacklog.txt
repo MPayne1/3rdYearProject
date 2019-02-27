@@ -13,14 +13,13 @@ Sprint Backlog
   [] add team description
   [] routing better
   [] update regex to include special characters for match description
+  
 [x] need to do
   [x] add user into playsfor once theyve created a new team
   [x] fix searching for leagues when there's no teams in them
     [x] creating league redirects to create team.
   [x] when start new season set last season finished to true
-  [] refresh app.vue when logout
-  [] think about remove sport field from team table
-  [] start season show unauth error message
+  [x] refresh app.vue when logout
 
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
