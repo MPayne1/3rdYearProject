@@ -20,10 +20,10 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-1">
 
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="HomeGoalsScoredHT">Home Team HT</label>
           <input v-model="results.HomeGoalsScoredHT" type="text" class="form-control" id="HomeGoalsScoredHT"
             placeholder="Home team score at half-time." required>
@@ -31,7 +31,7 @@
         <div class="form-group col-md-2">
 
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="AwayGoalsScoredHT">Away Team HT</label>
           <input v-model="results.AwayGoalsScoredHT" type="text" class="form-control" id="AwayGoalsScoredHT"
             placeholder="Away team score at half-time." required>
@@ -44,10 +44,10 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-2">
+        <div class="form-group col-md-1">
 
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="HomeGoalsScoredFT">Home Team FT</label>
           <input v-model="results.HomeGoalsScoredFT" type="text" class="form-control" id="HomeGoalsScoredFT"
             placeholder="Home team score at full-time." required>
@@ -55,7 +55,7 @@
         <div class="form-group col-md-2">
 
         </div>
-        <div class="form-group col-md-3">
+        <div class="form-group col-md-4">
           <label for="AwayGoalsScoredFT">Away Team FT</label>
           <input v-model="results.AwayGoalsScoredFT" type="text" class="form-control" id="AwayGoalsScoredFT"
             placeholder="Away team score at full-time." required>
