@@ -47,7 +47,7 @@ Sprint Backlog
       [] send req with results to backend
       [] redirect to league homepage after submitting results
         [x] Football
-        [] Tennis
+        [x] Tennis
         [x] american Football
         [] volleyball
         [] table Tennis
