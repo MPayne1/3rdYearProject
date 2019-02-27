@@ -42,10 +42,10 @@ Sprint Backlog
       [x] cricket
 
 
-  [] frontend
-    [] form for each sport
-      [] send req with results to backend
-      [] redirect to league homepage after submitting results
+  [x] frontend
+    [x] form for each sport
+      [x] send req with results to backend
+      [x] redirect to league homepage after submitting results
         [x] Football
         [x] Tennis
         [x] american Football
@@ -54,7 +54,7 @@ Sprint Backlog
         [x] Hockey
         [x] Basketball
         [x] rugby
-        [] cricket
+        [x] cricket
     [x] update list of sports when searching for league
 
 [] rankings
