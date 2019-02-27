@@ -101,7 +101,7 @@ export default {
     user: {},
     leagueName: '',
     leagueID: '',
-    Sport: 'American Football',
+    Sport: '',
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
@@ -278,8 +278,6 @@ export default {
         .then((result) => {
           if (result) {
             this.fixtures.Sport = result.result[0].Sport;
-            //this.Sport = result.result[0].Sport;
-            console.log(this.fixtures.Sport);
           }
         });
     },

@@ -86,7 +86,7 @@ export default new Router({
       beforeEnter: isLoggedIn,
     },
     {
-      path: '/league/AmericanFootballResults/:fixtureID',
+      path: '/league/results/update/AmericanFootball/:fixtureID',
       name: 'American FootballResults',
       component: AmericanFootballResults,
       beforeEnter: isLoggedIn,
