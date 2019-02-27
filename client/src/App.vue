@@ -50,7 +50,7 @@
         </ul>
       </div>
     </nav>
-    <router-view class="container pt-2" />
+    <router-view class="container pt-4" />
   </div>
 </template>
 

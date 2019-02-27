@@ -106,7 +106,7 @@
         </div>
         <div class="form-group col-md-3">
           <label for="AwayPointsScoredFT">Away Team 4th Set</label>
-          <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
+          <input v-model="results.AwayPointsScoredS4" type="text" class="form-control" id="AwayPointsScoredS4"
             placeholder="Away team score for the 4th set." required>
         </div>
       </div>
@@ -159,7 +159,7 @@
 import joi from 'joi';
 import App from '../../App.vue';
 
-const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
+const RESULTS_URL = 'https://localhost:3000/league/results/update/tennis';
 
 // schema for inserting tennis results
 const schema  = joi.object().keys({
