@@ -73,12 +73,12 @@
       <br>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ3">Home Team FT</label>
+          <label for="HomePointsScoredFT">Home Team FT</label>
           <input v-model="results.HomePointsScoredFT" type="text" class="form-control" id="HomePointsScoredFT"
             placeholder="Home team score at full-time." required>
         </div>
         <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ3">Away Team FT</label>
+          <label for="AwayPointsScoredFT">Away Team FT</label>
           <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
             placeholder="Away team score at full-time." required>
         </div>
@@ -197,7 +197,7 @@ export default {
       }
     },
     validResults() {
-      const result = joi.validate(this.user, schema);
+      const result = joi.validate(this.results, schema);
       if (result.error === null) {
         return true;
       }

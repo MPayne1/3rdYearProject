@@ -21,13 +21,13 @@
       <br>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="HomePointsScoredHT">Home Team HT</label>
-          <input v-model="results.HomePointsScoredHT" type="text" class="form-control" id="HomePointsScoredHT"
+          <label for="HomeGoalsScoredHT">Home Team HT</label>
+          <input v-model="results.HomeGoalsScoredHT" type="text" class="form-control" id="HomeGoalsScoredHT"
             placeholder="Home team score at half-time." required>
         </div>
         <div class="form-group col-md-6">
-          <label for="AwayPointsScoredHT">Away Team HT</label>
-          <input v-model="results.AwayPointsScoredHT" type="text" class="form-control" id="AwayPointsScoredHT"
+          <label for="AwayGoalsScoredHT">Away Team HT</label>
+          <input v-model="results.AwayGoalsScoredHT" type="text" class="form-control" id="AwayGoalsScoredHT"
             placeholder="Away team score at half-time." required>
         </div>
       </div>
@@ -39,13 +39,13 @@
       <br>
       <div class="form-row">
         <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ3">Home Team FT</label>
-          <input v-model="results.HomePointsScoredFT" type="text" class="form-control" id="HomePointsScoredFT"
+          <label for="HomeGoalsScoredFT">Home Team FT</label>
+          <input v-model="results.HomeGoalsScoredFT" type="text" class="form-control" id="HomeGoalsScoredFT"
             placeholder="Home team score at full-time." required>
         </div>
         <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ3">Away Team FT</label>
-          <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
+          <label for="AwayGoalsScoredFT">Away Team FT</label>
+          <input v-model="results.AwayGoalsScoredFT" type="text" class="form-control" id="AwayGoalsScoredFT"
             placeholder="Away team score at full-time." required>
         </div>
       </div>
@@ -151,24 +151,29 @@ export default {
       }
     },
     validResults() {
-      const result = joi.validate(this.user, schema);
+      const result = joi.validate(this.results, schema);
       if (result.error === null) {
         return true;
       }
       if (result.error.message.includes('HomeGoalsScoredHT')) {
-        this.errorMessage = "Home team's score for the half-time is invalid.";
+        this.errorMessage = "Home team's score for half-time is invalid.";
+        return false;
       }
       if (result.error.message.includes('HomeGoalsScoredFT')) {
-        this.errorMessage = "Home team's score for the full-time is invalid.";
+        this.errorMessage = "Home team's score for full-time is invalid.";
+        return false;
       }
       if (result.error.message.includes('AwayGoalsScoredHT')) {
-        this.errorMessage = "Away team's score for the half-time is invalid.";
+        this.errorMessage = "Away team's score for half-time is invalid.";
+        return false;
       }
       if (result.error.message.includes('AwayGoalsScoredFT')) {
-        this.errorMessage = "Away team's score for the full-time is invalid.";
+        this.errorMessage = "Away team's score for full-time is invalid.";
+        return false;
       }
       if (result.error.message.includes('MatchDescription')) {
         this.errorMessage = 'Match Description is invlaid.';
+        return false;
       }
       return false;
     },
