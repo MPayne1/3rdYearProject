@@ -72,18 +72,17 @@
 
 <script>
 import joi from 'joi';
-import App from '../../App.vue';
 
 const RESULTS_URL = 'https://localhost:3000/league/results/update/football';
 
 // schema for inserting american football results
-const schema  = joi.object().keys({
-    FixtureID: joi.number().positive().required(),
-    HomeGoalsScoredHT: joi.number().min(0).required(),
-    AwayGoalsScoredHT: joi.number().min(0).required(),
-    HomeGoalsScoredFT: joi.number().min(0).required(),
-    AwayGoalsScoredFT: joi.number().min(0).required(),
-    MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+const schema = joi.object().keys({
+  FixtureID: joi.number().positive().required(),
+  HomeGoalsScoredHT: joi.number().min(0).required(),
+  AwayGoalsScoredHT: joi.number().min(0).required(),
+  HomeGoalsScoredFT: joi.number().min(0).required(),
+  AwayGoalsScoredFT: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
 export default {
@@ -108,7 +107,7 @@ export default {
     },
   },
   mounted() {
-    this.results.FixtureID = this.$route.params.fixtureID
+    this.results.FixtureID = this.$route.params.fixtureID;
   },
   methods: {
     updateResults() {

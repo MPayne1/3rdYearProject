@@ -208,7 +208,7 @@ export default {
           });
         }).then(() => { // if no errors redirect to createTeam
           // first get leagueID
-          var leagueIDName = {
+          const leagueIDName = {
             leagueName: this.league.name,
           };
           fetch(LEAGUEID_URL, {
@@ -224,14 +224,14 @@ export default {
               if (result) {
                 console.log(result);
                 this.leagueID = result.result[0].leagueID;
-                //this.leagueID = result[0].leagueID;
+                // this.leagueID = result[0].leagueID;
               } else {
                 this.$router.push('/dashboard');
               }
               setTimeout(() => { // wait so loading icon is shown, improves ui
                 this.creating = false;
               }, 500);
-                this.$router.push({name: "createTeam", params: {leagueID: this.leagueID}, query: {Sport: this.league.sport}});
+              this.$router.push({ name: 'createTeam', params: { leagueID: this.leagueID }, query: { Sport: this.league.sport } });
             });
         }).catch((error) => { // if any errors catch them any display error message
           this.creating = false;

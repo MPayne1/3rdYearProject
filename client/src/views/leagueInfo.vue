@@ -75,8 +75,9 @@
 import Vue from 'vue';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 import joi from 'joi';
+
+Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 const API_URL = 'https://localhost:3000/';
 const START_SEASON_URL = 'https://localhost:3000/league/startSeason';
@@ -164,12 +165,12 @@ export default {
   methods: {
     // show date picker without closing FixtureInfo
     showDatePicker() {
-      if(this.fixtureInfoOpen !== true) {
+      if (this.fixtureInfoOpen !== true) {
         this.fixtureInfoOpen = true;
       }
     },
 
-    //update fixture info
+    // update fixture info
     updateFixture(index) {
       const body = {
         fixtureID: this.fixtures[index].fixtureID,
@@ -179,7 +180,7 @@ export default {
         county: this.fixtures[index].county,
         postcode: this.fixtures[index].postcode,
       };
-      if(this.validFixtureUpdate(body)) {
+      if (this.validFixtureUpdate(body)) {
         fetch(UPDATE_FIXTURES_URL, {
           method: 'POST',
           headers: {
@@ -195,7 +196,6 @@ export default {
             }
           });
       }
-
     },
     // check entered info is valid
     validFixtureUpdate(body) {

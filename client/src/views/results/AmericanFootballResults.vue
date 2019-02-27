@@ -111,7 +111,7 @@ import App from '../../App.vue';
 const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
 
 // schema for inserting american football results
-const schema  = joi.object().keys({
+const schema = joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredQ1: joi.number().min(0).required(),
   AwayPointsScoredQ1: joi.number().min(0).required(),
@@ -150,7 +150,7 @@ export default {
     },
   },
   mounted() {
-    this.results.FixtureID = this.$route.params.fixtureID
+    this.results.FixtureID = this.$route.params.fixtureID;
   },
   methods: {
     updateResults() {
