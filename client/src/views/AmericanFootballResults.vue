@@ -108,7 +108,7 @@
 import joi from 'joi';
 import App from '../App.vue';
 
-const RESULTS_URL = 'https://localhost:3000/league/results/americanFootball';
+const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
 
 // schema for inserting american football results
 const schema  = joi.object().keys({
@@ -154,13 +154,6 @@ export default {
   },
   methods: {
     updateResults() {
-      if(this.validResults()) {
-        console.log(this.results);
-      }
-    },
-
-
-    updateResults2() {
       this.errorMessage = '';
       if (this.validResults()) {
         const body = {
@@ -170,16 +163,17 @@ export default {
           HomePointsScoredHT: this.results.HomePointsScoredHT,
           AwayPointsScoredHT: this.results.AwayPointsScoredHT,
           HomePointsScoredQ3: this.results.HomePointsScoredQ3,
-          AwayPointsScoredQ3: this.reuslts.AwayPointsScoredQ3,
-          HomePointsScoredFT: this.reuslts.HomePointsScoredFT,
+          AwayPointsScoredQ3: this.results.AwayPointsScoredQ3,
+          HomePointsScoredFT: this.results.HomePointsScoredFT,
           AwayPointsScoredFT: this.results.AwayPointsScoredFT,
-          MatchDescription: this.reuslts.MatchDescription,
+          MatchDescription: this.results.MatchDescription,
         };
         this.updatingResults = true;
         fetch(RESULTS_URL, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.token}`,
           },
           body: JSON.stringify(body),
         }).then((response) => {
@@ -194,7 +188,7 @@ export default {
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.updatingResults = false;
 
-            this.$router.push('/league/Info');
+            this.$router.push('/dashboard');
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message
           this.updatingResults = false;
@@ -208,10 +202,31 @@ export default {
         return true;
       }
       if (result.error.message.includes('HomePointsScoredQ1')) {
-        this.errorMessage = "Home team's score for the first quater is invalid";
+        this.errorMessage = "Home team's score for the first quater is invalid.";
       }
-      if (result.error.message.includes('password')) {
-        this.errorMessage = 'Invalid Login Attempt';
+      if (result.error.message.includes('HomePointsScoredQ3')) {
+        this.errorMessage = "Home team's score for the third quater is invalid.";
+      }
+      if (result.error.message.includes('HomePointsScoredHT')) {
+        this.errorMessage = "Home team's score for the half-time is invalid.";
+      }
+      if (result.error.message.includes('HomePointsScoredFT')) {
+        this.errorMessage = "Home team's score for the full-time is invalid.";
+      }
+      if (result.error.message.includes('AwayPointsScoredQ1')) {
+        this.errorMessage = "Away team's score for the first quater is invalid.";
+      }
+      if (result.error.message.includes('AwayPointsScoredQ3')) {
+        this.errorMessage = "Away team's score for the third quater is invalid.";
+      }
+      if (result.error.message.includes('AwayPointsScoredHT')) {
+        this.errorMessage = "Away team's score for the half-time is invalid.";
+      }
+      if (result.error.message.includes('AwayPointsScoredFT')) {
+        this.errorMessage = "Away team's score for the full-time is invalid.";
+      }
+      if (result.error.message.includes('MatchDescription')) {
+        this.errorMessage = 'Match Description is invlaid.';
       }
       return false;
     },
