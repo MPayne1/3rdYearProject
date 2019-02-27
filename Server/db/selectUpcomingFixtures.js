@@ -5,9 +5,9 @@ const dbCon  = require('./connection.js');
 var selectUpcomingFixtures  = async function(leagueID, callback) {
   var res;
     var sql = `SELECT DISTINCT fixtureID, HomeTeamID, AwayTeamID, HomeTeamName,
-     AwayTeamName, date, address, city, county, postcode
+     AwayTeamName, date, address, city, county, postcode, Sport
      FROM fixture, Season,
-    (SELECT teamName as HomeTeamName FROM team, fixture WHERE HomeTeamID = teamID
+    (SELECT teamName as HomeTeamName, Sport FROM team, fixture WHERE HomeTeamID = teamID
       and team.leagueID = fixture.leagueID and team.leagueID = ${mysql.escape(leagueID)})as HomeTeam,
     (SELECT teamName as AwayTeamName FROM team, fixture WHERE AwayTeamID = teamID
       and team.leagueID = fixture.leagueID and team.leagueID = ${mysql.escape(leagueID)})as AwayTeam

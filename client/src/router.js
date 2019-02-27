@@ -9,7 +9,7 @@ import findLeague from './views/findLeague.vue';
 import createTeam from './views/createTeam.vue';
 import teamInfo from './views/teamInfo.vue';
 import leagueInfo from './views/leagueInfo.vue';
-
+import AmericanFootballResults from './views/AmericanFootballResults.vue';
 Vue.use(Router);
 
 // if user has a token theyre already logged in so redirect to dashboard
@@ -83,6 +83,12 @@ export default new Router({
       path: '/league/info',
       name: 'leagueInfo',
       component: leagueInfo,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/league/AmericanFootballResults/:fixtureID',
+      name: 'American FootballResults',
+      component: AmericanFootballResults,
       beforeEnter: isLoggedIn,
     },
   ],

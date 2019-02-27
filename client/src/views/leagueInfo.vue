@@ -16,7 +16,7 @@
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="showDatePicker(), fixtureIndex=index">
               <div id="fixtureInfo" class="align-items-center">
                 <div>
-                  <router-link :to="{ name: '', params: {} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
+                  <router-link :to="{ name: `${fixture.Sport}Results`, params: {fixtureID: fixture.fixtureID} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
                 </div>
                 <div v-if="fixtureInfoOpen && index == fixtureIndex">
                   <div v-if="errorMessage" class="alert alert-danger" role="alert">
@@ -83,6 +83,8 @@ const START_SEASON_URL = 'https://localhost:3000/league/startSeason';
 const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/upcomingFixtures';
 const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/updateFixture';
+const LEAGUE_SPORT_URL = 'https://localhost:3000/league/sport';
+
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -99,6 +101,7 @@ export default {
     user: {},
     leagueName: '',
     leagueID: '',
+    Sport: 'American Football',
     fixtureInfoOpen: false,
     fixtureIndex: '',
     fixtureDate: '',
@@ -152,6 +155,8 @@ export default {
           this.leagueID = result.result[0].leagueID;
         }
       }).then((res) => {
+        // get the sport, so can redirect to correct results page
+        this.leagueSport();
         // get upcoming Fixtures
         this.upcomingFixtures();
       });
@@ -253,6 +258,28 @@ export default {
           if (result) {
             console.log(result);
             this.upcomingFixtures();
+          }
+        });
+    },
+
+    // get the sport so can redirect to correct results page
+    leagueSport() {
+      const leagueID = {
+        leagueID: this.leagueID,
+      };
+      fetch(LEAGUE_SPORT_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueID),
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.fixtures.Sport = result.result[0].Sport;
+            //this.Sport = result.result[0].Sport;
+            console.log(this.fixtures.Sport);
           }
         });
     },

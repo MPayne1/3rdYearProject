@@ -20,6 +20,7 @@ const dbSelectLeagueID = require('../db/selectLeagueID.js');
 const dbSelectUpdateFixtureAdmin = require('../db/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../db/updateFixtureInfo.js');
 const dbUpdateSeasonFinished = require('../db/update/updateFinishPreviousSeason.js');
+const dbSelectLeagueSport = require('../db/select/selectLeagueSport.js');
 //------  schemas  ------
 
 // schema for input validation
@@ -55,7 +56,7 @@ const updateFixtureSchema = joi.object().keys({
   postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
 });
 
-// both startSeason and upcoming fixtures schema
+// both startSeason/ upcoming fixtures/ sport schema
 const startSeasonSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
 });
@@ -89,6 +90,24 @@ router.post('/leagueID', async(req, res, next) => {
       }
     });
   } else{
+    invalidInput(res, next);
+  }
+});
+
+// get the sport of the league
+router.post('/sport', async(req, res, next) => {
+  const result = joi.validate(req.body, startSeasonSchema);
+  if(result.error === null) {
+    var sport = await dbSelectLeagueSport(req.body.leagueID, async function(err, result){
+      if(err) next(err);
+      try{
+        result[0].sport;
+        res.json({result});
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
     invalidInput(res, next);
   }
 });
