@@ -52,7 +52,7 @@ Sprint Backlog
         [x] volleyball
         [x] table Tennis
         [x] Hockey
-        [] Basketball
+        [x] Basketball
         [] rugby
         [] cricket
     [x] update list of sports when searching for league
