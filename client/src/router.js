@@ -17,6 +17,7 @@ import TableTennisResults from './views/results/TableTennisResults.vue';
 import HockeyResults from './views/results/HockeyResults.vue';
 import BasketballResults from './views/results/BasketballResults.vue';
 import RugbyResults from './views/results/RugbyResults.vue';
+import CricketResults from './views/results/CricketResults.vue';
 
 Vue.use(Router);
 
@@ -139,6 +140,12 @@ export default new Router({
       path: '/league/results/update/RugbyResults/:fixtureID',
       name: 'RugbyResults',
       component: RugbyResults,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/league/results/update/CricketResults/:fixtureID',
+      name: 'CricketResults',
+      component: CricketResults,
       beforeEnter: isLoggedIn,
     },
   ],
