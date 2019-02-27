@@ -187,8 +187,8 @@ export default {
         }).then((result) => {
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.updatingResults = false;
-
-            this.$router.push('/dashboard');
+            // go back to leagueInfo page
+            this.$router.go(-1);
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message
           this.updatingResults = false;
