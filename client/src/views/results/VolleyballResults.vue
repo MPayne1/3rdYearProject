@@ -159,7 +159,7 @@
 import joi from 'joi';
 import App from '../../App.vue';
 
-const RESULTS_URL = 'https://localhost:3000/league/results/update/tennis';
+const RESULTS_URL = 'https://localhost:3000/league/results/update/volleyball';
 
 // schema for inserting tennis results
 const schema  = joi.object().keys({
