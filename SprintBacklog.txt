@@ -18,7 +18,7 @@ Sprint Backlog
   [x] fix searching for leagues when there's no teams in them
     [x] creating league redirects to create team.
   [x] when start new season set last season finished to true
-
+  [] refresh app.vue when logout
   [] think about remove sport field from team table
 
 

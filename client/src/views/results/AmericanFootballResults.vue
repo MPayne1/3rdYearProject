@@ -19,12 +19,18 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-1">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="HomePointsScoredQ1">Home Team Q1</label>
           <input v-model="results.HomePointsScoredQ1" type="text" class="form-control" id="HomePointsScoredQ1"
             placeholder="Home team score after the first quater." required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="AwayPointsScoredQ1">Away Team Q1</label>
           <input v-model="results.AwayPointsScoredQ1" type="text" class="form-control" id="AwayPointsScoredQ1"
             placeholder="Away team score after the first quater." required>
@@ -36,12 +42,18 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-1">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="HomePointsScoredHT">Home Team HT</label>
           <input v-model="results.HomePointsScoredHT" type="text" class="form-control" id="HomePointsScoredHT"
             placeholder="Home team score at half-time." required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="AwayPointsScoredHT">Away Team HT</label>
           <input v-model="results.AwayPointsScoredHT" type="text" class="form-control" id="AwayPointsScoredHT"
             placeholder="Away team score at half-time." required>
@@ -54,12 +66,18 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-1">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="HomePointsScoredQ3">Home Team Q3</label>
           <input v-model="results.HomePointsScoredQ3" type="text" class="form-control" id="HomePointsScoredQ3"
             placeholder="Home team score after the third quater." required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="AwayPointsScoredQ3">Away Team Q3</label>
           <input v-model="results.AwayPointsScoredQ3" type="text" class="form-control" id="AwayPointsScoredQ3"
             placeholder="Away team score after the third quater." required>
@@ -72,12 +90,18 @@
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-1">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="HomePointsScoredFT">Home Team FT</label>
           <input v-model="results.HomePointsScoredFT" type="text" class="form-control" id="HomePointsScoredFT"
             placeholder="Home team score at full-time." required>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-4">
           <label for="AwayPointsScoredFT">Away Team FT</label>
           <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
             placeholder="Away team score at full-time." required>

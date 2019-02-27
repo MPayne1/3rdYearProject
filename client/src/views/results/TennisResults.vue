@@ -15,72 +15,120 @@
   </div>
     <form v-if="!updatingResults" @submit.prevent="updateResults()">
       <div class="text-center">
-        <h5>First Quater</h5>
+        <h5>First Set</h5>
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ1">Home Team Q1</label>
-          <input v-model="results.HomePointsScoredQ1" type="text" class="form-control" id="HomePointsScoredQ1"
-            placeholder="Home team score after the first quater." required>
+        <div class="form-group col-md-2">
+
         </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ1">Away Team Q1</label>
-          <input v-model="results.AwayPointsScoredQ1" type="text" class="form-control" id="AwayPointsScoredQ1"
-            placeholder="Away team score after the first quater." required>
+        <div class="form-group col-md-3">
+          <label for="HomePointsScoredQ1">Home Team 1st Set</label>
+          <input v-model="results.HomePointsScoredS1" type="text" class="form-control" id="HomePointsScoredS1"
+            placeholder="Home team score for the 1st set." required>
+        </div>
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="AwayPointsScoredS1">Away Team 1st Set</label>
+          <input v-model="results.AwayPointsScoredS1" type="text" class="form-control" id="AwayPointsScoredS1"
+            placeholder="Away team score for the 1st set." required>
         </div>
       </div>
       <hr class="my-4">
       <div class="text-center">
-        <h5>Half-Time</h5>
+        <h5>Second Set</h5>
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredHT">Home Team HT</label>
-          <input v-model="results.HomePointsScoredHT" type="text" class="form-control" id="HomePointsScoredHT"
-            placeholder="Home team score at half-time." required>
+        <div class="form-group col-md-2">
+
         </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredHT">Away Team HT</label>
-          <input v-model="results.AwayPointsScoredHT" type="text" class="form-control" id="AwayPointsScoredHT"
-            placeholder="Away team score at half-time." required>
+        <div class="form-group col-md-3">
+          <label for="HomePointsScoredS2">Home Team 2nd Set</label>
+          <input v-model="results.HomePointsScoredS2" type="text" class="form-control" id="HomePointsScoredS2"
+            placeholder="Home team score for the 2nd set." required>
+        </div>
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="AwayPointsScoredHT">Away Team 2nd Set</label>
+          <input v-model="results.AwayPointsScoredS2" type="text" class="form-control" id="AwayPointsScoredS2"
+            placeholder="Away team score for the 2nd set." required>
         </div>
       </div>
 
       <hr class="my-4">
       <div class="text-center">
-        <h5>Third Quater</h5>
+        <h5>Third Set</h5>
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredQ3">Home Team Q3</label>
-          <input v-model="results.HomePointsScoredQ3" type="text" class="form-control" id="HomePointsScoredQ3"
-            placeholder="Home team score after the third quater." required>
+        <div class="form-group col-md-2">
+
         </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredQ3">Away Team Q3</label>
-          <input v-model="results.AwayPointsScoredQ3" type="text" class="form-control" id="AwayPointsScoredQ3"
-            placeholder="Away team score after the third quater." required>
+        <div class="form-group col-md-3">
+          <label for="HomePointsScoredS3">Home Team 3rd Set</label>
+          <input v-model="results.HomePointsScoredS3" type="text" class="form-control" id="HomePointsScoredS3"
+            placeholder="Home team score for the 3rd set." required>
+        </div>
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="AwayPointsScoredS3">Away Team 3rd Set</label>
+          <input v-model="results.AwayPointsScoredS3" type="text" class="form-control" id="AwayPointsScoredS3"
+            placeholder="Away team score for the 3rd set." required>
         </div>
       </div>
 
       <hr class="my-4">
       <div class="text-center">
-        <h5>Full-Time</h5>
+        <h5>Fourth Set</h5>
       </div>
       <br>
       <div class="form-row">
-        <div class="form-group col-md-6">
-          <label for="HomePointsScoredFT">Home Team FT</label>
-          <input v-model="results.HomePointsScoredFT" type="text" class="form-control" id="HomePointsScoredFT"
-            placeholder="Home team score at full-time." required>
+        <div class="form-group col-md-2">
+
         </div>
-        <div class="form-group col-md-6">
-          <label for="AwayPointsScoredFT">Away Team FT</label>
+        <div class="form-group col-md-3">
+          <label for="HomePointsScoredS4">Home Team 4th Set</label>
+          <input v-model="results.HomePointsScoredS4" type="text" class="form-control" id="HomePointsScoredS4"
+            placeholder="Home team score for the 4th set." required>
+        </div>
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="AwayPointsScoredFT">Away Team 4th Set</label>
           <input v-model="results.AwayPointsScoredFT" type="text" class="form-control" id="AwayPointsScoredFT"
-            placeholder="Away team score at full-time." required>
+            placeholder="Away team score for the 4th set." required>
+        </div>
+      </div>
+
+      <hr class="my-4">
+      <div class="text-center">
+        <h5>Fifth Set</h5>
+      </div>
+      <br>
+      <div class="form-row">
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="HomePointsScoredS5">Home Team 5th Set</label>
+          <input v-model="results.HomePointsScoredS5" type="text" class="form-control" id="HomePointsScoredS5"
+            placeholder="Home team score for the 5th set." required>
+        </div>
+        <div class="form-group col-md-2">
+
+        </div>
+        <div class="form-group col-md-3">
+          <label for="AwayPointsScoredS5">Away Team 5th Set</label>
+          <input v-model="results.AwayPointsScoredS5" type="text" class="form-control" id="AwayPointsScoredS5"
+            placeholder="Away team score for the 5th set." required>
         </div>
       </div>
 
@@ -110,18 +158,20 @@ import App from '../../App.vue';
 
 const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
 
-// schema for inserting american football results
-const schema = joi.object().keys({
+// schema for inserting tennis results
+const schema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
-  HomePointsScoredQ1: joi.number().min(0).required(),
-  AwayPointsScoredQ1: joi.number().min(0).required(),
-  HomePointsScoredHT: joi.number().min(0).required(),
-  AwayPointsScoredHT: joi.number().min(0).required(),
-  HomePointsScoredQ3: joi.number().min(0).required(),
-  AwayPointsScoredQ3: joi.number().min(0).required(),
-  HomePointsScoredFT: joi.number().min(0).required(),
-  AwayPointsScoredFT: joi.number().min(0).required(),
-  MatchDescription: joi.string().trim().regex(/^[\w\-\s]{0,300}$/).required(),
+  HomePointsScoredS1: joi.number().min(0).max(7).required(),
+  AwayPointsScoredS1: joi.number().min(0).max(7).required(),
+  HomePointsScoredS2: joi.number().min(0).max(7).required(),
+  AwayPointsScoredS2: joi.number().min(0).max(7).required(),
+  HomePointsScoredS3: joi.number().min(0).required(),
+  AwayPointsScoredS3: joi.number().min(0).required(),
+  HomePointsScoredS4: joi.number().min(0).max(7).required(),
+  AwayPointsScoredS4: joi.number().min(0).max(7).required(),
+  HomePointsScoredS5: joi.number().min(0).required(),
+  AwayPointsScoredS5: joi.number().min(0).required(),
+  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
 });
 
 export default {
@@ -130,14 +180,16 @@ export default {
     errorMessage: '',
     results: {
       FixtureID: '',
-      HomePointsScoredQ1: '',
-      AwayPointsScoredQ1: '',
-      HomePointsScoredHT: '',
-      AwayPointsScoredHT: '',
-      HomePointsScoredQ3: '',
-      AwayPointsScoredQ3: '',
-      HomePointsScoredFT: '',
-      AwayPointsScoredFT: '',
+      HomePointsScoredS1: '',
+      AwayPointsScoredS1: '',
+      HomePointsScoredS2: '',
+      AwayPointsScoredS2: '',
+      HomePointsScoredS3: '',
+      AwayPointsScoredS3: '',
+      HomePointsScoredS4: '',
+      AwayPointsScoredS4: '',
+      HomePointsScoredS5: '',
+      AwayPointsScoredS5: '',
       MatchDescription: '',
     },
   }),
@@ -158,14 +210,16 @@ export default {
       if (this.validResults()) {
         const body = {
           FixtureID: this.results.FixtureID,
-          HomePointsScoredQ1: this.results.HomePointsScoredQ1,
-          AwayPointsScoredQ1: this.results.AwayPointsScoredQ1,
-          HomePointsScoredHT: this.results.HomePointsScoredHT,
-          AwayPointsScoredHT: this.results.AwayPointsScoredHT,
-          HomePointsScoredQ3: this.results.HomePointsScoredQ3,
-          AwayPointsScoredQ3: this.results.AwayPointsScoredQ3,
-          HomePointsScoredFT: this.results.HomePointsScoredFT,
-          AwayPointsScoredFT: this.results.AwayPointsScoredFT,
+          HomePointsScoredS1: this.results.HomePointsScoredS1,
+          AwayPointsScoredS1: this.results.AwayPointsScoredS1,
+          HomePointsScoredS2: this.results.HomePointsScoredS2,
+          AwayPointsScoredS2: this.results.AwayPointsScoredS2,
+          HomePointsScoredS3: this.results.HomePointsScoredS3,
+          AwayPointsScoredS3: this.results.AwayPointsScoredS3,
+          HomePointsScoredS4: this.results.HomePointsScoredS4,
+          AwayPointsScoredS4: this.results.AwayPointsScoredS4,
+          HomePointsScoredS5: this.results.HomePointsScoredS5,
+          AwayPointsScoredS5: this.results.AwayPointsScoredS5,
           MatchDescription: this.results.MatchDescription,
         };
         this.updatingResults = true;
@@ -201,29 +255,35 @@ export default {
       if (result.error === null) {
         return true;
       }
-      if (result.error.message.includes('HomePointsScoredQ1')) {
-        this.errorMessage = "Home team's score for the first quater is invalid, can only contain numbers.";
+      if (result.error.message.includes('HomePointsScoredS1')) {
+        this.errorMessage = "Home team's score for the first set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('HomePointsScoredQ3')) {
-        this.errorMessage = "Home team's score for the third quater is invalid, can only contain numbers.";
+      if (result.error.message.includes('HomePointsScoredS2')) {
+        this.errorMessage = "Home team's score for the second set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('HomePointsScoredHT')) {
-        this.errorMessage = "Home team's score for the half-time is invalid, can only contain numbers.";
+      if (result.error.message.includes('HomePointsScoredS3')) {
+        this.errorMessage = "Home team's score for the third set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('HomePointsScoredFT')) {
-        this.errorMessage = "Home team's score for the full-time is invalid, can only contain numbers.";
+      if (result.error.message.includes('HomePointsScoredS4')) {
+        this.errorMessage = "Home team's score for the fourth set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('AwayPointsScoredQ1')) {
-        this.errorMessage = "Away team's score for the first quater is invalid, can only contain numbers.";
+      if (result.error.message.includes('HomePointsScoredS5')) {
+        this.errorMessage = "Home team's score for the fifth set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('AwayPointsScoredQ3')) {
-        this.errorMessage = "Away team's score for the third quater is invalid, can only contain numbers.";
+      if (result.error.message.includes('AwayPointsScoredS1')) {
+        this.errorMessage = "Away team's score for the first set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('AwayPointsScoredHT')) {
-        this.errorMessage = "Away team's score for the half-time is invalid, can only contain numbers.";
+      if (result.error.message.includes('AwayPointsScoredS2')) {
+        this.errorMessage = "Away team's score for the second set is invalid, can only contain numbers.";
       }
-      if (result.error.message.includes('AwayPointsScoredFT')) {
-        this.errorMessage = "Away team's score for the full-time is invalid, can only contain numbers.";
+      if (result.error.message.includes('AwayPointsScoredS3')) {
+        this.errorMessage = "Away team's score for the third set is invalid, can only contain numbers.";
+      }
+      if (result.error.message.includes('AwayPointsScoredS4')) {
+        this.errorMessage = "Away team's score for the fourth set is invalid, can only contain numbers.";
+      }
+      if (result.error.message.includes('AwayPointsScoredS5')) {
+        this.errorMessage = "Away team's score for the fifth set is invalid, can only contain numbers.";
       }
       if (result.error.message.includes('MatchDescription')) {
         this.errorMessage = 'Match Description is invlaid, can only contain letters or numbers.';
