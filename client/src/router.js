@@ -9,7 +9,7 @@ import findLeague from './views/findLeague.vue';
 import createTeam from './views/createTeam.vue';
 import teamInfo from './views/teamInfo.vue';
 import leagueInfo from './views/leagueInfo.vue';
-import AmericanFootballResults from './views/AmericanFootballResults.vue';
+import AmericanFootballResults from './views/results/AmericanFootballResults.vue';
 Vue.use(Router);
 
 // if user has a token theyre already logged in so redirect to dashboard

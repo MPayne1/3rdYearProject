@@ -8,7 +8,7 @@
     </div>
   </div>
   <div v-if="updatingResults" class="text-center">
-    <img src="../assets/loading_ring.svg"/>
+    <img src="../../assets/loading_ring.svg"/>
   </div>
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
@@ -106,19 +106,15 @@
 
 <script>
 import joi from 'joi';
-import App from '../App.vue';
+import App from '../../App.vue';
 
 const RESULTS_URL = 'https://localhost:3000/league/results/update/americanFootball';
 
 // schema for inserting american football results
 const schema  = joi.object().keys({
   FixtureID: joi.number().positive().required(),
-  HomePointsScoredQ1: joi.number().min(0).required(),
-  AwayPointsScoredQ1: joi.number().min(0).required(),
   HomePointsScoredHT: joi.number().min(0).required(),
   AwayPointsScoredHT: joi.number().min(0).required(),
-  HomePointsScoredQ3: joi.number().min(0).required(),
-  AwayPointsScoredQ3: joi.number().min(0).required(),
   HomePointsScoredFT: joi.number().min(0).required(),
   AwayPointsScoredFT: joi.number().min(0).required(),
   MatchDescription: joi.string().trim().regex(/^[\w\-\s]{0,300}$/).required(),
