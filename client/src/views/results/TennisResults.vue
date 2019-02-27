@@ -26,7 +26,7 @@
 
         </div>
         <div class="form-group col-md-3">
-          <label for="HomePointsScoredQ1">Home Team 1st Set</label>
+          <label for="HomePointsScoredS1">Home Team 1st Set</label>
           <input v-model="results.HomePointsScoredS1" type="text" class="form-control" id="HomePointsScoredS1"
             placeholder="Home team score for the 1st set." required>
         </div>
@@ -57,7 +57,7 @@
 
         </div>
         <div class="form-group col-md-3">
-          <label for="AwayPointsScoredHT">Away Team 2nd Set</label>
+          <label for="AwayPointsScoredS2">Away Team 2nd Set</label>
           <input v-model="results.AwayPointsScoredS2" type="text" class="form-control" id="AwayPointsScoredS2"
             placeholder="Away team score for the 2nd set." required>
         </div>
@@ -105,7 +105,7 @@
 
         </div>
         <div class="form-group col-md-3">
-          <label for="AwayPointsScoredFT">Away Team 4th Set</label>
+          <label for="AwayPointsScoredS4">Away Team 4th Set</label>
           <input v-model="results.AwayPointsScoredS4" type="text" class="form-control" id="AwayPointsScoredS4"
             placeholder="Away team score for the 4th set." required>
         </div>
