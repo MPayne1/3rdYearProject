@@ -19,7 +19,7 @@ const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
 const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
 const dbInsertRugbyResult = require('../../db/insert/insertRugbyResults.js');
 const dbInsertCricketResult = require('../../db/insert/insertCricketResults.js');
-// ------ Schemas ------
+// ------  Schemas  ------
 
 // schema for updating football results
 const updateFootballResultsSchema  = joi.object().keys({

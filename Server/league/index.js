@@ -47,15 +47,6 @@ const findLeagueSchema  = joi.object().keys({
   sport: joi.string().regex(/^[a-zA-Z\s]{2,30}$/).required()
 });
 
-// schema for updating date/location of fixture
-const updateFixtureSchema = joi.object().keys({
-  fixtureID: joi.number().positive().required(),
-  date: joi.string().min(2).max(30).required(),
-  address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-});
 
 // both startSeason/ upcoming fixtures/ sport schema
 const startSeasonSchema = joi.object().keys({
@@ -71,6 +62,7 @@ const leagueIDSchema = joi.object().keys({
 
 router.use('/results', resultsRoute);
 router.use('/fixtures', fixturesRoute);
+
 // all paths are prepended with /league
 router.get('/', (req, res) => {
   res.json({
@@ -199,43 +191,7 @@ router.post('/upcomingFixtures', async (req, res, next) => {
   }  else{
     next(result.error);
   }
-
 });
-
-// handle req for updatingfixture info
-router.post('/updateFixture', async (req, res, next) => {
-  var userID = req.user.UserID;
-  var fixtureID  = req.body.fixtureID;
-  // format date for adding to db
-  var date = req.body.date.slice(0,-3);
-  var address  = req.body.address;
-  var city = req.body.city;
-  var county = req.body.county;
-  var postcode = req.body.postcode;
-
-  const result = joi.validate(req.body, updateFixtureSchema);
-  if(result.error === null) {
-    // check user is captain of one of the teams or the league admin
-    var admin = await dbSelectUpdateFixtureAdmin(userID, fixtureID, async function(err, result) {
-      if(err) next(err);
-      // if result doesn't have league/team Admin then user can't update fixture
-      try {
-        result[0].leagueAdmin;
-        // if user is allowed, update the fixture info
-        var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
-        res.json(req.body);
-      } catch(e) {
-        var error = new Error("Only league admins and team captains can update fixture information");
-        res.status(403);
-        next(error);
-      }
-    });
-
-  } else {
-    next(result.error);
-  }
-});
-
 
 // generate the fixtures at start of season
 router.post('/startSeason', async(req, res, next) => {

@@ -80,10 +80,10 @@ import joi from 'joi';
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 const API_URL = 'https://localhost:3000/';
-const START_SEASON_URL = 'https://localhost:3000/league/startSeason';
+const START_SEASON_URL = 'https://localhost:3000/league/fixtures/update/startSeason';
 const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
-const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/upcomingFixtures';
-const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/updateFixture';
+const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upcomingFixtures';
+const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
 
 
 const updateFixtureSchema = joi.object().keys({
