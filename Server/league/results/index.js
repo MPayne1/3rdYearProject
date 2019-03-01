@@ -7,6 +7,7 @@ const router = express.Router();
 const joi = require('joi');
 
 const update = require('./update.js');
+
 // all paths are prepended with /league/results
 router.get('/', (req, res) => {
   res.json({

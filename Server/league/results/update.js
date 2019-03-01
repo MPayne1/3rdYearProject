@@ -103,7 +103,7 @@ const updateCricketResultsSchema  = joi.object().keys({
 });
 
 
-// all paths are prepended with /league/results
+// all paths are prepended with /league/results/update
 router.get('/', (req, res) => {
   res.json({
     message: 'results update router works'

@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 //insert a new season into db and then retireve the seaosnID
 var insertSelectSeason  = async function(leagueID, callback) {
