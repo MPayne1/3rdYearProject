@@ -1,6 +1,6 @@
 // adds new league to db
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 //insert a new user into the db
 var insertLeague  = async function(LeagueName, LeagueAdmin, Sport, maxTeams,

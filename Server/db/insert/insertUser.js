@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 //insert a new user into the db
 var insertUser  = async function(username, password, LastName, FirstName, Email) {

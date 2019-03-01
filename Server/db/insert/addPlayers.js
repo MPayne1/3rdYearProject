@@ -1,7 +1,7 @@
 // handles all mysql insert queries
 
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 
 //insert a new player into team db

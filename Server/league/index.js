@@ -8,12 +8,12 @@ const joi = require('joi');
 const resultsRoute = require('./results/index.js');
 // db operations
 const dbSelectLeagueNames = require('../db/selectLeagueNames.js');
-const dbInsert = require('../db/createLeague.js');
+const dbInsert = require('../db/insert/createLeague.js');
 const dbSelectLeagues = require('../db/selectLeagueFromCity.js');
 const dbSelectLeagueAdmin = require('../db/selectLeagueAdmin.js');
 const dbSelectTeamsInLeague = require('../db/selectTeamsInLeague.js');
 const dbInsertSelectNewSeason = require('../db/insertSelectNewSeason.js');
-const dbInsertFixture = require('../db/insertFixture.js');
+const dbInsertFixture = require('../db/insert/insertFixture.js');
 const dbSelectLeaguesPlayIn = require('../db/selectLeaguesPlayIn.js');
 const dbSelectUpcomingFixtures = require('../db/selectUpcomingFixtures.js');
 const dbSelectLeagueID = require('../db/selectLeagueID.js');

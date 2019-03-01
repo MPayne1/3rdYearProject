@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 const dbSelectUser = require('../db/selectUser.js');
 const dbSelectUserNames = require('../db/selectUserNames.js');
-const dbInsert = require('../db/insert.js');
+const dbInsert = require('../db/insert/insertUser.js');
 
 const router = express.Router();
 const signUpSchema = joi.object().keys({

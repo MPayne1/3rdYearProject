@@ -4,7 +4,6 @@ Sprint Backlog
   [x] general style
 
 [] nice to do
-  [] attribute loading spinner to loading.io
   [] refactor code, add more methods
   [] put db files into folders
   [] go over http status codes
@@ -23,6 +22,7 @@ Sprint Backlog
   [x] when start new season set last season finished to true
   [x] refresh app.vue when logout
 
+[] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
 
