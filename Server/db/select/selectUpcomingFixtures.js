@@ -1,6 +1,6 @@
 // select all upcoming fixtures
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 var selectUpcomingFixtures  = async function(leagueID, callback) {
   var res;

@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 /*
   select leagueadmin/team captains

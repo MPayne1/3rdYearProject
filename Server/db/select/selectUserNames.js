@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbCon  = require('./connection.js');
+const dbCon  = require('../connection.js');
 
 /*
   select all users with the username, to check usernames when signup

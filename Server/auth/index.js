@@ -6,8 +6,8 @@ const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const dbSelectUser = require('../db/selectUser.js');
-const dbSelectUserNames = require('../db/selectUserNames.js');
+const dbSelectUser = require('../db/select/selectUser.js');
+const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 
 const router = express.Router();
