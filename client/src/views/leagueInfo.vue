@@ -56,10 +56,10 @@
             </li>
           </ul>
           <div class="text-white card-footer" v-if="fixtures[0] === undefined">
+            <div v-if="errorMessage" class="alert alert-danger" role="alert">
+              {{ errorMessage }}
+            </div>
             <div class="form-group">
-              <div v-if="errorMessage" class="alert alert-danger" role="alert">
-                {{ errorMessage }}
-              </div>
               <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
                 type="submit">Start a new Season</button>
@@ -239,6 +239,7 @@ export default {
     },
     // start a new season
     startSeason() {
+      this.errorMessage = '';
       const leagueID = {
         leagueID: this.leagueID,
       };
@@ -250,12 +251,12 @@ export default {
         },
         body: JSON.stringify(leagueID),
       }).then(res => res.json())
-        .then((result) => {
-          if (result) {
-            console.log(result);
-            this.upcomingFixtures();
-          }
-        });
+      .then((result) => {
+        if (result) {
+          console.log(result);
+          this.upcomingFixtures();
+        }
+      });
     },
   },
 };
