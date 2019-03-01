@@ -5,14 +5,14 @@ Sprint Backlog
 
 [] nice to do
   [] refactor code, add more methods
-  [] put db files into folders
-  [] go over http status codes
+  [x] put db files into folders
+  [x] go over http status codes
   [] fix navbar when screen small e.g on mobile.
   [] add league description
   [] add team description
-  [] routing better
-    [] league
-    [] team
+  [x] routing better
+    [x] league
+    [x] team
   [] update regex to include special characters for match description
 
 [x] need to do

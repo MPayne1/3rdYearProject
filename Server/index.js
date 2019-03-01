@@ -40,7 +40,7 @@ var apiAuthLimiter = new rateLimiter({
 // shows req/res nicely in terminal
 app.use(volleyball);
 
-// only allow client request from this origin
+// only allow client request from this origin, vue server
 app.use(cors({
   origin: 'http://localhost:8080'
 }));
