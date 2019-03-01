@@ -5,6 +5,8 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
+
+// ------  db operations  ------
 const dbSelectTeamNames = require('../db/select/selectTeamNames.js');
 const dbInsert = require('../db/insert/createTeam.js');
 const dbSelectPlayer = require('../db/select/selectPlayers.js');
@@ -14,6 +16,8 @@ const dbSelectPlaysFor = require('../db/select/selectPlaysFor.js');
 const dbSelectAllPlayers = require('../db/select/selectAllPlayers.js');
 const dbSelectTeamID = require('../db/select/selectTeamID.js');
 const dbInsertPlayerTeamname = require('../db/insert/insertPlayerTeamName.js');
+
+// ------  schemas  ------
 
 const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
@@ -35,6 +39,8 @@ const allPlayersSchema = joi.object().keys({
   teamName: joi.string().min(2).max(20).required(),
 });
 
+
+// ------  routing  ------
 
 // all paths are prepended with /team
 router.get('/', (req, res) => {
@@ -64,9 +70,6 @@ router.post('/allplayers', async(req, res, next) => {
   }
 });
 
-
-
-
 // handle request for teams a user playsfor
 router.post('/playsfor', async (req, res, next) => {
   var playsfor = await dbSelectPlaysFor(req.user.UserID, async function (err, result) {
@@ -79,7 +82,6 @@ router.post('/playsfor', async (req, res, next) => {
     }
   });
 });
-
 
 
 // handle create team request

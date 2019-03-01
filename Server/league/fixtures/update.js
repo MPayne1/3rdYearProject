@@ -7,6 +7,7 @@ const router = express.Router();
 const joi = require('joi');
 
 // ------  db operations  ------
+
 const dbSelectUpdateFixtureAdmin = require('../../db/select/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../../db/update/updateFixtureInfo.js');
 const dbSelectUpcomingFixtures = require('../../db/select/selectUpcomingFixtures.js');
@@ -15,6 +16,7 @@ const dbSelectTeamsInLeague = require('../../db/select/selectTeamsInLeague.js');
 const dbUpdateSeasonFinished = require('../../db/update/updateFinishPreviousSeason.js');
 const dbInsertSelectNewSeason = require('../../db/insert/insertSelectNewSeason.js');
 const dbInsertFixture = require('../../db/insert/insertFixture.js');
+
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -32,6 +34,8 @@ const updateFixtureSchema = joi.object().keys({
 const startSeasonSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
 });
+
+// ------  routing ------
 
 // all paths are prepended with /league/fixtures/update
 router.get('/', (req, res) => {
