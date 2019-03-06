@@ -21,6 +21,8 @@ const dbInsertFootballRanking = require('../../db/insert/rankings/insertFootball
 const dbInsertTennisRanking = require('../../db/insert/rankings/insertTennisRankings.js');
 const dbInsertRugbyRanking = require('../../db/insert/rankings/insertRugbyRankings.js');
 const dbInsertAmericanFootballRanking = require('../../db/insert/rankings/insertAmericanFootballRankings.js');
+const dbInsertHockeyRanking = require('../../db/insert/rankings/insertHockeyRankings.js');
+
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -237,6 +239,12 @@ async function initialiseRankingsTable(seasonID, teams) {
                 await dbInsertAmericanFootballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
             }
             break;
+            case "Hockey":
+              for(i = 0; i< teams.length; i++) {
+                  //initialise everythink to 0
+                  await dbInsertHockeyRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+              }
+              break;
         default:
           console.log("sport no recognised");
       }
