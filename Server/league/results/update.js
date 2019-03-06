@@ -22,7 +22,7 @@ const dbInsertCricketResult = require('../../db/insert/insertCricketResults.js')
 const dbSelectLeaguePoints = require('../../db/select/selectLeaguePoints.js');
 const dbUpdateFootballRankings = require('../../db/update/rankings/updateFootballRankings.js');
 const dbUpdateRugbyRankings = require('../../db/update/rankings/updateRugbyRankings.js');
-
+const dbUpdateAmericanFootballRankings = require('../../db/update/rankings/updateAmericanFootballRankings.js');
 // ------  Schemas  ------
 
 // schema for updating football results
@@ -184,6 +184,7 @@ router.post('/americanFootball', async(req, res, next) => {
           , AwayPointsScoredFT, MatchDescription, (err) => {
             if(err) next(err);
         });
+        updateAmericanFootballRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -584,6 +585,56 @@ async function updateRugbyRanking(req, next) {
     }
   });
 }
+
+
+
+// update american football Ranking
+async function updateAmericanFootballRanking(req, next) {
+  var win = 0;
+  var draw = 0;
+  var loss = 0;
+  var seasonID;
+  var HomeTeamID;
+  var AwayTeamID;
+  var HomePointsScored = req.body.HomePointsScoredFT;
+  var AwayPointsScored = req.body.AwayPointsScoredFT;
+  // get points info from leageue table
+  await dbSelectLeaguePoints(req.body.FixtureID, async (err, result) => {
+    if(err) next(err);
+    try{
+      result[0];
+      win = result[0].pointsForWin;
+      draw = result[0].pointsForDraw;
+      loss = result[0].pointsForLoss;
+      seasonID = result[0].seasonID;
+      HomeTeamID = result[0].HomeTeamID;
+      AwayTeamID = result[0].AwayTeamID;
+
+      // home team wins
+      if(HomePointsScored > AwayPointsScored) {
+        // update home team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, HomeTeamID, 1, 0, 0, HomePointsScored, AwayPointsScored, win);
+        // update away team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, AwayTeamID, 0, 0, 1, AwayPointsScored, HomePointsScored, loss);
+      } // away team wins
+      else if(HomePointsScored < AwayPointsScored) {
+        // update away team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, AwayTeamID, 1, 0, 0, AwayPointsScored, HomePointsScored, win);
+        // update home team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, HomeTeamID, 0, 0, 1, HomePointsScored, AwayPointsScored, loss);
+      } // draw
+      else {
+        // update away team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, AwayTeamID, 0, 1, 0, AwayPointsScored, HomePointsScored, draw);
+        // update home team ranking
+        await dbUpdateAmericanFootballRankings(seasonID, HomeTeamID, 0, 1, 0, HomePointsScored, AwayPointsScored, draw);
+      }
+    } catch(e){
+      next(e);
+    }
+  });
+}
+
 
 // call db to update fixture played to true
 async function updateFixturePlayed (fixtureID) {
