@@ -6,7 +6,9 @@ const dbCon  = require('../connection.js');
 */
 var selectLeaguePoints = async function(fixtureID, callback) {
   var res;
-    var sql = `SELECT pointsForWin, pointsForDraw, pointsForLoss FROM league,fixture WHERE fixtureID = ${mysql.escape(fixtureID)}
+    var sql = `SELECT pointsForWin, pointsForDraw, pointsForLoss,
+    seasonID, HomeTeamID, AwayTeamID
+    FROM league, fixture WHERE fixtureID = ${mysql.escape(fixtureID)}
     and fixture.leagueID = league.leagueID`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;

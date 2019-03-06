@@ -19,6 +19,9 @@ const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
 const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
 const dbInsertRugbyResult = require('../../db/insert/insertRugbyResults.js');
 const dbInsertCricketResult = require('../../db/insert/insertCricketResults.js');
+const dbSelectLeaguePoints = require('../../db/select/selectLeaguePoints.js');
+const dbUpdateFootballRankings = require('../../db/update/rankings/updateFootballRankings.js');
+
 // ------  Schemas  ------
 
 // schema for updating football results
@@ -136,7 +139,7 @@ router.post('/football', async(req, res, next) => {
             if(err) next(err);
         });
 
-      //   updateFootballranking
+        updateFootballRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -487,20 +490,57 @@ router.post('/cricket', async(req, res, next) => {
 
 // update football Ranking
 async function updateFootballRanking(req, next) {
+  var win = 0;
+  var draw = 0;
+  var loss = 0;
+  var seasonID;
+  var HomeTeamID;
+  var AwayTeamID;
+  var HomeGoalsScored = req.body.HomeGoalsScoredFT;
+  var AwayGoalsScored = req.body.AwayGoalsScoredFT;
   // get points info from leageue table
+  await dbSelectLeaguePoints(req.body.FixtureID, async (err, result) => {
+    if(err) next(err);
+    try{
+      result[0];
+      win = result[0].pointsForWin;
+      draw = result[0].pointsForDraw;
+      loss = result[0].pointsForLoss;
+      seasonID = result[0].seasonID;
+      HomeTeamID = result[0].HomeTeamID;
+      AwayTeamID = result[0].AwayTeamID;
 
-  // see who won/draw
+      // home team wins
+      if(req.body.HomeGoalsScoredFT > req.body.AwayGoalsScoredFT) {
+        // update home team ranking
+        await dbUpdateFootballRankings(seasonID, HomeTeamID, 1, 0, 0, HomeGoalsScored, AwayGoalsScored, win);
+        // update away team ranking
+        await dbUpdateFootballRankings(seasonID, AwayTeamID, 0, 0, 1, AwayGoalsScored, HomeGoalsScored, loss);
+      } // away team wins
+      else if(req.body.HomeGoalsScoredFT < req.body.AwayGoalsScoredFT) {
+        // update away team ranking
+        await dbUpdateFootballRankings(seasonID, AwayTeamID, 1, 0, 0, AwayGoalsScored, HomeGoalsScored, win);
+        // update home team ranking
+        await dbUpdateFootballRankings(seasonID, HomeTeamID, 0, 0, 1, HomeGoalsScored, AwayGoalsScored, loss);
+      } // draw
+      else {
+        // update away team ranking
+        await dbUpdateFootballRankings(seasonID, AwayTeamID, 0, 1, 0, AwayGoalsScored, HomeGoalsScored, draw);
+        // update home team ranking
+        await dbUpdateFootballRankings(seasonID, HomeTeamID, 0, 1, 0, HomeGoalsScored, AwayGoalsScored, draw);
+      }
+    } catch(e){
+      next(e);
+    }
+  });
 
-  // update ranking table
 
 }
-
-
 
 // call db to update fixture played to true
 async function updateFixturePlayed (fixtureID) {
   var update = await dbUpdateFixturePlayed(fixtureID, 'true', (err) => {
-    if(err)next(err);
+    if(err) next(err);
   });
 }
 
