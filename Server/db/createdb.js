@@ -222,6 +222,11 @@ async function createTableTennisResultsTable(err) {
   });
 }
 
+// ------  create rankings tables  ------
+
+
+
+
 
 
 // createUsersTable();
@@ -230,7 +235,9 @@ async function createTableTennisResultsTable(err) {
 // createPlaysForTable();
 // createSeasonsTable();
 // createFixturesTable();
+
 // ------  create Results tables  ------
+
 //createFootballResultsTable();
 //createRugbyResultsTable();
 //createAmericanFootballResultsTable();
@@ -238,5 +245,7 @@ async function createTableTennisResultsTable(err) {
 //createTennisResultsTable();
 //createCricketResultsTable();
 //createVolleyballResultsTable();
-createHockeyResultsTable();
+//createHockeyResultsTable();
 //createTableTennisResultsTable();
+
+// ------  create Rankings tables  ------

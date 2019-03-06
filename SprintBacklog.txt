@@ -5,60 +5,29 @@ Sprint Backlog
 
 [] nice to do
   [] refactor code, add more methods
-  [x] put db files into folders
-  [x] go over http status codes
   [] fix navbar when screen small e.g on mobile.
   [] add league description
   [] add team description
-  [x] routing better
-    [x] league
-    [x] team
   [] update regex to include special characters for match description
-
-[x] need to do
-  [x] add user into playsfor once theyve created a new team
-  [x] fix searching for leagues when there's no teams in them
-    [x] creating league redirects to create team.
-  [x] when start new season set last season finished to true
-  [x] refresh app.vue when logout
+  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
 
 [] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
 
-[x] results
-  [x] backend, for each sport
-    [x] db results table for each sport
-    [x] add results to correct Table
-      [x] check user can update results
-    [x] update fixture to have been played
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
 
 
-  [x] frontend
-    [x] form for each sport
-      [x] send req with results to backend
-      [x] redirect to league homepage after submitting results
-        [x] Football
-        [x] Tennis
-        [x] american Football
-        [x] volleyball
-        [x] table Tennis
-        [x] Hockey
-        [x] Basketball
-        [x] rugby
-        [x] cricket
-    [x] update list of sports when searching for league
 
 [] rankings
+  [] create db tables for each sport
+  
+  [] frontend
+    [] send req to backend
+    [] show rankings in a table
+
+  [] Backend
+    [] Routes
+    [] query db
 
 [] unit test everything
   [] use mocha and chai
