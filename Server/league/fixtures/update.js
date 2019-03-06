@@ -22,6 +22,7 @@ const dbInsertTennisRanking = require('../../db/insert/rankings/insertTennisRank
 const dbInsertRugbyRanking = require('../../db/insert/rankings/insertRugbyRankings.js');
 const dbInsertAmericanFootballRanking = require('../../db/insert/rankings/insertAmericanFootballRankings.js');
 const dbInsertHockeyRanking = require('../../db/insert/rankings/insertHockeyRankings.js');
+const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTableTennisRankings.js');
 
 // ------  schemas  ------
 
@@ -233,18 +234,25 @@ async function initialiseRankingsTable(seasonID, teams) {
               await dbInsertRugbyRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
           }
           break;
-          case "American Football":
-            for(i = 0; i< teams.length; i++) {
-                //initialise everythink to 0
-                await dbInsertAmericanFootballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
-            }
-            break;
-            case "Hockey":
-              for(i = 0; i< teams.length; i++) {
-                  //initialise everythink to 0
-                  await dbInsertHockeyRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
-              }
-              break;
+        case "American Football":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertAmericanFootballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Hockey":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertHockeyRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Table Tennis":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertTableTennisRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+
         default:
           console.log("sport no recognised");
       }
