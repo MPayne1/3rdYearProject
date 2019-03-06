@@ -16,6 +16,10 @@ const dbSelectTeamsInLeague = require('../../db/select/selectTeamsInLeague.js');
 const dbUpdateSeasonFinished = require('../../db/update/updateFinishPreviousSeason.js');
 const dbInsertSelectNewSeason = require('../../db/insert/insertSelectNewSeason.js');
 const dbInsertFixture = require('../../db/insert/insertFixture.js');
+const dbSelectSportFromSeasonID = require('../../db/select/selectSportFromSeasonID.js');
+const dbInsertFootballRanking = require('../../db/insert/rankings/insertFootballRankings.js');
+const dbInsertTennisRanking = require('../../db/insert/ranking/insertTennisRanking.js');
+
 
 // ------  schemas  ------
 
@@ -125,6 +129,7 @@ if(result.error === null) {
           // set last season finished true
           await dbUpdateSeasonFinished(leagueID, 'true');
 
+
           // insert new season into season table, also getting the seasonID jsut created
           var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
             if(er) next(er);
@@ -138,9 +143,11 @@ if(result.error === null) {
                     await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
                   }
                 }
+                await initialiseRankingsTable(seasonID, result);
                 console.log(fixtures);
                 res.json(fixtures);
               });
+
             } catch(e) {
               next(e);
             }
@@ -157,8 +164,6 @@ if(result.error === null) {
       next(error);
     }
   });
-
-
  } else {
   next(result.error);
  }
@@ -199,6 +204,36 @@ for(j = 0; j < numTeams-1; j++) {
   callback(fixtures);
 }
 
+async function initialiseRankingsTable(seasonID, teams) {
+  // get sport from seasonID
+  await dbSelectSportFromSeasonID(seasonID, async (err, sport) => {
+    if(err) next(err);
+    try{
+      sport[0];
+      console.log(teams);
+      // for each team in teams, insert into rankings , all 0s
+      switch(sport[0].sport) {
+        case "Football":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertFootballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Tennis":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertTennisRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        default:
+          console.log("sport no recognised");
+      }
 
+
+    } catch(e) {
+      next(e);
+    }
+  });
+}
 
 module.exports = router;

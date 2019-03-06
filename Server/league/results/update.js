@@ -135,11 +135,15 @@ router.post('/football', async(req, res, next) => {
           AwayGoalsScoredHT, HomeGoalsScoredFT, AwayGoalsScoredFT, MatchDescription, (err) => {
             if(err) next(err);
         });
+
+      //   updateFootballranking
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
       }
     });
+
+
   }
   else {
     next(result.error);
@@ -481,6 +485,15 @@ router.post('/cricket', async(req, res, next) => {
 
 
 
+// update football Ranking
+async function updateFootballRanking(req, next) {
+  // get points info from leageue table
+
+  // see who won/draw
+
+  // update ranking table
+
+}
 
 
 
