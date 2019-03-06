@@ -303,7 +303,18 @@ async function createTableTennisRankingsTable(err) {
 }
 
 
-
+async function createHockeyRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE HockeyRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, GoalsScored int, GoalsConceded int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("HockeyRankings table created");
+  });
+}
 
 // createUsersTable();
 // createLeagueTable();
@@ -331,3 +342,4 @@ createRugbyRankingsTable();
 createBasketballRankingsTable();
 createTennisRankingsTable();
 createTableTennisRankingsTable();
+createHockeyRankingsTable();
