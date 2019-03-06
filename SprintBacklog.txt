@@ -12,13 +12,11 @@ Sprint Backlog
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] email users when the fixture/results info is updated
   [] show teamname rather than home/away in results page
+  [x] move results db files into own folder
 
 [] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
-
-
-
 
 [x] rankings
   [x] create db tables for each sport

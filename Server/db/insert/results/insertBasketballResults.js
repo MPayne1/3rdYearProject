@@ -1,12 +1,12 @@
 const mysql = require('mysql');
-const dbCon  = require('../connection.js');
+const dbCon  = require('../../connection.js');
 
 
 //insert a new result in db
-var insertAmericanFootballResults  = async function(fixtureID, HomePointsScoredQ1,
+var insertBasketballResults  = async function(fixtureID, HomePointsScoredQ1,
   AwayPointsScoredQ1, HomePointsScoredHT, AwayPointsScoredHT, HomePointsScoredQ3,
   AwayPointsScoredQ3, HomePointsScoredFT, AwayPointsScoredFT, MatchDescription, callback) {
-    var sql = `INSERT INTO AmericanFootballResults(fixtureID, HomePointsScoredQ1,
+    var sql = `INSERT INTO BasketballResults(fixtureID, HomePointsScoredQ1,
       AwayPointsScoredQ1, HomePointsScoredHT, AwayPointsScoredHT, HomePointsScoredQ3,
       AwayPointsScoredQ3, HomePointsScoredFT, AwayPointsScoredFT, MatchDescription)
       VALUES(${mysql.escape(fixtureID)}, ${mysql.escape(HomePointsScoredQ1)},
@@ -21,4 +21,4 @@ var insertAmericanFootballResults  = async function(fixtureID, HomePointsScoredQ
 }
 
 
-module.exports = insertAmericanFootballResults;
+module.exports = insertBasketballResults;

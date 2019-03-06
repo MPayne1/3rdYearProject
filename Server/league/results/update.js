@@ -9,16 +9,16 @@ const joi = require('joi');
 // ------  db operations  ------
 
 const dbSelectUpdateFixtureAdmin = require('../../db/select/selectUpdateFixtureAdmin.js');
-const dbInsertFootballResult = require('../../db/insert/insertFootballResults.js');
+const dbInsertFootballResult = require('../../db/insert/results/insertFootballResults.js');
 const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
-const dbInsertTennisResult = require('../../db/insert/insertTennisResults.js');
-const dbInsertAmericanFootballResult = require('../../db/insert/insertAmericanFootballResults.js');
-const dbInsertVolleyballResult = require('../../db/insert/insertVolleyballResults.js');
-const dbInsertTableTennisResult = require('../../db/insert/insertTableTennisResults.js');
-const dbInsertHockeyResult = require('../../db/insert/insertHockeyResults.js');
-const dbInsertBasketballResult = require('../../db/insert/insertBasketballResults.js');
-const dbInsertRugbyResult = require('../../db/insert/insertRugbyResults.js');
-const dbInsertCricketResult = require('../../db/insert/insertCricketResults.js');
+const dbInsertTennisResult = require('../../db/insert/results/insertTennisResults.js');
+const dbInsertAmericanFootballResult = require('../../db/insert/results/insertAmericanFootballResults.js');
+const dbInsertVolleyballResult = require('../../db/insert/results/insertVolleyballResults.js');
+const dbInsertTableTennisResult = require('../../db/insert/results/insertTableTennisResults.js');
+const dbInsertHockeyResult = require('../../db/insert/results/insertHockeyResults.js');
+const dbInsertBasketballResult = require('../../db/insert/results/insertBasketballResults.js');
+const dbInsertRugbyResult = require('../../db/insert/results/insertRugbyResults.js');
+const dbInsertCricketResult = require('../../db/insert/results/insertCricketResults.js');
 const dbSelectLeaguePoints = require('../../db/select/selectLeaguePoints.js');
 const dbUpdateFootballRankings = require('../../db/update/rankings/updateFootballRankings.js');
 const dbUpdateRugbyRankings = require('../../db/update/rankings/updateRugbyRankings.js');

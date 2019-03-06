@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-const dbCon  = require('../connection.js');
+const dbCon  = require('../../connection.js');
 
 //insert a new result in db
 var insertVolleyballResults  = async function(fixtureID, HomePointsScoredG1,
