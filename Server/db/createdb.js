@@ -237,7 +237,18 @@ async function createFootballRankingsTable(err) {
   });
 }
 
-
+async function createAmericanFootballRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE AmericanFootballRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, PointsScored int, PointsConceded int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("FootballRankings table created");
+  });
+}
 
 
 // createUsersTable();
@@ -260,4 +271,5 @@ async function createFootballRankingsTable(err) {
 //createTableTennisResultsTable();
 
 // ------  create Rankings tables  ------
- createFootballRankingsTable();
+createFootballRankingsTable();
+createAmericanFootballRankingsTable();
