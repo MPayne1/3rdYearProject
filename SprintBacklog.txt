@@ -21,15 +21,40 @@ Sprint Backlog
 
 
 [] rankings
-  [] create db tables for each sport
-
+  [x] create db tables for each sport
+    [x] Football
+    [x] Tennis
+    [x] american Football
+    [x] volleyball
+    [x] table Tennis
+    [x] Hockey
+    [x] Basketball
+    [x] rugby
+    [x] cricket
   [] frontend
     [] send req to backend
     [] show rankings in a table
-
+      [] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
   [] Backend
     [] Routes
     [] query db
+      [] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
 
 [] unit test everything
   [] use mocha and chai
