@@ -59,12 +59,12 @@ Sprint Backlog
     [] update rankings
       [x] Football
       [] Tennis
-      [] american Football
+      [x] american Football
       [] volleyball
       [] table Tennis
       [] Hockey
-      [] Basketball
-      [] rugby
+      [x] Basketball
+      [x] rugby
       [] cricket
     [] get rankings
       [] Football
