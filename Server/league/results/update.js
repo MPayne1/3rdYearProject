@@ -27,6 +27,7 @@ const dbUpdateBasketballRankings = require('../../db/update/rankings/updateBaske
 const dbUpdateHockeyRankings = require('../../db/update/rankings/updateHockeyRankings.js');
 const dbUpdateTennisRankings = require('../../db/update/rankings/updateTennisRankings.js');
 const dbUpdateTableTennisRankings = require('../../db/update/rankings/updateTableTennisRankings.js');
+const dbUpdateVolleyballRankings = require('../../db/update/rankings/updateVolleyballRankings.js');
 // ------  Schemas  ------
 
 // schema for updating football results
@@ -278,6 +279,7 @@ router.post('/volleyball', async(req, res, next) => {
           ,MatchDescription, (err) => {
             if(err) next(err);
         });
+        updateVolleyballRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -691,7 +693,7 @@ async function updateTennisRanking(req, next) {
 }
 
 
-// update tennis Ranking
+// update table tennis Ranking
 async function updateTableTennisRanking(req, next) {
   var win = 0;
   var draw = 0;
@@ -742,6 +744,60 @@ async function updateTableTennisRanking(req, next) {
     }
   });
 }
+
+
+// update volleyball Ranking
+async function updateVolleyballRanking(req, next) {
+  var win = 0;
+  var draw = 0;
+  var loss = 0;
+  var seasonID;
+  var HomeTeamID;
+  var AwayTeamID;
+  var HomeSetsWon = 0;
+  var AwaySetsWon = 0;
+
+  // calculate home/away sets won
+  HomeSetsWon = HomeTableTennisSetsWon(req);
+  AwaySetsWon = AwayTableTennisSetsWon(req);
+
+  // get points info from leageue table
+  await dbSelectLeaguePoints(req.body.FixtureID, async (err, result) => {
+    if(err) next(err);
+    try{
+      result[0];
+      win = result[0].pointsForWin;
+      draw = result[0].pointsForDraw;
+      loss = result[0].pointsForLoss;
+      seasonID = result[0].seasonID;
+      HomeTeamID = result[0].HomeTeamID;
+      AwayTeamID = result[0].AwayTeamID;
+
+      // home team wins
+      if(HomeSetsWon > AwaySetsWon) {
+        // update home team ranking
+        await dbUpdateVolleyballRankings(seasonID, HomeTeamID, 1, 0, 0, HomeSetsWon, AwaySetsWon, win);
+        // update away team ranking
+        await dbUpdateVolleyballRankings(seasonID, AwayTeamID, 0, 0, 1, AwaySetsWon, HomeSetsWon, loss);
+      } // away team wins
+      else if(HomeSetsWon < AwaySetsWon) {
+        // update away team ranking
+        await dbUpdateVolleyballRankings(seasonID, AwayTeamID, 1, 0, 0, AwaySetsWon, HomeSetsWon, win);
+        // update home team ranking
+        await dbUpdateVolleyballRankings(seasonID, HomeTeamID, 0, 0, 1, HomeSetsWon, AwaySetsWon, loss);
+      } // draw
+      else {
+        // update away team ranking
+        await dbUpdateVolleyballRankings(seasonID, AwayTeamID, 0, 1, 0, AwaySetsWon, HomeSetsWon, draw);
+        // update home team ranking
+        await dbUpdateVolleyballRankings(seasonID, HomeTeamID, 0, 1, 0, HomeSetsWon, AwaySetsWon, draw);
+      }
+    } catch(e){
+      next(e);
+    }
+  });
+}
+
 
 
 // update basketball Ranking
@@ -968,7 +1024,6 @@ function AwayTableTennisSetsWon(req) {
   }
   return AwayWon;
 }
-
 
 
 // call db to update fixture played to true
