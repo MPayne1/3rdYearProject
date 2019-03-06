@@ -4,7 +4,7 @@ const dbCon  = require('../connection.js');
 /*
   select the points allocation for the league, from the fixtureID
 */
-var selectLeagueAdmin = async function(fixtureID, callback) {
+var selectLeaguePoints = async function(fixtureID, callback) {
   var res;
     var sql = `SELECT pointsForWin, pointsForDraw, pointsForLoss FROM league,fixture WHERE fixtureID = ${mysql.escape(fixtureID)}
     and fixture.leagueID = league.leagueID`;
@@ -15,4 +15,4 @@ var selectLeagueAdmin = async function(fixtureID, callback) {
     });
 }
 
-module.exports = selectLeagueAdmin;
+module.exports = selectLeaguePoints;
