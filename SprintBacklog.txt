@@ -20,7 +20,7 @@ Sprint Backlog
 
 
 
-[] rankings
+[x] rankings
   [x] create db tables for each sport
     [x] Football
     [x] Tennis
@@ -58,8 +58,8 @@ Sprint Backlog
       [x] cricket
     [] update rankings
       [x] Football
-      [] Tennis
-      [x] american Football
+      [x] Tennis
+      [x] American Football
       [] volleyball
       [] table Tennis
       [x] Hockey
@@ -69,7 +69,7 @@ Sprint Backlog
     [] get rankings
       [] Football
       [] Tennis
-      [] american Football
+      [] American Football
       [] volleyball
       [] table Tennis
       [] Hockey
