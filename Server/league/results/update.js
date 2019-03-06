@@ -28,6 +28,7 @@ const dbUpdateHockeyRankings = require('../../db/update/rankings/updateHockeyRan
 const dbUpdateTennisRankings = require('../../db/update/rankings/updateTennisRankings.js');
 const dbUpdateTableTennisRankings = require('../../db/update/rankings/updateTableTennisRankings.js');
 const dbUpdateVolleyballRankings = require('../../db/update/rankings/updateVolleyballRankings.js');
+const dbUpdateCricketRankings = require('../../db/update/rankings/updateCricketRankings.js');
 // ------  Schemas  ------
 
 // schema for updating football results
@@ -484,6 +485,7 @@ router.post('/cricket', async(req, res, next) => {
           , AwayWicketsLostI2, MatchDescription, (err) => {
             if(err) next(err);
         });
+        updateCricketRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -798,6 +800,75 @@ async function updateVolleyballRanking(req, next) {
   });
 }
 
+
+// update cricket Ranking
+async function updateCricketRanking(req, next) {
+  var win = 0;
+  var draw = 0;
+  var loss = 0;
+  var seasonID;
+  var HomeTeamID;
+  var AwayTeamID;
+  var HomeRunsI1 = req.body.HomeRunsI1;
+  var AwayRunsI1 = req.body.AwayRunsI1;
+  var HomeRunsI2 = req.body.HomeRunsI2;
+  var AwayRunsI2 = req.body.AwayRunsI2;
+  var HomeWicketsLostI1 = parseInt(req.body.HomeWicketsLostI1);
+  var AwayWicketsLostI1 = parseInt(req.body.AwayWicketsLostI1);
+  var HomeWicketsLostI2 = parseInt(req.body.HomeWicketsLostI2);
+  var AwayWicketsLostI2 = parseInt(req.body.AwayWicketsLostI2);
+
+  var HomeRuns = parseInt(HomeRunsI1) + parseInt(HomeRunsI2);
+  var AwayRuns = parseInt(AwayRunsI1) + parseInt(AwayRunsI2);
+
+  // get points info from leageue table
+  await dbSelectLeaguePoints(req.body.FixtureID, async (err, result) => {
+    if(err) next(err);
+    try{
+      result[0];
+      win = result[0].pointsForWin;
+      draw = result[0].pointsForDraw;
+      loss = result[0].pointsForLoss;
+      seasonID = result[0].seasonID;
+      HomeTeamID = result[0].HomeTeamID;
+      AwayTeamID = result[0].AwayTeamID;
+
+      // home team wins
+      if(HomeRuns > AwayRuns) {
+        // update home team ranking
+        await dbUpdateCricketRankings(seasonID, HomeTeamID, 1, 0, 0,
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2),
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2), win);
+        // update away team ranking
+        await dbUpdateCricketRankings(seasonID, AwayTeamID, 0, 0, 1,
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2),
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2), loss);
+      } // away team wins
+      else if(HomeRuns < AwayRuns) {
+        // update away team ranking
+        await dbUpdateCricketRankings(seasonID, AwayTeamID, 1, 0, 0,
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2),
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2), win);
+        // update home team ranking
+        await dbUpdateCricketRankings(seasonID, HomeTeamID, 0, 0, 1,
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2),
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2), loss);
+      } // draw
+      else {
+        // update away team ranking
+        await dbUpdateCricketRankings(seasonID, AwayTeamID, 0, 1, 0,
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2),
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2), draw);
+        // update home team ranking
+        await dbUpdateCricketRankings(seasonID, HomeTeamID, 0, 1, 0,
+          HomeRuns, (AwayWicketsLostI1 + AwayWicketsLostI2),
+          AwayRuns, (HomeWicketsLostI1 + HomeWicketsLostI2), draw);
+      }
+    } catch(e){
+      next(e);
+    }
+  });
+}
 
 
 // update basketball Ranking
