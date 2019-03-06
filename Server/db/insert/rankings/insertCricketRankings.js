@@ -5,7 +5,7 @@ const dbCon  = require('../../connection.js');
 var insertCricketRankings  = async function(seasonID, teamID, played,
   wins, draws, losses, RunsFor, WicketsFor, RunsAgainst, WicketsAgainst, Points) {
     var sql = `INSERT INTO CricketRankings(seasonID, TeamID, played,
-      wins, draws, losses, SetsFor, SetsAgainst, Points)
+      wins, draws, losses, RunsFor,  WicketsFor, RunsAgainst, WicketsAgainst, Points)
       VALUES(${mysql.escape(seasonID)}, ${mysql.escape(teamID)},
        ${mysql.escape(played)},  ${mysql.escape(wins)},
        ${mysql.escape(draws)},  ${mysql.escape(losses)},

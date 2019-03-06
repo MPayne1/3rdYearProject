@@ -25,6 +25,8 @@ const dbInsertHockeyRanking = require('../../db/insert/rankings/insertHockeyRank
 const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTableTennisRankings.js');
 const dbInsertVolleyballRanking = require('../../db/insert/rankings/insertVolleyballRankings.js');
 const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasketballRankings.js');
+const dbInsertCricketRanking = require('../../db/insert/rankings/insertCricketRankings.js');
+
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -125,7 +127,7 @@ if(result.error === null) {
       result[0].LeagueAdmin;
       numTimes = result[0].games;
       // get list of teams in league
-      var teams = await dbSelectTeamsInLeague(leagueID, async function(err, result) {
+      var teams = await dbSelectTeamsInLeague(leagueID, async function(err, teamList) {
         if(err) next(err);
         try {
           result[0];
@@ -140,14 +142,14 @@ if(result.error === null) {
             try{
               seasonID = result2[result2.length-1].seasonID;
 
-              await generateFixtures(result, seasonID, leagueID, async (fixtures) => {
+              await generateFixtures(teamList, seasonID, leagueID, async (fixtures) => {
                 // then insert fixtures into db, for each time the teams play each other
                 for(i = 0; i < numTimes; i++) {
                   for(j = 0; j < fixtures.length; j++) {
                     await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
                   }
                 }
-                await initialiseRankingsTable(seasonID, result);
+                await initialiseRankingsTable(seasonID, teamList);
                 console.log(fixtures);
                 res.json(fixtures);
               });
@@ -263,6 +265,12 @@ async function initialiseRankingsTable(seasonID, teams) {
           for(i = 0; i< teams.length; i++) {
             //initialise everythink to 0
             await dbInsertBasketballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Cricket":
+          for(i = 0; i< teams.length; i++) {
+            //initialise everythink to 0
+            await dbInsertCricketRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0,0);
           }
           break;
         default:
