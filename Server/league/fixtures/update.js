@@ -19,7 +19,7 @@ const dbInsertFixture = require('../../db/insert/insertFixture.js');
 const dbSelectSportFromSeasonID = require('../../db/select/selectSportFromSeasonID.js');
 const dbInsertFootballRanking = require('../../db/insert/rankings/insertFootballRankings.js');
 const dbInsertTennisRanking = require('../../db/insert/rankings/insertTennisRankings.js');
-
+const dbInsertRugbyRanking = require('../../db/insert/rankings/insertRugbyRankings.js');
 
 // ------  schemas  ------
 
@@ -223,6 +223,12 @@ async function initialiseRankingsTable(seasonID, teams) {
           for(i = 0; i< teams.length; i++) {
               //initialise everythink to 0
               await dbInsertTennisRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Rugby":
+          for(i = 0; i< teams.length; i++) {
+              //initialise everythink to 0
+              await dbInsertRugbyRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
           }
           break;
         default:

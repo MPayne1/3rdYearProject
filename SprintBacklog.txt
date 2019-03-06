@@ -31,6 +31,7 @@ Sprint Backlog
     [x] Basketball
     [x] rugby
     [x] cricket
+
   [] frontend
     [] send req to backend
     [] show rankings in a table
@@ -43,9 +44,21 @@ Sprint Backlog
       [] Basketball
       [] rugby
       [] cricket
+
   [] Backend
     [] Routes
     [] query db
+    [] update rankings
+      [] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
+    [] get rankings
       [] Football
       [] Tennis
       [] american Football
