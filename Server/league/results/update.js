@@ -436,7 +436,7 @@ router.post('/rugby', async(req, res, next) => {
           , MatchDescription, (err) => {
             if(err) next(err);
         });
-        // updateRugbyRanking;
+        updateRugbyRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -513,13 +513,13 @@ async function updateFootballRanking(req) {
       AwayTeamID = result[0].AwayTeamID;
 
       // home team wins
-      if(req.body.HomeGoalsScoredFT > req.body.AwayGoalsScoredFT) {
+      if(HomeGoalsScored > AwayGoalsScored) {
         // update home team ranking
         await dbUpdateFootballRankings(seasonID, HomeTeamID, 1, 0, 0, HomeGoalsScored, AwayGoalsScored, win);
         // update away team ranking
         await dbUpdateFootballRankings(seasonID, AwayTeamID, 0, 0, 1, AwayGoalsScored, HomeGoalsScored, loss);
       } // away team wins
-      else if(req.body.HomeGoalsScoredFT < req.body.AwayGoalsScoredFT) {
+      else if(HomeGoalsScored < AwayGoalsScored) {
         // update away team ranking
         await dbUpdateFootballRankings(seasonID, AwayTeamID, 1, 0, 0, AwayGoalsScored, HomeGoalsScored, win);
         // update home team ranking
@@ -539,7 +539,7 @@ async function updateFootballRanking(req) {
 
 
 // update Rugby Ranking
-async function updateRugbyRanking(req) {
+async function updateRugbyRanking(req, next) {
   var win = 0;
   var draw = 0;
   var loss = 0;
@@ -563,21 +563,21 @@ async function updateRugbyRanking(req) {
       // home team wins
       if(HomePointsScored > AwayPointsScored) {
         // update home team ranking
-        await dbUpdateRugbylRankings(seasonID, HomeTeamID, 1, 0, 0, HomePointsScored, AwayPointsScored, win);
+        await dbUpdateRugbyRankings(seasonID, HomeTeamID, 1, 0, 0, HomePointsScored, AwayPointsScored, win);
         // update away team ranking
-        await dbUpdateRugbylRankings(seasonID, AwayTeamID, 0, 0, 1, AwayGoalsScored, HomePointsScored, loss);
+        await dbUpdateRugbyRankings(seasonID, AwayTeamID, 0, 0, 1, AwayPointsScored, HomePointsScored, loss);
       } // away team wins
       else if(HomePointsScored < AwayPointsScored) {
         // update away team ranking
-        await dbUpdateRugbylRankings(seasonID, AwayTeamID, 1, 0, 0, AwayPointsScored, HomePointsScored, win);
+        await dbUpdateRugbyRankings(seasonID, AwayTeamID, 1, 0, 0, AwayPointsScored, HomePointsScored, win);
         // update home team ranking
-        await dbUpdateRugbylRankings(seasonID, HomeTeamID, 0, 0, 1, HomePointsScored, AwayPointsScored, loss);
+        await dbUpdateRugbyRankings(seasonID, HomeTeamID, 0, 0, 1, HomePointsScored, AwayPointsScored, loss);
       } // draw
       else {
         // update away team ranking
-        await dbUpdateRugbylRankings(seasonID, AwayTeamID, 0, 1, 0, AwayPointsScored, HomePointsScored, draw);
+        await dbUpdateRugbyRankings(seasonID, AwayTeamID, 0, 1, 0, AwayPointsScored, HomePointsScored, draw);
         // update home team ranking
-        await dbUpdateRugbylRankings(seasonID, HomeTeamID, 0, 1, 0, HomePointsScored, AwayPointsScored, draw);
+        await dbUpdateRugbyRankings(seasonID, HomeTeamID, 0, 1, 0, HomePointsScored, AwayPointsScored, draw);
       }
     } catch(e){
       next(e);

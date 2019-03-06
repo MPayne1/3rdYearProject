@@ -16,4 +16,4 @@ var updateRugbyRanking  = async function(seasonID, teamID, wins , draw, loss, Po
     });
 }
 
-module.exports = updateFootballRanking;
+module.exports = updateRugbyRanking;
