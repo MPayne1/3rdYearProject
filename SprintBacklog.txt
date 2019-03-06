@@ -11,7 +11,7 @@ Sprint Backlog
   [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] email users when the fixture/results info is updated
-
+  [] show teamname rather than home/away in results page
 
 [] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
@@ -62,7 +62,7 @@ Sprint Backlog
       [x] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [x] Basketball
       [x] rugby
       [] cricket
