@@ -18,7 +18,7 @@ const dbInsertSelectNewSeason = require('../../db/insert/insertSelectNewSeason.j
 const dbInsertFixture = require('../../db/insert/insertFixture.js');
 const dbSelectSportFromSeasonID = require('../../db/select/selectSportFromSeasonID.js');
 const dbInsertFootballRanking = require('../../db/insert/rankings/insertFootballRankings.js');
-const dbInsertTennisRanking = require('../../db/insert/ranking/insertTennisRanking.js');
+const dbInsertTennisRanking = require('../../db/insert/rankings/insertTennisRankings.js');
 
 
 // ------  schemas  ------
