@@ -263,6 +263,18 @@ async function createRugbyRankingsTable(err) {
   });
 }
 
+async function createBasketballRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE BasketballRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, PointsScored int, PointsConceded int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("BasketballRankings table created");
+  });
+}
 
 // createUsersTable();
 // createLeagueTable();
