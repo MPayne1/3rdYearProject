@@ -10,6 +10,8 @@ Sprint Backlog
   [] add team description
   [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
+  [] email users when the fixture/results info is updated
+
 
 [] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
@@ -20,7 +22,7 @@ Sprint Backlog
 
 [] rankings
   [] create db tables for each sport
-  
+
   [] frontend
     [] send req to backend
     [] show rankings in a table

@@ -276,6 +276,21 @@ async function createBasketballRankingsTable(err) {
   });
 }
 
+async function createTennisRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE TennisRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, SetsFor int, SetsAgainst int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("TennisRankings table created");
+  });
+}
+
+
+
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
