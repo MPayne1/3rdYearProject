@@ -56,7 +56,7 @@ Sprint Backlog
       [x] Basketball
       [x] rugby
       [x] cricket
-    [] update rankings
+    [x] update rankings
       [x] Football
       [x] Tennis
       [x] American Football
@@ -65,7 +65,7 @@ Sprint Backlog
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
+      [x] cricket
     [] get rankings
       [] Football
       [] Tennis
