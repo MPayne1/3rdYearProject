@@ -25,6 +25,7 @@ const dbUpdateRugbyRankings = require('../../db/update/rankings/updateRugbyRanki
 const dbUpdateAmericanFootballRankings = require('../../db/update/rankings/updateAmericanFootballRankings.js');
 const dbUpdateBasketballRankings = require('../../db/update/rankings/updateBasketballRankings.js');
 const dbUpdateHockeyRankings = require('../../db/update/rankings/updateHockeyRankings.js');
+const dbUpdateTennisRankings = require('../../db/update/rankings/updateTennisRankings.js');
 // ------  Schemas  ------
 
 // schema for updating football results
@@ -231,6 +232,7 @@ router.post('/tennis', async(req, res, next) => {
           ,MatchDescription, (err) => {
             if(err) next(err);
         });
+        updateTennisRanking(req);
         res.json(req.body);
       } catch(e) {
         unauthorisedUser(res, next)
@@ -333,7 +335,6 @@ router.post('/tableTennis', async(req, res, next) => {
 });
 
 
-
 // hockey results
 router.post('/hockey', async(req, res, next) => {
   const result  = joi.validate(req.body, updateHockeyResultsSchema);
@@ -369,7 +370,6 @@ router.post('/hockey', async(req, res, next) => {
     next(result.error);
   }
 });
-
 
 
 // basketball results
@@ -412,8 +412,6 @@ router.post('/basketball', async(req, res, next) => {
     next(result.error);
   }
 });
-
-
 
 
 // rugby results
@@ -639,6 +637,59 @@ async function updateHockeyRanking(req, next) {
 }
 
 
+// update tennis Ranking
+async function updateTennisRanking(req, next) {
+  var win = 0;
+  var draw = 0;
+  var loss = 0;
+  var seasonID;
+  var HomeTeamID;
+  var AwayTeamID;
+  var HomeSetsWon = 0;
+  var AwaySetsWon = 0;
+
+  // calculate home/away sets won
+  HomeSetsWon = HomeTennisSetsWon(req);
+  AwaySetsWon = AwayTennisSetsWon(req);
+
+  // get points info from leageue table
+  await dbSelectLeaguePoints(req.body.FixtureID, async (err, result) => {
+    if(err) next(err);
+    try{
+      result[0];
+      win = result[0].pointsForWin;
+      draw = result[0].pointsForDraw;
+      loss = result[0].pointsForLoss;
+      seasonID = result[0].seasonID;
+      HomeTeamID = result[0].HomeTeamID;
+      AwayTeamID = result[0].AwayTeamID;
+
+      // home team wins
+      if(HomeSetsWon > AwaySetsWon) {
+        // update home team ranking
+        await dbUpdateTennisRankings(seasonID, HomeTeamID, 1, 0, 0, HomeSetsWon, AwaySetsWon, win);
+        // update away team ranking
+        await dbUpdateTennisRankings(seasonID, AwayTeamID, 0, 0, 1, AwaySetsWon, HomeSetsWon, loss);
+      } // away team wins
+      else if(HomeSetsWon < AwaySetsWon) {
+        // update away team ranking
+        await dbUpdateTennisRankings(seasonID, AwayTeamID, 1, 0, 0, AwaySetsWon, HomeSetsWon, win);
+        // update home team ranking
+        await dbUpdateTennisRankings(seasonID, HomeTeamID, 0, 0, 1, HomeSetsWon, AwaySetsWon, loss);
+      } // draw
+      else {
+        // update away team ranking
+        await dbUpdateTennisRankings(seasonID, AwayTeamID, 0, 1, 0, AwaySetsWon, HomeSetsWon, draw);
+        // update home team ranking
+        await dbUpdateTennisRankings(seasonID, HomeTeamID, 0, 1, 0, HomeSetsWon, AwaySetsWon, draw);
+      }
+    } catch(e){
+      next(e);
+    }
+  });
+}
+
+
 // update basketball Ranking
 async function updateBasketballRanking(req, next) {
   var win = 0;
@@ -685,8 +736,6 @@ async function updateBasketballRanking(req, next) {
     }
   });
 }
-
-
 
 
 // update american football Ranking
@@ -736,6 +785,69 @@ async function updateAmericanFootballRanking(req, next) {
   });
 }
 
+// calculate how many sets hometeam Won
+function HomeTennisSetsWon(req) {
+  var HomePointsScoredS1 = req.body.HomePointsScoredS1;
+  var AwayPointsScoredS1 = req.body.AwayPointsScoredS1;
+  var HomePointsScoredS2 = req.body.HomePointsScoredS2;
+  var AwayPointsScoredS2 = req.body.AwayPointsScoredS2;
+  var HomePointsScoredS3 = req.body.HomePointsScoredS3;
+  var AwayPointsScoredS3 = req.body.AwayPointsScoredS3;
+  var HomePointsScoredS4 = req.body.HomePointsScoredS4;
+  var AwayPointsScoredS4 = req.body.AwayPointsScoredS4;
+  var HomePointsScoredS5 = req.body.HomePointsScoredS5;
+  var AwayPointsScoredS5 = req.body.AwayPointsScoredS5;
+  var HomeWon = 0;
+
+  if(HomePointsScoredS1 > AwayPointsScoredS1) {
+    HomeWon += 1;
+  }
+  if(HomePointsScoredS2 > AwayPointsScoredS2) {
+    HomeWon += 1;
+  }
+  if(HomePointsScoredS3 > AwayPointsScoredS3) {
+    HomeWon += 1;
+  }
+  if(HomePointsScoredS4 > AwayPointsScoredS4) {
+    HomeWon += 1;
+  }
+  if(HomePointsScoredS5 > AwayPointsScoredS5) {
+    HomeWon += 1;
+  }
+  return HomeWon;
+}
+
+// calculate how many sets awayteam Won
+function AwayTennisSetsWon(req) {
+  var HomePointsScoredS1 = req.body.HomePointsScoredS1;
+  var AwayPointsScoredS1 = req.body.AwayPointsScoredS1;
+  var HomePointsScoredS2 = req.body.HomePointsScoredS2;
+  var AwayPointsScoredS2 = req.body.AwayPointsScoredS2;
+  var HomePointsScoredS3 = req.body.HomePointsScoredS3;
+  var AwayPointsScoredS3 = req.body.AwayPointsScoredS3;
+  var HomePointsScoredS4 = req.body.HomePointsScoredS4;
+  var AwayPointsScoredS4 = req.body.AwayPointsScoredS4;
+  var HomePointsScoredS5 = req.body.HomePointsScoredS5;
+  var AwayPointsScoredS5 = req.body.AwayPointsScoredS5;
+  var AwayWon = 0;
+
+  if(HomePointsScoredS1 < AwayPointsScoredS1) {
+    AwayWon += 1;
+  }
+  if(HomePointsScoredS2 < AwayPointsScoredS2) {
+    AwayWon += 1;
+  }
+  if(HomePointsScoredS3 < AwayPointsScoredS3) {
+    AwayWon += 1;
+  }
+  if(HomePointsScoredS4 < AwayPointsScoredS4) {
+    AwayWon += 1;
+  }
+  if(HomePointsScoredS5 < AwayPointsScoredS5) {
+    AwayWon += 1;
+  }
+  return AwayWon;
+}
 
 // call db to update fixture played to true
 async function updateFixturePlayed (fixtureID) {
@@ -750,6 +862,5 @@ function unauthorisedUser(res, next) {
   res.status(403);
   next(error);
 }
-
 
 module.exports = router;
