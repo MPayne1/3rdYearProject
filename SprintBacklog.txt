@@ -46,8 +46,16 @@ Sprint Backlog
       [] cricket
 
   [] Backend
-    [] Routes
-    [] query db
+    [x] initialise rankings when start new season
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
     [] update rankings
       [] Football
       [] Tennis
