@@ -6,8 +6,8 @@ var updateHockeyRanking  = async function(seasonID, teamID, wins , draw, loss, P
     var sql = `UPDATE hockeyRankings SET played = played + 1,
     wins = wins + ${mysql.escape(wins)}, draws = draws + ${mysql.escape(draw)},
     losses = losses + ${mysql.escape(loss)},
-    PointsScored = PointsScored + ${mysql.escape(PointsScored)},
-    PointsConceded = PointsConceded + ${mysql.escape(PointsConceded)},
+    GoalsScored = GoalsScored + ${mysql.escape(PointsScored)},
+    GoalsConceded = GoalsConceded + ${mysql.escape(PointsConceded)},
     Points = Points + ${mysql.escape(points)}
     WHERE seasonID = ${mysql.escape(seasonID)} and teamID = ${mysql.escape(teamID)};`;
 	  await dbCon.query(sql , (err, result) => {
