@@ -224,7 +224,18 @@ async function createTableTennisResultsTable(err) {
 
 // ------  create rankings tables  ------
 
-
+async function createFootballRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE FootballRankings(SeasonID int, TeamID int,Played int," +
+  " Wins int, Draws int, Losses int, GoalsScored int, GoalsConceded int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("FootballRankings table created");
+  });
+}
 
 
 
@@ -249,3 +260,4 @@ async function createTableTennisResultsTable(err) {
 //createTableTennisResultsTable();
 
 // ------  create Rankings tables  ------
+ createFootballRankingsTable();
