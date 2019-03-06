@@ -316,6 +316,20 @@ async function createHockeyRankingsTable(err) {
   });
 }
 
+async function createCricketRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE CricketRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, RunsFor int, WicketsFor int,"+
+  " RunsAgainst int, WicketsAgainst int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("CricketRankings table created");
+  });
+}
+
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
@@ -343,3 +357,4 @@ createBasketballRankingsTable();
 createTennisRankingsTable();
 createTableTennisRankingsTable();
 createHockeyRankingsTable();
+createCricketRankingsTable();
