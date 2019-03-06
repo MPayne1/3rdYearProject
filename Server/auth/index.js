@@ -73,7 +73,6 @@ router.post('/login', async(req, res, next) => {
         var u = result[0].username;
         bcrypt.compare(req.body.password, result[0].password).then((passwordResult) => {
           if(passwordResult) { //password was correct
-            console.log(process.env.TOKEN_SECRET);
             var r = result[0];
             createTokenSendResponse(r, res, next);
           } else {
