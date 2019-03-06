@@ -12,7 +12,7 @@ var updateBasketballRanking = async function(seasonID, teamID, wins , draw, loss
     WHERE seasonID = ${mysql.escape(seasonID)} and teamID = ${mysql.escape(teamID)};`;
 	  await dbCon.query(sql , (err, result) => {
 		    if(err) throw err;
-        console.log('american football ranking updated');
+        console.log('basketball ranking updated');
     });
 }
 
