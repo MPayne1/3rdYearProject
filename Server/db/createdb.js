@@ -224,6 +224,7 @@ async function createTableTennisResultsTable(err) {
 
 // ------  create rankings tables  ------
 
+// create football rankings table
 async function createFootballRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE FootballRankings(SeasonID int, TeamID int,Played int," +
@@ -237,6 +238,7 @@ async function createFootballRankingsTable(err) {
   });
 }
 
+// create american football rankings table
 async function createAmericanFootballRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE AmericanFootballRankings(SeasonID int, TeamID int, Played int," +
@@ -250,6 +252,7 @@ async function createAmericanFootballRankingsTable(err) {
   });
 }
 
+// create rugby rankings table
 async function createRugbyRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE RugbyRankings(SeasonID int, TeamID int, Played int," +
@@ -263,6 +266,7 @@ async function createRugbyRankingsTable(err) {
   });
 }
 
+// create basketball rankings table
 async function createBasketballRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE BasketballRankings(SeasonID int, TeamID int, Played int," +
@@ -276,6 +280,7 @@ async function createBasketballRankingsTable(err) {
   });
 }
 
+// create tennis rankings table
 async function createTennisRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE TennisRankings(SeasonID int, TeamID int, Played int," +
@@ -289,6 +294,7 @@ async function createTennisRankingsTable(err) {
   });
 }
 
+// create table tennis rankings table
 async function createTableTennisRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE TableTennisRankings(SeasonID int, TeamID int, Played int," +
@@ -302,7 +308,7 @@ async function createTableTennisRankingsTable(err) {
   });
 }
 
-
+// create hockey rankings table
 async function createHockeyRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE HockeyRankings(SeasonID int, TeamID int, Played int," +
@@ -316,6 +322,7 @@ async function createHockeyRankingsTable(err) {
   });
 }
 
+// create cricket rankings table
 async function createCricketRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE CricketRankings(SeasonID int, TeamID int, Played int," +
@@ -330,7 +337,7 @@ async function createCricketRankingsTable(err) {
   });
 }
 
-
+// create volleyball rankings table
 async function createVolleyballRankingsTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE VolleyballRankings(SeasonID int, TeamID int, Played int," +
@@ -354,23 +361,24 @@ async function createVolleyballRankingsTable(err) {
 
 // ------  create Results tables  ------
 
-//createFootballResultsTable();
-//createRugbyResultsTable();
-//createAmericanFootballResultsTable();
-//createBasketballResultsTable();
-//createTennisResultsTable();
-//createCricketResultsTable();
-//createVolleyballResultsTable();
-//createHockeyResultsTable();
-//createTableTennisResultsTable();
+// createFootballResultsTable();
+// createRugbyResultsTable();
+// createAmericanFootballResultsTable();
+// createBasketballResultsTable();
+// createTennisResultsTable();
+// createCricketResultsTable();
+// createVolleyballResultsTable();
+// createHockeyResultsTable();
+// createTableTennisResultsTable();
 
 // ------  create Rankings tables  ------
-createFootballRankingsTable();
-createAmericanFootballRankingsTable();
-createRugbyRankingsTable();
-createBasketballRankingsTable();
-createTennisRankingsTable();
-createTableTennisRankingsTable();
-createHockeyRankingsTable();
-createCricketRankingsTable();
-createVolleyballRankingsTable();
+
+// createFootballRankingsTable();
+// createAmericanFootballRankingsTable();
+// createRugbyRankingsTable();
+// createBasketballRankingsTable();
+// createTennisRankingsTable();
+// createTableTennisRankingsTable();
+// createHockeyRankingsTable();
+// createCricketRankingsTable();
+// createVolleyballRankingsTable();
