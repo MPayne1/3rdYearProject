@@ -24,7 +24,7 @@ const dbInsertAmericanFootballRanking = require('../../db/insert/rankings/insert
 const dbInsertHockeyRanking = require('../../db/insert/rankings/insertHockeyRankings.js');
 const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTableTennisRankings.js');
 const dbInsertVolleyballRanking = require('../../db/insert/rankings/insertVolleyballRankings.js');
-
+const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasketballRankings.js');
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -257,6 +257,12 @@ async function initialiseRankingsTable(seasonID, teams) {
           for(i = 0; i< teams.length; i++) {
             //initialise everythink to 0
             await dbInsertVolleyballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
+          }
+          break;
+        case "Basketball":
+          for(i = 0; i< teams.length; i++) {
+            //initialise everythink to 0
+            await dbInsertBasketballRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0);
           }
           break;
         default:
