@@ -246,7 +246,20 @@ async function createAmericanFootballRankingsTable(err) {
   " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
   await db.query(sql, function(err, result){
     if(err) throw err;
-    console.log("FootballRankings table created");
+    console.log("AmericanFootballRankings table created");
+  });
+}
+
+async function createRugbyRankingsTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE RugbyRankings(SeasonID int, TeamID int, Played int," +
+  " Wins int, Draws int, Losses int, PointsScored int, PointsConceded int, Points int," +
+  "PRIMARY KEY (SeasonID, TeamID)," +
+  " FOREIGN KEY (SeasonID) REFERENCES season(SeasonID), " +
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, function(err, result){
+    if(err) throw err;
+    console.log("RugbyRankings table created");
   });
 }
 
