@@ -19,16 +19,29 @@ Sprint Backlog
   [] might have to change joi schemas
 
 [x] rankings
-  [x] create db tables for each sport
-    [x] Football
-    [x] Tennis
-    [x] american Football
-    [x] volleyball
-    [x] table Tennis
-    [x] Hockey
-    [x] Basketball
-    [x] rugby
-    [x] cricket
+  [x] db
+    [x] create db tables for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] create insert new rankings for each sport
+    [x] create update rankings for each sport
+    [x] create select rankings for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
 
   [] frontend
     [] send req to backend
@@ -43,7 +56,7 @@ Sprint Backlog
       [] rugby
       [] cricket
 
-  [] Backend
+  [x] Backend
     [x] initialise rankings when start new season
       [x] Football
       [x] Tennis
@@ -64,16 +77,16 @@ Sprint Backlog
       [x] Basketball
       [x] rugby
       [x] cricket
-    [] get rankings
+    [x] get rankings in order by points
       [x] Football
-      [] Tennis
+      [x] Tennis
       [x] American Football
-      [] volleyball
-      [] table Tennis
-      [] Hockey
-      [] Basketball
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
       [x] rugby
-      [] cricket
+      [x] cricket
 
 [] unit test everything
   [] use mocha and chai
