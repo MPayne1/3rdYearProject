@@ -13,6 +13,7 @@ const dbRugbyRankings = require('../../db/select/rankings/selectRugbyRankings.js
 const dbAmericanFootballRankings = require('../../db/select/rankings/selectAmericanFootballRankings.js');
 const dbBasketballRankings = require('../../db/select/rankings/selectBasketballRankings.js');
 const dbHockeyRankings = require('../../db/select/rankings/selectHockeyRankings.js');
+const dbVolleyballRankings = require('../../db/select/rankings/selectVolleyballRankings.js');
 // ------  schemas  ------
 
 // ranking schema
@@ -118,6 +119,26 @@ router.post('/hockey', async (req, res, next) => {
   if(result.error === null) {
     var leagueID = req.body.leagueID;
     var rankings = await dbHockeyRankings(leagueID, (err, result) => {
+      if(err) next (err);
+      try {
+        result[0];
+        res.json(result);
+      } catch (e) {
+        invalidInput(res, next)
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
+
+// route to get volleyball rankings
+router.post('/volleyball', async (req, res, next) => {
+  const result = joi.validate(req.body, getRankingSchema);
+
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    var rankings = await dbVolleyballRankings(leagueID, (err, result) => {
       if(err) next (err);
       try {
         result[0];
