@@ -65,14 +65,14 @@ Sprint Backlog
       [x] rugby
       [x] cricket
     [] get rankings
-      [] Football
+      [x] Football
       [] Tennis
-      [] American Football
+      [x] American Football
       [] volleyball
       [] table Tennis
       [] Hockey
       [] Basketball
-      [] rugby
+      [x] rugby
       [] cricket
 
 [] unit test everything
