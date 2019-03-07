@@ -194,19 +194,19 @@ function generateFixtures(teamList, seasonID, leagueID, callback) {
   }
   var numTeams = teamList.length;
 
-// for each round/matchday
-for(j = 0; j < numTeams-1; j++) {
-  // for each home team
-  for(i = 0; i < numTeams / 2; i++) {
-    // insert teams as a fixture
-    fixtures.push({
-      leagueID: leagueID,
-      seasonID: seasonID,
-      HomeTeamID: teamList[i].teamID,
-      AwayTeamID: teamList[numTeams-1-i].teamID});
+  // for each round/matchday
+  for(j = 0; j < numTeams-1; j++) {
+    // for each home team
+    for(i = 0; i < numTeams / 2; i++) {
+      // insert teams as a fixture
+      fixtures.push({
+        leagueID: leagueID,
+        seasonID: seasonID,
+        HomeTeamID: teamList[i].teamID,
+        AwayTeamID: teamList[numTeams-1-i].teamID});
+    }
+    teamList.splice(1,0, teamList.pop());
   }
-  teamList.splice(1,0, teamList.pop());
-}
   callback(fixtures);
 }
 
@@ -270,11 +270,11 @@ async function initialiseRankingsTable(seasonID, teams) {
         case "Cricket":
           for(i = 0; i< teams.length; i++) {
             //initialise everythink to 0
-            await dbInsertCricketRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0,0);
+            await dbInsertCricketRanking(seasonID, teams[i].teamID,0,0,0,0,0,0,0,0,0);
           }
           break;
         default:
-          console.log("sport no recognised");
+          console.log("sport not recognised");
       }
 
 
