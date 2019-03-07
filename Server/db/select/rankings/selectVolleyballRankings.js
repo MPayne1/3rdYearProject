@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
 /*
-  select the rugby rankings
+  select the volleyball rankings
 */
 var selectVolleyballRankings  = async function(leagueID, callback) {
   var res;
