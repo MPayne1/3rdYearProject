@@ -7,7 +7,7 @@ const router = express.Router();
 const joi = require('joi');
 const resultsRoute = require('./results/index.js');
 const fixturesRoute = require('./fixtures/index.js');
-
+const rankingsRoute = require('./rankings/index.js');
 // ------  db operations  ------
 
 const dbSelectLeagueNames = require('../db/select/selectLeagueNames.js');
@@ -53,7 +53,7 @@ const leagueIDSchema = joi.object().keys({
 
 router.use('/results', resultsRoute);
 router.use('/fixtures', fixturesRoute);
-
+router.use('/rankings', rankingsRoute);
 // all paths are prepended with /league
 router.get('/', (req, res) => {
   res.json({
