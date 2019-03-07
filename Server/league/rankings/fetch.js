@@ -1,4 +1,5 @@
-// get the rankings
+// handle requests to get the rankings
+
 // require in modules
 const express = require('express');
 const jwt = require('jsonwebtoken');
@@ -12,6 +13,8 @@ router.get('/', (req, res) => {
     message: 'rankings fetch router works'
   });
 });
+
+
 
 
 module.exports = router;
