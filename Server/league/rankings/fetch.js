@@ -9,6 +9,9 @@ const joi = require('joi');
 
 // ------  db operations  ------
 const dbFootballRankings = require('../../db/select/rankings/selectFootballRankings.js');
+const dbRugbyRankings = require('../../db/select/rankings/selectRugbyRankings.js');
+
+
 
 // ------  schemas  ------
 
@@ -45,6 +48,29 @@ router.post('/football', async (req, res, next) => {
     next(result.error)
   }
 });
+
+// route to get rugby rankings
+router.post('/rugby', async (req, res, next) => {
+  const result = joi.validate(req.body, getRankingSchema);
+
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    var rankings = await dbRugbyRankings(leagueID, (err, result) => {
+      if(err) next (err);
+      try {
+        result[0];
+        res.json(result);
+      } catch (e) {
+        invalidInput(res, next)
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
+
+
+
 
 // create/format response for invalid inputs
 function invalidInput(res, next) {
