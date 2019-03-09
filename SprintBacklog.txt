@@ -45,7 +45,7 @@ Sprint Backlog
 
   [] frontend
     [x] send req to backend
-    [] border round table
+    [] border around table
     [x] round table corners
     [] show rankings in a table
       [x] Football
@@ -53,11 +53,11 @@ Sprint Backlog
       [x] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
-      [] Basketball
-      [] rugby
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
       [] cricket
-    [] clicking teamname goes to teampage
+    [x] clicking teamname goes to teampage
 
   [x] Backend
     [x] initialise rankings when start new season
