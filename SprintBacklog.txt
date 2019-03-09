@@ -46,17 +46,18 @@ Sprint Backlog
   [] frontend
     [x] send req to backend
     [] border around table
+    [] fix upcomingFixtures overlap table
     [x] round table corners
-    [] show rankings in a table
+    [x] show rankings in a table
       [x] Football
-      [] Tennis
+      [x] Tennis
       [x] american Football
-      [] volleyball
-      [] table Tennis
+      [x] volleyball
+      [x] table Tennis
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
+      [x] cricket
     [x] clicking teamname goes to teampage
 
   [x] Backend
