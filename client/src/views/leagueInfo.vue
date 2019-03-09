@@ -4,8 +4,43 @@
       <h2>{{ this.leagueName }}</h2>
     </div>
     <div class="text-center row">
-      <div class="col-md-8 jumbotron">
-        <h4>show table here</h4>
+      <div class="col-md-8">
+        <table id="rankingsTable" class="table table-hover">
+          <thead id="rankingsHeader">
+            <tr class="text-white">
+              <th scope="col">Teamname</th>
+              <th scope="col">Played</th>
+              <th scope="col">Wins</th>
+              <th scope="col">Draws</th>
+              <th scope="col">Losses</th>
+              <th scope="col">Scored</th>
+              <th scope="col">Conceded</th>
+              <th scope="col">Points</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="team in rankings" v-if="sport == 'American Football'">
+                <th scope="row">{{ team.teamname }}</th>
+                <td>{{ team.Played }}</td>
+                <td>{{ team.Wins }}</td>
+                <td>{{ team.Draws }}</td>
+                <td>{{ team.Losses }}</td>
+                <td >{{ team.PointsScored }}</td>
+                <td >{{ team.PointsConceded }}</td>
+                <td>{{ team.points }}</td>
+            </tr>
+            <tr v-for="team in rankings" v-if="sport == 'Football'">
+                <th scope="row">{{ team.teamname }}</th>
+                <td>{{ team.Played }}</td>
+                <td>{{ team.Wins }}</td>
+                <td>{{ team.Draws }}</td>
+                <td>{{ team.Losses }}</td>
+                <td >{{ team.GoalsScored }}</td>
+                <td >{{ team.GoalsConceded }}</td>
+                <td>{{ team.points }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
 
       <div class="col-md-4">
@@ -107,6 +142,7 @@ export default {
     errorMessage: '',
     fixtureUpdated: false,
     sport:'',
+    rankings: [],
   }),
   watch: {
     fixtures: {
@@ -245,7 +281,7 @@ export default {
       const leagueID = {
         leagueID: this.leagueID,
       };
-      var URL = FETCH_RANKINGS_URL+this.sport;
+      const URL = FETCH_RANKINGS_URL+this.sport;
       fetch(URL,  {
         method: 'POST',
         headers : {
@@ -256,6 +292,7 @@ export default {
       }).then(res => res.json())
         .then((result) => {
           console.log(result);
+          this.rankings = result;
         });
     },
     // start a new season
@@ -300,5 +337,20 @@ export default {
   }
   #fixList{
     background-color: #2C3E50
+  }
+  #rankingsHeader {
+    background-color: #2C3E50;
+  }
+  table thead:first-child th:first-child{
+    border-top-left-radius: 5px;
+  }
+  table thead:first-child th:last-child{
+    border-top-right-radius: 5px;
+  }
+  table tr:last-child th:first-child {
+    border-bottom-left-radius: 5px;
+  }
+  table tr:last-child td:last-child {
+      border-bottom-right-radius: 5px;
   }
 </style>
