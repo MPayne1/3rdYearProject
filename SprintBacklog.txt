@@ -44,7 +44,7 @@ Sprint Backlog
       [x] cricket
 
   [] frontend
-    [] send req to backend
+    [x] send req to backend
     [] show rankings in a table
       [] Football
       [] Tennis
@@ -55,7 +55,8 @@ Sprint Backlog
       [] Basketball
       [] rugby
       [] cricket
-
+    [] clicking teamname goes to teampage
+    
   [x] Backend
     [x] initialise rankings when start new season
       [x] Football
