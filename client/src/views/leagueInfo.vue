@@ -8,41 +8,34 @@
         <table id="rankingsTable" class="table table-hover">
           <thead id="rankingsHeader">
             <tr class="text-white">
-              <th scope="col">Teamname</th>
+              <th scope="col">Team Name</th>
               <th scope="col">Played</th>
               <th scope="col">Wins</th>
               <th scope="col">Draws</th>
               <th scope="col">Losses</th>
-              <th scope="col">Scored</th>
-              <th scope="col">Conceded</th>
+              <th v-if="sport == 'Football'" scope="col">Goals Scored</th>
+              <th v-if="sport == 'Football'" scope="col">Goals Conceded</th>
+              <th v-if="sport == 'American Football'" scope="col">Points Scored</th>
+              <th v-if="sport == 'American Football'" scope="col">Points Conceded</th>
               <th scope="col">Points</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="team in rankings" v-if="sport == 'American Football'">
+            <tr v-for="team in rankings" @click="goToTeamPage(team.teamname)">
                 <th scope="row">{{ team.teamname }}</th>
                 <td>{{ team.Played }}</td>
                 <td>{{ team.Wins }}</td>
                 <td>{{ team.Draws }}</td>
                 <td>{{ team.Losses }}</td>
-                <td >{{ team.PointsScored }}</td>
-                <td >{{ team.PointsConceded }}</td>
-                <td>{{ team.points }}</td>
-            </tr>
-            <tr v-for="team in rankings" v-if="sport == 'Football'">
-                <th scope="row">{{ team.teamname }}</th>
-                <td>{{ team.Played }}</td>
-                <td>{{ team.Wins }}</td>
-                <td>{{ team.Draws }}</td>
-                <td>{{ team.Losses }}</td>
-                <td >{{ team.GoalsScored }}</td>
-                <td >{{ team.GoalsConceded }}</td>
+                <td v-if="sport == 'Football'">{{ team.GoalsScored }}</td>
+                <td v-if="sport == 'Football'">{{ team.GoalsConceded }}</td>
+                <td v-if="sport == 'American Football'">{{ team.PointsScored }}</td>
+                <td v-if="sport == 'American Football'">{{ team.PointsConceded }}</td>
                 <td>{{ team.points }}</td>
             </tr>
           </tbody>
         </table>
       </div>
-
       <div class="col-md-4">
         <div class="card bg-secondary border-secondary ">
           <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
@@ -316,6 +309,9 @@ export default {
         }
       });
     },
+    goToTeamPage(teamName) {
+      this.$router.push({ path: '/team/info/', query: { teamName } });
+    }
   },
 };
 </script>
