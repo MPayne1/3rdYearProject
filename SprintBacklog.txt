@@ -16,6 +16,7 @@ Sprint Backlog
 
 [] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
+  [] or teamID 1 if easier
   [] might have to change joi schemas
 
 [x] rankings
@@ -46,8 +47,9 @@ Sprint Backlog
   [] frontend
     [x] send req to backend
     [] border around table
-    [] fix upcomingFixtures overlap table
+    [] fix upcomingFixtures overlap rankings table
     [x] round table corners
+      [] fix them
     [x] show rankings in a table
       [x] Football
       [x] Tennis
