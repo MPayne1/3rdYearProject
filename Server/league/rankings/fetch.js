@@ -75,8 +75,8 @@ router.post('/rugby', async (req, res, next) => {
   }
 });
 
-// route to get american football rankings
-router.post('/americanFootball', async (req, res, next) => {
+// route to get american football rankings, need %20 for the space
+router.post('/american%20Football', async (req, res, next) => {
   const result = joi.validate(req.body, getRankingSchema);
 
   if(result.error === null) {
@@ -175,8 +175,8 @@ router.post('/tennis', async (req, res, next) => {
   }
 });
 
-// route to get table tennis rankings
-router.post('/tableTennis', async (req, res, next) => {
+// route to get table tennis rankings, need %20 for the space
+router.post('/table%20Tennis', async (req, res, next) => {
   const result = joi.validate(req.body, getRankingSchema);
 
   if(result.error === null) {

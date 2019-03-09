@@ -84,7 +84,7 @@ const START_SEASON_URL = 'https://localhost:3000/league/fixtures/update/startSea
 const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upcomingFixtures';
 const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
-
+var FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -106,6 +106,7 @@ export default {
     fixtureDate: '',
     errorMessage: '',
     fixtureUpdated: false,
+    sport:'',
   }),
   watch: {
     fixtures: {
@@ -234,7 +235,27 @@ export default {
         .then((result) => {
           if (result) {
             this.fixtures = result.result;
+            this.sport = this.fixtures[0].Sport;
+            this.getRankings();
           }
+        });
+    },
+    // get the league Rankings
+    getRankings() {
+      const leagueID = {
+        leagueID: this.leagueID,
+      };
+      var URL = FETCH_RANKINGS_URL+this.sport;
+      fetch(URL,  {
+        method: 'POST',
+        headers : {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body : JSON.stringify(leagueID),
+      }).then(res => res.json())
+        .then((result) => {
+          console.log(result);
         });
     },
     // start a new season
