@@ -23,6 +23,10 @@
               <th v-if="sport == 'Rugby'" scope="col">Points Conceded</th>
               <th v-if="sport == 'Basketball'" scope="col">Points Scored</th>
               <th v-if="sport == 'Basketball'" scope="col">Points Conceded</th>
+              <th v-if="sport == 'Tennis'" scope="col">Sets Won</th>
+              <th v-if="sport == 'Tennis'" scope="col">Sets Lost</th>
+              <th v-if="sport == 'Table Tennis'" scope="col">Sets Won</th>
+              <th v-if="sport == 'Table Tennis'" scope="col">Sets Lost</th>
               <th scope="col">Points</th>
             </tr>
           </thead>
@@ -43,6 +47,10 @@
                 <td v-if="sport == 'Rugby'">{{ team.PointsConceded }}</td>
                 <td v-if="sport == 'Basketball'">{{ team.PointsScored }}</td>
                 <td v-if="sport == 'Basketball'">{{ team.PointsConceded }}</td>
+                <td v-if="sport == 'Tennis'">{{ team.SetsFor }}</td>
+                <td v-if="sport == 'Tennis'">{{ team.SetsAgainst }}</td>
+                <td v-if="sport == 'Table Tennis'">{{ team.SetsFor }}</td>
+                <td v-if="sport == 'Table Tennis'">{{ team.SetsAgainst }}</td>
                 <td>{{ team.points }}</td>
             </tr>
           </tbody>
