@@ -27,6 +27,12 @@
               <th v-if="sport == 'Tennis'" scope="col">Sets Lost</th>
               <th v-if="sport == 'Table Tennis'" scope="col">Sets Won</th>
               <th v-if="sport == 'Table Tennis'" scope="col">Sets Lost</th>
+              <th v-if="sport == 'Volleyball'" scope="col">Games Won</th>
+              <th v-if="sport == 'Volleyball'" scope="col">Games Lost</th>
+              <th v-if="sport == 'Cricket'" scope="col">Runs For</th>
+              <th v-if="sport == 'Cricket'" scope="col">Wickets For</th>
+              <th v-if="sport == 'Cricket'" scope="col">Runs Against</th>
+              <th v-if="sport == 'Cricket'" scope="col">Wickets Against</th>
               <th scope="col">Points</th>
             </tr>
           </thead>
@@ -51,6 +57,12 @@
                 <td v-if="sport == 'Tennis'">{{ team.SetsAgainst }}</td>
                 <td v-if="sport == 'Table Tennis'">{{ team.SetsFor }}</td>
                 <td v-if="sport == 'Table Tennis'">{{ team.SetsAgainst }}</td>
+                <td v-if="sport == 'Volleyball'">{{ team.GamesFor }}</td>
+                <td v-if="sport == 'Volleyball'">{{ team.GamesAgainst }}</td>
+                <td v-if="sport == 'Cricket'">{{ team.RunsFor }}</td>
+                <td v-if="sport == 'Cricket'">{{ team.WicketsFor }}</td>
+                <td v-if="sport == 'Cricket'">{{ team.RunsAgainst }}</td>
+                <td v-if="sport == 'Cricket'">{{ team.WicketsAgainst }}</td>
                 <td>{{ team.points }}</td>
             </tr>
           </tbody>
