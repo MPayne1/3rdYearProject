@@ -15,8 +15,14 @@
               <th scope="col">Losses</th>
               <th v-if="sport == 'Football'" scope="col">Goals Scored</th>
               <th v-if="sport == 'Football'" scope="col">Goals Conceded</th>
+              <th v-if="sport == 'Hockey'" scope="col">Goals Scored</th>
+              <th v-if="sport == 'Hockey'" scope="col">Goals Conceded</th>
               <th v-if="sport == 'American Football'" scope="col">Points Scored</th>
               <th v-if="sport == 'American Football'" scope="col">Points Conceded</th>
+              <th v-if="sport == 'Rugby'" scope="col">Points Scored</th>
+              <th v-if="sport == 'Rugby'" scope="col">Points Conceded</th>
+              <th v-if="sport == 'Basketball'" scope="col">Points Scored</th>
+              <th v-if="sport == 'Basketball'" scope="col">Points Conceded</th>
               <th scope="col">Points</th>
             </tr>
           </thead>
@@ -29,8 +35,14 @@
                 <td>{{ team.Losses }}</td>
                 <td v-if="sport == 'Football'">{{ team.GoalsScored }}</td>
                 <td v-if="sport == 'Football'">{{ team.GoalsConceded }}</td>
+                <td v-if="sport == 'Hockey'">{{ team.GoalsScored }}</td>
+                <td v-if="sport == 'Hockey'">{{ team.GoalsConceded }}</td>
                 <td v-if="sport == 'American Football'">{{ team.PointsScored }}</td>
                 <td v-if="sport == 'American Football'">{{ team.PointsConceded }}</td>
+                <td v-if="sport == 'Rugby'">{{ team.PointsScored }}</td>
+                <td v-if="sport == 'Rugby'">{{ team.PointsConceded }}</td>
+                <td v-if="sport == 'Basketball'">{{ team.PointsScored }}</td>
+                <td v-if="sport == 'Basketball'">{{ team.PointsConceded }}</td>
                 <td>{{ team.points }}</td>
             </tr>
           </tbody>
@@ -265,6 +277,7 @@ export default {
           if (result) {
             this.fixtures = result.result;
             this.sport = this.fixtures[0].Sport;
+            console.log(this.sport);
             this.getRankings();
           }
         });
