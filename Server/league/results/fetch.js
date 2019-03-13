@@ -14,5 +14,10 @@ router.get('/', (req, res) => {
   });
 });
 
+// route to get football results
+router.post('/football', async (req, res, next) => {
+
+});
+
 
 module.exports = router;
