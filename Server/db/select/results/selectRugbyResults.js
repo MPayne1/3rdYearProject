@@ -2,9 +2,9 @@ const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
 /*
-  select the hockey results
+  select the football rankings
 */
-var selectHockeyResults  = async function(leagueID, callback) {
+var selectHockeyResuls  = async function(leagueID, callback) {
   var res;
     var sql = `SELECT HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
     hometeam.fixtureID, homeTeam.HomePointsScoredHT, homeTeam.HomePointsScoredFT,
@@ -31,7 +31,7 @@ var selectHockeyResults  = async function(leagueID, callback) {
     });
 }
 
-module.exports = selectHockeyResults;
+module.exports = selectHockeyResuls;
 
 /*
 SELECT HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
