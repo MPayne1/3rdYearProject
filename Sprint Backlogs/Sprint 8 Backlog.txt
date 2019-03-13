@@ -1,0 +1,100 @@
+
+Sprint Backlog
+[x] UI designs
+  [x] general style
+
+[] nice to do
+  [] refactor code, add more methods
+  [] fix navbar when screen small e.g on mobile.
+  [] add league description
+  [] add team description
+  [] update regex to include special characters for match description
+  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
+  [] email users when the fixture/results info is updated
+  [] show teamname rather than home/away in results page
+  [x] move results db files into own folder
+
+[] attribute loading spinner to loading.io
+
+[x] fix odd num teams
+  [x] temporarily add one extra team to work out fixtures
+  [x] then switch out temp team so the team plays themselves
+  [x] redo upcomingfixutres db to work properly
+
+[x] rankings
+  [x] db
+    [x] create db tables for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] create insert new rankings for each sport
+    [x] create update rankings for each sport
+    [x] create select rankings for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+
+  [] frontend
+    [x] send req to backend
+    [] border around table
+    [] fix upcomingFixtures overlap rankings table
+    [x] round table corners
+      [] fix them
+    [x] show rankings in a table
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] clicking teamname goes to teampage
+
+  [x] Backend
+    [x] initialise rankings when start new season
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] update rankings
+      [x] Football
+      [x] Tennis
+      [x] American Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] get rankings in order by points
+      [x] Football
+      [x] Tennis
+      [x] American Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+
+[] unit test everything
+  [] use mocha and chai
