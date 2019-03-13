@@ -9,6 +9,7 @@ const joi = require('joi');
 
 // ------  db operations  ------
 const dbFootballResults = require('../../db/select/results/selectFootballResults.js');
+const dbHockeyResults = require('../../db/select/results/selectHockeyResults.js');
 
 // results schema
 const getResultsSchema = joi.object().keys({
@@ -45,7 +46,21 @@ router.post('/football', async (req, res, next) => {
 
 // route to get hockey results
 router.post('/hockey', async(req, res, next) => {
-  
+  const result  = joi.validate(req.body, getResultsSchema);
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    await dbHockeyResults(leagueID, (err, results) => {
+      if(err) next(err);
+      try {
+        results[0];
+        res.json(results);
+      } catch (e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error)
+  }
 });
 
 
