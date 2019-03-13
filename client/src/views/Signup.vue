@@ -131,7 +131,7 @@ export default {
         }).then(() => { // if no errors redirect to login page
           setTimeout(() => { // wait so loading icon is shown, improves ui
             this.signingUp = false;
-            this.$router.push('#/auth/login');
+            this.$router.push('/auth/login');
           }, 700);
         }).catch((error) => { // if any errors catch them any display error message
           this.signingUp = false;

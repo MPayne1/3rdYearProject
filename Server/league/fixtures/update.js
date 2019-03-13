@@ -26,7 +26,6 @@ const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTable
 const dbInsertVolleyballRanking = require('../../db/insert/rankings/insertVolleyballRankings.js');
 const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasketballRankings.js');
 const dbInsertCricketRanking = require('../../db/insert/rankings/insertCricketRankings.js');
-
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -96,15 +95,16 @@ router.post('/upcomingFixtures', async (req, res, next) => {
   var leagueID = req.body.leagueID
   const result = joi.validate(req.body, startSeasonSchema);
   if(result.error === null) {
-    var fixtures = await dbSelectUpcomingFixtures(leagueID, async function(err, result) {
-      if(err) next(err);
-      try {
-        result[0].fixtureID;
-        res.json({result});
-      } catch(e) {
-        res.json({message: "no upcoming fixtures"});
-      }
-    });
+        var fixtures = await dbSelectUpcomingFixtures(leagueID, async function(err, result) {
+          if(err) next(err);
+          try {
+            result[0].fixtureID;
+            console.log(result);
+            res.json({result});
+          } catch(e) {
+            res.json({message: "no upcoming fixtures"});
+          }
+        });
   }  else{
     next(result.error);
   }
@@ -117,8 +117,8 @@ router.post('/startSeason', async(req, res, next) => {
   var seasonID = '';
   var numTimes = '';
 
-const result = joi.validate(req.body, startSeasonSchema);
-if(result.error === null) {
+  const result = joi.validate(req.body, startSeasonSchema);
+  if(result.error === null) {
 
   // check user is leagueAdmin, also get the no.of times each team plays each other
   var admin = await dbSelectLeagueAdmin(leagueAdmin, leagueID, async function(err, result) {
@@ -131,34 +131,35 @@ if(result.error === null) {
         if(err) next(err);
         try {
           result[0];
+            // set last season finished true
+            await dbUpdateSeasonFinished(leagueID, 'true');
 
-          // set last season finished true
-          await dbUpdateSeasonFinished(leagueID, 'true');
 
+            // insert new season into season table, also getting the seasonID jsut created
+            var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
+              if(er) next(er);
+              try{
+                seasonID = result2[result2.length-1].seasonID;
 
-          // insert new season into season table, also getting the seasonID jsut created
-          var season = await dbInsertSelectNewSeason(leagueID, async function(er, result2) {
-            if(er) next(er);
-            try{
-              seasonID = result2[result2.length-1].seasonID;
-
-              await generateFixtures(teamList, seasonID, leagueID, async (fixtures) => {
-                // then insert fixtures into db, for each time the teams play each other
-                for(i = 0; i < numTimes; i++) {
-                  for(j = 0; j < fixtures.length; j++) {
-                    await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
+                await generateFixtures(teamList, seasonID, leagueID, async (fixtures) => {
+                  // then insert fixtures into db, for each time the teams play each other
+                  for(i = 0; i < numTimes; i++) {
+                    for(j = 0; j < fixtures.length; j++) {
+                      await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
+                    }
                   }
-                }
-                await initialiseRankingsTable(seasonID, teamList);
-                console.log(fixtures);
-                res.json(fixtures);
-              });
+                  await initialiseRankingsTable(seasonID, teamList);
+                  console.log(fixtures);
+                  res.json(fixtures);
+                });
 
-            } catch(e) {
-              next(e);
-            }
-          });
+              } catch(e) {
+                console.log("fixtures error");
+                next(e);
+              }
+            });
         } catch(e) {
+          if (e) next(e);
           var error = new Error("No teams in the league yet.");
           res.status(422);
           next(error);
@@ -188,12 +189,11 @@ fixture = {
 function generateFixtures(teamList, seasonID, leagueID, callback) {
 
   var fixtures = [];
-  // add a Bye team if odd no of teams
+
   if(teamList.length % 2 == 1) {
-    teamList.push({teamID: 0});
+    teamList.push({teamID: 1});
   }
   var numTeams = teamList.length;
-
   // for each round/matchday
   for(j = 0; j < numTeams-1; j++) {
     // for each home team
@@ -206,6 +206,16 @@ function generateFixtures(teamList, seasonID, leagueID, callback) {
         AwayTeamID: teamList[numTeams-1-i].teamID});
     }
     teamList.splice(1,0, teamList.pop());
+  }
+
+  // if any teams are playing the bye team, se them to "play" themselves
+  for(k = 0; k < fixtures.length; k++) {
+    if(fixtures[k].HomeTeamID == 1) {
+      fixtures[k].HomeTeamID = fixtures[k].AwayTeamID;
+    }
+    if(fixtures[k].AwayTeamID == 1) {
+      fixtures[k].AwayTeamID = fixtures[k].HomeTeamID;
+    }
   }
   callback(fixtures);
 }

@@ -3,6 +3,9 @@
     <div class="jumbotron">
       <h2>{{ this.leagueName }}</h2>
     </div>
+    <div v-if="this.errorMessage" class="alert alert-danger" role="alert">
+      {{this.errorMessage}}
+    </div>
     <div class="text-center row">
       <div class="col-md-8">
         <table id="rankingsTable" class="table table-hover">
@@ -70,7 +73,7 @@
       </div>
       <div class="col-md-4">
         <div class="card bg-secondary border-secondary ">
-          <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4></div>
+          <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4> <small>If your team is playing itself you have a bye game.</small></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
               align-items-center card-body" v-for="(fixture,index) in fixtures" @click="showDatePicker(), fixtureIndex=index">
@@ -79,9 +82,6 @@
                   <router-link :to="{ name: `${fixture.Sport}Results`, params: {fixtureID: fixture.fixtureID} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
                 </div>
                 <div v-if="fixtureInfoOpen && index == fixtureIndex">
-                  <div v-if="errorMessage" class="alert alert-danger" role="alert">
-                    {{ errorMessage }}
-                  </div>
                   <!--Show data picker with appropiate label, depending on if date has been entered or not -->
                   <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10) + fixture.date.slice(11,16)" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
                   <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
@@ -116,9 +116,6 @@
             </li>
           </ul>
           <div class="text-white card-footer" v-if="fixtures[0] === undefined">
-            <div v-if="errorMessage" class="alert alert-danger" role="alert">
-              {{ errorMessage }}
-            </div>
             <div class="form-group">
               <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
@@ -175,7 +172,7 @@ export default {
         this.errorMessage = '';
       },
       deep: true,
-    },
+    }
   },
   mounted() {
     // get the leagueName query
@@ -297,7 +294,8 @@ export default {
           if (result) {
             this.fixtures = result.result;
             this.sport = this.fixtures[0].Sport;
-            console.log(this.sport);
+            console.log(this.fixtures);
+
             this.getRankings();
           }
         });
@@ -338,8 +336,16 @@ export default {
       .then((result) => {
         if (result) {
           console.log(result);
-          this.upcomingFixtures();
+          if(result.message) {
+            throw new Error(result.message);
+          }
+          else {
+            this.upcomingFixtures();
+          }
         }
+      }).catch((error) => {
+          this.errorMessage = error.message;
+          console.log(this.errorMessage);
       });
     },
     goToTeamPage(teamName) {
