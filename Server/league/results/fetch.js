@@ -10,6 +10,7 @@ const joi = require('joi');
 // ------  db operations  ------
 const dbFootballResults = require('../../db/select/results/selectFootballResults.js');
 const dbHockeyResults = require('../../db/select/results/selectHockeyResults.js');
+const dbRugbyResults = require('../../db/select/results/selectRugbyResults.js');
 
 // results schema
 const getResultsSchema = joi.object().keys({
@@ -23,6 +24,7 @@ router.get('/', (req, res) => {
     message: 'results fetch router works'
   });
 });
+
 
 // route to get football results
 router.post('/football', async (req, res, next) => {
@@ -44,12 +46,33 @@ router.post('/football', async (req, res, next) => {
 
 });
 
+
 // route to get hockey results
 router.post('/hockey', async(req, res, next) => {
   const result  = joi.validate(req.body, getResultsSchema);
   if(result.error === null) {
     var leagueID = req.body.leagueID;
     await dbHockeyResults(leagueID, (err, results) => {
+      if(err) next(err);
+      try {
+        results[0];
+        res.json(results);
+      } catch (e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
+
+
+// route to get rugby results
+router.post('/rugby', async(req, res, next) => {
+  const result  = joi.validate(req.body, getResultsSchema);
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    await dbRugbyResults(leagueID, (err, results) => {
       if(err) next(err);
       try {
         results[0];
