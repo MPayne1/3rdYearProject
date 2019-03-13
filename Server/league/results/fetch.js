@@ -12,6 +12,7 @@ const dbFootballResults = require('../../db/select/results/selectFootballResults
 const dbHockeyResults = require('../../db/select/results/selectHockeyResults.js');
 const dbRugbyResults = require('../../db/select/results/selectRugbyResults.js');
 const dbAmericanFootballResults = require('../../db/select/results/selectAmericanFootballResults.js');
+const dbBasketballResults = require('../../db/select/results/selectBasketballResults.js');
 
 // results schema
 const getResultsSchema = joi.object().keys({
@@ -108,6 +109,24 @@ router.post('/american%20football', async(req, res, next) => {
 });
 
 
+// route to get basketball results
+router.post('/basketball', async(req, res, next) => {
+  const result  = joi.validate(req.body, getResultsSchema);
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    await dbBasketballResults(leagueID, (err, results) => {
+      if(err) next(err);
+      try {
+        results[0];
+        res.json(results);
+      } catch (e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
 
 // create/format response for invalid inputs
 function invalidInput(res, next) {
