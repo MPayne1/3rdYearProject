@@ -43,6 +43,12 @@ router.post('/football', async (req, res, next) => {
 
 });
 
+// route to get hockey results
+router.post('/hockey', async(req, res, next) => {
+  
+});
+
+
 // create/format response for invalid inputs
 function invalidInput(res, next) {
   res.status(409);
