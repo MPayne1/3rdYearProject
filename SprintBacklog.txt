@@ -22,7 +22,7 @@ Sprint Backlog
       [x] Football
       [x] Tennis
       [x] american Football
-      [] volleyball
+      [x] volleyball
       [x] table Tennis
       [x] Hockey
       [x] Basketball
@@ -32,7 +32,7 @@ Sprint Backlog
       [x] Football
       [x] Tennis
       [x] american Football
-      [] volleyball
+      [x] volleyball
       [x] table Tennis
       [x] Hockey
       [x] Basketball
