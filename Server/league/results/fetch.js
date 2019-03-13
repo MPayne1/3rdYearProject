@@ -16,6 +16,8 @@ const dbBasketballResults = require('../../db/select/results/selectBasketballRes
 const dbTennisResults = require('../../db/select/results/selectTennisResults.js');
 const dbTableTennisResults = require('../../db/select/results/selectTableTennisResults.js');
 const dbVolleyballResults = require('../../db/select/results/selectVolleyballResults.js');
+const dbCricketResults = require('../../db/select/results/selectCricketResults.js');
+
 // results schema
 const getResultsSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
@@ -191,7 +193,24 @@ router.post('/volleyball', async(req, res, next) => {
 });
 
 
-
+// route to get volleyball results
+router.post('/cricket', async(req, res, next) => {
+  const result  = joi.validate(req.body, getResultsSchema);
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    await dbCricketResults(leagueID, (err, results) => {
+      if(err) next(err);
+      try {
+        results[0];
+        res.json(results);
+      } catch (e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
 
 // create/format response for invalid inputs
 function invalidInput(res, next) {
