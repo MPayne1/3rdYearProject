@@ -99,7 +99,6 @@ router.post('/upcomingFixtures', async (req, res, next) => {
           if(err) next(err);
           try {
             result[0].fixtureID;
-            console.log(result);
             res.json({result});
           } catch(e) {
             res.json({message: "no upcoming fixtures"});
