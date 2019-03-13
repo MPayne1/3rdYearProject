@@ -17,8 +17,8 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 
 []show results
-  [] backend
-    [] db select results for each sport
+  [x] backend
+    [x] db select results for each sport
       [x] Football
       [x] Tennis
       [x] american Football
@@ -27,8 +27,8 @@ Sprint Backlog
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
-    [] route for each sport
+      [x] cricket
+    [x] route for each sport
       [x] Football
       [x] Tennis
       [x] american Football
@@ -37,7 +37,7 @@ Sprint Backlog
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
+      [x] cricket
   [] frontend
     [] show results for each sport
 [] unit test everything
