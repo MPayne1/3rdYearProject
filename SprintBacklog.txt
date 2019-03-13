@@ -15,9 +15,11 @@ Sprint Backlog
   [x] move results db files into own folder
 
 [] attribute loading spinner to loading.io
-[] add team with teamID 0 for any bye weeks
-  [] or teamID 1 if easier
-  [] might have to change joi schemas
+
+[x] fix odd num teams
+  [x] temporarily add one extra team to work out fixtures
+  [x] then switch out temp team so the team plays themselves
+  [x] redo upcomingfixutres db to work properly
 
 [x] rankings
   [x] db
