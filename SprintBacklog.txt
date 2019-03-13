@@ -20,22 +20,22 @@ Sprint Backlog
   [] backend
     [] db select results for each sport
       [x] Football
-      [] Tennis
+      [x] Tennis
       [x] american Football
       [] volleyball
-      [] table Tennis
+      [x] table Tennis
       [x] Hockey
-      [] Basketball
+      [x] Basketball
       [x] rugby
       [] cricket
     [] route for each sport
       [x] Football
-      [] Tennis
+      [x] Tennis
       [x] american Football
       [] volleyball
-      [] table Tennis
+      [x] table Tennis
       [x] Hockey
-      [] Basketball
+      [x] Basketball
       [x] rugby
       [] cricket
   [] frontend
