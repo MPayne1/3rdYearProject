@@ -24,17 +24,17 @@ Sprint Backlog
       [] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [] Basketball
       [] rugby
       [] cricket
     [] route for each sport
-      [] Football
+      [x] Football
       [] Tennis
       [] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [] Basketball
       [] rugby
       [] cricket
