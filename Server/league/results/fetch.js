@@ -14,6 +14,7 @@ const dbRugbyResults = require('../../db/select/results/selectRugbyResults.js');
 const dbAmericanFootballResults = require('../../db/select/results/selectAmericanFootballResults.js');
 const dbBasketballResults = require('../../db/select/results/selectBasketballResults.js');
 const dbTennisResults = require('../../db/select/results/selectTennisResults.js');
+const dbTableTennisResults = require('../../db/select/results/selectTableTennisResults.js');
 // results schema
 const getResultsSchema = joi.object().keys({
   leagueID: joi.number().positive().required()
@@ -129,7 +130,6 @@ router.post('/basketball', async(req, res, next) => {
 });
 
 
-
 // route to get tennis results
 router.post('/tennis', async(req, res, next) => {
   const result  = joi.validate(req.body, getResultsSchema);
@@ -148,6 +148,30 @@ router.post('/tennis', async(req, res, next) => {
     next(result.error)
   }
 });
+
+
+// route to get tennis results
+router.post('/table%20tennis', async(req, res, next) => {
+  const result  = joi.validate(req.body, getResultsSchema);
+  if(result.error === null) {
+    var leagueID = req.body.leagueID;
+    await dbTableTennisResults(leagueID, (err, results) => {
+      if(err) next(err);
+      try {
+        results[0];
+        res.json(results);
+      } catch (e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error)
+  }
+});
+
+
+
+
 // create/format response for invalid inputs
 function invalidInput(res, next) {
   res.status(409);
