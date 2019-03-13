@@ -7,6 +7,15 @@ const router = express.Router();
 const joi = require('joi');
 
 
+// ------  db operations  ------
+const dbFootballResults = require('../../db/select/results/selectFootballResults.js');
+
+// results schema
+const getResultsSchema = joi.object().keys({
+  leagueID: joi.number().positive().required()
+});
+
+
 // all paths are prepended with /league/rankings/fetch
 router.get('/', (req, res) => {
   res.json({
@@ -16,8 +25,29 @@ router.get('/', (req, res) => {
 
 // route to get football results
 router.post('/football', async (req, res, next) => {
+    const result = joi.validate(req.body, getResultsSchema);
+    if(result.error === null) {
+      var leagueID = req.body.leagueID;
+        await dbFootballResults(leagueID, (err, results) => {
+          if(err) next (err);
+          try {
+            results[0];
+            res.json(results);
+          } catch (e) {
+            invalidInput(res, next)
+          }
+        });
+    } else{
+      next(result.error)
+    }
 
 });
 
+// create/format response for invalid inputs
+function invalidInput(res, next) {
+  res.status(409);
+  var error = new Error("Invlaid Input");
+  next(error);
+}
 
 module.exports = router;
