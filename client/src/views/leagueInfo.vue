@@ -502,7 +502,7 @@
           this.fixtures = result.splice(0,this.showMax);
           this.fixturesExtra = result.splice(0,length);
         } else {
-          this.fixtures = result.result;
+          this.fixtures = result;
         }
       },
 
@@ -533,9 +533,9 @@
           },
           body : JSON.stringify(leagueID),
         }).then(res => res.json())
-          .then((result) => {
-            console.log(result);
-            this.rankings = result;
+          .then((rank) => {
+            console.log(rank);
+            this.rankings = rank;
           });
       },
       // start a new season
