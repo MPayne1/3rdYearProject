@@ -126,6 +126,12 @@
                 type="submit">Start a new Season</button>
             </div>
           </div>
+          <div class="text-white card-footer" v-if="fixturesExtra[0] != undefined && isAllFixtures == true">
+            <h5 @click="showAllFixtures(), isAllFixtures = !isAllFixtures">Show all Upcoming Fixtures</h5>
+          </div>
+          <div class="text-white card-footer" v-if="this.fixtures.length > 10">
+            <h5 @click="splitFixtures(fixtures), isAllFixtures = true">Hide Fixtures</h5>
+          </div>
         </div>
       </div>
       <div class="col-md-4">
@@ -285,6 +291,8 @@
   export default {
     data: () => ({
       fixtures: [],
+      fixturesExtra: [],
+      isAllFixtures: true,
       user: {},
       leagueName: '',
       leagueID: '',
@@ -296,6 +304,7 @@
       sport:'',
       rankings: [],
       results: [],
+      resultsExtra : [],
       resultsInfoOpen: false,
       resultIndex: '',
     }),
@@ -368,6 +377,10 @@
         } else {
           this.resultsInfoOpen = !this.resultsInfoOpen;
         }
+      },
+      // show the list of all fixtures
+      showAllFixtures() {
+        this.fixtures = this.fixtures.concat(this.fixturesExtra);
       },
       // update fixture info
       updateFixture(index) {
@@ -459,10 +472,20 @@
         }).then(res => res.json())
           .then((result) => {
             if (result.result != undefined) {
-              this.fixtures = result.result;
-              //console.log(this.fixtures[0].Sport);
+              this.splitFixtures(result.result);
             }
           });
+      },
+      splitFixtures(result) {
+        if(result.length > 10) {
+          var length = result.length;
+          this.fixturesExtra = result.slice();
+          this.fixtures = result.splice(0,10);
+          this.fixturesExtra = result.splice(0,length);
+        } else {
+          this.fixtures = result.result;
+        }
+
       },
       // get the league Rankings
       getRankings() {
@@ -555,7 +578,7 @@
     margin-top: 5px;
   }
   #fixList, #resultsList{
-    background-color: #2C3E50
+    background-color: #2C3E50;
   }
   #rankingsHeader {
     background-color: #2C3E50;
