@@ -137,12 +137,15 @@
               @click="resultsInfoOpen = !resultsInfoOpen, resultIndex = index">
               <div id="resultsInfo" class="align-items-center">
                 <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
-              </div>
-              <div v-if="sport =='Football'">
                 <div v-if="resultsInfoOpen && resultIndex == index">
-                  <h5>{{result.HomeGoalsScoredFT}} FT {{result.AwayGoalsScoredFT}}</h5>
-                  <h6>{{result.HomeGoalsScoredHT}} HT {{result.AwayGoalsScoredHT}}</h6>
-                  <p>{{result.MatchDescription}}</p>
+                  <div v-if="sport =='Football'">
+                    <h5>{{result.HomeGoalsScoredFT}} FT {{result.AwayGoalsScoredFT}}</h5>
+                    <h6>{{result.HomeGoalsScoredHT}} HT {{result.AwayGoalsScoredHT}}</h6>
+                    <p>{{result.MatchDescription}}</p>
+                  </div>
+                  <div v-if="sport == 'American Football'">
+                    
+                  </div>
                 </div>
               </div>
             </li>
