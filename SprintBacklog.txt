@@ -61,5 +61,44 @@ Sprint Backlog
       [x] cricket
 
 
+[]show teams results
+  [] backend
+    [] db select results for each sport
+      [x] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
+    [] route for each sport
+      [x] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
+  [] frontend
+    [] send req to backend
+    [] only show 10 results
+      [] click button to expand
+      [] click button to reduce again
+    [] show results for each sport
+      [] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
+
+
 [] unit test everything
   [] use mocha and chai
