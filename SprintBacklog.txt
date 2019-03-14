@@ -40,7 +40,7 @@ Sprint Backlog
       [x] cricket
   [] frontend
     [x] send req to backend
-    [] fix the placement of results card when fixtures card expands
+    [x] fix the placement of results card when fixtures card expands
     [x] fix spacing between result e.g. 1 FT 0 -> 1 - FT - 0
     [x] show results for each sport
       [x] Football
@@ -52,5 +52,7 @@ Sprint Backlog
       [x] Basketball
       [x] rugby
       [x] cricket
+
+
 [] unit test everything
   [] use mocha and chai

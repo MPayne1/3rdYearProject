@@ -7,7 +7,8 @@
       {{this.errorMessage}}
     </div>
     <div class="text-center row">
-      <div class="col-md-8">
+      <div class="col-md-2"></div>
+      <div  style="overflow-x:auto" class="col-md-8">
         <table id="rankingsTable" class="table table-hover">
           <thead id="rankingsHeader">
             <tr class="text-white">
@@ -71,6 +72,9 @@
           </tbody>
         </table>
       </div>
+    </div>
+    <div class="text-center row">
+      <div class="col-md-2"></div>
       <div class="col-md-4">
         <div class="card bg-secondary border-secondary ">
           <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4> <small>If your team is playing itself you have a bye game.</small></div>
@@ -124,133 +128,132 @@
           </div>
         </div>
       </div>
-
-    </div>
-    <div class="text-center ">
       <div class="col-md-4">
-        <div class="card bg-secondary border-secondary">
-          <div id="resultsList" class="text-white card-header">
-            <h4>Results</h4>
-          </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between
-              align-items-center card-body text-center" v-for="(result, index) in results"
-              @click="showResultsInfo(index)">
-              <div id="resultsInfo" class="align-items-center">
-                <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
-                <div v-if="resultsInfoOpen && resultIndex == index">
-                  <div v-if="sport =='Football'">
-                    <hr class="my-3">
-                    <h5>{{result.HomeGoalsScoredFT}} - FT - {{result.AwayGoalsScoredFT}}</h5>
-                    <h6>{{result.HomeGoalsScoredHT}} - HT - {{result.AwayGoalsScoredHT}}</h6>
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+          <div class="card bg-secondary border-secondary">
+            <div id="resultsList" class="text-white card-header">
+              <h4>Results</h4>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between
+                align-items-center card-body text-center" v-for="(result, index) in results"
+                @click="showResultsInfo(index)">
+                <div id="resultsInfo" class="align-items-center">
+                  <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
+                  <div v-if="resultsInfoOpen && resultIndex == index">
+                    <div v-if="sport =='Football'">
+                      <hr class="my-3">
+                      <h5>{{result.HomeGoalsScoredFT}} - FT - {{result.AwayGoalsScoredFT}}</h5>
+                      <h6>{{result.HomeGoalsScoredHT}} - HT - {{result.AwayGoalsScoredHT}}</h6>
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'American Football'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
-                    <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
-                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
-                    <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'American Football'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                      <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
+                      <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                      <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Hockey'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
-                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Hockey'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                      <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Basketball'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
-                    <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
-                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
-                    <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Basketball'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                      <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
+                      <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                      <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Rugby'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
-                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Rugby'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                      <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Volleyball'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
-                    <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
-                    <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
-                    <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
-                    <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Volleyball'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
+                      <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
+                      <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
+                      <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
+                      <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Table Tennis'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
-                    <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
-                    <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
-                    <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
-                    <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Table Tennis'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
+                      <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
+                      <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
+                      <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
+                      <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Tennis'">
-                    <hr class="my-3">
-                    <h5>{{result.HomePointsScoredS1}} - 1st Set - {{result.AwayPointsScoredS1}}</h5>
-                    <h5>{{result.HomePointsScoredS2}} - 2nd Set - {{result.AwayPointsScoredS2}}</h5>
-                    <h5>{{result.HomePointsScoredS3}} - 3rd Set - {{result.AwayPointsScoredS3}}</h5>
-                    <h5>{{result.HomePointsScoredS4}} - 4th Set - {{result.AwayPointsScoredS4}}</h5>
-                    <h5>{{result.HomePointsScoredS5}} - 5th Set - {{result.AwayPointsScoredS5}}</h5>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Tennis'">
+                      <hr class="my-3">
+                      <h5>{{result.HomePointsScoredS1}} - 1st Set - {{result.AwayPointsScoredS1}}</h5>
+                      <h5>{{result.HomePointsScoredS2}} - 2nd Set - {{result.AwayPointsScoredS2}}</h5>
+                      <h5>{{result.HomePointsScoredS3}} - 3rd Set - {{result.AwayPointsScoredS3}}</h5>
+                      <h5>{{result.HomePointsScoredS4}} - 4th Set - {{result.AwayPointsScoredS4}}</h5>
+                      <h5>{{result.HomePointsScoredS5}} - 5th Set - {{result.AwayPointsScoredS5}}</h5>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div v-if="sport == 'Cricket'">
-                    <hr class="my-3">
-                    <h5>{{result.HomeRunsI1}}/{{result.HomeWicketsLostI1}} - 1st Innings - {{result.AwayRunsI1}}/{{result.AwayWicketsLostI1}}</h5>
-                    <h5>{{result.HomeRunsI2}}/{{result.HomeWicketsLostI2}} - 2nd Innings - {{result.AwayRunsI2}}/{{result.AwayWicketsLostI2}}</h5>
-                    <hr class="my-3">
-                    <div id="matchDescription">
-                      <h6>Match Description:</h6>
-                      <p>{{result.MatchDescription}}</p>
+                    <div v-if="sport == 'Cricket'">
+                      <hr class="my-3">
+                      <h5>{{result.HomeRunsI1}}/{{result.HomeWicketsLostI1}} - 1st Innings - {{result.AwayRunsI1}}/{{result.AwayWicketsLostI1}}</h5>
+                      <h5>{{result.HomeRunsI2}}/{{result.HomeWicketsLostI2}} - 2nd Innings - {{result.AwayRunsI2}}/{{result.AwayWicketsLostI2}}</h5>
+                      <hr class="my-3">
+                      <div id="matchDescription">
+                        <h6>Match Description:</h6>
+                        <p>{{result.MatchDescription}}</p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-          <div class="text-white card-footer" v-if="results[0] === undefined">
-            <h5>No Recent Results</h5>
+              </li>
+            </ul>
+            <div class="text-white card-footer" v-if="results[0] === undefined">
+              <h5>No Recent Results</h5>
+            </div>
           </div>
         </div>
-      </div>
+      <div class="col-md-2"></div>
     </div>
+
   </div>
 </template>
 
@@ -558,22 +561,32 @@
   #rankingsHeader {
     background-color: #2C3E50;
   }
+  #rankingsTable {
+    margin-bottom: 40px;
+  }
   #resultsInfo {
     word-spacing: 0.5em;
   }
   #matchDescription {
     word-spacing: normal;
   }
+  /*
   table thead:first-child th:first-child{
-    border-top-left-radius: 5px;
+    border-top-left-radius: 7px;
   }
   table thead:first-child th:last-child{
-    border-top-right-radius: 5px;
+    border-top-right-radius: 7px;
   }
-  table tr:last-child th:first-child {
-    border-bottom-left-radius: 5px;
+  table tr:last-child {
+    border-bottom: 1px solid #95a3a4;
+    border-bottom-left-radius: 7px;
   }
-  table tr:last-child td:last-child {
-      border-bottom-right-radius: 5px;
+  table tr{
+    border-left: 1px solid #95a3a4;
+    border-right: 1px solid #95a3a4;
+  }
+  */
+  #rankingsTable {
+    border: 1px solid #95a3a4;
   }
 </style>
