@@ -124,6 +124,7 @@
           </div>
         </div>
       </div>
+
     </div>
     <div class="text-center ">
       <div class="col-md-4">
@@ -139,17 +140,26 @@
                 <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
                 <div v-if="resultsInfoOpen && resultIndex == index">
                   <div v-if="sport =='Football'">
+                    <hr class="my-3">
                     <h5>{{result.HomeGoalsScoredFT}} FT {{result.AwayGoalsScoredFT}}</h5>
                     <h6>{{result.HomeGoalsScoredHT}} HT {{result.AwayGoalsScoredHT}}</h6>
                     <p>{{result.MatchDescription}}</p>
                   </div>
                   <div v-if="sport == 'American Football'">
-                    
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} FT {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredQ3}} Q3 {{result.AwayPointsScoredQ3}}</h6>
+                    <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
+                    <h6>{{result.HomePointsScoredQ1}}  Q1 {{result.AwayPointsScoredQ1}}</h6>
+                    <p>{{result.MatchDescription}}</p>
                   </div>
                 </div>
               </div>
             </li>
           </ul>
+          <div class="text-white card-footer" v-if="results[0] === undefined">
+            <h5>No Recent Results</h5>
+          </div>
         </div>
       </div>
     </div>
