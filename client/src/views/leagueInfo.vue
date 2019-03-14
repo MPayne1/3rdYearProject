@@ -138,10 +138,11 @@
               <div id="resultsInfo" class="align-items-center">
                 <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
               </div>
-              <div v-if="sport =='Football'" class="">
+              <div v-if="sport =='Football'">
                 <div v-if="resultsInfoOpen && resultIndex == index">
                   <h5>{{result.HomeGoalsScoredFT}} FT {{result.AwayGoalsScoredFT}}</h5>
                   <h6>{{result.HomeGoalsScoredHT}} HT {{result.AwayGoalsScoredHT}}</h6>
+                  <p>{{result.MatchDescription}}</p>
                 </div>
               </div>
             </li>
@@ -153,276 +154,276 @@
 </template>
 
 <script>
-import Vue from 'vue';
-import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
-import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
-import joi from 'joi';
+  import Vue from 'vue';
+  import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
+  import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
+  import joi from 'joi';
 
-Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+  Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
-const API_URL = 'https://localhost:3000/';
-const START_SEASON_URL = 'https://localhost:3000/league/fixtures/update/startSeason';
-const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
-const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upcomingFixtures';
-const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
-var FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
-var FETCH_RESULTS_URL = 'https://localhost:3000/league/results/fetch/';
-const GET_SPORT_URL = 'https://localhost:3000/league/sport';
+  const API_URL = 'https://localhost:3000/';
+  const START_SEASON_URL = 'https://localhost:3000/league/fixtures/update/startSeason';
+  const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
+  const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upcomingFixtures';
+  const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
+  var FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
+  var FETCH_RESULTS_URL = 'https://localhost:3000/league/results/fetch/';
+  const GET_SPORT_URL = 'https://localhost:3000/league/sport';
 
-const updateFixtureSchema = joi.object().keys({
-  fixtureID: joi.number().positive().required(),
-  date: joi.string().min(2).max(30).required(),
-  address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-  postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
-});
+  const updateFixtureSchema = joi.object().keys({
+    fixtureID: joi.number().positive().required(),
+    date: joi.string().min(2).max(30).required(),
+    address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+    city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+    county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+    postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
+  });
 
-export default {
-  data: () => ({
-    fixtures: [],
-    user: {},
-    leagueName: '',
-    leagueID: '',
-    fixtureInfoOpen: false,
-    fixtureIndex: '',
-    fixtureDate: '',
-    errorMessage: '',
-    fixtureUpdated: false,
-    sport:'',
-    rankings: [],
-    results: [],
-    resultsInfoOpen: false,
-    resultIndex: '',
-  }),
-  watch: {
-    fixtures: {
-      handler() {
-        this.errorMessage = '';
-      },
-      deep: true,
-    }
-  },
-  mounted() {
-    // get the leagueName query
-    if (this.$route.query.leagueName) {
-      this.leagueName = this.$route.query.leagueName;
-    } else {
-      this.$router.push('/dashboard/');
-    }
-    // set the authorization header
-    fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-    }).then(res => res.json())
-      .then((result) => {
-        // if there's no user object in the response then remove the token
-        if (result.user) {
-          this.user = result.user;
-        } else {
-          localStorage.removeItem('token');
-          this.$router.push('/auth/login');
-        }
-      });
-    const leagueName = {
-      leagueName: this.leagueName,
-    };
-    // get the leagueID
-    fetch(LEAGUEID_URL, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-      body: JSON.stringify(leagueName),
-    }).then(res => res.json())
-      .then((result) => {
-        if (result) {
-          this.leagueID = result.result[0].leagueID;
-        }
-      }).then((res) => {
-        this.getSport();
-        // get upcoming Fixtures
-        this.upcomingFixtures();
-      });
-  },
-  methods: {
-    // show date picker without closing FixtureInfo
-    showDatePicker() {
-      if (this.fixtureInfoOpen !== true) {
-        this.fixtureInfoOpen = true;
+  export default {
+    data: () => ({
+      fixtures: [],
+      user: {},
+      leagueName: '',
+      leagueID: '',
+      fixtureInfoOpen: false,
+      fixtureIndex: '',
+      fixtureDate: '',
+      errorMessage: '',
+      fixtureUpdated: false,
+      sport:'',
+      rankings: [],
+      results: [],
+      resultsInfoOpen: false,
+      resultIndex: '',
+    }),
+    watch: {
+      fixtures: {
+        handler() {
+          this.errorMessage = '';
+        },
+        deep: true,
       }
     },
-
-    // update fixture info
-    updateFixture(index) {
-      const body = {
-        fixtureID: this.fixtures[index].fixtureID,
-        date: this.fixtures[index].date,
-        address: this.fixtures[index].address,
-        city: this.fixtures[index].city,
-        county: this.fixtures[index].county,
-        postcode: this.fixtures[index].postcode,
+    mounted() {
+      // get the leagueName query
+      if (this.$route.query.leagueName) {
+        this.leagueName = this.$route.query.leagueName;
+      } else {
+        this.$router.push('/dashboard/');
+      }
+      // set the authorization header
+      fetch(API_URL, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          // if there's no user object in the response then remove the token
+          if (result.user) {
+            this.user = result.user;
+          } else {
+            localStorage.removeItem('token');
+            this.$router.push('/auth/login');
+          }
+        });
+      const leagueName = {
+        leagueName: this.leagueName,
       };
-      if (this.validFixtureUpdate(body)) {
-        fetch(UPDATE_FIXTURES_URL, {
+      // get the leagueID
+      fetch(LEAGUEID_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueName),
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.leagueID = result.result[0].leagueID;
+          }
+        }).then((res) => {
+          this.getSport();
+          // get upcoming Fixtures
+          this.upcomingFixtures();
+        });
+    },
+    methods: {
+      // show date picker without closing FixtureInfo
+      showDatePicker() {
+        if (this.fixtureInfoOpen !== true) {
+          this.fixtureInfoOpen = true;
+        }
+      },
+
+      // update fixture info
+      updateFixture(index) {
+        const body = {
+          fixtureID: this.fixtures[index].fixtureID,
+          date: this.fixtures[index].date,
+          address: this.fixtures[index].address,
+          city: this.fixtures[index].city,
+          county: this.fixtures[index].county,
+          postcode: this.fixtures[index].postcode,
+        };
+        if (this.validFixtureUpdate(body)) {
+          fetch(UPDATE_FIXTURES_URL, {
+            method: 'POST',
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+            body: JSON.stringify(body),
+          }).then(res => res.json())
+            .then((result) => {
+              if (result) {
+                console.log(result);
+                this.fixtureUpdated = true;
+              }
+            });
+        }
+      },
+      // check entered info is valid
+      validFixtureUpdate(body) {
+        const result = joi.validate(body, updateFixtureSchema);
+        if (result.error === null) {
+          return true;
+        }
+        if (result.error.message.includes('date')) {
+          this.errorMessage = 'Please enter a valid Date';
+        }
+        if (result.error.message.includes('address')) {
+          this.errorMessage = 'Please enter a valid Address';
+        }
+        if (result.error.message.includes('city')) {
+          this.errorMessage = 'Please enter a valid city';
+        }
+        if (result.error.message.includes('county')) {
+          this.errorMessage = 'Please enter a valid county';
+        }
+        if (result.error.message.includes('postcode')) {
+          this.errorMessage = 'Please enter a valid Postcode/ZIP code';
+        }
+        console.log(result.error.message);
+        return false;
+      },
+
+      // get the sport of the league
+      getSport() {
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        fetch(GET_SPORT_URL, {
           method: 'POST',
           headers: {
             'content-type': 'application/json',
             Authorization: `Bearer ${localStorage.token}`,
           },
-          body: JSON.stringify(body),
+          body: JSON.stringify(leagueID),
         }).then(res => res.json())
           .then((result) => {
             if (result) {
-              console.log(result);
-              this.fixtureUpdated = true;
+              this.sport = result.result[0].Sport;
+              console.log(this.sport);
+
+              this.getRankings();
+              this.getResults();
             }
+          });
+      },
+      // load upcoming Fixtures
+      upcomingFixtures() {
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        fetch(UPCOMING_FIXTURES_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(leagueID),
+        }).then(res => res.json())
+          .then((result) => {
+            if (result.result != undefined) {
+              this.fixtures = result.result;
+              //console.log(this.fixtures[0].Sport);
+            }
+          });
+      },
+      // get the league Rankings
+      getRankings() {
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        const URL = FETCH_RANKINGS_URL+this.sport;
+        fetch(URL,  {
+          method: 'POST',
+          headers : {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body : JSON.stringify(leagueID),
+        }).then(res => res.json())
+          .then((result) => {
+            console.log(result);
+            this.rankings = result;
+          });
+      },
+      // start a new season
+      startSeason() {
+        this.errorMessage = '';
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        fetch(START_SEASON_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(leagueID),
+        }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            console.log(result);
+            if(result.message) {
+              throw new Error(result.message);
+            }
+            else {
+              this.upcomingFixtures();
+            }
+          }
+        }).catch((error) => {
+            this.errorMessage = error.message;
+            console.log(this.errorMessage);
+        });
+      },
+      goToTeamPage(teamName) {
+        this.$router.push({ path: '/team/info/', query: { teamName } });
+      },
+      // get the past results
+      getResults() {
+        this.errorMessage = '';
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        const URL = FETCH_RESULTS_URL+this.sport;
+        fetch(URL,  {
+          method: 'POST',
+          headers : {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body : JSON.stringify(leagueID),
+        }).then(res => res.json())
+          .then((result) => {
+            console.log(result);
+            this.results = result;
           });
       }
     },
-    // check entered info is valid
-    validFixtureUpdate(body) {
-      const result = joi.validate(body, updateFixtureSchema);
-      if (result.error === null) {
-        return true;
-      }
-      if (result.error.message.includes('date')) {
-        this.errorMessage = 'Please enter a valid Date';
-      }
-      if (result.error.message.includes('address')) {
-        this.errorMessage = 'Please enter a valid Address';
-      }
-      if (result.error.message.includes('city')) {
-        this.errorMessage = 'Please enter a valid city';
-      }
-      if (result.error.message.includes('county')) {
-        this.errorMessage = 'Please enter a valid county';
-      }
-      if (result.error.message.includes('postcode')) {
-        this.errorMessage = 'Please enter a valid Postcode/ZIP code';
-      }
-      console.log(result.error.message);
-      return false;
-    },
-
-    // get the sport of the league
-    getSport() {
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      fetch(GET_SPORT_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          if (result) {
-            this.sport = result.result[0].Sport;
-            console.log(this.sport);
-
-            this.getRankings();
-            this.getResults();
-          }
-        });
-    },
-    // load upcoming Fixtures
-    upcomingFixtures() {
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      fetch(UPCOMING_FIXTURES_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          if (result.result != undefined) {
-            this.fixtures = result.result;
-            //console.log(this.fixtures[0].Sport);
-          }
-        });
-    },
-    // get the league Rankings
-    getRankings() {
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      const URL = FETCH_RANKINGS_URL+this.sport;
-      fetch(URL,  {
-        method: 'POST',
-        headers : {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body : JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          console.log(result);
-          this.rankings = result;
-        });
-    },
-    // start a new season
-    startSeason() {
-      this.errorMessage = '';
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      fetch(START_SEASON_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueID),
-      }).then(res => res.json())
-      .then((result) => {
-        if (result) {
-          console.log(result);
-          if(result.message) {
-            throw new Error(result.message);
-          }
-          else {
-            this.upcomingFixtures();
-          }
-        }
-      }).catch((error) => {
-          this.errorMessage = error.message;
-          console.log(this.errorMessage);
-      });
-    },
-    goToTeamPage(teamName) {
-      this.$router.push({ path: '/team/info/', query: { teamName } });
-    },
-    // get the past results
-    getResults() {
-      this.errorMessage = '';
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      const URL = FETCH_RESULTS_URL+this.sport;
-      fetch(URL,  {
-        method: 'POST',
-        headers : {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body : JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          console.log(result);
-          this.results = result;
-        });
-    }
-  },
-};
+  };
 </script>
 
 <style>
