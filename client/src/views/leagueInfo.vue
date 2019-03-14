@@ -129,7 +129,7 @@
           <div class="text-white card-footer" v-if="fixturesExtra[0] != undefined && isAllFixtures == true">
             <h5 @click="showAllFixtures(), isAllFixtures = !isAllFixtures">Show all Upcoming Fixtures</h5>
           </div>
-          <div class="text-white card-footer" v-if="this.fixtures.length > 10">
+          <div class="text-white card-footer" v-if="this.fixtures.length > showMax">
             <h5 @click="splitFixtures(fixtures), isAllFixtures = true">Hide Fixtures</h5>
           </div>
         </div>
@@ -255,6 +255,12 @@
             <div class="text-white card-footer" v-if="results[0] === undefined">
               <h5>No Recent Results</h5>
             </div>
+            <div class="text-white card-footer" v-if="resultsExtra[0] != undefined && isAllResults == true">
+              <h5 @click="showAllResults(), isAllResults = !isAllResults">Show all Results</h5>
+            </div>
+            <div class="text-white card-footer" v-if="this.results.length > showMax">
+              <h5 @click="splitResults(results), isAllResults = true">Hide Results</h5>
+            </div>
           </div>
         </div>
       <div class="col-md-2"></div>
@@ -305,8 +311,10 @@
       rankings: [],
       results: [],
       resultsExtra : [],
+      isAllResults: true,
       resultsInfoOpen: false,
       resultIndex: '',
+      showMax: 10,
     }),
     watch: {
       fixtures: {
@@ -381,6 +389,10 @@
       // show the list of all fixtures
       showAllFixtures() {
         this.fixtures = this.fixtures.concat(this.fixturesExtra);
+      },
+      // show the list of all results
+      showAllResults() {
+        this.results = this.results.concat(this.resultsExtra);
       },
       // update fixture info
       updateFixture(index) {
@@ -457,6 +469,7 @@
             }
           });
       },
+
       // load upcoming Fixtures
       upcomingFixtures() {
         const leagueID = {
@@ -476,17 +489,32 @@
             }
           });
       },
+
+      // split the fixtures, so only show showMax (10) of them
       splitFixtures(result) {
-        if(result.length > 10) {
+        if(result.length > this.showMax) {
           var length = result.length;
           this.fixturesExtra = result.slice();
-          this.fixtures = result.splice(0,10);
+          this.fixtures = result.splice(0,this.showMax);
           this.fixturesExtra = result.splice(0,length);
         } else {
           this.fixtures = result.result;
         }
-
       },
+
+      // split the results, so only show showMax (10) of them
+      splitResults(result) {
+        if(result.length > this.showMax) {
+          var length = result.length;
+          this.resultsExtra = result.slice();
+          this.results = result.splice(0,this.showMax);
+          this.resultsExtra = result.splice(0,length);
+        } else {
+          this.results = result;
+        }
+        console.log(this.results);
+      },
+
       // get the league Rankings
       getRankings() {
         const leagueID = {
@@ -554,8 +582,9 @@
           body : JSON.stringify(leagueID),
         }).then(res => res.json())
           .then((result) => {
-            console.log(result);
-            this.results = result;
+            if(result != undefined) {
+              this.splitResults(result);
+            }
           });
       }
     },
