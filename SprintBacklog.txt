@@ -48,8 +48,8 @@ Sprint Backlog
       [] volleyball
       [] table Tennis
       [x] Hockey
-      [] Basketball
-      [] rugby
+      [x] Basketball
+      [x] rugby
       [] cricket
 [] unit test everything
   [] use mocha and chai
