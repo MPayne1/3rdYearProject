@@ -242,6 +242,7 @@ export default {
           this.leagueID = result.result[0].leagueID;
         }
       }).then((res) => {
+        this.getSport();
         // get upcoming Fixtures
         this.upcomingFixtures();
       });
@@ -324,8 +325,8 @@ export default {
             this.sport = result.result[0].Sport;
             console.log(this.sport);
 
-            //this.getRankings();
-            //this.getResults();
+            this.getRankings();
+            this.getResults();
           }
         });
     },
@@ -343,13 +344,9 @@ export default {
         body: JSON.stringify(leagueID),
       }).then(res => res.json())
         .then((result) => {
-          if (result) {
+          if (result.result != undefined) {
             this.fixtures = result.result;
-            this.sport = this.fixtures[0].Sport;
-            console.log(this.fixtures);
-
-            this.getRankings();
-            this.getResults();
+            //console.log(this.fixtures[0].Sport);
           }
         });
     },

@@ -17,7 +17,7 @@ const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
 const dbSelectTeamsInLeague = require('../db/select/selectTeamsInLeague.js');
 const dbSelectLeaguesPlayIn = require('../db/select/selectLeaguesPlayIn.js');
 const dbSelectLeagueID = require('../db/select/selectLeagueID.js');
-//const dbSelectLeagueSport = require('../db/select/selectLeagueSport.js');
+const dbSelectLeagueSport = require('../db/select/selectLeagueSport.js');
 
 //------  schemas  ------
 
