@@ -41,12 +41,13 @@ Sprint Backlog
   [] frontend
     [x] send req to backend
     [] fix the placement of results card when fixtures card expands
+    [x] fix spacing between result e.g. 1 FT 0 -> 1 - FT - 0
     [] show results for each sport
       [x] Football
       [] Tennis
       [x] american Football
-      [] volleyball
-      [] table Tennis
+      [x] volleyball
+      [x] table Tennis
       [x] Hockey
       [x] Basketball
       [x] rugby

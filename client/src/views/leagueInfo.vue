@@ -205,6 +205,19 @@
                       <p>{{result.MatchDescription}}</p>
                     </div>
                   </div>
+                  <div v-if="sport == 'Table Tennis'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
+                    <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
+                    <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
+                    <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
+                    <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
