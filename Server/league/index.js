@@ -49,6 +49,11 @@ const leagueIDSchema = joi.object().keys({
   leagueName: joi.string().min(2).max(20).required()
 });
 
+// schema to get the sport for the league
+const getSportSchema =  joi.object().keys({
+  leagueID: joi.number().positive().required()
+});
+
 // ------  routing  ------
 
 router.use('/results', resultsRoute);
@@ -76,6 +81,24 @@ router.post('/leagueID', async(req, res, next) => {
       }
     });
   } else{
+    invalidInput(res, next);
+  }
+});
+
+
+router.post('/sport', async(req, res, next) => {
+  const result = joi.validate(req.body, getSportSchema);
+  if(result.error == null) {
+    await dbSelectLeagueSport(req.body.leagueID, async(err, result) => {
+      if(err) next(err);
+      try{
+        result[0].Sport;
+        res.json({result});
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
     invalidInput(res, next);
   }
 });
