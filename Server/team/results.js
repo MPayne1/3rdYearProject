@@ -8,7 +8,9 @@ const joi = require('joi');
 
 // ------  db operations  ------
 const dbSelectFootballResults = require('../db/select/results/teamResults/selectFootballTeamResults.js');
+const dbSelectTennisResults = require('../db/select/results/teamResults/selectTennisTeamResults.js');
 
+// ------  schemas  ------
 //schema for teams results
 const teamResultSchema = joi.object().keys({
   teamID: joi.number().positive().required(),
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
   });
 });
 
-
+// route to get the football teams results
 router.post('/football', async(req, res, next) => {
   const result = joi.validate(req.body, teamResultSchema);
   if(result.error === null) {
@@ -31,10 +33,37 @@ router.post('/football', async(req, res, next) => {
         result[0];
         res.json(result);
       } catch(e) {
-        next(e);
+        invalidInput(res, next);
       }
     })
+  } else{
+    next(result.error);
   }
 });
 
+// route to get the tennis teams results
+router.post('/tennis', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbSelectTennisResults(req.body.teamID, (err, result)=> {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    })
+  } else{
+    next(result.error);
+  }
+});
+
+
+// create/format response for invalid inputs
+function invalidInput(res, next) {
+  res.status(409);
+  var error = new Error("Invlaid Input");
+  next(error);
+}
 module.exports = router;
