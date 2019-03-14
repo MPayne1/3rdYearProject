@@ -76,7 +76,7 @@
     <div class="text-center row">
       <div class="col-md-2"></div>
       <div class="col-md-4">
-        <div class="card bg-secondary border-secondary ">
+        <div id="fixtureCard" class="card bg-secondary border-secondary ">
           <div id="fixList" class="text-white card-header"><h4>Upcoming Fixtures</h4> <small>If your team is playing itself you have a bye game.</small></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
@@ -127,15 +127,17 @@
             </div>
           </div>
           <div class="text-white card-footer" v-if="fixturesExtra[0] != undefined && isAllFixtures == true">
-            <h5 @click="showAllFixtures(), isAllFixtures = !isAllFixtures">Show all Upcoming Fixtures</h5>
+            <button @click="showAllFixtures(), isAllFixtures = !isAllFixtures"
+            class="btn btn-primary btn-lg">Show all upcoming fixtures</button>
           </div>
           <div class="text-white card-footer" v-if="this.fixtures.length > showMax">
-            <h5 @click="splitFixtures(fixtures), isAllFixtures = true">Hide Fixtures</h5>
+            <button @click="splitFixtures(fixtures), isAllFixtures = true"
+            class="btn btn-primary btn-lg">Hide Fixtures</button>
           </div>
         </div>
       </div>
       <div class="col-md-4">
-          <div class="card bg-secondary border-secondary">
+          <div id="resultCard" class="card bg-secondary border-secondary">
             <div id="resultsList" class="text-white card-header">
               <h4>Results</h4>
             </div>
@@ -256,10 +258,12 @@
               <h5>No Recent Results</h5>
             </div>
             <div class="text-white card-footer" v-if="resultsExtra[0] != undefined && isAllResults == true">
-              <h5 @click="showAllResults(), isAllResults = !isAllResults">Show all Results</h5>
+              <button @click="showAllResults(), isAllResults = !isAllResults"
+              class="btn btn-primary btn-lg">Show all results</button>
             </div>
             <div class="text-white card-footer" v-if="this.results.length > showMax">
-              <h5 @click="splitResults(results), isAllResults = true">Hide Results</h5>
+              <button @click="splitResults(results), isAllResults = true"
+              class="btn btn-primary btn-lg">Hide Results</button>
             </div>
           </div>
         </div>
@@ -620,6 +624,9 @@
   }
   #matchDescription {
     word-spacing: normal;
+  }
+  #resultCard, #fixtureCard {
+    margin-bottom: 20px;
   }
   /*
   table thead:first-child th:first-child{
