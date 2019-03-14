@@ -85,7 +85,7 @@ router.post('/leagueID', async(req, res, next) => {
   }
 });
 
-
+// get sport from leagueID
 router.post('/sport', async(req, res, next) => {
   const result = joi.validate(req.body, getSportSchema);
   if(result.error == null) {

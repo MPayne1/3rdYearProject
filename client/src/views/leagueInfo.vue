@@ -618,6 +618,7 @@
   }
   #rankingsTable {
     margin-bottom: 40px;
+    border: 1px solid #95a3a4;
   }
   #resultsInfo {
     word-spacing: 0.5em;
@@ -627,24 +628,5 @@
   }
   #resultCard, #fixtureCard {
     margin-bottom: 20px;
-  }
-  /*
-  table thead:first-child th:first-child{
-    border-top-left-radius: 7px;
-  }
-  table thead:first-child th:last-child{
-    border-top-right-radius: 7px;
-  }
-  table tr:last-child {
-    border-bottom: 1px solid #95a3a4;
-    border-bottom-left-radius: 7px;
-  }
-  table tr{
-    border-left: 1px solid #95a3a4;
-    border-right: 1px solid #95a3a4;
-  }
-  */
-  #rankingsTable {
-    border: 1px solid #95a3a4;
   }
 </style>
