@@ -39,14 +39,15 @@ Sprint Backlog
       [x] rugby
       [x] cricket
   [] frontend
-    [] send req to backend
+    [x] send req to backend
+    [] fix the placement of results card when fixtures card expands
     [] show results for each sport
-      [] Football
+      [x] Football
       [] Tennis
-      [] american Football
+      [x] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [] Basketball
       [] rugby
       [] cricket
