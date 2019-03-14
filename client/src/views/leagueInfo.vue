@@ -218,6 +218,19 @@
                       <p>{{result.MatchDescription}}</p>
                     </div>
                   </div>
+                  <div v-if="sport == 'Tennis'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredS1}} - 1st Set - {{result.AwayPointsScoredS1}}</h5>
+                    <h5>{{result.HomePointsScoredS2}} - 2nd Set - {{result.AwayPointsScoredS2}}</h5>
+                    <h5>{{result.HomePointsScoredS3}} - 3rd Set - {{result.AwayPointsScoredS3}}</h5>
+                    <h5>{{result.HomePointsScoredS4}} - 4th Set - {{result.AwayPointsScoredS4}}</h5>
+                    <h5>{{result.HomePointsScoredS5}} - 5th Set - {{result.AwayPointsScoredS5}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
