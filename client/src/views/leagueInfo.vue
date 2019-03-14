@@ -125,6 +125,23 @@
         </div>
       </div>
     </div>
+    <div class="text-center ">
+      <div class="col-md-4">
+        <div class="card bg-secondary border-secondary">
+          <div id="resultsList" class="text-white card-header">
+            <h4>Results</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between
+              align-items-center card-body" v-for="(result,index) in results" @click="resultIndex=index">
+              <div v-if="sport =='Football' "class="align-items-center">
+                <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -142,6 +159,7 @@ const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
 const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upcomingFixtures';
 const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
 var FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
+var FETCH_RESULTS_URL = 'https://localhost:3000/league/results/fetch/';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -165,6 +183,7 @@ export default {
     fixtureUpdated: false,
     sport:'',
     rankings: [],
+    results: [],
   }),
   watch: {
     fixtures: {
@@ -297,6 +316,7 @@ export default {
             console.log(this.fixtures);
 
             this.getRankings();
+            this.getResults();
           }
         });
     },
@@ -350,6 +370,26 @@ export default {
     },
     goToTeamPage(teamName) {
       this.$router.push({ path: '/team/info/', query: { teamName } });
+    },
+    // get the past results
+    getResults() {
+      this.errorMessage = '';
+      const leagueID = {
+        leagueID: this.leagueID,
+      };
+      const URL = FETCH_RESULTS_URL+this.sport;
+      fetch(URL,  {
+        method: 'POST',
+        headers : {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body : JSON.stringify(leagueID),
+      }).then(res => res.json())
+        .then((result) => {
+          console.log(result);
+          this.results = result;
+        });
     }
   },
 };
@@ -370,7 +410,7 @@ export default {
   #dateTimePicker {
     margin-top: 5px;
   }
-  #fixList{
+  #fixList, #resultsList{
     background-color: #2C3E50
   }
   #rankingsHeader {
