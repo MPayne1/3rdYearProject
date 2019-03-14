@@ -5,6 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
+const resultsRoute = require('./results.js');
 
 // ------  db operations  ------
 const dbSelectTeamNames = require('../db/select/selectTeamNames.js');
@@ -49,6 +50,8 @@ router.get('/', (req, res) => {
   });
 });
 
+// team results route
+router.use('/results', resultsRoute);
 
 // handle request to get all players of a team
 router.post('/allplayers', async(req, res, next) => {
