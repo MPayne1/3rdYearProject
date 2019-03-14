@@ -231,6 +231,16 @@
                       <p>{{result.MatchDescription}}</p>
                     </div>
                   </div>
+                  <div v-if="sport == 'Cricket'">
+                    <hr class="my-3">
+                    <h5>{{result.HomeRunsI1}}/{{result.HomeWicketsLostI1}} - 1st Innings - {{result.AwayRunsI1}}/{{result.AwayWicketsLostI1}}</h5>
+                    <h5>{{result.HomeRunsI2}}/{{result.HomeWicketsLostI2}} - 2nd Innings - {{result.AwayRunsI2}}/{{result.AwayWicketsLostI2}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
