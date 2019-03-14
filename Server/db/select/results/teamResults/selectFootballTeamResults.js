@@ -1,29 +1,27 @@
 const mysql = require('mysql');
-const dbCon  = require('../../connection.js');
+const dbCon  = require('../../../connection.js');
 
 /*
   select the football results
 */
-var selectFootballResults  = async function(leagueID, callback) {
+var selectFootballResults  = async function(teamID, callback) {
   var res;
     var sql = `SELECT HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
     hometeam.fixtureID, homeTeam.HomeGoalsScoredHT, homeTeam.HomeGoalsScoredFT,
     awayTeam.AwayGoalsScoredHT, awayTeam.AwayGoalsScoredFT, awayTeam.MatchDescription
     from (select teamName as HomeTeamName, HometeamID , fixture.fixtureID,
       HomeGoalsScoredHT, HomeGoalsScoredFT, MatchDescription
-      from team, fixture, footballResults, season where HometeamID = TeamID and
-      fixture.leagueID = team.leagueID and
-      team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
+      from team, fixture, footballResults, season where
+      fixture.leagueID = team.leagueID and played = 'true' and
       footballResults.fixtureID = fixture.fixtureID and
       season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixture.fixtureID,
      AwayGoalsScoredHT, AwayGoalsScoredFT, MatchDescription
-       from team, fixture, footballResults, season where AwayTeamID = teamID and
-       fixture.leagueID = team.leagueID and
-       team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
+       from team, fixture, footballResults, season where
+       fixture.leagueID = team.leagueID and played = 'true' and
         footballResults.fixtureID = fixture.fixtureID and
         season.seasonID = fixture.seasonID and finished = 'false') as awayTeam
-     where homeTeam.fixtureID = awayTeam.fixtureID;`;
+     where homeTeam.fixtureID = awayTeam.fixtureID and HomeTeamID = ${mysql.escape(teamID)} or AwayTeamID = ${mysql.escape(teamID)} GROUP BY homeTeam.fixtureID;`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;
@@ -32,3 +30,20 @@ var selectFootballResults  = async function(leagueID, callback) {
 }
 
 module.exports = selectFootballResults;
+
+/*
+SELECT  HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
+hometeam.fixtureID, homeTeam.HomeGoalsScoredHT, homeTeam.HomeGoalsScoredFT,
+awayTeam.AwayGoalsScoredHT, awayTeam.AwayGoalsScoredFT, awayTeam.MatchDescription
+from (select  teamName as HomeTeamName, HometeamID , fixture.fixtureID,
+  HomeGoalsScoredHT, HomeGoalsScoredFT, MatchDescription
+  from team, fixture, footballResults, season where
+  fixture.leagueID = team.leagueID and played = 'true'
+  and footballResults.fixtureID = fixture.fixtureID and season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
+ (select teamName as AwayTeamName, AwayteamID , fixture.fixtureID,
+ AwayGoalsScoredHT, AwayGoalsScoredFT, MatchDescription
+   from team, fixture, footballResults, season where
+   fixture.leagueID = team.leagueID and played = 'true'
+   and footballResults.fixtureID = fixture.fixtureID and season.seasonID = fixture.seasonID and finished = 'false') as awayTeam
+ where homeTeam.fixtureID = awayTeam.fixtureID and HomeTeamID = 165 or AwayTeamID = 165 group by homeTeam.fixtureID`;
+*/
