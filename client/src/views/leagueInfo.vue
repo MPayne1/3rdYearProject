@@ -151,12 +151,34 @@
                     <h6>{{result.HomePointsScoredQ3}} Q3 {{result.AwayPointsScoredQ3}}</h6>
                     <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
                     <h6>{{result.HomePointsScoredQ1}}  Q1 {{result.AwayPointsScoredQ1}}</h6>
+                    <hr class="my-3">
+                    <h6>Match Description:</h6>
                     <p>{{result.MatchDescription}}</p>
                   </div>
                   <div v-if="sport == 'Hockey'">
                     <hr class="my-3">
                     <h5>{{result.HomePointsScoredFT}} FT {{result.AwayPointsScoredFT}}</h5>
                     <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
+                    <hr class="my-3">
+                    <h6>Match Description:</h6>
+                    <p>{{result.MatchDescription}}</p>
+                  </div>
+                  <div v-if="sport == 'Basketball'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} FT {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredQ3}} Q3 {{result.AwayPointsScoredQ3}}</h6>
+                    <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
+                    <h6>{{result.HomePointsScoredQ1}}  Q1 {{result.AwayPointsScoredQ1}}</h6>
+                    <hr class="my-3">
+                    <h6>Match Description:</h6>
+                    <p>{{result.MatchDescription}}</p>
+                  </div>
+                  <div v-if="sport == 'Rugby'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} FT {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
+                    <hr class="my-3">
+                    <h6>Match Description:</h6>
                     <p>{{result.MatchDescription}}</p>
                   </div>
                 </div>
