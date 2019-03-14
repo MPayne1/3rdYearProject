@@ -12,11 +12,15 @@ Sprint Backlog
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] email users when the fixture/results info is updated
   [] show teamname rather than home/away in results page
-  [x] move results db files into own folder
+  [x] only show 10 upcomgin fixtures
+    [x] click button to expand
+    [x] click button to reduce again
+  [] team announcements, team captain
+  [] league announcements, league admin
 
 [] attribute loading spinner to loading.io
 
-[]show results
+[x]show league results
   [x] backend
     [x] db select results for each sport
       [x] Football
@@ -38,8 +42,11 @@ Sprint Backlog
       [x] Basketball
       [x] rugby
       [x] cricket
-  [] frontend
+  [x] frontend
     [x] send req to backend
+    [x] only show 10 results
+      [x] click button to expand
+      [x] click button to reduce again
     [x] fix the placement of results card when fixtures card expands
     [x] fix spacing between result e.g. 1 FT 0 -> 1 - FT - 0
     [x] show results for each sport
