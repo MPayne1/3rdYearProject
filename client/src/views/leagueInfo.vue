@@ -133,9 +133,16 @@
           </div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
-              align-items-center card-body" v-for="(result,index) in results" @click="resultIndex=index">
-              <div v-if="sport =='Football' "class="align-items-center">
+              align-items-center card-body text-center" v-for="(result, index) in results"
+              @click="resultsInfoOpen = !resultsInfoOpen, resultIndex = index">
+              <div id="resultsInfo" class="align-items-center">
                 <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
+              </div>
+              <div v-if="sport =='Football'" class="">
+                <div v-if="resultsInfoOpen && resultIndex == index">
+                  <h5>{{result.HomeGoalsScoredFT}} FT {{result.AwayGoalsScoredFT}}</h5>
+                  <h6>{{result.HomeGoalsScoredHT}} HT {{result.AwayGoalsScoredHT}}</h6>
+                </div>
               </div>
             </li>
           </ul>
@@ -160,6 +167,7 @@ const UPCOMING_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/upc
 const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updateFixture';
 var FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
 var FETCH_RESULTS_URL = 'https://localhost:3000/league/results/fetch/';
+const GET_SPORT_URL = 'https://localhost:3000/league/sport';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -184,6 +192,8 @@ export default {
     sport:'',
     rankings: [],
     results: [],
+    resultsInfoOpen: false,
+    resultIndex: '',
   }),
   watch: {
     fixtures: {
@@ -296,6 +306,29 @@ export default {
       return false;
     },
 
+    // get the sport of the league
+    getSport() {
+      const leagueID = {
+        leagueID: this.leagueID,
+      };
+      fetch(GET_SPORT_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(leagueID),
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.sport = result.result[0].Sport;
+            console.log(this.sport);
+
+            //this.getRankings();
+            //this.getResults();
+          }
+        });
+    },
     // load upcoming Fixtures
     upcomingFixtures() {
       const leagueID = {
@@ -399,7 +432,7 @@ export default {
   #address {
     margin-top: 15px;
   }
-  #fixtureInfo {
+  #fixtureInfo, #resultsInfo {
     margin-left: auto;
     margin-right: auto;
   }
