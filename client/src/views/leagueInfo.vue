@@ -135,7 +135,7 @@
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between
               align-items-center card-body text-center" v-for="(result, index) in results"
-              @click="resultsInfoOpen = !resultsInfoOpen, resultIndex = index">
+              @click="showResultsInfo(index)">
               <div id="resultsInfo" class="align-items-center">
                 <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
                 <div v-if="resultsInfoOpen && resultIndex == index">
@@ -274,7 +274,17 @@
           this.fixtureInfoOpen = true;
         }
       },
-
+      showResultsInfo(index) {
+        if(this.resultsInfoOpen == true && this.resultIndex == index) {
+          this.resultsInfoOpen = false;
+          this.resultIndex = index;
+        } else if(this.resultsInfoOpen == true && this.resultIndex != index) {
+          this.resultIndex = index;
+          this.resultsInfoOpen = true;
+        } else {
+          this.resultsInfoOpen = !this.resultsInfoOpen;
+        }
+      },
       // update fixture info
       updateFixture(index) {
         const body = {
