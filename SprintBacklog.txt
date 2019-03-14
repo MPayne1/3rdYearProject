@@ -65,7 +65,7 @@ Sprint Backlog
   [] backend
     [] db select results for each sport
       [x] Football
-      [] Tennis
+      [x] Tennis
       [] american Football
       [] volleyball
       [] table Tennis
@@ -75,7 +75,7 @@ Sprint Backlog
       [] cricket
     [] route for each sport
       [x] Football
-      [] Tennis
+      [x] Tennis
       [] american Football
       [] volleyball
       [] table Tennis
