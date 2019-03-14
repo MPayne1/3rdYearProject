@@ -153,6 +153,12 @@
                     <h6>{{result.HomePointsScoredQ1}}  Q1 {{result.AwayPointsScoredQ1}}</h6>
                     <p>{{result.MatchDescription}}</p>
                   </div>
+                  <div v-if="sport == 'Hockey'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} FT {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredHT}} HT {{result.AwayPointsScoredHT}}</h6>
+                    <p>{{result.MatchDescription}}</p>
+                  </div>
                 </div>
               </div>
             </li>
