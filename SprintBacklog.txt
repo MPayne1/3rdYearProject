@@ -39,6 +39,16 @@ Sprint Backlog
       [x] rugby
       [x] cricket
   [] frontend
+    [] send req to backend
     [] show results for each sport
+      [] Football
+      [] Tennis
+      [] american Football
+      [] volleyball
+      [] table Tennis
+      [] Hockey
+      [] Basketball
+      [] rugby
+      [] cricket
 [] unit test everything
   [] use mocha and chai
