@@ -7,12 +7,16 @@ const router = express.Router();
 const joi = require('joi');
 
 // ------  db operations  ------
+
 const dbSelectFootballResults = require('../db/select/results/teamResults/selectFootballTeamResults.js');
 const dbSelectTennisResults = require('../db/select/results/teamResults/selectTennisTeamResults.js');
 const dbAmericanFootballResults = require('../db/select/results/teamResults/selectAmericanFootballTeamResults.js');
 const dbBasketballResults = require('../db/select/results/teamResults/selectBasketballTeamResults.js');
 const dbHockeyResults = require('../db/select/results/teamResults/selectHockeyTeamResults.js');
 const dbRugbyResults = require('../db/select/results/teamResults/selectRugbyTeamResults.js');
+const dbTableTennisResults = require('../db/select/results/teamResults/selectTableTennisTeamResults.js');
+
+
 
 // ------  schemas  ------
 //schema for teams results
@@ -136,6 +140,24 @@ router.post('/rugby', async(req, res, next) => {
   }
 });
 
+
+// route to get the table tennis teams results
+router.post('/table%20tennis', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbTableTennisResults(req.body.teamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
 
 
 
