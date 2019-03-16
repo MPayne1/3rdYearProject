@@ -11,6 +11,7 @@ const dbSelectFootballResults = require('../db/select/results/teamResults/select
 const dbSelectTennisResults = require('../db/select/results/teamResults/selectTennisTeamResults.js');
 const dbAmericanFootballResults = require('../db/select/results/teamResults/selectAmericanFootballTeamResults.js');
 const dbBasketballResults = require('../db/select/results/teamResults/selectBasketballTeamResults.js');
+const dbHockeyResults = require('../db/select/results/teamResults/selectHockeyTeamResults.js');
 // ------  schemas  ------
 //schema for teams results
 const teamResultSchema = joi.object().keys({
@@ -84,6 +85,25 @@ router.post('/basketball', async(req, res, next) => {
   const result = joi.validate(req.body, teamResultSchema);
   if(result.error === null) {
     await dbBasketballResults(req.body.teamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+
+// route to get the hockey teams results
+router.post('/hockey', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbHockeyResults(req.body.teamID, (err, result) => {
       if(err) next(err);
       try{
         result[0];
