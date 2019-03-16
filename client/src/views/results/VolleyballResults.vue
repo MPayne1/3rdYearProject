@@ -162,7 +162,7 @@ import App from '../../App.vue';
 const RESULTS_URL = 'https://localhost:3000/league/results/update/volleyball';
 
 // schema for inserting tennis results
-const schema  = joi.object().keys({
+const schema = joi.object().keys({
   FixtureID: joi.number().positive().required(),
   HomePointsScoredG1: joi.number().min(0).required(),
   AwayPointsScoredG1: joi.number().min(0).required(),
