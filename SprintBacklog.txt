@@ -62,27 +62,27 @@ Sprint Backlog
 
 
 []show teams results
-  [] backend
-    [] db select results for each sport
+  [x] backend
+    [x] db select results for each sport
       [x] Football
       [x] Tennis
       [x] american Football
-      [] volleyball
-      [] table Tennis
+      [x] volleyball
+      [x] table Tennis
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
-    [] route for each sport
+      [x] cricket
+    [x] route for each sport
       [x] Football
       [x] Tennis
       [x] american Football
-      [] volleyball
-      [] table Tennis
+      [x] volleyball
+      [x] table Tennis
       [x] Hockey
       [x] Basketball
       [x] rugby
-      [] cricket
+      [x] cricket
   [] frontend
     [] send req to backend
     [] only show 10 results
