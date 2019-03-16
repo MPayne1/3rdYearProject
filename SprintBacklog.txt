@@ -69,9 +69,9 @@ Sprint Backlog
       [x] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [x] Basketball
-      [] rugby
+      [x] rugby
       [] cricket
     [] route for each sport
       [x] Football
@@ -79,9 +79,9 @@ Sprint Backlog
       [x] american Football
       [] volleyball
       [] table Tennis
-      [] Hockey
+      [x] Hockey
       [x] Basketball
-      [] rugby
+      [x] rugby
       [] cricket
   [] frontend
     [] send req to backend
