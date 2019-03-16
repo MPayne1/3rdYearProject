@@ -9,7 +9,7 @@ const joi = require('joi');
 // ------  db operations  ------
 const dbSelectFootballResults = require('../db/select/results/teamResults/selectFootballTeamResults.js');
 const dbSelectTennisResults = require('../db/select/results/teamResults/selectTennisTeamResults.js');
-
+const dbAmericanFootballResults = require('../db/select/results/teamResults/selectAmericanFootballTeamResults.js');
 // ------  schemas  ------
 //schema for teams results
 const teamResultSchema = joi.object().keys({
@@ -35,7 +35,7 @@ router.post('/football', async(req, res, next) => {
       } catch(e) {
         invalidInput(res, next);
       }
-    })
+    });
   } else{
     next(result.error);
   }
@@ -53,12 +53,32 @@ router.post('/tennis', async(req, res, next) => {
       } catch(e) {
         invalidInput(res, next);
       }
-    })
+    });
   } else{
     next(result.error);
   }
 });
 
+
+router.post('/american%20football', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbAmericanFootballResults(req.body.teamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+
+
+
+  } else {
+    next(result.error);
+  }
+});
 
 // create/format response for invalid inputs
 function invalidInput(res, next) {
