@@ -4,195 +4,411 @@
       <h2>TeamInfo</h2>
       <h4>{{teamName}}</h4>
     </div>
-
-    <div class="card text-white bg-secondary border-secondary mb-3" style="max-width: 20rem;">
-      <div id="playerList" class="card-header"><h4>Players</h4></div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
-          <router-link :to="{ name: 'playerInfo', params: {} }">
-            {{ player.username }}</router-link>
-        </li>
-      </ul>
-      <div class="card-footer">
-        <form  @submit.prevent="addPlayer()">
-        <div class="form-group">
-          <div v-if="errorMessage" class="alert alert-danger" role="alert">
-            {{errorMessage}}
+    <div class="text-center row">
+      <div class="col-md-2"></div>
+      <div class="col-md-4">
+        <div id="playersCard" class="card text-white bg-secondary">
+          <div id="playerList" class="card-header"><h4>Players</h4></div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
+              <router-link :to="{ name: 'playerInfo', params: {} }">
+                {{ player.username }}</router-link>
+            </li>
+          </ul>
+          <div class="card-footer">
+            <form  @submit.prevent="addPlayer()">
+            <div class="form-group">
+              <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                {{errorMessage}}
+              </div>
+              <label for="username">Player's Username</label>
+              <input v-model="username" type="text" class="form-control"
+                id="username" placeholder="Username" required>
+                <br>
+              <button @click="addPlayer()" class="btn btn-primary btn-lg"
+                type="submit">Add a player</button>
+            </div>
+          </form>
           </div>
-          <label for="username">Player's Username</label>
-          <input v-model="username" type="text" class="form-control"
-            id="username" placeholder="Username" required>
-            <br>
-          <button @click="addPlayer()" class="btn btn-primary btn-lg"
-            type="submit">Add a player</button>
         </div>
-      </form>
+      </div>
+      <div class="col-md-4">
+        <div id="resultCard" class="card bg-secondary border-secondary">
+          <div id="resultsList" class="text-white card-header">
+            <h4>Results</h4>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item d-flex justify-content-between
+              align-items-center card-body text-center" v-for="(result, index) in results"
+              @click="showResultsInfo(index)">
+              <div id="resultsInfo" class="align-items-center">
+                <h5>{{result.HomeTeamName}} vs {{result.AwayTeamName}}</h5>
+                <div v-if="resultsInfoOpen && resultIndex == index">
+                  <div v-if="sport =='Football'">
+                    <hr class="my-3">
+                    <h5>{{result.HomeGoalsScoredFT}} - FT - {{result.AwayGoalsScoredFT}}</h5>
+                    <h6>{{result.HomeGoalsScoredHT}} - HT - {{result.AwayGoalsScoredHT}}</h6>
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'American Football'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
+                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                    <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Hockey'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Basketball'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredQ3}} - Q3 - {{result.AwayPointsScoredQ3}}</h6>
+                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                    <h6>{{result.HomePointsScoredQ1}} - Q1 - {{result.AwayPointsScoredQ1}}</h6>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Rugby'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredFT}} - FT - {{result.AwayPointsScoredFT}}</h5>
+                    <h6>{{result.HomePointsScoredHT}} - HT - {{result.AwayPointsScoredHT}}</h6>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Volleyball'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
+                    <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
+                    <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
+                    <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
+                    <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Table Tennis'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredG1}} - game 1 - {{result.AwayPointsScoredG1}}</h5>
+                    <h5>{{result.HomePointsScoredG2}} - game 2 - {{result.AwayPointsScoredG2}}</h5>
+                    <h5>{{result.HomePointsScoredG3}} - game 3 - {{result.AwayPointsScoredG3}}</h5>
+                    <h5>{{result.HomePointsScoredG4}} - game 4 - {{result.AwayPointsScoredG4}}</h5>
+                    <h5>{{result.HomePointsScoredG5}} - game 5 - {{result.AwayPointsScoredG5}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Tennis'">
+                    <hr class="my-3">
+                    <h5>{{result.HomePointsScoredS1}} - 1st Set - {{result.AwayPointsScoredS1}}</h5>
+                    <h5>{{result.HomePointsScoredS2}} - 2nd Set - {{result.AwayPointsScoredS2}}</h5>
+                    <h5>{{result.HomePointsScoredS3}} - 3rd Set - {{result.AwayPointsScoredS3}}</h5>
+                    <h5>{{result.HomePointsScoredS4}} - 4th Set - {{result.AwayPointsScoredS4}}</h5>
+                    <h5>{{result.HomePointsScoredS5}} - 5th Set - {{result.AwayPointsScoredS5}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                  <div v-if="sport == 'Cricket'">
+                    <hr class="my-3">
+                    <h5>{{result.HomeRunsI1}}/{{result.HomeWicketsLostI1}} - 1st Innings - {{result.AwayRunsI1}}/{{result.AwayWicketsLostI1}}</h5>
+                    <h5>{{result.HomeRunsI2}}/{{result.HomeWicketsLostI2}} - 2nd Innings - {{result.AwayRunsI2}}/{{result.AwayWicketsLostI2}}</h5>
+                    <hr class="my-3">
+                    <div id="matchDescription">
+                      <h6>Match Description:</h6>
+                      <p>{{result.MatchDescription}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+          <div class="text-white card-footer" v-if="results[0] === undefined">
+            <h5>No Recent Results</h5>
+          </div>
+          <div class="text-white card-footer" v-if="resultsExtra[0] != undefined && isAllResults == true">
+            <button @click="showAllResults(), isAllResults = !isAllResults"
+            class="btn btn-primary btn-lg">Show all results</button>
+          </div>
+          <div class="text-white card-footer" v-if="this.results.length > showMax">
+            <button @click="splitResults(results), isAllResults = true"
+            class="btn btn-primary btn-lg">Hide Results</button>
+          </div>
+        </div>
       </div>
     </div>
-
+      <div class="col-md-2"></div>
   </div>
-
 </template>
 
 <script>
-import joi from 'joi';
+  import joi from 'joi';
 
-const API_URL = 'https://localhost:3000/';
-const PLAYERS_URL = 'https://localhost:3000/team/allplayers';
-const TEAMID_URL = 'https://localhost:3000/team/teamID';
-const ADDPLAYER_URL = 'https://localhost:3000/team/addPlayer';
+  const API_URL = 'https://localhost:3000/';
+  const PLAYERS_URL = 'https://localhost:3000/team/allplayers';
+  const TEAMID_URL = 'https://localhost:3000/team/teamID';
+  const ADDPLAYER_URL = 'https://localhost:3000/team/addPlayer';
+  const GET_SPORT_URL = 'https://localhost:3000/team/sport';
+  const FETCH_RESULTS_URL = 'https://localhost:3000/team/results/';
 
-const addPlayerSchema = joi.object().keys({
-  username: joi.string().alphanum().min(2).max(20)
-    .required(),
-  teamID: joi.number().positive().required(),
-});
+  const addPlayerSchema = joi.object().keys({
+    username: joi.string().alphanum().min(2).max(20)
+      .required(),
+    teamID: joi.number().positive().required(),
+  });
 
-export default {
-  data: () => ({
-    user: {},
-    players: [],
-    teamName: '',
-    username: '',
-    errorMessage: '',
-    teamID: '',
-  }),
-  watch: {
-    username: {
-      handler() {
-        this.errorMessage = '';
+  export default {
+    data: () => ({
+      user: {},
+      players: [],
+      teamName: '',
+      username: '',
+      errorMessage: '',
+      teamID: '',
+      sport: '',
+      results: [],
+      resultsExtra: [],
+      isAllResults: true,
+      resultsInfoOpen: false,
+      resultIndex: '',
+      showMax: 10,
+    }),
+    watch: {
+      username: {
+        handler() {
+          this.errorMessage = '';
+        },
+        deep: true,
       },
-      deep: true,
+      teamID: {
+        handler() {
+          this.errorMessage = '';
+        },
+        deep: true,
+      },
+      teamName: {
+        handler() {
+          this.errorMessage = '';
+        },
+        deep: true,
+      },
     },
-    teamID: {
-      handler() {
-        this.errorMessage = '';
-      },
-      deep: true,
+    mounted() {
+      // get the teamName query
+      if (this.$route.query.teamName) {
+        this.teamName = this.$route.query.teamName;
+      } else {
+        this.$router.push('/dashboard/');
+      }
+      // get the authorization header
+      fetch(API_URL, {
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          // if there's no user object in the response then remove the token
+          if (result.user) {
+            this.user = result.user;
+            console.log(result);
+          } else {
+            localStorage.removeItem('token');
+            this.$router.push('/auth/login');
+          }
+        });
+      const teamName = {
+        teamName: this.teamName,
+      };
+      // get the teamID
+      fetch(TEAMID_URL, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+        body: JSON.stringify(teamName),
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.teamID = result.result[0].teamID;
+            console.log(this.teamID);
+            // get the players in the team
+            this.playerList();
+            this.getSport();
+          }
+        });
     },
-    teamName: {
-      handler() {
-        this.errorMessage = '';
-      },
-      deep: true,
-    },
-  },
-  mounted() {
-    // get the teamName query
-    if (this.$route.query.teamName) {
-      this.teamName = this.$route.query.teamName;
-    } else {
-      this.$router.push('/dashboard/');
-    }
-    // get the authorization header
-    fetch(API_URL, {
-      headers: {
-        Authorization: `Bearer ${localStorage.token}`,
-      },
-    }).then(res => res.json())
-      .then((result) => {
-        // if there's no user object in the response then remove the token
-        if (result.user) {
-          this.user = result.user;
-          console.log(result);
+    methods: {
+      showResultsInfo(index) {
+        if (this.resultsInfoOpen == true && this.resultIndex == index) {
+          this.resultsInfoOpen = false;
+          this.resultIndex = index;
+        } else if (this.resultsInfoOpen == true && this.resultIndex != index) {
+          this.resultIndex = index;
+          this.resultsInfoOpen = true;
         } else {
-          localStorage.removeItem('token');
-          this.$router.push('/auth/login');
+          this.resultsInfoOpen = !this.resultsInfoOpen;
         }
-      });
-    const teamName = {
-      teamName: this.teamName,
-    };
-    // get the teamID
-    fetch(TEAMID_URL, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${localStorage.token}`,
       },
-      body: JSON.stringify(teamName),
-    }).then(res => res.json())
-      .then((result) => {
-        if (result) {
-          this.teamID = result.result[0].teamID;
-          console.log(this.teamID);
+      // show the list of all results
+      showAllResults() {
+        this.results = this.results.concat(this.resultsExtra);
+      },
+      // split the results, so only show showMax (10) of them
+      splitResults(result) {
+        if (result.length > this.showMax) {
+          const length = result.length;
+          this.resultsExtra = result.slice();
+          this.results = result.splice(0, this.showMax);
+          this.resultsExtra = result.splice(0, length);
+        } else {
+          this.results = result;
         }
-      });
-
-    // get the players in the team
-    this.playerList();
-  },
-  methods: {
-    playerList() {
-      if (this.teamName) {
-        const body = {
-          teamName: this.teamName,
+        console.log(this.results);
+      },
+      // get the past results
+      getResults() {
+        this.errorMessage = '';
+        const teamID = {
+          teamID: this.teamID,
         };
-        fetch(PLAYERS_URL, {
+        const URL = FETCH_RESULTS_URL + this.sport;
+        fetch(URL, {
           method: 'POST',
-          body: JSON.stringify(body),
           headers: {
             'content-type': 'application/json',
             Authorization: `Bearer ${localStorage.token}`,
           },
+          body: JSON.stringify(teamID),
+        }).then(res => res.json())
+          .then((result) => {
+            if (result != undefined) {
+              this.splitResults(result);
+            }
+          });
+      },
+      // get the sport of the league
+      getSport() {
+        const teamID = {
+          teamID: this.teamID,
+        };
+        fetch(GET_SPORT_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(teamID),
         }).then(res => res.json())
           .then((result) => {
             if (result) {
-              this.players = result.result;
+              this.sport = result.result[0].Sport;
+              console.log(this.sport);
+              this.getResults();
             }
           });
-      }
-    },
-    addPlayer() {
-      this.errorMessage = '';
-      const body = {
-        username: this.username,
-        teamID: this.teamID,
-      };
-      if (this.validAddPlayer(body)) {
-        // send the request to the backend
-        this.adding = true;
-        fetch(ADDPLAYER_URL, {
-          method: 'POST',
-          body: JSON.stringify(body),
-          headers: {
-            'content-type': 'application/json',
-            authorization: `Bearer ${localStorage.token}`,
-          },
-        }).then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          // handle any errors the server returns
-          return response.json().then((error) => {
-            throw new Error(error.message);
+      },
+      // get list of teams players
+      playerList() {
+        if (this.teamName) {
+          const body = {
+            teamName: this.teamName,
+          };
+          fetch(PLAYERS_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(res => res.json())
+            .then((result) => {
+              if (result) {
+                this.players = result.result;
+              }
+            });
+        }
+      },
+      addPlayer() {
+        this.errorMessage = '';
+        const body = {
+          username: this.username,
+          teamID: this.teamID,
+        };
+        if (this.validAddPlayer(body)) {
+          // send the request to the backend
+          this.adding = true;
+          fetch(ADDPLAYER_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            // handle any errors the server returns
+            return response.json().then((error) => {
+              throw new Error(error.message);
+            });
+          }).then(() => { // if no errors refresh players list
+            this.playerList();
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
           });
-        }).then(() => { // if no errors refresh players list
-          this.playerList();
-        }).catch((error) => { // if any errors catch them any display error message
-          this.errorMessage = error.message;
-        });
-      }
+        }
+      },
+      validAddPlayer(body) {
+        const result = joi.validate(body, addPlayerSchema);
+        if (result.error === null) {
+          return true;
+        }
+        if (result.error.message.includes('username')) {
+          this.errorMessage = 'Invalid username';
+        }
+        if (result.error.message.includes('teamID')) {
+          this.errorMessage = 'Invlaid team, please go back to previous page';
+        }
+        return false;
+      },
     },
-    validAddPlayer(body) {
-      const result = joi.validate(body, addPlayerSchema);
-      if (result.error === null) {
-        return true;
-      }
-      if (result.error.message.includes('username')) {
-        this.errorMessage = 'Invalid username';
-      }
-      if (result.error.message.includes('teamID')) {
-        this.errorMessage = 'Invlaid team, please go back to previous page';
-      }
-      return false;
-    },
-  },
-};
+  };
 </script>
 
 <style>
   #playerList {
-    background-color: #2C3E50
+    background-color: #2C3E50;
+  }
+  #playersCard {
+    margin-bottom: 20px;
   }
 </style>

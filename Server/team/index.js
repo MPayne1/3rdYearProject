@@ -17,7 +17,7 @@ const dbSelectPlaysFor = require('../db/select/selectPlaysFor.js');
 const dbSelectAllPlayers = require('../db/select/selectAllPlayers.js');
 const dbSelectTeamID = require('../db/select/selectTeamID.js');
 const dbInsertPlayerTeamname = require('../db/insert/insertPlayerTeamName.js');
-
+const dbSelectTeamSport = require('../db/select/selectTeamSport.js');
 // ------  schemas  ------
 
 const teamSchema = joi.object().keys({
@@ -38,6 +38,11 @@ const addplayerSchema = joi.object().keys({
 
 const allPlayersSchema = joi.object().keys({
   teamName: joi.string().min(2).max(20).required(),
+});
+
+// schema to get the sport for the team
+const getSportSchema =  joi.object().keys({
+  teamID: joi.number().positive().required()
 });
 
 
@@ -180,6 +185,26 @@ router.post('/teamID', async(req, res, next) => {
     invalidInput(res, next);
   }
 });
+
+
+// get sport from teamID
+router.post('/sport', async(req, res, next) => {
+  const result = joi.validate(req.body, getSportSchema);
+  if(result.error == null) {
+    await dbSelectTeamSport(req.body.teamID, async(err, result) => {
+      if(err) next(err);
+      try{
+        result[0].Sport;
+        res.json({result});
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    invalidInput(res, next);
+  }
+});
+
 
 // create response for invalid inputs
 function invalidInput(res, next) {
