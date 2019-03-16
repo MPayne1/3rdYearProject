@@ -66,21 +66,21 @@ Sprint Backlog
     [] db select results for each sport
       [x] Football
       [x] Tennis
-      [] american Football
+      [x] american Football
       [] volleyball
       [] table Tennis
       [] Hockey
-      [] Basketball
+      [x] Basketball
       [] rugby
       [] cricket
     [] route for each sport
       [x] Football
       [x] Tennis
-      [] american Football
+      [x] american Football
       [] volleyball
       [] table Tennis
       [] Hockey
-      [] Basketball
+      [x] Basketball
       [] rugby
       [] cricket
   [] frontend
