@@ -15,7 +15,7 @@ const dbBasketballResults = require('../db/select/results/teamResults/selectBask
 const dbHockeyResults = require('../db/select/results/teamResults/selectHockeyTeamResults.js');
 const dbRugbyResults = require('../db/select/results/teamResults/selectRugbyTeamResults.js');
 const dbTableTennisResults = require('../db/select/results/teamResults/selectTableTennisTeamResults.js');
-
+const dbVolleyballResults  = require('../db/select/results/teamResults/selectVolleyballTeamResults.js');
 
 
 // ------  schemas  ------
@@ -146,6 +146,24 @@ router.post('/table%20tennis', async(req, res, next) => {
   const result = joi.validate(req.body, teamResultSchema);
   if(result.error === null) {
     await dbTableTennisResults(req.body.teamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+// route to get the volleybal; teams results
+router.post('/volleyball', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbVolleyballResults(req.body.teamID, (err, result) => {
       if(err) next(err);
       try{
         result[0];
