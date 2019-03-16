@@ -16,7 +16,7 @@ const dbHockeyResults = require('../db/select/results/teamResults/selectHockeyTe
 const dbRugbyResults = require('../db/select/results/teamResults/selectRugbyTeamResults.js');
 const dbTableTennisResults = require('../db/select/results/teamResults/selectTableTennisTeamResults.js');
 const dbVolleyballResults  = require('../db/select/results/teamResults/selectVolleyballTeamResults.js');
-
+const dbCricketResults = require('../db/select/results/teamResults/selectCricketTeamResults.js');
 
 // ------  schemas  ------
 //schema for teams results
@@ -121,7 +121,6 @@ router.post('/hockey', async(req, res, next) => {
   }
 });
 
-
 // route to get the rugby teams results
 router.post('/rugby', async(req, res, next) => {
   const result = joi.validate(req.body, teamResultSchema);
@@ -139,7 +138,6 @@ router.post('/rugby', async(req, res, next) => {
     next(result.error);
   }
 });
-
 
 // route to get the table tennis teams results
 router.post('/table%20tennis', async(req, res, next) => {
@@ -164,6 +162,24 @@ router.post('/volleyball', async(req, res, next) => {
   const result = joi.validate(req.body, teamResultSchema);
   if(result.error === null) {
     await dbVolleyballResults(req.body.teamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0];
+        res.json(result);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
+// route to get the volleybal; teams results
+router.post('/cricket', async(req, res, next) => {
+  const result = joi.validate(req.body, teamResultSchema);
+  if(result.error === null) {
+    await dbCricketResults(req.body.teamID, (err, result) => {
       if(err) next(err);
       try{
         result[0];
