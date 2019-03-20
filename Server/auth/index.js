@@ -24,6 +24,10 @@ const loginSchema = joi.object().keys({
   password: joi.string().trim().min(8).required(),
 });
 
+const changeEmailSchema = joi.object().keys({
+  email: joi.string().email({minDomainAtoms: 2 }).required(),
+});
+
 const invalidLogin = 'Invalid Login Attempt.';
 
 // any route in here is pre-prended with /auth
