@@ -137,7 +137,7 @@ Sprint Backlog
     [] form for new password
     [] send req with resetToken and new password
 
-[] on signup add userID to passwordreset table
+[x] on signup add userID to passwordreset table
 
 [] unit test everything
   [] use mocha and chai
