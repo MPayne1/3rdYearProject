@@ -94,6 +94,13 @@ router.post('/login', async(req, res, next) => {
 });
 
 
+// handle change email req
+router.post('/changeEmail', async(req, res, next) => {
+  const result = joi.validate(req.body, changeEmailSchema);
+  
+});
+
+
 // function to set status code and error message for invalid login attempt
 function invalidLoginAttempt(res, next) {
   res.status(422); // status code for not processable input

@@ -1701,6 +1701,7 @@
       "resolved": "https://registry.npmjs.org/negotiator/-/negotiator-0.6.1.tgz",
       "version": "0.6.1"
     },
+    "nodemailer": "^5.1.1",
     "nopt": {
       "integrity": "sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=",
       "requires": {
