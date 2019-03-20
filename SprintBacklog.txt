@@ -117,11 +117,6 @@ Sprint Backlog
       [x] hash newPassword
       [x] update db
       [x] send confirmation email
-    [] reset password
-      [] gen random hash
-      [] add random hash to db
-      [] send reset password email with random hash
-      [] have a route to check random hash belongs to a user, then redirect to change password
   [] frontend
     [] change Email
       [] check auth
@@ -133,5 +128,12 @@ Sprint Backlog
       [] send req
     [] Logout
 
+[] forgotten password
+  [x] Backend
+    [x] db table for reset password info
+    [x] create random hash
+    [x] send reset password email
+  [] frontend
+    [] send req with resetToken and new password
 [] unit test everything
   [] use mocha and chai
