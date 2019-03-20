@@ -34,18 +34,43 @@ function setMailOptions(to, subject, text) {
   };
 }
 
-// function to send the email
-function sendEmail(reciever, subject, text, callback) {
+// function to send the change email email
+function sendChangeEmail(reciever,firstname, lastname,callback) {
+  var text = `Hello ${firstname} ${lastname},
+   You have successfully changed your email address to ${reciever}`;
+  var subject = "Change of email address";
+
   setMailOptions(reciever, subject, text);
   transporter.sendMail(mailOptions, (err, info) => {
     if(err) {
       console.log(err);
       callback(err, null);
     }  else {
-      console.log('email sent' + info.response);
+      console.log('email sent ' + info.response);
       callback(null, info);
     }
   });
 }
 
-module.exports = {sendEmail};
+// function to send changed password email
+function sendChangePassword(reciever, firstname, lastname, callback) {
+  var text = `Hello ${firstname} ${lastname},
+  You have successfully changed your password`;
+  var subject = "Change of password";
+
+  setMailOptions(reciever, subject, text);
+  transporter.sendMail(mailOptions, (err, info) => {
+    if(err) {
+      console.log(err);
+      callback(err, null);
+    }  else {
+      console.log('email sent ' + info.response);
+      callback(null, info);
+    }
+  });
+}
+
+
+
+
+module.exports = {sendChangeEmail, sendChangePassword};
