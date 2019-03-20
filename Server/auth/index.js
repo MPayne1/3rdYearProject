@@ -16,6 +16,8 @@ const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
 const dbSelectUserForgottenPassword = require('../db/select/selectUserForgottenPassword.js');
 const dbSelectResetPasswordInfo = require('../db/select/selectResetPasswordInfo.js');
 const dbUpdateResetPasswordInfo = require('../db/update/updateUserForgottenPassword.js');
+const dbInsertPasswordReset = require('../db/insert/insertPasswordReset.js');
+
 
 const router = express.Router();
 const hashingRounds = 12;
@@ -86,7 +88,9 @@ router.post('/signup', async (req, res, next) => {
         bcrypt.hash(req.body.password, hashingRounds).then(async hashedPassword => {
           res.json({username});
           await dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
+          await dbInsertPasswordReset(username);
         });
+
       }
     });
   } else{
