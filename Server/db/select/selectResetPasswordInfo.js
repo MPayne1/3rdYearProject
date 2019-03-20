@@ -4,11 +4,11 @@ const dbCon  = require('../connection.js');
 /*
   select everything for a given username
 */
-var selectUser  = async function(token, email, callback) {
+var selectUser  = async function(token, callback) {
   var res;
-    var sql = `SELECT * FROM resetpassword, users
+    var sql = `SELECT * FROM passwordreset, users
     WHERE resetToken =  ${mysql.escape(token)} and
-    users.UserID = resetPassword.UserID`;
+    users.UserID = passwordreset.UserID`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;

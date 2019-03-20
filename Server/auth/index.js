@@ -6,6 +6,7 @@ const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const email = require('../email/index.js');
+const crypto = require('crypto');
 
 const dbSelectUser = require('../db/select/selectUser.js');
 const dbSelectUserNames = require('../db/select/selectUserNames.js');
@@ -13,6 +14,8 @@ const dbInsert = require('../db/insert/insertUser.js');
 const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
 const dbSelectUserForgottenPassword = require('../db/select/selectUserForgottenPassword.js');
+const dbSelectResetPasswordInfo = require('../db/select/selectResetPasswordInfo.js');
+const dbUpdateResetPasswordInfo = require('../db/update/updateUserForgottenPassword.js');
 
 const router = express.Router();
 const hashingRounds = 12;
@@ -43,6 +46,11 @@ const changePasswordSchema = joi.object().keys({
   newPassword: joi.string().trim().min(8).required(),
 });
 
+const resetPasswordSchema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20).required(),
+  password: joi.string().trim().min(8).required(),
+  resetToken: joi.required(),
+})
 
 const forgottonPasswordSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
@@ -207,30 +215,33 @@ router.post('/forgottenPassword', async(req, res, next) => {
     var username = req.body.username;
     var email = req.body.email;
     // check db for username and email.
-    await dbSelectUserForgottenPassword(username, email, (err, result) => {
+    await dbSelectUserForgottenPassword(username, email, async (err, result) => {
       if(err) next(err);
       try{
         var userID = result[0].UserID;
         var token;
-        crypto.randomBytes(20, (err, buf) => {
-          token = buf.toString('hex');
-        });
+        const buf = crypto.randomBytes(20);
+        token = buf.toString('hex');
+
         var expires = Date.now() + 3600000; //expires in 1 hour
         //update user resetPassword table
-        //await dbUpdateResetPasswordInfo(userID, token, expires);
+        await dbUpdateResetPasswordInfo(userID, token, expires);
 
         // send reset password email
         var firstname = result[0].FirstName;
         var lastname = result[0].LastName;
+        var emailAdress = result[0].Email
           // send email for change of password
-        email.sendForgotenPassword(result[0].Email, firstname, lastname, token, (err, result) => {
+        email.sendForgottenPassword(emailAdress, firstname, lastname, token, (err, result) => {
             if(err){
               next(err);
             } else {
               res.json({message: 'reset password email sent'});
             }
         });
+        console.log(token);
       } catch(e) {
+        console.log(e);
         res.json({message: "username or email not recognised"});
       }
     })
@@ -241,13 +252,45 @@ router.post('/forgottenPassword', async(req, res, next) => {
 });
 
 
-router.post('/resetPassword', async(req, res, next) {
+router.post('/resetPassword', async(req, res, next) => {
   // check resetToken matches db
+  const result = joi.validate(req.body, resetPasswordSchema);
+  if(result.error === null) {
+    await dbSelectResetPasswordInfo(req.body.resetToken, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0].UserID;
+        // check expiry date
+        if(result[0].resetExpires > Date.now()) {
+          throw new Error();
+        }
+        // generate new hashedPassword
+        bcrypt.hash(req.body.password, hashingRounds).then(async hashedPassword => {
+          // update db
+          await dbUpdateUserPassword(result[0].UserID, hashedPassword);
+        });
 
-  // hash new password
+        // send email confirmation
+        var firstname = result[0].FirstName;
+        var lastname = result[0].LastName;
+          // send email for change of password
+        email.sendChangePassword(result[0].Email, firstname, lastname, (err, result) => {
+          if(err){
+            next(err);
+          } else {
+            res.json({message: 'password changed'});
+          }
+        });
+      } catch(e) {
+        res.json({message: "Reset Token invalid or expired"});
+      }
+    });
+    // update db
+  } else{
+      res.json({message: "invalid password or reset token"});
+  }
 
-  // update db
-})
+});
 
 
 // function to set status code and error message for invalid login attempt
