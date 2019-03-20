@@ -11,6 +11,7 @@ const dbSelectUser = require('../db/select/selectUser.js');
 const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
+const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
 const router = express.Router();
 const hashingRounds = 12;
 // ------  schemas  ------
