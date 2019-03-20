@@ -14,6 +14,7 @@ const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
 const router = express.Router();
 const hashingRounds = 12;
+
 // ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
@@ -99,7 +100,6 @@ router.post('/login', async(req, res, next) => {
       } catch(e) { // if no matching username then invalid login attempt
           invalidLoginAttempt(res, next);
       }
-
     });
   } else{
     invalidLoginAttempt(res, next);
@@ -109,7 +109,6 @@ router.post('/login', async(req, res, next) => {
 
 // handle change email req
 router.post('/changeEmail', async(req, res, next) => {
-  var changeEmailSubject = "Change of email address";
 
   const result = joi.validate(req.body, changeEmailSchema);
   if(result.error === null) {
@@ -128,9 +127,7 @@ router.post('/changeEmail', async(req, res, next) => {
             await dbUpdateUserEmail(userID, req.body.email);
 
             // then send change confirmation email
-            var changeEmailText = `Hello ${firstname} ${lastname},
-             You have successfully changed your email address to ${req.body.email}`;
-            email.sendEmail(req.body.email, changeEmailSubject, changeEmailText, (err, result) => {
+            email.sendChangeEmail(req.body.email, firstname, lastname, (err, result) => {
               if(err){
                 next(err);
               }  else{
@@ -167,11 +164,20 @@ router.post('/changePassword', async(req, res, next) => {
           if(passwordResult) { //password was correct
             // generate new hashedPassword
             bcrypt.hash(req.body.newPassword, hashingRounds).then(async hashedPassword => {
-              res.json({message: "password changed"});
               // update db
               await dbUpdateUserPassword(result[0].UserID, hashedPassword);
             });
-            // send email for change of password
+
+            var firstname = result[0].FirstName;
+            var lastname = result[0].LastName;
+              // send email for change of password
+            email.sendChangePassword(result[0].Email, firstname, lastname, (err, result) => {
+              if(err){
+                next(err);
+              } else {
+                res.json({message: 'password changed'});
+              }
+            });
           } else {
             invalidLoginAttempt(res, next);
           }
