@@ -12,7 +12,7 @@ const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const router = express.Router();
-
+const hashingRounds = 12;
 // ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
@@ -31,6 +31,12 @@ const changeEmailSchema = joi.object().keys({
   email: joi.string().email({minDomainAtoms: 2 }).required(),
   username: joi.string().alphanum().min(2).max(20).required(),
   password: joi.string().trim().min(8).required(),
+});
+
+const changePasswordSchema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20).required(),
+  password: joi.string().trim().min(8).required(),
+  newPassword: joi.string().trim().min(8).required(),
 });
 
 const invalidLogin = 'Invalid Login Attempt.';
@@ -59,7 +65,7 @@ router.post('/signup', async (req, res, next) => {
         res.status(409); // status code for conflicts e.g. duplicate username
         next(error);
       } catch(e) {// if username is free, then hash the passsword
-        bcrypt.hash(req.body.password, 12).then(async hashedPassword => {
+        bcrypt.hash(req.body.password, hashingRounds).then(async hashedPassword => {
           res.json({username});
           await dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
         });
@@ -143,6 +149,41 @@ router.post('/changeEmail', async(req, res, next) => {
   }
 });
 
+
+// handle change password req
+router.post('/changePassword', async(req, res, next) => {
+
+  const result = joi.validate(req.body, changePasswordSchema);
+  if(result.error === null) {
+
+    // check current password
+    const username = req.body.username;
+    var users = await dbSelectUser(username, function(err, result){
+      if(err) next(err);
+      try {
+        var u = result[0].username;
+        bcrypt.compare(req.body.password, result[0].password).then(async (passwordResult) => {
+          if(passwordResult) { //password was correct
+            // generate new hashedPassword
+            bcrypt.hash(req.body.newPassword, hashingRounds).then(async hashedPassword => {
+              res.json({message: "password changed"});
+              // update db
+              await dbUpdateUserPassword(result[0].UserID, hashedPassword);
+            });
+            // send email for change of password
+          } else {
+            invalidLoginAttempt(res, next);
+          }
+        });
+      } catch(e) { // if no matching username then invalid change password attempt
+          invalidLoginAttempt(res, next);
+      }
+    });
+  } else {
+    res.json({message: "input error"})
+  }
+
+})
 
 // function to set status code and error message for invalid login attempt
 function invalidLoginAttempt(res, next) {
