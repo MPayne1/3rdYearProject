@@ -10,16 +10,16 @@ const email = require('../email/index.js');
 const dbSelectUser = require('../db/select/selectUser.js');
 const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
-
+const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const router = express.Router();
 
 // ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
-  password: joi.string().trim().min(8).required(),
+  password: joi.string().trim().min(8).required(), // password must be 8 char long and not empty
   email: joi.string().email({minDomainAtoms: 2 }).required(),
   FirstName: joi.string().alphanum().min(2).max(30).required(),
-  LastName: joi.string().alphanum().min(2).max(30).required() // password must be 8 char long and not empty
+  LastName: joi.string().alphanum().min(2).max(30).required()
 });
 
 const loginSchema = joi.object().keys({
@@ -29,6 +29,8 @@ const loginSchema = joi.object().keys({
 
 const changeEmailSchema = joi.object().keys({
   email: joi.string().email({minDomainAtoms: 2 }).required(),
+  username: joi.string().alphanum().min(2).max(20).required(),
+  password: joi.string().trim().min(8).required(),
 });
 
 const invalidLogin = 'Invalid Login Attempt.';
@@ -100,22 +102,45 @@ router.post('/login', async(req, res, next) => {
 
 // handle change email req
 router.post('/changeEmail', async(req, res, next) => {
-  var changeEmailSubjet = "Change of email address";
+  var changeEmailSubject = "Change of email address";
 
   const result = joi.validate(req.body, changeEmailSchema);
   if(result.error === null) {
-    var changeEmailText = `You have successfully changed your email address to ${req.body.email}`;
-    email.sendEmail(req.body.email, changeEmailSubject, changeEmailText, (err, result) => {
-      if(err){
-        next(err);
-      }  else{
-        res.json(result);
+    // first check password matches
+    const username = req.body.username;
+    var users = await dbSelectUser(username, function(err, result){
+      if(err) next(err);
+      try {
+        var u = result[0].username;
+        bcrypt.compare(req.body.password, result[0].password).then(async (passwordResult) => {
+          if(passwordResult) { //password was correct
+            // update db
+            var userID = result[0].UserID;
+            var firstname = result[0].FirstName;
+            var lastname = result[0].LastName;
+            await dbUpdateUserEmail(userID, req.body.email);
+
+            // then send change confirmation email
+            var changeEmailText = `Hello ${firstname} ${lastname},
+             You have successfully changed your email address to ${req.body.email}`;
+            email.sendEmail(req.body.email, changeEmailSubject, changeEmailText, (err, result) => {
+              if(err){
+                next(err);
+              }  else{
+                res.json(result);
+              }
+            });
+          } else {
+            invalidLoginAttempt(res, next);
+          }
+        });
+      } catch(e) { // if no matching username then invalid login attempt
+          invalidLoginAttempt(res, next);
       }
     });
   } else {
     res.json({message: "input error"})
   }
-
 });
 
 
