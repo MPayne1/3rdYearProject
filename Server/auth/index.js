@@ -12,6 +12,8 @@ const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
+const dbSelectUserForgottenPassword = require('../db/select/selectUserForgottenPassword.js');
+
 const router = express.Router();
 const hashingRounds = 12;
 
@@ -39,6 +41,12 @@ const changePasswordSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   password: joi.string().trim().min(8).required(),
   newPassword: joi.string().trim().min(8).required(),
+});
+
+
+const forgottonPasswordSchema = joi.object().keys({
+  username: joi.string().alphanum().min(2).max(20).required(),
+  email: joi.string().email({minDomainAtoms: 2 }).required(),
 });
 
 const invalidLogin = 'Invalid Login Attempt.';
@@ -147,7 +155,6 @@ router.post('/changeEmail', async(req, res, next) => {
   }
 });
 
-
 // handle change password req
 router.post('/changePassword', async(req, res, next) => {
 
@@ -191,6 +198,57 @@ router.post('/changePassword', async(req, res, next) => {
   }
 
 })
+
+
+// forgotten password req
+router.post('/forgottenPassword', async(req, res, next) => {
+  const result = joi.validate(req.body, forgottonPasswordSchema);
+  if(result.error === null) {
+    var username = req.body.username;
+    var email = req.body.email;
+    // check db for username and email.
+    await dbSelectUserForgottenPassword(username, email, (err, result) => {
+      if(err) next(err);
+      try{
+        var userID = result[0].UserID;
+        var token;
+        crypto.randomBytes(20, (err, buf) => {
+          token = buf.toString('hex');
+        });
+        var expires = Date.now() + 3600000; //expires in 1 hour
+        //update user resetPassword table
+        //await dbUpdateResetPasswordInfo(userID, token, expires);
+
+        // send reset password email
+        var firstname = result[0].FirstName;
+        var lastname = result[0].LastName;
+          // send email for change of password
+        email.sendForgotenPassword(result[0].Email, firstname, lastname, token, (err, result) => {
+            if(err){
+              next(err);
+            } else {
+              res.json({message: 'reset password email sent'});
+            }
+        });
+      } catch(e) {
+        res.json({message: "username or email not recognised"});
+      }
+    })
+  } else{
+    res.json({message: "username or email not valid"});
+  }
+
+});
+
+
+router.post('/resetPassword', async(req, res, next) {
+  // check resetToken matches db
+
+  // hash new password
+
+  // update db
+})
+
 
 // function to set status code and error message for invalid login attempt
 function invalidLoginAttempt(res, next) {
