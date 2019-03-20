@@ -71,6 +71,28 @@ function sendChangePassword(reciever, firstname, lastname, callback) {
 }
 
 
+// function send forgotten password email
+function sendForgotenPassword(email, firstname, lastname, host, token, callback) {
+  var text = `Hello ${firstname} ${lastname},
+  You are receiving this because you (or someone else) have requested the reset of the password for your account.
+  Please click on the following link, or paste this into your browser to complete the process:
+  https://localhost:8000/auth/resetPassword/${token}
+  If you did not request this, please ignore this email and your password will remain unchanged.`
+
+  var subject = "Reset Password"
+  setMailOptions(email, subject, text);
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if(err) {
+      console.log(err);
+      callback(err, null);
+    }  else {
+      console.log('email sent ' + info.response);
+      callback(null, info);
+    }
+  });
+}
+
 
 
 module.exports = {sendChangeEmail, sendChangePassword};
