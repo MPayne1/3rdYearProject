@@ -91,7 +91,9 @@ app.get('/', (req, res) => {
   });
 });
 
-app.use('/auth/login', apiAuthLimiter);   // rate limit the login route
+app.use('/auth/login', apiAuthLimiter);  // rate limit the login route
+app.use('/auth/changePassword', middlewares.isLoggedIn);
+app.use('/auth/changeEmail', middlewares.isLoggedIn);
 app.use('/auth', auth);
 app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
 app.use('/team', middlewares.isLoggedIn, team);

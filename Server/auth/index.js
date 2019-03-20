@@ -213,9 +213,9 @@ router.post('/forgottenPassword', async(req, res, next) => {
   const result = joi.validate(req.body, forgottonPasswordSchema);
   if(result.error === null) {
     var username = req.body.username;
-    var email = req.body.email;
+    var userEmail = req.body.email;
     // check db for username and email.
-    await dbSelectUserForgottenPassword(username, email, async (err, result) => {
+    await dbSelectUserForgottenPassword(username, userEmail, async (err, result) => {
       if(err) next(err);
       try{
         var userID = result[0].UserID;
@@ -230,21 +230,23 @@ router.post('/forgottenPassword', async(req, res, next) => {
         // send reset password email
         var firstname = result[0].FirstName;
         var lastname = result[0].LastName;
-        var emailAdress = result[0].Email;
-          // send email for change of password
-        email.sendForgottenPassword(emailAdress, firstname, lastname, token, (err, result) => {
-            if(err){
-              next(err);
-            } else {
-              res.json({message: 'reset password email sent'});
-            }
+
+        ///send email for change of password
+        email.sendForgottenPassword(userEmail, firstname, lastname, token, (err, result) => {
+          if(err){
+            next(err);
+          } else {
+            res.json({message: 'reset password email sent'});
+          }
         });
       } catch(e) {
         console.log(e);
+        res.status(422);
         res.json({message: "username or email not recognised"});
       }
     })
   } else{
+    res.status(422);
     res.json({message: "username or email not valid"});
   }
 

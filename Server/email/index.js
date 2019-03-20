@@ -96,7 +96,7 @@ function sendForgottenPassword(email, firstname, lastname, token, callback) {
 
 
 module.exports = {
-  sendForgottenPassword,
   sendChangeEmail,
-  sendChangePassword
+  sendChangePassword,
+  sendForgottenPassword
 };
