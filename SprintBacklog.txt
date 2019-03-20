@@ -112,7 +112,13 @@ Sprint Backlog
       [x] check login information Again
       [x] send change confirmation email to new addreess
       [x] db update users email
-    [] change password
+    [x] change password
+      [x] check current password
+      [x] hash newPassword
+      [x] update db
+      [x] send confirmation email
+    [] reset password
+    
   [] frontend
     [] change Email
       [] check auth
