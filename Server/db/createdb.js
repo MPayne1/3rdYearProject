@@ -351,6 +351,17 @@ async function createVolleyballRankingsTable(err) {
   });
 }
 
+// create table for password reset
+async function createPasswordResetTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE passwordReset(UserID int, resetToken VARCHAR(40), "+
+  "resetExpires int, PRIMARY KEY (UserID), "+
+  "FOREIGN KEY(UserID) REFERENCES users(UserID));";
+  await db.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log('reset password table created');
+  });
+}
 
 // createUsersTable();
 // createLeagueTable();
@@ -358,6 +369,7 @@ async function createVolleyballRankingsTable(err) {
 // createPlaysForTable();
 // createSeasonsTable();
 // createFixturesTable();
+// createPasswordResetTable();
 
 // ------  create Results tables  ------
 
