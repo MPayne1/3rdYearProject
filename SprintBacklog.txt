@@ -11,6 +11,10 @@ Sprint Backlog
   [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] email users when the fixture/results info is updated
+  [] leave a team
+  [] transfer teamAdmin
+  [] transfer leagueAdmin
+  [] get league/team admin for frontend only show options of user is
   [] show teamname rather than home/away in results page
   [x] only show 10 upcomgin fixtures
     [x] click button to expand
@@ -99,6 +103,23 @@ Sprint Backlog
       [x] rugby
       [x] cricket
 
+[] player profile page
+  [] Backend
+    [] /player route
+      []/profile route
+    [] db get user info
+    [] change Email
+    [] change password
+  [] frontend
+    [] change Email
+      [] check auth
+      [] form
+      [] send req
+    []  change password
+      [] form
+      [] check auth
+      [] send req
+    [] Logout
 
 [] unit test everything
   [] use mocha and chai
