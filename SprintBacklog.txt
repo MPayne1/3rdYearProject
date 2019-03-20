@@ -118,7 +118,10 @@ Sprint Backlog
       [x] update db
       [x] send confirmation email
     [] reset password
-    
+      [] gen random hash
+      [] add random hash to db
+      [] send reset password email with random hash
+      [] have a route to check random hash belongs to a user, then redirect to change password
   [] frontend
     [] change Email
       [] check auth
