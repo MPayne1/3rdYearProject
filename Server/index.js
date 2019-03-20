@@ -28,6 +28,7 @@ app.enable('trust proxy');
 const auth = require('./auth/index.js');
 const league = require('./league/index.js');
 const team = require('./team/index.js');
+const player = require('./player/index.js');
 
 // don't allow more than 10 reqs in 15 mins
 var apiAuthLimiter = new rateLimiter({
@@ -94,6 +95,7 @@ app.use('/auth/login', apiAuthLimiter);   // rate limit the login route
 app.use('/auth', auth);
 app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
 app.use('/team', middlewares.isLoggedIn, team);
+app.use('/player', middlewares.isLoggedIn, player);
 
 function notFound(req, res, next) {
   res.status(404);
