@@ -230,7 +230,7 @@ router.post('/forgottenPassword', async(req, res, next) => {
         // send reset password email
         var firstname = result[0].FirstName;
         var lastname = result[0].LastName;
-        var emailAdress = result[0].Email
+        var emailAdress = result[0].Email;
           // send email for change of password
         email.sendForgottenPassword(emailAdress, firstname, lastname, token, (err, result) => {
             if(err){
@@ -239,7 +239,6 @@ router.post('/forgottenPassword', async(req, res, next) => {
               res.json({message: 'reset password email sent'});
             }
         });
-        console.log(token);
       } catch(e) {
         console.log(e);
         res.json({message: "username or email not recognised"});

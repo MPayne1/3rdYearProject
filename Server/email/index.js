@@ -7,7 +7,7 @@ if (dotenv.error) {
 }
 const sendAddress = process.env.EMAIL_ADDRESS;
 const sendPassword = process.env.EMAIL_PASSWORD;
-
+const host = "localhost:8080";
 
 var mailOptions = {};
 
@@ -76,7 +76,7 @@ function sendForgottenPassword(email, firstname, lastname, token, callback) {
   var text = `Hello ${firstname} ${lastname},
   You are receiving this because you (or someone else) have requested the reset of the password for your account.
   Please click on the following link, or paste this into your browser to complete the process:
-  https://localhost:8080/auth/resetPassword/${token}
+  https://${host}/auth/resetPassword/${token}
   If you did not request this, please ignore this email and your password will remain unchanged.`;
 
   var subject = "Reset Password";
@@ -95,4 +95,8 @@ function sendForgottenPassword(email, firstname, lastname, token, callback) {
 
 
 
-module.exports = {sendForgottenPassword, sendChangeEmail, sendChangePassword };
+module.exports = {
+  sendForgottenPassword,
+  sendChangeEmail,
+  sendChangePassword
+};
