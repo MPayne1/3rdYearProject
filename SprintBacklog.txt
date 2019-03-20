@@ -105,10 +105,13 @@ Sprint Backlog
 
 [] player profile page
   [] Backend
-    [] /player route
-      []/profile route
-    [] db get user info
-    [] change Email
+    [x] /player route
+      [x]/profile route
+    [] db get user info for display on profile page
+    [x] change Email
+      [x] check login information Again
+      [x] send change confirmation email to new addreess
+      [x] db update users email
     [] change password
   [] frontend
     [] change Email
