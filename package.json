@@ -1702,6 +1702,7 @@
       "version": "0.6.1"
     },
     "nodemailer": "^5.1.1",
+    "nodemailer-smtp-transport": "^2.7.4",
     "nopt": {
       "integrity": "sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=",
       "requires": {

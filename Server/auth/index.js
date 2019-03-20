@@ -5,12 +5,15 @@ const express = require('express');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const email = require('../email/index.js');
 
 const dbSelectUser = require('../db/select/selectUser.js');
 const dbSelectUserNames = require('../db/select/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 
 const router = express.Router();
+
+// ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
   password: joi.string().trim().min(8).required(),
@@ -30,6 +33,7 @@ const changeEmailSchema = joi.object().keys({
 
 const invalidLogin = 'Invalid Login Attempt.';
 
+// ------  routes  ------
 // any route in here is pre-prended with /auth
 
 router.get('/', (req, res) => {
@@ -96,8 +100,22 @@ router.post('/login', async(req, res, next) => {
 
 // handle change email req
 router.post('/changeEmail', async(req, res, next) => {
+  var changeEmailSubjet = "Change of email address";
+
   const result = joi.validate(req.body, changeEmailSchema);
-  
+  if(result.error === null) {
+    var changeEmailText = `You have successfully changed your email address to ${req.body.email}`;
+    email.sendEmail(req.body.email, changeEmailSubject, changeEmailText, (err, result) => {
+      if(err){
+        next(err);
+      }  else{
+        res.json(result);
+      }
+    });
+  } else {
+    res.json({message: "input error"})
+  }
+
 });
 
 

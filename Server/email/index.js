@@ -1,41 +1,51 @@
 // handle all emailing needs
-
-var nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
+const nodemailer = require('nodemailer');
 const dotenv = require('dotenv').config();
 if (dotenv.error) {
   console.log(dotenv.error)
 }
+const sendAddress = process.env.EMAIL_ADDRESS;
+const sendPassword = process.env.EMAIL_PASSWORD;
+
 
 var mailOptions = {};
 
-var transporter = nodemailer.createTransport({
-  sevice: 'gmail',
+// setup the from email account for sending emails
+var transporter = nodemailer.createTransport(smtpTransport({
+  sevice: 'Gmail',
+  host: 'smtp.gmail.com',
   auth: {
-    user: process.env.EMAIL_ADDRESS,
-    pass: process.env.EMAIL_PASSWORD
-  }
-});
+    user: sendAddress,
+    pass: sendPassword
+  },
+  tls: {
+    rejectUnauthorized: false
+ }
+}));
 
-
-function setMailOptions(to) {
+// function to setup the email options, to, subject and content
+function setMailOptions(to, subject, text) {
   mailOptions = {
-    from: process.env.EMAIL_ADDRESS,
+    from: sendAddress,
     to: to,
-    subject: 'test email'
-    text: 'It worked!'
+    subject: subject,
+    text: text
   };
 }
 
-
-function sendEmail(to, (err, info) => {
-  setMailOptions(to);
+// function to send the email
+function sendEmail(reciever, subject, text, callback) {
+  setMailOptions(reciever, subject, text);
   transporter.sendMail(mailOptions, (err, info) => {
-    if(err){
+    if(err) {
       console.log(err);
+      callback(err, null);
     }  else {
       console.log('email sent' + info.response);
+      callback(null, info);
     }
   });
-});
+}
 
-module.exports = sendEmail;
+module.exports = {sendEmail};
