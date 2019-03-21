@@ -283,16 +283,16 @@ router.post('/resetPassword', async(req, res, next) => {
           if(err){
             next(err);
           } else {
-            res.json({message: 'password changed'});
+            res.json({message: 'Password changed'});
           }
         });
       } catch(e) {
-        res.json({message: "Reset Token invalid or expired"});
+        res.json({error: "Reset Token invalid or expired"});
       }
     });
     // update db
   } else{
-      res.json({message: "invalid password or reset token"});
+      res.json({error: "invalid password or reset token"});
   }
 
 });
