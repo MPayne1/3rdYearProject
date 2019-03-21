@@ -93,10 +93,32 @@ function sendForgottenPassword(email, firstname, lastname, token, callback) {
   });
 }
 
-
+// send email with updated fixture info
+function sendFixtureUpdated(email, firstname, lastname, homeTeamName, awayTeamName,
+  date, address, city, county, postcode, callback) {
+    var text = `Hello ${firstname} ${lastname},
+    The match between ${homeTeamName} vs ${awayTeamName} has been updated to now take place at:
+    ${date}
+    ${address}
+    ${city}
+    ${county}
+    ${postcode}`;
+    var subject = "Fixtutre Information Updated"
+    setMailOptions(email, subject, text);
+    transporter.sendMail(mailOptions, (err, info) => {
+      if(err) {
+        console.log(err);
+        callback(err, null);
+      }  else {
+        console.log('email sent ' + info.response);
+        callback(null, info);
+      }
+    });
+}
 
 module.exports = {
   sendChangeEmail,
   sendChangePassword,
-  sendForgottenPassword
+  sendForgottenPassword,
+  sendFixtureUpdated
 };
