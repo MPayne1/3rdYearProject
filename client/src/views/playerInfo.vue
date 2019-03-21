@@ -1,13 +1,15 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>Player Info</h2>
+      <h2>Player Information</h2>
       <h4>{{username}}</h4>
     </div>
-
-
+    <div v-if="showSettings == false" class="alert alert-warning" role="alert">
+      <h4>{{username}} has no information to publicly show.</h4>
+    </div>
 
     <div class="text-center row">
+      <div class="col-md-4"></div>
       <div v-if="showSettings" class="col-md-4">
         <div id="settingsCard" class="card">
           <div class="text-white card-header bg-primary"><h4>Settings</h4></div>
@@ -74,11 +76,8 @@
             </ul>
         </div>
       </div>
+      <div class="col-md-4"></div>
     </div>
-
-
-
-
   </div>
 </template>
 
