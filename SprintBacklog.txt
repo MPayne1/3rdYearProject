@@ -132,15 +132,15 @@ Sprint Backlog
       [x] check auth
       [x] send req
     [] show other user info?
-    
-[] forgotten password
+
+[x] forgotten password
   [x] Backend
     [x] db table for reset password info
     [x] create random hash
     [x] send reset password email
-  [] frontend
-    [] form for new password
-    [] send req with resetToken and new password
+  [x] frontend
+    [x] form for new password
+    [x] send req with resetToken and new password
 
 [x] on signup add userID to passwordreset table
 
