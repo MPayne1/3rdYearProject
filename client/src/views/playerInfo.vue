@@ -44,7 +44,30 @@
                 <div id="settingsItem" class="align-items-center">
                   <h5 @click="passwordOpen = !passwordOpen">Change Password</h5>
                   <div v-if="passwordOpen"class="">
-                    <h4>Change password form</h4>
+                    <form  @submit.prevent="changePassword()">
+                    <div class="form-group">
+                      <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                        {{errorMessage}}
+                      </div>
+                      <div v-if="successMessage" class="alert alert-success" role="alert">
+                        {{successMessage}}
+                      </div>
+                      <input v-model="newPassword.username" type="text" class="form-control"
+                        placeholder="Username" required>
+                      <br>
+                      <input v-model="newPassword.password" type="password" class="form-control"
+                        placeholder="Current Password" required>
+                      <br>
+                      <input v-model="newPassword.newpassword" type="password" class="form-control"
+                        placeholder="New Password" required>
+                      <br>
+                      <input v-model="newPassword.confirmPassword" type="password" class="form-control"
+                        placeholder="Confirm New Password" required>
+                      <br>
+                      <button @click="changePassword()" class="btn btn-primary btn-lg"
+                        type="submit">Change Password</button>
+                    </div>
+                  </form>
                   </div>
                 </div>
               </li>
@@ -64,6 +87,7 @@
 
   const API_URL = 'https://localhost:3000/';
   const CHANGE_EMAIL_URL = 'https://localhost:3000/auth/changeEmail';
+  const CHANGE_PASSWORD_URL = 'https://localhost:3000/auth/changePassword';
 
   const changeEmailSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -72,6 +96,12 @@
     email: joi.string().email({ minDomainAtoms: 2 }).required(),
   });
 
+  const changePasswordSchema = joi.object().keys({
+    username: joi.string().alphanum().min(2).max(20).required(),
+    password: joi.string().trim().min(8).required(),
+    newpassword: joi.string().trim().min(8).required(),
+    confirmPassword: joi.string().trim().min(8).required(),
+  });
 
   export default {
     data: () => ({
@@ -79,6 +109,12 @@
       email: {
         email: '',
         username: '',
+        password: '',
+      },
+      newPassword: {
+        username: '',
+        newpassword: '',
+        confirmPassword:'',
         password: '',
       },
       username: '',
@@ -154,6 +190,55 @@
         }
       },
 
+      changePassword() {
+        if(this.validPassword()) {
+          const body = {
+            username: this.newPassword.username,
+            password: this.newPassword.password,
+            newPassword: this.newPassword.newpassword,
+          };
+          // send the request to the backend
+          fetch(CHANGE_PASSWORD_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(response => response.json())
+          .then((res) =>{
+            if (res.message) {
+              this.successMessage = res.message;
+            }
+            console.log(res);
+            this.newPassword.username = '';
+            this.newPassword.password = '';
+            this.newPassword.newpassword = '';
+            this.newPassword.confirmPassword = '';
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
+          });
+        }
+      },
+
+      // check change password info is valid
+      validPassword() {
+        if (this.newPassword.newpassword !== this.newPassword.confirmPassword) {
+          this.errorMessage = 'Passwords must match';
+          return false;
+        }
+        const result = joi.validate(this.newPassword, changePasswordSchema);
+        if (result.error === null) {
+          return true;
+        }
+        if (result.error.message.includes('username')) {
+          this.errorMessage = 'Username is invalid, must be at least 2 characters and not include any symbols';
+        } else {
+          this.errorMessage = 'Password is invalid, must be at least 8 characters';
+        }
+        return false;
+      },
+      // check change email info is valid
       validEmail() {
         const result = joi.validate(this.email, changeEmailSchema);
         if (result.error === null) {
