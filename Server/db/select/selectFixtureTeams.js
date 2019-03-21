@@ -2,13 +2,13 @@ const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
 /*
-  select the players in a fixture
+  select teams in a fixture
 */
 var selectPlayers  = async function(fixtureID, callback) {
   var res;
-    var sql = `SELECT users.UserID, FirstName, LastName, Email
-    FROM playsfor, users, fixture
-    WHERE playsfor.userID = users.userID and (playsfor.teamID = fixture.HomeTeamID or playsfor.teamID = fixture.AwayTeamID)
+    var sql = `SELECT TeamName
+    FROM fixture, team
+    WHERE (team.teamID = fixture.HomeTeamID or team.teamID = fixture.AwayTeamID)
     and fixture.fixtureID = ${mysql.escape(fixtureID)};`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
