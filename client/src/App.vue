@@ -37,15 +37,13 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link  class="nav-link">{{user.username}}</router-link> <!--needs :to property -->
+            <router-link  class="nav-link" :to="{ name: 'playerInfo',
+            params: {username: user.username}}">{{user.username}} </router-link> <!--needs :to property -->
           </li>
         </ul>
       </div>
