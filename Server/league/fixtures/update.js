@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
+const email = require('../../email/index.js');
 // ------  db operations  ------
 
 const dbSelectUpdateFixtureAdmin = require('../../db/select/selectUpdateFixtureAdmin.js');
@@ -26,6 +27,11 @@ const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTable
 const dbInsertVolleyballRanking = require('../../db/insert/rankings/insertVolleyballRankings.js');
 const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasketballRankings.js');
 const dbInsertCricketRanking = require('../../db/insert/rankings/insertCricketRankings.js');
+const dbSelectFixturePlayers = require('../../db/select/selectFixturePlayers.js');
+const dbSelectFixtureTeams = require('../../db/select/selectFixtureTeams.js');
+
+
+
 // ------  schemas  ------
 
 // schema for updating date/location of fixture
@@ -75,7 +81,36 @@ router.post('/updateFixture', async (req, res, next) => {
         result[0].leagueAdmin;
         // if user is allowed, update the fixture info
         var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
-        res.json(req.body);
+
+        // get team members of teams
+        await dbSelectFixturePlayers(fixtureID, async (err, playerRes) => {
+          if(err) next(err);
+          try{
+            var players = playerRes;
+            await dbSelectFixtureTeams(fixtureID, async (er, teamResult) => {
+              if(er) next(er);
+              try {
+                var teams = teamResult;
+                console.log(teams);
+                //send email to users
+                for(j = 0; j < players.length; j++) {
+                  await email.sendFixtureUpdated(players[j].Email,
+                    players[j].FirstName, players[j].LastName, teams[0].TeamName,
+                    teams[1].TeamName, date, address, city, county, postcode,
+                    (err, mail) => {
+                      if(err) next(err);
+                      console.log(mail);
+                  });
+                }
+                res.json(req.body);
+              } catch(e){
+                next(e);
+              }
+            })
+          } catch(e) {
+            next(e);
+          }
+        });
       } catch(e) {
         var error = new Error("Only league admins and team captains can update fixture information");
         res.status(403);
@@ -95,15 +130,15 @@ router.post('/upcomingFixtures', async (req, res, next) => {
   var leagueID = req.body.leagueID
   const result = joi.validate(req.body, startSeasonSchema);
   if(result.error === null) {
-        var fixtures = await dbSelectUpcomingFixtures(leagueID, async function(err, result) {
-          if(err) next(err);
-          try {
-            result[0].fixtureID;
-            res.json({result});
-          } catch(e) {
-            res.json({message: "no upcoming fixtures"});
-          }
-        });
+    var fixtures = await dbSelectUpcomingFixtures(leagueID, async function(err, result) {
+      if(err) next(err);
+      try {
+        result[0].fixtureID;
+        res.json({result});
+      } catch(e) {
+        res.json({message: "no upcoming fixtures"});
+      }
+    });
   }  else{
     next(result.error);
   }

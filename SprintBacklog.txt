@@ -144,6 +144,8 @@ Sprint Backlog
 
 [x] on signup add userID to passwordreset table
 
+[] seed passwordreset with all current users
+
 [] email to team members when fixture info updated
   [] get list of users in both teams
   [] send email to each
