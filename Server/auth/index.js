@@ -151,7 +151,7 @@ router.post('/changeEmail', async(req, res, next) => {
               if(err){
                 next(err);
               }  else{
-                res.json(result);
+              res.json({message: "Email updated"})
               }
             });
           } else {

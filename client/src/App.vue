@@ -36,9 +36,6 @@
               <a class="dropdown-item" id="teamInfo" v-for="team in teams" v-on:click="teamPage(team.teamName)" @click="teamOpen = !teamOpen" >{{team.teamName}}</a>
             </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
