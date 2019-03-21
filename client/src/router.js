@@ -20,7 +20,7 @@ import RugbyResults from './views/results/RugbyResults.vue';
 import CricketResults from './views/results/CricketResults.vue';
 import playerInfo from './views/playerInfo.vue';
 import forgottenPassword from './views/ForgottenPassword.vue';
-
+import resetPassword from './views/ResetPassword.vue';
 
 Vue.use(Router);
 
@@ -65,6 +65,12 @@ export default new Router({
       path: '/auth/forgottenPassword',
       name: 'forgottenPassword',
       component: forgottenPassword,
+      beforeEnter: loggedInRedirectDashboard,
+    },
+    {
+      path: '/auth/resetPassword/:token',
+      name: 'resetPassword',
+      component: resetPassword,
       beforeEnter: loggedInRedirectDashboard,
     },
     {
