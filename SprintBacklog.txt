@@ -144,5 +144,9 @@ Sprint Backlog
 
 [x] on signup add userID to passwordreset table
 
+[] email to team members when fixture info updated
+  [] get list of users in both teams
+  [] send email to each
+
 [] unit test everything
   [] use mocha and chai
