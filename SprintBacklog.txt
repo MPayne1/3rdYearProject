@@ -10,7 +10,7 @@ Sprint Backlog
   [] add team description
   [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
-  [] email users when the fixture/results info is updated
+  [x] email users when the fixture/results info is updated
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
@@ -144,7 +144,8 @@ Sprint Backlog
 
 [x] on signup add userID to passwordreset table
 
-[] seed passwordreset with all current users
+[x] seed passwordreset with all current users
+[x] change all users email to the test email
 
 [x] email to team members when fixture info updated
   [x] db get teamnames in fixture
