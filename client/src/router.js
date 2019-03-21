@@ -18,7 +18,7 @@ import HockeyResults from './views/results/HockeyResults.vue';
 import BasketballResults from './views/results/BasketballResults.vue';
 import RugbyResults from './views/results/RugbyResults.vue';
 import CricketResults from './views/results/CricketResults.vue';
-
+import playerInfo from './views/playerInfo.vue';
 Vue.use(Router);
 
 // if user has a token theyre already logged in so redirect to dashboard
@@ -86,6 +86,12 @@ export default new Router({
       path: '/team/info',
       name: 'teamInfo',
       component: teamInfo,
+      beforeEnter: isLoggedIn,
+    },
+    {
+      path: '/player/info/:username',
+      name: 'playerInfo',
+      component: playerInfo,
       beforeEnter: isLoggedIn,
     },
     {

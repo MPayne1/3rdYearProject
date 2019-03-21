@@ -45,7 +45,7 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
-            <router-link class="nav-link">{{user.username}}</router-link> <!--needs :to property -->
+            <router-link  class="nav-link">{{user.username}}</router-link> <!--needs :to property -->
           </li>
         </ul>
       </div>

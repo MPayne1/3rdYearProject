@@ -11,7 +11,7 @@
           <div id="playerList" class="card-header"><h4>Players</h4></div>
           <ul class="list-group list-group-flush">
             <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
-              <router-link :to="{ name: 'playerInfo', params: {} }">
+              <router-link :to="{ name: 'playerInfo', params: {username: player.username} }">
                 {{ player.username }}</router-link>
             </li>
           </ul>
