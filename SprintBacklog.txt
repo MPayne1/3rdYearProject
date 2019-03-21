@@ -117,7 +117,7 @@ Sprint Backlog
       [x] hash newPassword
       [x] update db
       [x] send confirmation email
-  [] frontend
+  [x] frontend
     [x] player page
       [x] only show settings card if logged in as same user
     [x] ensure links work properly
@@ -127,11 +127,12 @@ Sprint Backlog
       [x] send req
       [x] show error errorMessage
       [x] show succes message
-    []  change password
-      [] form
-      [] check auth
-      [] send req
-
+    [x]  change password
+      [x] form
+      [x] check auth
+      [x] send req
+    [] show other user info?
+    
 [] forgotten password
   [x] Backend
     [x] db table for reset password info
