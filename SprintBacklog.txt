@@ -146,9 +146,10 @@ Sprint Backlog
 
 [] seed passwordreset with all current users
 
-[] email to team members when fixture info updated
-  [] get list of users in both teams
-  [] send email to each
+[x] email to team members when fixture info updated
+  [x] db get teamnames in fixture
+  [x] db get list of users in both teams
+  [x] send email to each
 
 [] unit test everything
   [] use mocha and chai
