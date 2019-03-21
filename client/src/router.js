@@ -19,6 +19,9 @@ import BasketballResults from './views/results/BasketballResults.vue';
 import RugbyResults from './views/results/RugbyResults.vue';
 import CricketResults from './views/results/CricketResults.vue';
 import playerInfo from './views/playerInfo.vue';
+import forgottenPassword from './views/ForgottenPassword.vue';
+
+
 Vue.use(Router);
 
 // if user has a token theyre already logged in so redirect to dashboard
@@ -56,6 +59,12 @@ export default new Router({
       path: '/auth/login',
       name: 'login',
       component: Login,
+      beforeEnter: loggedInRedirectDashboard,
+    },
+    {
+      path: '/auth/forgottenPassword',
+      name: 'forgottenPassword',
+      component: forgottenPassword,
       beforeEnter: loggedInRedirectDashboard,
     },
     {

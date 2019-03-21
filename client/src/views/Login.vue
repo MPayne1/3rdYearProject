@@ -32,6 +32,8 @@
         <button type="submit" class="btn btn-primary btn-lg">Login</button>
       </div>
     </form>
+
+    <router-link :to="{ name: 'forgottenPassword' }">Forgot Your Password?</router-link>
   </div>
   </div>
 </template>
