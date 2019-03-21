@@ -118,17 +118,19 @@ Sprint Backlog
       [x] update db
       [x] send confirmation email
   [] frontend
-    [] player page
-    [] ensure links work properly
-    [] change Email
-      [] check auth
-      [] form
-      [] send req
+    [x] player page
+      [x] only show settings card if logged in as same user
+    [x] ensure links work properly
+    [x] change Email
+      [x] check auth
+      [x] form
+      [x] send req
+      [x] show error errorMessage
+      [x] show succes message
     []  change password
       [] form
       [] check auth
       [] send req
-    [] Logout
 
 [] forgotten password
   [x] Backend
