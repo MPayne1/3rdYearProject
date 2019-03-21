@@ -118,6 +118,8 @@ Sprint Backlog
       [x] update db
       [x] send confirmation email
   [] frontend
+    [] player page
+    [] ensure links work properly
     [] change Email
       [] check auth
       [] form
