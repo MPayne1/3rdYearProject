@@ -5,7 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
-
+const changeInfo = require('./changeInfo.js');
 
 // ------  schemas  ------
 
@@ -13,12 +13,12 @@ const joi = require('joi');
 
 // ------  routing  ------
 
-// all paths are prepended with /team
+// all paths are prepended with /player/profile
 router.get('/', (req, res) => {
   res.json({
     message: 'player profile router works'
   });
 });
 
-
+router.use('/changeInfo', changeInfo);
 module.exports = router;
