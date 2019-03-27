@@ -8,6 +8,8 @@ const joi = require('joi');
 
 const dbSelectCaptain = require('../db/select/selectTeamCaptain.js');
 const dbInsertAnnouncement = require('../db/insert/insertTeamAnnouncement.js');
+const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
+
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
   message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
@@ -60,7 +62,8 @@ router.post('/remove', async(req, res, next) => {
 
   if(result.error === null) {
     // remove announcement from db
-    await
+    await dbDeleteAnnouncement(req.body.AnnouncementID);
+    res.json({message: "Announcement deleted."})
   } else {
     next(result.error);
   }
