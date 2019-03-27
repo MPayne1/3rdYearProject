@@ -23,7 +23,7 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 
 
-[] add more user details - phone number, bio, share info publicly option
+[x] add more user details - phone number, bio, share info publicly option
   [x] db
     [x] alter user Table
       [x] phone number
@@ -42,10 +42,12 @@ Sprint Backlog
     [x] change phone number
     [x] change bio
     [x] change publicly share true/false
-  [] frontend
-    [] show user info if logged in as user or publicly show == true
-    [] edit user info
-
+  [x] frontend
+    [x] show user info if logged in as user or publicly show == true
+    [x] edit user info
+      [x] send req to backend
+      [x] show success message
+      [x] form
 
 [] on dashboard show more info
   [] team announcements
