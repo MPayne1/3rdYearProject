@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
-// update users phonrNumber
+// update users bio
 var updateUserBio  = async function(userID, bio) {
     var sql = `UPDATE users SET Bio = ${mysql.escape(bio)}
     WHERE userID = ${mysql.escape(userID)};`;
