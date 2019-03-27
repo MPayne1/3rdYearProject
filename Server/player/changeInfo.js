@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
+const dbUpdatePhoneNumber = require('../db/update/profile/updateUserPhoneNumber.js');
 
 // ------  schemas  ------
 const phoneNumberSchema = joi.object().keys({
@@ -24,16 +25,15 @@ router.get('/', (req, res) => {
   });
 });
 
-
-router.post('/phoneNumber', (req, res, next) => {
+// route to update a users phoneNumber
+router.post('/phoneNumber', async (req, res, next) => {
   const result = joi.validate(req.body, phoneNumberSchema);
 
   if(result.error === null) {
-    //update db
-
+    // update db
+    await dbUpdatePhoneNumber(req.user.UserID, req.body.phoneNumber);
     // send response
-
-
+    res.json({message: "Phone number updated."});
   } else {
     res.status(422);
     next(result.error);
