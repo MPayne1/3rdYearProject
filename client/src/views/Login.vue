@@ -33,7 +33,7 @@
       </div>
     </form>
 
-    <router-link :to="{ name: 'forgottenPassword' }">Forgot Your Password?</router-link>
+    <router-link v-if="!loggingIn" :to="{ name: 'forgottenPassword' }">Forgot Your Password?</router-link>
   </div>
   </div>
 </template>
