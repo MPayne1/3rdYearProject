@@ -53,6 +53,8 @@ Sprint Backlog
   [] db
     [] create Table
     [] insert new announcement
+    [] remove announcement
+    [] select announcement for viewing
   [] backend
     [] route
     [] check user is team captain
@@ -63,6 +65,6 @@ Sprint Backlog
     [] form to add announcement
     [] form to remove announcement
 
-    
+
 [] unit test everything
   [] use mocha and chai
