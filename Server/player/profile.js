@@ -34,6 +34,7 @@ router.post('/view', async (req, res, next) => {
     await dbSelectUserInfo(req.body.username, (err, result) => {
       if(err) next(err);
       try {
+        console.log(result);
         // check if profile requested matches the logged in user if yes send info
         if(result[0].UserID === req.user.UserID) {
           res.json(result);

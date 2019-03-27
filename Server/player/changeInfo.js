@@ -72,7 +72,7 @@ router.post('/publiclyShow', async (req, res, next) => {
     // update db
     await dbUpdatePubliclyShow(req.user.UserID, req.body.publiclyShow);
     // send response
-    res.json({message: "publiclyShow updated."});
+    res.json({message: "Privacy information updated."});
   } else {
     res.status(422);
     next(result.error);
