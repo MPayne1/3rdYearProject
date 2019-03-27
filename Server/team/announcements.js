@@ -18,6 +18,7 @@ const newAnnouncementSchema = joi.object().keys({
 
 const removeAnnouncementSchema = joi.object().keys({
   AnnouncementID: joi.number().positive().required(),
+  TeamID: joi.number().positive().required(),
 });
 
 
@@ -61,13 +62,23 @@ router.post('/remove', async(req, res, next) => {
   const result = joi.validate(req.body, removeAnnouncementSchema);
 
   if(result.error === null) {
-    // remove announcement from db
-    await dbDeleteAnnouncement(req.body.AnnouncementID);
-    res.json({message: "Announcement deleted."})
+    // check user is teamAdmin
+    await dbSelectCaptain(req.user.UserID, req.body.TeamID, async(err, result) => {
+      if(err) next(err);
+      try{
+        result[0].TeamAdmin;
+        // remove announcement from db
+        await dbDeleteAnnouncement(req.body.AnnouncementID);
+        res.json({message: "Announcement deleted."})
+      } catch(e) {
+        var error = new Error("Only the team Admin/captain can remove announcements.");
+        res.status(409);
+        next(error);
+      }
+    });
   } else {
     next(result.error);
   }
-
 });
 
 
