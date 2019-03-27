@@ -117,7 +117,7 @@ function sendFixtureUpdated(email, firstname, lastname, homeTeamName, awayTeamNa
 }
 
 // send email for a new team annoucement
-function sendTeamAnnouncement(email,firstname, lastname, teamname, message) {
+function sendTeamAnnouncement(email,firstname, lastname, teamname, message, callback) {
   var text = `Hello ${firstname} ${lastname},
   You have recieved a new team message from ${teamname}:
   ${message}`;
@@ -141,5 +141,6 @@ module.exports = {
   sendChangeEmail,
   sendChangePassword,
   sendForgottenPassword,
-  sendFixtureUpdated
+  sendFixtureUpdated,
+  sendTeamAnnouncement
 };

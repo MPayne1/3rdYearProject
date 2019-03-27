@@ -6,10 +6,12 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
+const email = require('../email/index.js');
+
 const dbSelectCaptain = require('../db/select/selectTeamCaptain.js');
 const dbInsertAnnouncement = require('../db/insert/insertTeamAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
-
+const dbUserEmailInfo = require('../db/select/selectUserEmailTeamAnnouncement.js');
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
   message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
@@ -45,7 +47,27 @@ router.post('/new', async(req, res, next) => {
         // add announcement to db
         await dbInsertAnnouncement( req.body.TeamID, req.body.message);
 
-        res.json({message: "Announcement added"});
+        // get info for all players
+        await dbUserEmailInfo(req.body.TeamID, async (err,userInfo) => {
+          if(err) next(err);
+          try {
+            userInfo[0].email;
+            // send email to users in team
+            for(i = 0; i < userInfo.length; i++) {
+              await email.sendTeamAnnouncement(userInfo[i].email,
+                userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
+                req.body.message, (err, mail) => {
+                    if(err) next(err);
+                    console.log(mail);
+                });
+            }
+            res.json({message: "Announcement added"});
+          } catch(e) {
+            next(e);
+          }
+        });
+
+
       } catch(e) {
         var error = new Error("Only the team Admin/captain can add announcements.");
         res.status(409);
