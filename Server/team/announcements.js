@@ -11,6 +11,7 @@ const email = require('../email/index.js');
 const dbSelectCaptain = require('../db/select/selectTeamCaptain.js');
 const dbInsertAnnouncement = require('../db/insert/insertTeamAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
+const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
 const dbUserEmailInfo = require('../db/select/selectUserEmailTeamAnnouncement.js');
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
@@ -23,6 +24,9 @@ const removeAnnouncementSchema = joi.object().keys({
   TeamID: joi.number().positive().required(),
 });
 
+const selectAnnouncementsSchema = joi.object().keys({
+  TeamID: joi.number().positive().required(),
+});
 
 // ------  routes  ------
 
@@ -66,8 +70,6 @@ router.post('/new', async(req, res, next) => {
             next(e);
           }
         });
-
-
       } catch(e) {
         var error = new Error("Only the team Admin/captain can add announcements.");
         res.status(409);
@@ -79,7 +81,7 @@ router.post('/new', async(req, res, next) => {
   }
 });
 
-
+// route to remove a team announcement
 router.post('/remove', async(req, res, next) => {
   const result = joi.validate(req.body, removeAnnouncementSchema);
 
@@ -102,6 +104,28 @@ router.post('/remove', async(req, res, next) => {
     next(result.error);
   }
 });
+
+
+// route to select all team announcements for a team
+router.post('/selectAll', async(req, res, next) => {
+  const result = joi.validate(req.body, selectAnnouncementsSchema);
+
+  if(result.error === null) {
+    // get all announcements from db
+    await dbSelectTeamAnnouncements(req.body.TeamID, (err, result) => {
+      if(err) next(err);
+      try{
+        result[0].message;
+        res.json(result);
+      } catch(e) {
+        next(e);
+      }
+    });
+  } else {
+    next(result.error);
+  }
+});
+
 
 
 
