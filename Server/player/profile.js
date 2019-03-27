@@ -7,6 +7,8 @@ const router = express.Router();
 const joi = require('joi');
 const changeInfo = require('./changeInfo.js');
 
+
+const dbSelectUserInfo = require('../db/select/selectUserInfo.js');
 // ------  schemas  ------
 
 const viewProfileSchema = joi.object().keys({
@@ -24,17 +26,28 @@ router.get('/', (req, res) => {
 
 
 // route to view a users profile
-router.post('/view', (req, res, next) => {
+router.post('/view', async (req, res, next) => {
   const result = joi.validate(req.body, viewProfileSchema);
 
   if(result.error === null) {
     // get user info
-
-    // check if profile requested matches the logged in user
-    // if yes send info
-    // if not check publicly show value
-
-
+    await dbSelectUserInfo(req.body.UserID, (err, result) => {
+      if(err) next(err);
+      try {
+        // check if profile requested matches the logged in user if yes send info
+        if(req.body.UserID === req.user.UserID) {
+          res.json(result);
+        }
+        // if not check publicly show value
+        else if(result[0].publiclyShow == 'True') {
+          res.json(result);
+        } else {
+          res.json({message: "This user has no information to publicly show."});
+        }
+      }catch(e) {
+        next(e)
+      }
+    });
   } else {
     res.status(422);
     next(result.error);
