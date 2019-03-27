@@ -7,13 +7,16 @@ const router = express.Router();
 const joi = require('joi');
 
 const dbUpdatePhoneNumber = require('../db/update/profile/updateUserPhoneNumber.js');
-
+const dbUpdateBio = require('../db/update/profile/updateUserBio.js');
 // ------  schemas  ------
 const phoneNumberSchema = joi.object().keys({
   phoneNumber: joi.string().alphanum().max(15).required()
 });
 
-//Bio: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+const bioSchema = joi.object().keys({
+  Bio: joi.string().regex(/^[\w\-\s]{0,200}$/).required()
+});
+
 //publiclyShow: joi.any().valid('False', 'True')
 
 // ------  routing  ------
@@ -39,6 +42,24 @@ router.post('/phoneNumber', async (req, res, next) => {
     next(result.error);
   }
 });
+
+
+
+// route to update a users phoneNumber
+router.post('/Bio', async (req, res, next) => {
+  const result = joi.validate(req.body, bioSchema);
+
+  if(result.error === null) {
+    // update db
+    await dbUpdateBio(req.user.UserID, req.body.Bio);
+    // send response
+    res.json({message: "Bio updated."});
+  } else {
+    res.status(422);
+    next(result.error);
+  }
+});
+
 
 
 module.exports = router;
