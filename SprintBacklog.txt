@@ -22,12 +22,12 @@ Sprint Backlog
 
 
 [] add more user details - phone number, bio, share info publicly option
-  [] db
-    [] alter user Table
-      [] phone number
-      [] bio
-      [] publicly share info true/false
-    [] insert new user
+  [x] db
+    [x] alter user Table
+      [x] phone number
+      [x] bio
+      [x] publicly share info true/false
+    [x] insert new user
   [] backend
     [] alter signup
     [] get info for user page
@@ -42,7 +42,7 @@ Sprint Backlog
 [] on dashboard show more info
   [] team announcements
   [] league announcements
-  
+
 
 [] unit test everything
   [] use mocha and chai
