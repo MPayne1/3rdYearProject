@@ -12,7 +12,7 @@ const dbSelectUserInfo = require('../db/select/selectUserInfo.js');
 // ------  schemas  ------
 
 const viewProfileSchema = joi.object().keys({
-  UserID: joi.number().positive().required()
+  username: joi.string().alphanum().min(2).max(20).required(),
 });
 
 // ------  routing  ------
@@ -31,11 +31,11 @@ router.post('/view', async (req, res, next) => {
 
   if(result.error === null) {
     // get user info
-    await dbSelectUserInfo(req.body.UserID, (err, result) => {
+    await dbSelectUserInfo(req.body.username, (err, result) => {
       if(err) next(err);
       try {
         // check if profile requested matches the logged in user if yes send info
-        if(req.body.UserID === req.user.UserID) {
+        if(result[0].UserID === req.user.UserID) {
           res.json(result);
         }
         // if not check publicly show value
