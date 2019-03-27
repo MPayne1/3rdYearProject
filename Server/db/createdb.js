@@ -14,7 +14,8 @@ async function createUsersTable(err) {
 	if(err) throw err;
 	var sql = "CREATE TABLE users(UserID int NOT NULL AUTO_INCREMENT, " +
 	"username VARCHAR(20), password VARCHAR(255), LastName VARCHAR(255),"+
-	" FirstName VARCHAR(255), Email VARCHAR(50), PRIMARY KEY (UserID))";
+	" FirstName VARCHAR(255), Email VARCHAR(50), Bio VARCHAR(200), "+
+  "PhoneNumber VARCHAR(15), publiclyShow ENUM('False', 'True'),PRIMARY KEY (UserID))";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
 		console.log("Users Table created");
@@ -363,6 +364,18 @@ async function createPasswordResetTable(err) {
   });
 }
 
+
+async function createTeamAnnouncementTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE teamAnnouncement(AnnouncementID int NOT NULL AUTO_INCREMENT,"+
+  "TeamID int, message VARCHAR(200), PRIMARY KEY(AnnouncementID),"+
+  " FOREIGN KEY (TeamID) REFERENCES team(TeamID));";
+  await db.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log('team announcement table created');
+  });
+}
+
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
@@ -370,6 +383,8 @@ async function createPasswordResetTable(err) {
 // createSeasonsTable();
 // createFixturesTable();
 // createPasswordResetTable();
+// createTeamAnnouncementTable(); 
+
 
 // ------  create Results tables  ------
 
