@@ -103,7 +103,7 @@ function sendFixtureUpdated(email, firstname, lastname, homeTeamName, awayTeamNa
     ${city}
     ${county}
     ${postcode}`;
-    var subject = "Fixtutre Information Updated"
+    var subject = "Fixtutre Information Updated";
     setMailOptions(email, subject, text);
     transporter.sendMail(mailOptions, (err, info) => {
       if(err) {
@@ -115,6 +115,27 @@ function sendFixtureUpdated(email, firstname, lastname, homeTeamName, awayTeamNa
       }
     });
 }
+
+// send email for a new team annoucement
+function sendTeamAnnouncement(email,firstname, lastname, teamname, message) {
+  var text = `Hello ${firstname} ${lastname},
+  You have recieved a new team message from ${teamname}:
+  ${message}`;
+
+  var subject = "New Team Announcement";
+  setMailOptions(email, subject, text);
+  transporter.sendMail(mailOptions, (err, info) => {
+    if(err) {
+      console.log(err);
+      callback(err, null);
+    }  else {
+      console.log('email sent ' + info.response);
+      callback(null, info);
+    }
+  });
+}
+
+
 
 module.exports = {
   sendChangeEmail,
