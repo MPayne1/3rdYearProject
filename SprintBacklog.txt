@@ -50,22 +50,22 @@ Sprint Backlog
       [x] form
 
 [] team announcements
-  [] db
+  [x] db
     [x] create Table
     [x] insert new announcement
     [x] remove announcement
-    [] select announcement for viewing
-  [] backend
-    [] routes
-      [] team announcement route
+    [x] select announcement for viewing
+  [x] backend
+    [x] routes
+      [x] team announcement route
         [x] new
         [x] remove
-        [] select all
+        [x] select all
     [x] check user is team captain
       [x] add new announcement
       [x] delete team announcement
     [x] remove announcement
-    [] email all team members when new announcement
+    [x] email all team members when new announcement
   [] frontend
     [] form to add announcement
     [] form to remove announcement
