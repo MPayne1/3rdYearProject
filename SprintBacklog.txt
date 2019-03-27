@@ -8,13 +8,15 @@ Sprint Backlog
   [] fix navbar when screen small e.g on mobile.
   [] add league description
   [] add team description
-  [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
-  [] get league/team admin for frontend only show options of user is
   [] show teamname rather than home/away in results page
+
+[] need to do
+  [] get league/team admin for frontend only show options of user is
+  [] update regex to include special characters for match description
   [] team announcements, team captain
   [] league announcements, league admin
 
@@ -29,13 +31,15 @@ Sprint Backlog
       [x] publicly share info true/false
     [x] insert new user
     [x] update phone number
+    [x] update bio
+    [] update publiclyShow
   [] backend
     [x] alter signup
       [x] route
       [x] schema
     [] get info for user page
     [x] change phone number
-    [] change bio
+    [x] change bio
     [] change publicly share true/false
   [] frontend
     [] show user info if logged in as user or publicly show == true
