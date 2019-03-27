@@ -28,8 +28,11 @@ Sprint Backlog
       [x] bio
       [x] publicly share info true/false
     [x] insert new user
+    [] update phone number
   [] backend
-    [] alter signup
+    [x] alter signup
+      [x] route
+      [x] schema
     [] get info for user page
     [] change phone number
     [] change bio
