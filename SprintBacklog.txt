@@ -33,12 +33,12 @@ Sprint Backlog
     [x] update phone number
     [x] update bio
     [x] update publiclyShow
-  [] backend
+  [x] backend
     [x] alter signup
       [x] route
       [x] schema
-    [] get info for user page if publiclyShow == true and req.user == req.body.userID
-      [] name, bio, phonenumber, email
+    [x] get info for user page if publiclyShow == true and req.user == req.body.userID
+      [x] name, bio, phonenumber, email
     [x] change phone number
     [x] change bio
     [x] change publicly share true/false
