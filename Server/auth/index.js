@@ -28,7 +28,10 @@ const signUpSchema = joi.object().keys({
   password: joi.string().trim().min(8).required(), // password must be 8 char long and not empty
   email: joi.string().email({minDomainAtoms: 2 }).required(),
   FirstName: joi.string().alphanum().min(2).max(30).required(),
-  LastName: joi.string().alphanum().min(2).max(30).required()
+  LastName: joi.string().alphanum().min(2).max(30).required(),
+  phoneNumber: joi.string().alphanum().max(15).required(),
+  Bio: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+  publiclyShow: joi.any().valid('False', 'True')
 });
 
 const loginSchema = joi.object().keys({
@@ -87,7 +90,9 @@ router.post('/signup', async (req, res, next) => {
       } catch(e) {// if username is free, then hash the passsword
         bcrypt.hash(req.body.password, hashingRounds).then(async hashedPassword => {
           res.json({username});
-          await dbInsert(username, hashedPassword, req.body.LastName, req.body.FirstName, req.body.email);
+          await dbInsert(username, hashedPassword, req.body.LastName,
+            req.body.FirstName, req.body.email, req.body.phoneNumber,
+            req.body.Bio, req.body.publiclyShow);
           await dbInsertPasswordReset(username);
         });
 
