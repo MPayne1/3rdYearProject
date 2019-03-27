@@ -10,147 +10,39 @@ Sprint Backlog
   [] add team description
   [] update regex to include special characters for match description
   [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
-  [x] email users when the fixture/results info is updated
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
   [] get league/team admin for frontend only show options of user is
   [] show teamname rather than home/away in results page
-  [x] only show 10 upcomgin fixtures
-    [x] click button to expand
-    [x] click button to reduce again
   [] team announcements, team captain
   [] league announcements, league admin
 
 [] attribute loading spinner to loading.io
 
-[x]show league results
-  [x] backend
-    [x] db select results for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
-    [x] route for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
-  [x] frontend
-    [x] send req to backend
-    [x] only show 10 results
-      [x] click button to expand
-      [x] click button to reduce again
-    [x] fix the placement of results card when fixtures card expands
-    [x] fix spacing between result e.g. 1 FT 0 -> 1 - FT - 0
-    [x] show results for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
+
+[] add more user details - phone number, bio, share info publicly option
+  [] db
+    [] alter user Table
+      [] phone number
+      [] bio
+      [] publicly share info true/false
+    [] insert new user
+  [] backend
+    [] alter signup
+    [] get info for user page
+    [] change phone number
+    [] change bio
+    [] change publicly share true/false
+  [] frontend
+    [] show user info if logged in as user or publicly show == true
+    [] edit user info
 
 
-[x]show teams results
-  [x] backend
-    [x] db select results for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
-    [x] route for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
-  [x] frontend
-    [x] send req to backend
-    [x] only show 10 results
-      [x] click button to expand
-      [x] click button to reduce again
-    [x] show results for each sport
-      [x] Football
-      [x] Tennis
-      [x] american Football
-      [x] volleyball
-      [x] table Tennis
-      [x] Hockey
-      [x] Basketball
-      [x] rugby
-      [x] cricket
-
-[] player profile page
-  [] Backend
-    [x] /player route
-      [x]/profile route
-    [] db get user info for display on profile page
-    [x] change Email
-      [x] check login information Again
-      [x] send change confirmation email to new addreess
-      [x] db update users email
-    [x] change password
-      [x] check current password
-      [x] hash newPassword
-      [x] update db
-      [x] send confirmation email
-  [x] frontend
-    [x] player page
-      [x] only show settings card if logged in as same user
-    [x] ensure links work properly
-    [x] change Email
-      [x] check auth
-      [x] form
-      [x] send req
-      [x] show error errorMessage
-      [x] show succes message
-    [x]  change password
-      [x] form
-      [x] check auth
-      [x] send req
-    [] show other user info?
-
-[x] forgotten password
-  [x] Backend
-    [x] db table for reset password info
-    [x] create random hash
-    [x] send reset password email
-  [x] frontend
-    [x] form for new password
-    [x] send req with resetToken and new password
-
-[x] on signup add userID to passwordreset table
-
-[x] seed passwordreset with all current users
-[x] change all users email to the test email
-
-[x] email to team members when fixture info updated
-  [x] db get teamnames in fixture
-  [x] db get list of users in both teams
-  [x] send email to each
+[] on dashboard show more info
+  [] team announcements
+  [] league announcements
+  
 
 [] unit test everything
   [] use mocha and chai

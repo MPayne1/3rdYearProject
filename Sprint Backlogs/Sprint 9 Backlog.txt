@@ -1,0 +1,154 @@
+
+Sprint Backlog
+[x] UI designs
+  [x] general style
+
+[] nice to do
+  [] refactor code, add more methods
+  [] fix navbar when screen small e.g on mobile.
+  [] add league description
+  [] add team description
+  [] update regex to include special characters for match description
+  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
+  [x] email users when the fixture/results info is updated
+  [] leave a team
+  [] transfer teamAdmin
+  [] transfer leagueAdmin
+  [] get league/team admin for frontend only show options of user is
+  [] show teamname rather than home/away in results page
+  [x] only show 10 upcomgin fixtures
+    [x] click button to expand
+    [x] click button to reduce again
+  [] team announcements, team captain
+  [] league announcements, league admin
+
+[] attribute loading spinner to loading.io
+
+[x]show league results
+  [x] backend
+    [x] db select results for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] route for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+  [x] frontend
+    [x] send req to backend
+    [x] only show 10 results
+      [x] click button to expand
+      [x] click button to reduce again
+    [x] fix the placement of results card when fixtures card expands
+    [x] fix spacing between result e.g. 1 FT 0 -> 1 - FT - 0
+    [x] show results for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+
+
+[x]show teams results
+  [x] backend
+    [x] db select results for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+    [x] route for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+  [x] frontend
+    [x] send req to backend
+    [x] only show 10 results
+      [x] click button to expand
+      [x] click button to reduce again
+    [x] show results for each sport
+      [x] Football
+      [x] Tennis
+      [x] american Football
+      [x] volleyball
+      [x] table Tennis
+      [x] Hockey
+      [x] Basketball
+      [x] rugby
+      [x] cricket
+
+[x] player profile page
+  [x] Backend
+    [x] /player route
+      [x]/profile route
+    [x] change Email
+      [x] check login information Again
+      [x] send change confirmation email to new addreess
+      [x] db update users email
+    [x] change password
+      [x] check current password
+      [x] hash newPassword
+      [x] update db
+      [x] send confirmation email
+  [x] frontend
+    [x] player page
+      [x] only show settings card if logged in as same user
+    [x] ensure links work properly
+    [x] change Email
+      [x] check auth
+      [x] form
+      [x] send req
+      [x] show error errorMessage
+      [x] show succes message
+    [x]  change password
+      [x] form
+      [x] check auth
+      [x] send req
+
+[x] forgotten password
+  [x] Backend
+    [x] db table for reset password info
+    [x] create random hash
+    [x] send reset password email
+  [x] frontend
+    [x] form for new password
+    [x] send req with resetToken and new password
+
+[x] on signup add userID to passwordreset table
+
+[x] seed passwordreset with all current users
+[x] change all users email to the test email
+
+[x] email to team members when fixture info updated
+  [x] db get teamnames in fixture
+  [x] db get list of users in both teams
+  [x] send email to each
+
+[] unit test everything
+  [] use mocha and chai
