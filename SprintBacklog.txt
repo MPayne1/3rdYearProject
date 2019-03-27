@@ -49,10 +49,20 @@ Sprint Backlog
       [x] show success message
       [x] form
 
-[] on dashboard show more info
-  [] team announcements
-  [] league announcements
+[] team announcements
+  [] db
+    [] create Table
+    [] insert new announcement
+  [] backend
+    [] route
+    [] check user is team captain
+      [] add new announcement
+    [] remove announcement
+    [] email all team members
+  [] frontend
+    [] form to add announcement
+    [] form to remove announcement
 
-
+    
 [] unit test everything
   [] use mocha and chai
