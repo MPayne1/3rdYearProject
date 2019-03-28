@@ -12,6 +12,11 @@ Sprint Backlog
   [] transfer teamAdmin
   [] transfer leagueAdmin
   [] show teamname rather than home/away in results page
+  [] when add player suggest players, like search
+  [] when searching for league, make so don't need to fill in all bits
+  [] team messaging
+  [] player stats
+  [] team/league/user photos
 
 [x] need to do
   [x] get league/team admin for frontend only show options of user is
