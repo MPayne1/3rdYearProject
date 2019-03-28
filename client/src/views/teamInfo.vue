@@ -223,7 +223,7 @@
   });
 
   const addAnnouncementSchema = joi.object().keys({
-    message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+    message: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,200}$/).required(),
     TeamID: joi.number().positive().required(),
   });
 
