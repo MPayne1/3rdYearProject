@@ -13,7 +13,6 @@ var selectTeamCaptain  = async function(userID, teamID, callback) {
         res = result;
         callback(null, res);
     });
-    console.log(res);
 }
 
 module.exports = selectTeamCaptain;
