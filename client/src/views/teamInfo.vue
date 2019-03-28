@@ -6,6 +6,33 @@
     </div>
     <div class="text-center row">
       <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div id="announcementCard" class="card  bg-secondary">
+          <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
+          <ul class="list-group list-group-flush text-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center" v-for="announcement in announcements">
+              <h5 class="text-center">{{announcement.message}}</h5>
+            </li>
+          </ul>
+          <div class="card-footer">
+            <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
+              {{announcementErrorMessage}}
+            </div>
+            <form  @submit.prevent="addAnnoucement()">
+            <div class="form-group">
+              <input v-model="newAnnouncement.message" type="text" class="form-control"
+                placeholder="Enter message" required>
+                <br>
+              <button class="btn btn-primary btn-lg"
+                type="submit">Add a new announcement</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center row">
+      <div class="col-md-2"></div>
       <div class="col-md-4">
         <div id="playersCard" class="card text-white bg-secondary">
           <div id="playerList" class="card-header"><h4>Players</h4></div>
@@ -177,11 +204,18 @@
   const ADDPLAYER_URL = 'https://localhost:3000/team/addPlayer';
   const GET_SPORT_URL = 'https://localhost:3000/team/sport';
   const FETCH_RESULTS_URL = 'https://localhost:3000/team/results/';
+  const GET_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/selectAll';
+  const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/new';
 
   const addPlayerSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
       .required(),
     teamID: joi.number().positive().required(),
+  });
+
+  const addAnnouncementSchema = joi.object().keys({
+    message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+    TeamID: joi.number().positive().required(),
   });
 
   export default {
@@ -191,6 +225,7 @@
       teamName: '',
       username: '',
       errorMessage: '',
+      announcementErrorMessage: '',
       teamID: '',
       sport: '',
       results: [],
@@ -199,6 +234,11 @@
       resultsInfoOpen: false,
       resultIndex: '',
       showMax: 10,
+      announcements: {},
+      newAnnouncement: {
+        message: '',
+        TeamID: '',
+      }
     }),
     watch: {
       username: {
@@ -262,6 +302,7 @@
             // get the players in the team
             this.playerList();
             this.getSport();
+            this.getAnnouncements();
           }
         });
     },
@@ -387,6 +428,62 @@
           });
         }
       },
+
+      getAnnouncements() {
+        if(this.teamID) {
+          const body = {
+            TeamID: this.teamID
+          };
+          fetch(GET_ANNOUNCEMENT_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(res => res.json())
+            .then((result) => {
+              if (result.message) {
+                this.announcementErrorMessage = result.message;
+              } else {
+                console.log(result);
+                this.announcements = result;
+              }
+            });
+        }
+      },
+      addAnnoucement() {
+        this.announcementErrorMessage = '';
+        const body = {
+          message: this.newAnnouncement.message,
+          TeamID: this.teamID,
+        };
+        if (this.validAddAnnouncement(body)) {
+          // send the request to the backend
+          this.adding = true;
+          fetch(ADD_ANNOUNCEMENT_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then((response) => {
+            if (response.ok) {
+              return response.json();
+            }
+            // handle any errors the server returns
+            return response.json().then((error) => {
+              throw new Error(error.message);
+            });
+          }).then(() => { // if no errors refresh players list
+            this.getAnnouncements();
+            this.newAnnouncement.message = '';
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
+          });
+        }
+      },
       validAddPlayer(body) {
         const result = joi.validate(body, addPlayerSchema);
         if (result.error === null) {
@@ -400,15 +497,28 @@
         }
         return false;
       },
+      validAddAnnouncement(body) {
+        const result = joi.validate(body, addAnnouncementSchema);
+        if (result.error === null) {
+          return true;
+        }
+        if (result.error.message.includes('message')) {
+          this.announcementErrorMessage = 'Messsage must be less than 200 characters';
+        }
+        if (result.error.message.includes('teamID')) {
+          this.announcementErrorMessage = 'Invlaid team, please refresh page';
+        }
+        return false;
+      },
     },
   };
 </script>
 
 <style>
-  #playerList {
+  #playerList, #announcementList{
     background-color: #2C3E50;
   }
-  #playersCard {
+  #playersCard, #announcementCard {
     margin-bottom: 20px;
   }
 </style>
