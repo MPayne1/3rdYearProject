@@ -16,6 +16,7 @@
       <input v-model="user.email" type="email" class="form-control" id="email"
       placeholder="Email" required>
     </div>
+    <br>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="FirstName">First name</label>
@@ -29,6 +30,23 @@
           placeholder="Last name" required>
       </div>
     </div>
+    <br>
+    <div class="form-row">
+      <div class="form-group col-md-12">
+        <label for="Bio">Bio, a short description about yourself.</label>
+        <textarea v-model="user.Bio" type="email" class="form-control" id="Bio"
+        placeholder="A short description about yourself." required></textarea>
+      </div>
+    </div>
+    <br>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label for="phoneNumber">Phone number</label>
+        <input v-model="user.phoneNumber" type="text" class="form-control"
+          placeholder="Phone Number" id="phoneNumber" required>
+      </div>
+    </div>
+    <br>
     <div class="form-group">
       <label for="username">Username</label>
       <input v-model="user.username" type="text" class="form-control" id="username"
@@ -37,6 +55,7 @@
         Username must be between 2 and 20 characters.
       </small>
     </div>
+    <br>
     <div class="form-row">
       <div class="form-group col-md-6">
         <label for="password">Password</label>
@@ -52,6 +71,16 @@
         <input v-model="user.confirmPassword" type="password"
           class="form-control" id="confirmPassword"
           placeholder="Confirm Password" required>
+      </div>
+    </div>
+    <br>
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <div class="custom-control custom-switch">
+          <label for="toggleSwitch">Do you want other users to be able to see your email, phone number, name and bio?</label>
+         <input type="checkbox" v-model="user.publiclyShow"class="custom-control-input"  id="toggleSwitch" checked="">
+         <label class="custom-control-label" for="toggleSwitch">Show your profile information publicly</label>
+        </div>
       </div>
     </div>
     <div class="text-center">
@@ -78,6 +107,9 @@ const schema = joi.object().keys({
     .required(),
   LastName: joi.string().alphanum().min(2).max(30)
     .required(),
+  phoneNumber: joi.string().regex(/^[0-9]{3,15}$/).required(),
+  Bio: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,200}$/).required(),
+  publiclyShow: joi.required()
 });
 
 export default {
@@ -91,6 +123,9 @@ export default {
       LastName: '',
       FirstName: '',
       email: '',
+      Bio: '',
+      phoneNumber: '',
+      publiclyShow: true,
     },
   }),
   watch: {
@@ -103,6 +138,12 @@ export default {
   },
   methods: {
     signup() {
+      var show = '';
+      if(this.user.publiclyShow == false) {
+        show = 'False';
+      } else {
+        show = 'True';
+      }
       if (this.validUser()) {
         const body = {
           username: this.user.username,
@@ -110,8 +151,10 @@ export default {
           LastName: this.user.LastName,
           FirstName: this.user.FirstName,
           email: this.user.email,
+          Bio: this.user.Bio,
+          phoneNumber: this.user.phoneNumber,
+          publiclyShow: show
         };
-        console.log(this.user.username, this.user.email);
         // send the request to the backend
         this.signingUp = true;
         fetch(SIGNUP_URL, {
@@ -156,7 +199,14 @@ export default {
       }
       if (result.error.message.includes('FirstName') || result.error.message.includes('LastName')) {
         this.errorMessage = 'Names can only contain letters.';
-      } else {
+      }
+      if(result.error.message.includes('Bio')) {
+        this.errorMessage = 'Bio must be shorter than 200 characters';
+      }
+      if(result.error.message.includes('phoneNumber')) {
+        this.errorMessage = 'Phone number can only contain letters and must be 3-15 diigits';
+      }
+      if(result.error.message.includes('password')){
         this.errorMessage = 'Password is invalid, must be at least 8 characters';
       }
       return false;
