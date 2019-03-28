@@ -15,7 +15,7 @@
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
-              <div v-if="announcementOpen && announcementIndex == index && this.isLeagueAdmin" class="">
+              <div v-if="announcementOpen && announcementIndex == index && isLeagueAdmin" class="">
                 <button class="btn btn-primary" type="submit"
                 @click="deleteAnnouncement(announcement.LeagueAnnouncementID)"
                 name="button">Delete Announcement</button>
