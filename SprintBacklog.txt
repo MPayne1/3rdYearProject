@@ -17,7 +17,7 @@ Sprint Backlog
 [] need to do
   [] get league/team admin for frontend only show options of user is
   [] update regex to include special characters for match description
-  [] team announcements, team captain
+  [x] team announcements, team captain
   [] league announcements, league admin
 
 [] attribute loading spinner to loading.io
@@ -49,7 +49,7 @@ Sprint Backlog
       [x] show success message
       [x] form
 
-[] team announcements
+[x] team announcements
   [x] db
     [x] create Table
     [x] insert new announcement
@@ -67,10 +67,15 @@ Sprint Backlog
       [x] delete team announcement
     [x] remove announcement
     [x] email all team members when new announcement
-  [] frontend
-    [] form to add announcement
-    [] form to remove announcement
-
+  [x] frontend
+    [x] form to add announcement
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+    [x] form to remove announcement
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
 
 [] league announcements
   [x] db
@@ -90,8 +95,15 @@ Sprint Backlog
   [] frontend
     [] form to add
       [] send req
+      [] show error Messsage
+      [] show success message
     [] form to remove
       [] send req
+      [] show error Messsage
+      [] show success message
+
+
+
 
 [] unit test everything
   [] use mocha and chai
