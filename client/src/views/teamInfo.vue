@@ -13,12 +13,12 @@
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
-              <div v-if="announcementOpen && announcementIndex == index " class="">
+              <div v-if="announcementOpen && announcementIndex == index && isTeamAdmin" class="">
                 <button class="btn btn-primary" type="submit" @click="deleteAnnouncement(announcement.AnnouncementID)"name="button">Delete Announcement</button>
               </div>
             </li>
           </ul>
-          <div class="card-footer">
+          <div class="card-footer" v-if="isTeamAdmin">
             <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
               {{announcementErrorMessage}}
             </div>
@@ -49,7 +49,7 @@
                 {{ player.username }}</router-link>
             </li>
           </ul>
-          <div class="card-footer">
+          <div class="card-footer" v-if="isTeamAdmin">
             <form  @submit.prevent="addPlayer()">
             <div class="form-group">
               <div v-if="errorMessage" class="alert alert-danger" role="alert">
@@ -214,6 +214,7 @@
   const GET_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/selectAll';
   const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/new';
   const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/remove';
+  const TEAM_ADMIN_URL = 'https://localhost:3000/team/isTeamAdmin';
 
   const addPlayerSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -255,6 +256,7 @@
       announcementOpen: false,
       announcementIndex: '',
       announcementSuccess: '',
+      isTeamAdmin: false,
     }),
     watch: {
       username: {
@@ -319,6 +321,7 @@
             this.playerList();
             this.getSport();
             this.getAnnouncements();
+            this.getIsTeamAdmin();
           }
         });
     },
@@ -430,7 +433,7 @@
           username: this.username,
           teamID: this.teamID,
         };
-        if (this.validAddPlayer(body)) {
+        if (this.validAddPlayer(body) && this.isTeamAdmin) {
           // send the request to the backend
           this.adding = true;
           fetch(ADDPLAYER_URL, {
@@ -485,7 +488,7 @@
           message: this.newAnnouncement.message,
           TeamID: this.teamID,
         };
-        if (this.validAddAnnouncement(body)) {
+        if (this.validAddAnnouncement(body)&& this.isTeamAdmin) {
           // send the request to the backend
           this.adding = true;
           fetch(ADD_ANNOUNCEMENT_URL, {
@@ -512,7 +515,7 @@
           AnnouncementID: announcementID,
           TeamID: this.teamID,
         };
-        if(this.validDeleteAnnouncement(body)) {
+        if(this.validDeleteAnnouncement(body) && this.isTeamAdmin) {
           fetch(DELETE_ANNOUNCEMENT_URL, {
             method: 'POST',
             body: JSON.stringify(body),
@@ -531,6 +534,30 @@
             });
         }
       },
+
+      getIsTeamAdmin() {
+        if(this.teamID) {
+          const body= {
+            TeamID: this.teamID,
+          };
+          fetch(TEAM_ADMIN_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(res => res.json())
+            .then((result) => {
+              if (result.TeamAdmin) {
+                this.isTeamAdmin = true;
+              } else {
+                this.isTeamAdmin = false;
+              }
+            });
+        }
+      },
+
       validAddPlayer(body) {
         const result = joi.validate(body, addPlayerSchema);
         if (result.error === null) {

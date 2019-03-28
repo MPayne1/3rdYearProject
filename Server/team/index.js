@@ -61,6 +61,18 @@ router.use('/results', resultsRoute);
 // team announcement route
 router.use('/announcements', announcementsRoute);
 
+// handle req to check if user is teamAdmin
+router.post('/isTeamAdmin', async(req, res, next) => {
+  await dbSelectCaptain(req.user.UserID, req.body.TeamID, (err, result) => {
+    if(err) next(err);
+    try{
+      result[0].TeamAdmin;
+      res.json(result[0]);
+    } catch(e) {
+      res.json({message: "user isn't the team Admi.n"});
+    }
+  });
+});
 
 // handle request to get all players of a team
 router.post('/allplayers', async(req, res, next) => {
