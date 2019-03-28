@@ -15,8 +15,8 @@ Sprint Backlog
   [] show teamname rather than home/away in results page
 
 [] need to do
-  [] get league/team admin for frontend only show options of user is
-  [] update regex to include special characters for match description
+  [x] get league/team admin for frontend only show options of user is
+  [] update regex to include special characters for match description/announcements/user bio
   [x] team announcements, team captain
   [x] league announcements, league admin
 
@@ -103,18 +103,37 @@ Sprint Backlog
       [x] show success message
 
 
-[] teamAdmin tailoring
-  [] backend
-    [] get the teams admin
-      [] db
-      [] route
-  [] frontend
-    [] send req for teams admin
-    [] check user is teams admin
-    [] show teamadmin things to only team admin
-      [] add player
-      [] add announcements
-      [] remove announcements
+[x] teamAdmin tailoring
+  [x] backend
+    [x] get the teams admin
+      [x] db
+      [x] route
+  [x] frontend
+    [x] send req for teams admin
+    [x] check user is teams admin
+    [x] show teamadmin things to only team admin
+      [x] add player
+      [x] add announcements
+      [x] remove announcements
+
+[x] teamAdmin/leagueAdmin tailoring
+  [x] backend
+    [x] get the league admin
+      [x] db
+      [x] route
+    [x] get the teamAdmins in league
+      [x] db
+      [x] route
+  [x] frontend
+    [x] send req for teams/league admin
+    [x] check user is teams admin/leagueAdmin
+    [x] show teamadmin things to only team admin
+      [x] update fixture
+    [x] show leagueAdmin things to only leagueAdmin
+      [x] update fixtures
+      [x] add announcement
+      [x] remove announcement
+      [x] start season
 
 [] unit test everything
   [] use mocha and chai
