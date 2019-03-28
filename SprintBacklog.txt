@@ -61,6 +61,7 @@ Sprint Backlog
         [x] new
         [x] remove
         [x] select all
+          [x] check user is in team
     [x] check user is team captain
       [x] add new announcement
       [x] delete team announcement
@@ -72,25 +73,25 @@ Sprint Backlog
 
 
 [] league announcements
-  [] db
-    []  create table
-    [] insert new announcement
-    [] remove announcement
-    [] select all announcements for viewing
-  [] backend
-    [] routes
-      [] new
-      [] remove
-      [] select
-    [] check user is leagueAdmin
-      [] add new announcement
-      [] delete annoucement
-    [] email everyone in league announcement
+  [x] db
+    [x]  create table
+    [x] insert new announcement
+    [x] remove announcement
+    [x] select all announcements for viewing
+  [x] backend
+    [x] routes
+      [x] new
+      [x] remove
+      [x] select
+    [x] check user is leagueAdmin
+      [x] add new announcement
+      [x] delete annoucement
+    [x] email everyone in league announcement
   [] frontend
     [] form to add
       [] send req
     [] form to remove
       [] send req
-      
+
 [] unit test everything
   [] use mocha and chai
