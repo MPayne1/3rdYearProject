@@ -15,7 +15,7 @@ const phoneNumberSchema = joi.object().keys({
 });
 
 const bioSchema = joi.object().keys({
-  Bio: joi.string().regex(/^[\w\-\s]{0,200}$/).required()
+  Bio: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,200}$/).required()
 });
 
 const showSchema = joi.object().keys({

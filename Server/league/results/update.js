@@ -38,7 +38,7 @@ const updateFootballResultsSchema  = joi.object().keys({
   AwayGoalsScoredHT: joi.number().min(0).required(),
   HomeGoalsScoredFT: joi.number().min(0).required(),
   AwayGoalsScoredFT: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 // schema for inserting tennis results
@@ -54,7 +54,7 @@ const updateTennisResultsSchema  = joi.object().keys({
   AwayPointsScoredS4: joi.number().min(0).max(7).required(),
   HomePointsScoredS5: joi.number().min(0).required(),
   AwayPointsScoredS5: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 // schema for inserting american football / basketball results
@@ -68,7 +68,7 @@ const updateAmericanFootballResultsSchema  = joi.object().keys({
   AwayPointsScoredQ3: joi.number().min(0).required(),
   HomePointsScoredFT: joi.number().min(0).required(),
   AwayPointsScoredFT: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 // schema for inserting volleyball / tabletennis  results
@@ -84,7 +84,7 @@ const updateVolleyballResultsSchema =  joi.object().keys({
   AwayPointsScoredG4: joi.number().min(0).required(),
   HomePointsScoredG5: joi.number().min(0).required(),
   AwayPointsScoredG5: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 // schema for inserting hockey / rugby results
@@ -94,7 +94,7 @@ const updateHockeyResultsSchema  = joi.object().keys({
   AwayPointsScoredHT: joi.number().min(0).required(),
   HomePointsScoredFT: joi.number().min(0).required(),
   AwayPointsScoredFT: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 // schema for inserting cricket results
@@ -108,7 +108,7 @@ const updateCricketResultsSchema  = joi.object().keys({
   AwayRunsI2: joi.number().min(0).required(),
   HomeWicketsLostI2: joi.number().min(0).required(),
   AwayWicketsLostI2: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 
