@@ -71,5 +71,26 @@ Sprint Backlog
     [] form to remove announcement
 
 
+[] league announcements
+  [] db
+    []  create table
+    [] insert new announcement
+    [] remove announcement
+    [] select all announcements for viewing
+  [] backend
+    [] routes
+      [] new
+      [] remove
+      [] select
+    [] check user is leagueAdmin
+      [] add new announcement
+      [] delete annoucement
+    [] email everyone in league announcement
+  [] frontend
+    [] form to add
+      [] send req
+    [] form to remove
+      [] send req
+      
 [] unit test everything
   [] use mocha and chai
