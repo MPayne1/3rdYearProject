@@ -10,7 +10,7 @@ const email = require('../email/index.js');
 
 const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
 const dbInsertAnnouncement = require('../db/insert/insertLeagueAnnouncement.js');
-const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
+const dbDeleteAnnouncement = require('../db/delete/deleteLeagueAnnouncement.js');
 const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
 const dbUserEmailInfo = require('../db/select/selectUserEmailLeagueAnnouncement.js');
 
@@ -22,7 +22,7 @@ const newAnnouncementSchema = joi.object().keys({
 
 const removeAnnouncementSchema = joi.object().keys({
   AnnouncementID: joi.number().positive().required(),
-  TeamID: joi.number().positive().required(),
+  LeagueID: joi.number().positive().required(),
 });
 
 const selectAnnouncementsSchema = joi.object().keys({
@@ -88,15 +88,15 @@ router.post('/remove', async(req, res, next) => {
 
   if(result.error === null) {
     // check user is teamAdmin
-    await dbSelectCaptain(req.user.UserID, req.body.TeamID, async(err, result) => {
+    await dbSelectLeagueAdmin(req.user.UserID, req.body.LeagueID, async(err, result) => {
       if(err) next(err);
       try{
-        result[0].TeamAdmin;
+        result[0].LeagueAdmin;
         // remove announcement from db
         await dbDeleteAnnouncement(req.body.AnnouncementID);
         res.json({message: "Announcement deleted."})
       } catch(e) {
-        var error = new Error("Only the team Admin/captain can remove announcements.");
+        var error = new Error("Only the league admin can remove announcements.");
         res.status(409);
         next(error);
       }
