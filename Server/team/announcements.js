@@ -132,7 +132,7 @@ router.post('/selectAll', async(req, res, next) => {
         });
       } catch(e) {
         var error = new Error("Only the team memebers can view team announcements.");
-        res.status(409);
+        res.status(403);
         next(error);
       }
     });
