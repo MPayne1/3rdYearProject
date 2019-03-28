@@ -8,7 +8,6 @@ Sprint Backlog
   [] fix navbar when screen small e.g on mobile.
   [] add league description
   [] add team description
-  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
@@ -139,7 +138,7 @@ Sprint Backlog
   [x] include letters numbers symbols spaces
 [x] regex for users phone number
 
-[] fix signup frontend to include bio email, phonenumber, privacy
+[x] fix signup frontend to include bio, phonenumber, privacy
 
 
 [] unit test everything
