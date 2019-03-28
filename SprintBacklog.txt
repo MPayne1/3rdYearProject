@@ -77,7 +77,7 @@ Sprint Backlog
       [x] show error Messsage
       [x] show success message
 
-[] league announcements
+[x] league announcements
   [x] db
     [x]  create table
     [x] insert new announcement
@@ -92,15 +92,15 @@ Sprint Backlog
       [x] add new announcement
       [x] delete annoucement
     [x] email everyone in league announcement
-  [] frontend
-    [] form to add
-      [] send req
-      [] show error Messsage
-      [] show success message
-    [] form to remove
-      [] send req
-      [] show error Messsage
-      [] show success message
+  [x] frontend
+    [x] form to add
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+    [x] form to remove
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
 
 
 
