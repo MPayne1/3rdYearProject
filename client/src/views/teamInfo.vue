@@ -10,13 +10,20 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
-            <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center" v-for="announcement in announcements">
+            <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
+            v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
+              <div v-if="announcementOpen && announcementIndex == index " class="">
+                <button class="btn btn-primary" type="submit" @click="deleteAnnouncement(announcement.AnnouncementID)"name="button">Delete Announcement</button>
+              </div>
             </li>
           </ul>
           <div class="card-footer">
             <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
               {{announcementErrorMessage}}
+            </div>
+            <div v-if="announcementSuccess" class="alert alert-success" role="alert">
+              {{announcementSuccess}}
             </div>
             <form  @submit.prevent="addAnnoucement()">
             <div class="form-group">
@@ -206,6 +213,7 @@
   const FETCH_RESULTS_URL = 'https://localhost:3000/team/results/';
   const GET_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/selectAll';
   const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/new';
+  const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/remove';
 
   const addPlayerSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -215,6 +223,11 @@
 
   const addAnnouncementSchema = joi.object().keys({
     message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+    TeamID: joi.number().positive().required(),
+  });
+
+  const deleteAnnouncementSchema = joi.object().keys({
+    AnnouncementID: joi.number().positive().required(),
     TeamID: joi.number().positive().required(),
   });
 
@@ -238,7 +251,10 @@
       newAnnouncement: {
         message: '',
         TeamID: '',
-      }
+      },
+      announcementOpen: false,
+      announcementIndex: '',
+      announcementSuccess: '',
     }),
     watch: {
       username: {
@@ -307,6 +323,17 @@
         });
     },
     methods: {
+      showAnnouncementInfo(index){
+        if (this.announcementOpen == true && this.announcementIndex == index) {
+          this.announcementOpen = false;
+          this.announcementIndex = index;
+        } else if (this.announcementOpen == true && this.announcementIndex != index) {
+          this.announcementIndex = index;
+          this.announcementOpen = true;
+        } else {
+          this.announcementOpen = !this.announcementOpen;
+        }
+      },
       showResultsInfo(index) {
         if (this.resultsInfoOpen == true && this.resultIndex == index) {
           this.resultsInfoOpen = false;
@@ -468,20 +495,40 @@
               'content-type': 'application/json',
               authorization: `Bearer ${localStorage.token}`,
             },
-          }).then((response) => {
-            if (response.ok) {
-              return response.json();
+          }).then(response => response.json())
+          .then((result) => {
+            if (result.message) {
+              this.announcementSuccess = result.message;
+              this.getAnnouncements();
+              this.newAnnouncement.message = '';
             }
-            // handle any errors the server returns
-            return response.json().then((error) => {
-              throw new Error(error.message);
-            });
-          }).then(() => { // if no errors refresh players list
-            this.getAnnouncements();
-            this.newAnnouncement.message = '';
           }).catch((error) => { // if any errors catch them any display error message
             this.errorMessage = error.message;
           });
+        }
+      },
+      deleteAnnouncement(announcementID) {
+        const body = {
+          AnnouncementID: announcementID,
+          TeamID: this.teamID,
+        };
+        if(this.validDeleteAnnouncement(body)) {
+          fetch(DELETE_ANNOUNCEMENT_URL, {
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+              'content-type': 'application/json',
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(res => res.json())
+            .then((result) => {
+              if (result.message) {
+                this.announcementSuccess = result.message;
+                this.getAnnouncements();
+              } else {
+                console.log(result);
+              }
+            });
         }
       },
       validAddPlayer(body) {
@@ -506,7 +553,20 @@
           this.announcementErrorMessage = 'Messsage must be less than 200 characters';
         }
         if (result.error.message.includes('teamID')) {
-          this.announcementErrorMessage = 'Invlaid team, please refresh page';
+          this.announcementErrorMessage = 'Invlaid team, please refresh the page';
+        }
+        return false;
+      },
+      validDeleteAnnouncement(body) {
+        const result = joi.validate(body, deleteAnnouncementSchema);
+        if (result.error === null) {
+          return true;
+        }
+        if (result.error.message.includes('AnnouncementID')) {
+          this.announcementErrorMessage = 'Invalid announcement please refresh the page';
+        }
+        if (result.error.message.includes('TeamID')) {
+          this.announcementErrorMessage = 'Invlaid team, please refresh the page';
         }
         return false;
       },
