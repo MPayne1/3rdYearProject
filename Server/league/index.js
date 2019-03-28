@@ -8,6 +8,7 @@ const joi = require('joi');
 const resultsRoute = require('./results/index.js');
 const fixturesRoute = require('./fixtures/index.js');
 const rankingsRoute = require('./rankings/index.js');
+const announcementsRoute = require('./LeagueAnnouncements.js');
 // ------  db operations  ------
 
 const dbSelectLeagueNames = require('../db/select/selectLeagueNames.js');
@@ -59,6 +60,7 @@ const getSportSchema =  joi.object().keys({
 router.use('/results', resultsRoute);
 router.use('/fixtures', fixturesRoute);
 router.use('/rankings', rankingsRoute);
+router.use('/announcements', announcementsRoute);
 // all paths are prepended with /league
 router.get('/', (req, res) => {
   res.json({
