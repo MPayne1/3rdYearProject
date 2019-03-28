@@ -30,7 +30,7 @@ const signUpSchema = joi.object().keys({
   FirstName: joi.string().alphanum().min(2).max(30).required(),
   LastName: joi.string().alphanum().min(2).max(30).required(),
   phoneNumber: joi.string().alphanum().max(15).required(),
-  Bio: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+  Bio: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,200}$/).required(),
   publiclyShow: joi.any().valid('False', 'True')
 });
 
