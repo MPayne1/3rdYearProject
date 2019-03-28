@@ -69,7 +69,7 @@ router.post('/isTeamAdmin', async(req, res, next) => {
       result[0].TeamAdmin;
       res.json(result[0]);
     } catch(e) {
-      res.json({message: "user isn't the team Admi.n"});
+      res.json({message: "User is not the team Admin"});
     }
   });
 });
