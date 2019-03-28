@@ -135,5 +135,9 @@ Sprint Backlog
       [x] remove announcement
       [x] start season
 
+[] fix regex for match description, user bio, announcements
+  [] include letters numbers symbols spaces
+[] regex for users phone number
+
 [] unit test everything
   [] use mocha and chai
