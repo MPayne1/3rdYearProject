@@ -135,12 +135,30 @@ function sendTeamAnnouncement(email,firstname, lastname, teamname, message, call
   });
 }
 
+// send email for a new league annoucement
+function sendLeagueAnnouncement(email,firstname, lastname, leagueName, message, callback) {
+  var text = `Hello ${firstname} ${lastname},
+  You have recieved a new league message from ${leagueName}:
+  ${message}`;
 
+  var subject = "New Legaue Announcement";
+  setMailOptions(email, subject, text);
+  transporter.sendMail(mailOptions, (err, info) => {
+    if(err) {
+      console.log(err);
+      callback(err, null);
+    }  else {
+      console.log('email sent ' + info.response);
+      callback(null, info);
+    }
+  });
+}
 
 module.exports = {
   sendChangeEmail,
   sendChangePassword,
   sendForgottenPassword,
   sendFixtureUpdated,
-  sendTeamAnnouncement
+  sendTeamAnnouncement,
+  sendLeagueAnnouncement
 };

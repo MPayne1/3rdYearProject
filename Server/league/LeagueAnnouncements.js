@@ -12,7 +12,7 @@ const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
 const dbInsertAnnouncement = require('../db/insert/insertLeagueAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
 const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
-const dbUserEmailInfo = require('../db/select/selectUserEmailTeamAnnouncement.js');
+const dbUserEmailInfo = require('../db/select/selectUserEmailLeagueAnnouncement.js');
 
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
@@ -52,26 +52,25 @@ router.post('/new', async(req, res, next) => {
         // add announcement to db
         await dbInsertAnnouncement( req.body.LeagueID, req.body.message);
 
-        res.json({message: "Announcement added"});
-        // // get info for all players
-        // await dbUserEmailInfo(req.body.TeamID, async (err,userInfo) => {
-        //   if(err) next(err);
-        //   try {
-        //     userInfo[0].email;
-        //     // send email to users in team
-        //     for(i = 0; i < userInfo.length; i++) {
-        //       await email.sendTeamAnnouncement(userInfo[i].email,
-        //         userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
-        //         req.body.message, (err, mail) => {
-        //             if(err) next(err);
-        //             console.log(mail);
-        //         });
-        //     }
-        //     res.json({message: "Announcement added"});
-        //   } catch(e) {
-        //     next(e);
-        //   }
-        // });
+        // get info for all players
+        await dbUserEmailInfo(req.body.LeagueID, async (err,userInfo) => {
+          if(err) next(err);
+          try {
+            userInfo[0].email;
+            // send email to users in team
+            for(i = 0; i < userInfo.length; i++) {
+              await email.sendLeagueAnnouncement(userInfo[i].email,
+                userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
+                req.body.message, (err, mail) => {
+                    if(err) next(err);
+                    console.log(mail);
+                });
+            }
+            res.json({message: "Announcement added"});
+          } catch(e) {
+            next(e);
+          }
+        });
       } catch(e) {
         var error = new Error("Only the league Admincan add announcements.");
         res.status(409);
