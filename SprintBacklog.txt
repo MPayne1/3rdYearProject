@@ -14,9 +14,9 @@ Sprint Backlog
   [] transfer leagueAdmin
   [] show teamname rather than home/away in results page
 
-[] need to do
+[x] need to do
   [x] get league/team admin for frontend only show options of user is
-  [] update regex to include special characters for match description/announcements/user bio
+  [x] update regex to include special characters for match description/announcements/user bio
   [x] team announcements, team captain
   [x] league announcements, league admin
 
@@ -135,9 +135,12 @@ Sprint Backlog
       [x] remove announcement
       [x] start season
 
-[] fix regex for match description, user bio, announcements
-  [] include letters numbers symbols spaces
-[] regex for users phone number
+[x] fix regex for match description, user bio, announcements
+  [x] include letters numbers symbols spaces
+[x] regex for users phone number
+
+[] fix signup frontend to include bio email, phonenumber, privacy
+
 
 [] unit test everything
   [] use mocha and chai
