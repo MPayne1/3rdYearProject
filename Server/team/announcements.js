@@ -17,7 +17,6 @@ const dbSelectPlaysFor = require('../db/select/selectPlaysInTeam.js');
 
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
-//  message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
   message: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,200}$/).required(),
   TeamID: joi.number().positive().required(),
 });
@@ -59,15 +58,15 @@ router.post('/new', async(req, res, next) => {
           if(err) next(err);
           try {
             userInfo[0].email;
-            // // send email to users in team
-            // for(i = 0; i < userInfo.length; i++) {
-            //   await email.sendTeamAnnouncement(userInfo[i].email,
-            //     userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
-            //     req.body.message, (err, mail) => {
-            //         if(err) next(err);
-            //         console.log(mail);
-            //     });
-            // }
+            // send email to users in team
+            for(i = 0; i < userInfo.length; i++) {
+              await email.sendTeamAnnouncement(userInfo[i].email,
+                userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
+                req.body.message, (err, mail) => {
+                    if(err) next(err);
+                    console.log(mail);
+                });
+            }
             res.json({message: "Announcement added"});
           } catch(e) {
             next(e);

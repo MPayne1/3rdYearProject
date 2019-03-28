@@ -11,7 +11,7 @@ const dbUpdateBio = require('../db/update/profile/updateUserBio.js');
 const dbUpdatePubliclyShow = require('../db/update/profile/updatePubliclyShow.js');
 // ------  schemas  ------
 const phoneNumberSchema = joi.object().keys({
-  phoneNumber: joi.string().alphanum().max(15).required()
+  phoneNumber: joi.string().regex(/^[0-9]{3,15}$/).required()
 });
 
 const bioSchema = joi.object().keys({
