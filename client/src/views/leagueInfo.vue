@@ -15,14 +15,14 @@
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
-              <div v-if="announcementOpen && announcementIndex == index " class="">
+              <div v-if="announcementOpen && announcementIndex == index && this.isLeagueAdmin" class="">
                 <button class="btn btn-primary" type="submit"
                 @click="deleteAnnouncement(announcement.LeagueAnnouncementID)"
                 name="button">Delete Announcement</button>
               </div>
             </li>
           </ul>
-          <div class="card-footer">
+          <div class="card-footer"v-if="isLeagueAdmin">
             <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
               {{announcementErrorMessage}}
             </div>
@@ -142,7 +142,7 @@
                       <input v-model="fixture.postcode" type="text" class="form-control"
                         placeholder="Postcode/ZIP code" required>
                     </div>
-                    <div class="text-center">
+                    <div class="text-center" v-if="isLeagueAdmin || isATeamAdmin">
                       <button type="submit" class="btn btn-primary">Update Fixture</button>
                     </div>
                     <div id="fixtureUpdatedDiv" v-if="fixtureUpdated" class="alert alert-success">
@@ -159,7 +159,7 @@
             <div class="form-group">
               <h5>No Upcoming Fixtures</h5>
               <button @click="startSeason()" class="btn btn-primary btn-lg"
-                type="submit">Start a new Season</button>
+                type="submit" v-if="isLeagueAdmin">Start a new Season</button>
             </div>
           </div>
           <div class="text-white card-footer" v-if="fixturesExtra[0] != undefined && isAllFixtures == true">
@@ -327,6 +327,8 @@ const GET_SPORT_URL = 'https://localhost:3000/league/sport';
 const GET_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/selectAll';
 const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/new';
 const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/remove';
+const IS_LEAGUE_ADMIN_URL = 'https://localhost:3000/league/isLeagueAdmin';
+const IS_A_TEAM_ADMIN_URL = 'https://localhost:3000/league/isTeamAdmin';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -378,6 +380,8 @@ export default {
     announcementIndex: '',
     announcementSuccess: '',
     announcementErrorMessage: '',
+    isLeagueAdmin: false,
+    isATeamAdmin: false,
   }),
   watch: {
     fixtures: {
@@ -430,6 +434,8 @@ export default {
         this.getAnnouncements();
         // get upcoming Fixtures
         this.upcomingFixtures();
+        this.getIsLeagueAdmin();
+        this.getIsATeamAdmin();
       });
   },
   methods: {
@@ -479,7 +485,7 @@ export default {
         county: this.fixtures[index].county,
         postcode: this.fixtures[index].postcode,
       };
-      if (this.validFixtureUpdate(body)) {
+      if (this.validFixtureUpdate(body) && (this.isLeagueAdmin || this.isATeamAdmin)) {
         fetch(UPDATE_FIXTURES_URL, {
           method: 'POST',
           headers: {
@@ -612,30 +618,32 @@ export default {
     // start a new season
     startSeason() {
       this.errorMessage = '';
-      const leagueID = {
-        leagueID: this.leagueID,
-      };
-      fetch(START_SEASON_URL, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-        body: JSON.stringify(leagueID),
-      }).then(res => res.json())
-        .then((result) => {
-          if (result) {
-            console.log(result);
-            if (result.message) {
-              throw new Error(result.message);
-            } else {
-              this.upcomingFixtures();
+      if(this.isLeagueAdmin) {
+        const leagueID = {
+          leagueID: this.leagueID,
+        };
+        fetch(START_SEASON_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+          body: JSON.stringify(leagueID),
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              console.log(result);
+              if (result.message) {
+                throw new Error(result.message);
+              } else {
+                this.upcomingFixtures();
+              }
             }
-          }
-        }).catch((error) => {
-          this.errorMessage = error.message;
-          console.log(this.errorMessage);
-        });
+          }).catch((error) => {
+            this.errorMessage = error.message;
+            console.log(this.errorMessage);
+          });
+      }
     },
     goToTeamPage(teamName) {
       this.$router.push({ path: '/team/info/', query: { teamName } });
@@ -691,7 +699,7 @@ export default {
         message: this.newAnnouncement.message,
         LeagueID: this.leagueID,
       };
-      if (this.validAddAnnouncement(body)) {
+      if (this.validAddAnnouncement(body) && this.isLeagueAdmin) {
         // send the request to the backend
         fetch(ADD_ANNOUNCEMENT_URL, {
           method: 'POST',
@@ -718,7 +726,7 @@ export default {
         AnnouncementID: announcementID,
         LeagueID: this.leagueID,
       };
-      if(this.validDeleteAnnouncement(body)) {
+      if(this.validDeleteAnnouncement(body) && this.isLeagueAdmin) {
         fetch(DELETE_ANNOUNCEMENT_URL, {
           method: 'POST',
           body: JSON.stringify(body),
@@ -733,6 +741,55 @@ export default {
               this.getAnnouncements();
             } else {
               console.log(result);
+            }
+          });
+      }
+    },
+
+    getIsLeagueAdmin() {
+      if(this.leagueID) {
+        const body = {
+          LeagueID: this.leagueID
+        };
+        fetch(IS_LEAGUE_ADMIN_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result.LeagueAdmin) {
+            console.log(result);
+              this.isLeagueAdmin = true;
+            } else {
+              console.log(result);
+              this.isLeagueAdmin = false;
+            }
+          });
+      }
+    },
+    getIsATeamAdmin() {
+      if(this.leagueID) {
+        const body = {
+          LeagueID: this.leagueID
+        };
+        fetch(IS_A_TEAM_ADMIN_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result.TeamAdmin) {
+            console.log(result);
+              this.isATeamAdmin = true;
+            } else {
+              console.log(result);
+              this.isATeamAdmin = false;
             }
           });
       }

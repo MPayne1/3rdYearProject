@@ -19,6 +19,7 @@ const dbSelectTeamsInLeague = require('../db/select/selectTeamsInLeague.js');
 const dbSelectLeaguesPlayIn = require('../db/select/selectLeaguesPlayIn.js');
 const dbSelectLeagueID = require('../db/select/selectLeagueID.js');
 const dbSelectLeagueSport = require('../db/select/selectLeagueSport.js');
+const dbSelectTeamAdminsInLeague = require('../db/select/selectTeamAdminsInLeague.js');
 
 //------  schemas  ------
 
@@ -68,6 +69,31 @@ router.get('/', (req, res) => {
   });
 });
 
+// handle request to check if user is leagueAdmin
+router.post('/isLeagueAdmin', async(req, res, next) => {
+  await dbSelectLeagueAdmin(req.user.UserID, req.body.LeagueID, (err, result) => {
+    if(err) next(err);
+    try {
+      result[0].LeagueAdmin;
+      res.json(result[0]);
+    }catch(e) {
+      res.json({message: "User is not league Admin"});
+    }
+  });
+});
+
+// handle request to check if user is team admin for any teams in the league
+router.post('/isTeamAdmin', async(req, res, next) => {
+  await dbSelectTeamAdminsInLeague(req.body.LeagueID, req.user.UserID, (err, result) => {
+    if(err) next(err);
+    try {
+      result[0].TeamAdmin;
+      res.json(result[0]);
+    } catch(e) {
+      re.json({message: "User is not the team admin for a team in the league"});
+    }
+  });
+});
 
 // handle get leagueID from leagueName request
 router.post('/leagueID', async(req, res, next) => {
