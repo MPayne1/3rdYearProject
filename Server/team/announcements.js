@@ -13,6 +13,8 @@ const dbInsertAnnouncement = require('../db/insert/insertTeamAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
 const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
 const dbUserEmailInfo = require('../db/select/selectUserEmailTeamAnnouncement.js');
+const dbSelectPlaysFor = require('../db/select/selectPlaysInTeam.js');
+
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({
   message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
@@ -111,14 +113,27 @@ router.post('/selectAll', async(req, res, next) => {
   const result = joi.validate(req.body, selectAnnouncementsSchema);
 
   if(result.error === null) {
-    // get all announcements from db
-    await dbSelectTeamAnnouncements(req.body.TeamID, (err, result) => {
-      if(err) next(err);
-      try{
-        result[0].message;
-        res.json(result);
+    // check user plays in team
+    await dbSelectPlaysFor(req.user.UserID, req.body.TeamID, async(er, team) => {
+      if(er) next(er);
+      try {
+        team[0].TeamID;
+        // get all announcements from db
+        await dbSelectTeamAnnouncements(req.body.TeamID, (err, result) => {
+          if(err) next(err);
+          try{
+            result[0].message;
+            res.json(result);
+          } catch(e) {
+            var error = new Error("Currently no team announcements");
+            res.status(422);
+            next(error);
+          }
+        });
       } catch(e) {
-        next(e);
+        var error = new Error("Only the team memebers can view team announcements.");
+        res.status(409);
+        next(error);
       }
     });
   } else {

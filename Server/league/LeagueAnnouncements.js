@@ -119,7 +119,9 @@ router.post('/selectAll', async(req, res, next) => {
         result[0].message;
         res.json(result);
       } catch(e) {
-        next(e);
+        var error = new Error("Currently no league announcements");
+        res.status(422);
+        next(error);
       }
     });
   } else {
