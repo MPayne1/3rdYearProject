@@ -11,15 +11,15 @@ const rankingsRoute = require('./rankings/index.js');
 const announcementsRoute = require('./LeagueAnnouncements.js');
 // ------  db operations  ------
 
-const dbSelectLeagueNames = require('../db/select/selectLeagueNames.js');
+const dbSelectLeagueNames = require('../db/select/League/selectLeagueNames.js');
 const dbInsert = require('../db/insert/createLeague.js');
-const dbSelectLeagues = require('../db/select/selectLeagueFromCity.js');
-const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
-const dbSelectTeamsInLeague = require('../db/select/selectTeamsInLeague.js');
-const dbSelectLeaguesPlayIn = require('../db/select/selectLeaguesPlayIn.js');
-const dbSelectLeagueID = require('../db/select/selectLeagueID.js');
-const dbSelectLeagueSport = require('../db/select/selectLeagueSport.js');
-const dbSelectTeamAdminsInLeague = require('../db/select/selectTeamAdminsInLeague.js');
+const dbSelectLeagues = require('../db/select/League/selectLeagueFromCity.js');
+const dbSelectLeagueAdmin = require('../db/select/League/selectLeagueAdmin.js');
+const dbSelectTeamsInLeague = require('../db/select/League/selectTeamsInLeague.js');
+const dbSelectLeaguesPlayIn = require('../db/select/League/selectLeaguesPlayIn.js');
+const dbSelectLeagueID = require('../db/select/League/selectLeagueID.js');
+const dbSelectLeagueSport = require('../db/select/League/selectLeagueSport.js');
+const dbSelectTeamAdminsInLeague = require('../db/select/League/selectTeamAdminsInLeague.js');
 
 //------  schemas  ------
 

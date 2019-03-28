@@ -8,11 +8,11 @@ const joi = require('joi');
 
 const email = require('../email/index.js');
 
-const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
+const dbSelectLeagueAdmin = require('../db/select/League/selectLeagueAdmin.js');
 const dbInsertAnnouncement = require('../db/insert/insertLeagueAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteLeagueAnnouncement.js');
-const dbSelectLeagueAnnouncements = require('../db/select/selectLeagueAnnouncements.js');
-const dbUserEmailInfo = require('../db/select/selectUserEmailLeagueAnnouncement.js');
+const dbSelectLeagueAnnouncements = require('../db/select/League/selectLeagueAnnouncements.js');
+const dbUserEmailInfo = require('../db/select/Users/selectUserEmailLeagueAnnouncement.js');
 
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({

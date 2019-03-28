@@ -8,7 +8,7 @@ const joi = require('joi');
 const changeInfo = require('./changeInfo.js');
 
 
-const dbSelectUserInfo = require('../db/select/selectUserInfo.js');
+const dbSelectUserInfo = require('../db/select/Users/selectUserInfo.js');
 // ------  schemas  ------
 
 const viewProfileSchema = joi.object().keys({

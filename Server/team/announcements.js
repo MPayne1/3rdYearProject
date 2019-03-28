@@ -8,12 +8,12 @@ const joi = require('joi');
 
 const email = require('../email/index.js');
 
-const dbSelectCaptain = require('../db/select/selectTeamCaptain.js');
+const dbSelectCaptain = require('../db/select/Team/selectTeamCaptain.js');
 const dbInsertAnnouncement = require('../db/insert/insertTeamAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteTeamAnnouncement.js');
-const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
-const dbUserEmailInfo = require('../db/select/selectUserEmailTeamAnnouncement.js');
-const dbSelectPlaysFor = require('../db/select/selectPlaysInTeam.js');
+const dbSelectTeamAnnouncements = require('../db/select/Team/selectTeamAnnouncements.js');
+const dbUserEmailInfo = require('../db/select/Users/selectUserEmailTeamAnnouncement.js');
+const dbSelectPlaysFor = require('../db/select/Team/selectPlaysInTeam.js');
 
 // ------  schemas  ------
 const newAnnouncementSchema = joi.object().keys({

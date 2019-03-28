@@ -8,7 +8,7 @@ const joi = require('joi');
 
 // ------  db operations  ------
 
-const dbSelectUpdateFixtureAdmin = require('../../db/select/selectUpdateFixtureAdmin.js');
+const dbSelectUpdateFixtureAdmin = require('../../db/select/Fixture/selectUpdateFixtureAdmin.js');
 const dbInsertFootballResult = require('../../db/insert/results/insertFootballResults.js');
 const dbUpdateFixturePlayed = require('../../db/update/updateFixturePlayed.js');
 const dbInsertTennisResult = require('../../db/insert/results/insertTennisResults.js');

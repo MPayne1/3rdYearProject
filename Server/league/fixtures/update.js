@@ -9,11 +9,11 @@ const joi = require('joi');
 const email = require('../../email/index.js');
 // ------  db operations  ------
 
-const dbSelectUpdateFixtureAdmin = require('../../db/select/selectUpdateFixtureAdmin.js');
+const dbSelectUpdateFixtureAdmin = require('../../db/select/Fixture/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../../db/update/updateFixtureInfo.js');
-const dbSelectUpcomingFixtures = require('../../db/select/selectUpcomingFixtures.js');
-const dbSelectLeagueAdmin = require('../../db/select/selectLeagueAdmin.js');
-const dbSelectTeamsInLeague = require('../../db/select/selectTeamsInLeague.js');
+const dbSelectUpcomingFixtures = require('../../db/select/Fixture/selectUpcomingFixtures.js');
+const dbSelectLeagueAdmin = require('../../db/select/League/selectLeagueAdmin.js');
+const dbSelectTeamsInLeague = require('../../db/select/League/selectTeamsInLeague.js');
 const dbUpdateSeasonFinished = require('../../db/update/updateFinishPreviousSeason.js');
 const dbInsertSelectNewSeason = require('../../db/insert/insertSelectNewSeason.js');
 const dbInsertFixture = require('../../db/insert/insertFixture.js');
@@ -27,8 +27,8 @@ const dbInsertTableTennisRanking = require('../../db/insert/rankings/insertTable
 const dbInsertVolleyballRanking = require('../../db/insert/rankings/insertVolleyballRankings.js');
 const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasketballRankings.js');
 const dbInsertCricketRanking = require('../../db/insert/rankings/insertCricketRankings.js');
-const dbSelectFixturePlayers = require('../../db/select/selectFixturePlayers.js');
-const dbSelectFixtureTeams = require('../../db/select/selectFixtureTeams.js');
+const dbSelectFixturePlayers = require('../../db/select/Fixture/selectFixturePlayers.js');
+const dbSelectFixtureTeams = require('../../db/select/Fixture/selectFixtureTeams.js');
 
 
 

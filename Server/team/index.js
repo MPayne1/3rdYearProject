@@ -9,16 +9,16 @@ const resultsRoute = require('./results.js');
 const announcementsRoute = require('./announcements.js');
 
 // ------  db operations  ------
-const dbSelectTeamNames = require('../db/select/selectTeamNames.js');
+const dbSelectTeamNames = require('../db/select/Team/selectTeamNames.js');
 const dbInsert = require('../db/insert/createTeam.js');
-const dbSelectPlayer = require('../db/select/selectPlayers.js');
+const dbSelectPlayer = require('../db/select/Team/selectPlayers.js');
 const dbInsertPlayer = require('../db/insert/addPlayers.js');
-const dbSelectCaptain = require('../db/select/selectTeamCaptain.js');
-const dbSelectPlaysFor = require('../db/select/selectPlaysFor.js');
-const dbSelectAllPlayers = require('../db/select/selectAllPlayers.js');
-const dbSelectTeamID = require('../db/select/selectTeamID.js');
+const dbSelectCaptain = require('../db/select/Team/selectTeamCaptain.js');
+const dbSelectPlaysFor = require('../db/select/Team/selectPlaysFor.js');
+const dbSelectAllPlayers = require('../db/select/Team/selectAllPlayers.js');
+const dbSelectTeamID = require('../db/select/Team/selectTeamID.js');
 const dbInsertPlayerTeamname = require('../db/insert/insertPlayerTeamName.js');
-const dbSelectTeamSport = require('../db/select/selectTeamSport.js');
+const dbSelectTeamSport = require('../db/select/Team/selectTeamSport.js');
 // ------  schemas  ------
 
 const teamSchema = joi.object().keys({

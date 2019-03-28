@@ -8,13 +8,13 @@ const jwt = require('jsonwebtoken');
 const email = require('../email/index.js');
 const crypto = require('crypto');
 
-const dbSelectUser = require('../db/select/selectUser.js');
-const dbSelectUserNames = require('../db/select/selectUserNames.js');
+const dbSelectUser = require('../db/select/Users/selectUser.js');
+const dbSelectUserNames = require('../db/select/Users/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
 const dbUpdateUserEmail = require('../db/update/updateUserEmail.js');
 const dbUpdateUserPassword = require('../db/update/updateUserPassword.js');
-const dbSelectUserForgottenPassword = require('../db/select/selectUserForgottenPassword.js');
-const dbSelectResetPasswordInfo = require('../db/select/selectResetPasswordInfo.js');
+const dbSelectUserForgottenPassword = require('../db/select/Users/selectUserForgottenPassword.js');
+const dbSelectResetPasswordInfo = require('../db/select/Users/selectResetPasswordInfo.js');
 const dbUpdateResetPasswordInfo = require('../db/update/updateUserForgottenPassword.js');
 const dbInsertPasswordReset = require('../db/insert/insertPasswordReset.js');
 
