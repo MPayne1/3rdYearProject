@@ -18,7 +18,7 @@ Sprint Backlog
   [] get league/team admin for frontend only show options of user is
   [] update regex to include special characters for match description
   [x] team announcements, team captain
-  [] league announcements, league admin
+  [x] league announcements, league admin
 
 [] attribute loading spinner to loading.io
 
@@ -103,7 +103,18 @@ Sprint Backlog
       [x] show success message
 
 
-
+[] teamAdmin tailoring
+  [] backend
+    [] get the teams admin
+      [] db
+      [] route
+  [] frontend
+    [] send req for teams admin
+    [] check user is teams admin
+    [] show teamadmin things to only team admin
+      [] add player
+      [] add announcements
+      [] remove announcements
 
 [] unit test everything
   [] use mocha and chai
