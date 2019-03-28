@@ -60,7 +60,7 @@ router.post('/new', async(req, res, next) => {
             // send email to users in team
             for(i = 0; i < userInfo.length; i++) {
               await email.sendLeagueAnnouncement(userInfo[i].email,
-                userInfo[i].firstname, userInfo[i].lastname, userInfo[i].teamname,
+                userInfo[i].firstname, userInfo[i].lastname, userInfo[i].leagueName,
                 req.body.message, (err, mail) => {
                     if(err) next(err);
                     console.log(mail);

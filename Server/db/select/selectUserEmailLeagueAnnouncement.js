@@ -6,7 +6,7 @@ const dbCon  = require('../connection.js');
 */
 var selectUser  = async function(LeagueID, callback) {
   var res;
-    var sql = `SELECT email, firstname, lastname, teamname FROM users, team, playsfor, league
+    var sql = `SELECT email, firstname, lastname, leagueName FROM users, team, playsfor, league
     WHERE team.LeagueID =  ${mysql.escape(LeagueID)}
     and team.TeamID = playsfor.TeamID and playsfor.UserID = users.UserID
     and league.LeagueID = team.LeagueID`;
