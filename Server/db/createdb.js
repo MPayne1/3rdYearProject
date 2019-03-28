@@ -364,7 +364,7 @@ async function createPasswordResetTable(err) {
   });
 }
 
-
+// create table for team announcements
 async function createTeamAnnouncementTable(err) {
   if(err) throw err;
   var sql = "CREATE TABLE teamAnnouncement(AnnouncementID int NOT NULL AUTO_INCREMENT,"+
@@ -376,6 +376,21 @@ async function createTeamAnnouncementTable(err) {
   });
 }
 
+// create table for league announcements
+async function createLeagueAnnouncementTable(err) {
+  if(err) throw err;
+  var sql = "CREATE TABLE leagueAnnouncement(LeagueAnnouncementID int NOT NULL AUTO_INCREMENT,"+
+  "LeagueID int, message VARCHAR(200), PRIMARY KEY(LeagueAnnouncementID),"+
+  " FOREIGN KEY (LeagueID) REFERENCES League(LeagueID));";
+  await db.query(sql, (err, result) => {
+    if(err) throw err;
+    console.log('league announcement table created');
+  });
+}
+
+
+
+
 // createUsersTable();
 // createLeagueTable();
 // createTeamTable();
@@ -383,8 +398,8 @@ async function createTeamAnnouncementTable(err) {
 // createSeasonsTable();
 // createFixturesTable();
 // createPasswordResetTable();
-// createTeamAnnouncementTable(); 
-
+// createTeamAnnouncementTable();
+// createLeagueAnnouncementTable();
 
 // ------  create Results tables  ------
 
