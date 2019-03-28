@@ -11,7 +11,7 @@ const email = require('../email/index.js');
 const dbSelectLeagueAdmin = require('../db/select/selectLeagueAdmin.js');
 const dbInsertAnnouncement = require('../db/insert/insertLeagueAnnouncement.js');
 const dbDeleteAnnouncement = require('../db/delete/deleteLeagueAnnouncement.js');
-const dbSelectTeamAnnouncements = require('../db/select/selectTeamAnnouncements.js');
+const dbSelectLeagueAnnouncements = require('../db/select/selectLeagueAnnouncements.js');
 const dbUserEmailInfo = require('../db/select/selectUserEmailLeagueAnnouncement.js');
 
 // ------  schemas  ------
@@ -26,7 +26,7 @@ const removeAnnouncementSchema = joi.object().keys({
 });
 
 const selectAnnouncementsSchema = joi.object().keys({
-  TeamID: joi.number().positive().required(),
+  LeagueID: joi.number().positive().required(),
 });
 
 // ------  routes  ------
@@ -107,13 +107,13 @@ router.post('/remove', async(req, res, next) => {
 });
 
 
-// route to select all team announcements for a team
+// route to select all league announcements for a league
 router.post('/selectAll', async(req, res, next) => {
   const result = joi.validate(req.body, selectAnnouncementsSchema);
 
   if(result.error === null) {
     // get all announcements from db
-    await dbSelectTeamAnnouncements(req.body.TeamID, (err, result) => {
+    await dbSelectLeagueAnnouncements(req.body.LeagueID, (err, result) => {
       if(err) next(err);
       try{
         result[0].message;
