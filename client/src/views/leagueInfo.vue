@@ -8,6 +8,42 @@
     </div>
     <div class="text-center row">
       <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div id="announcementCard" class="card  bg-secondary">
+          <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
+          <ul class="list-group list-group-flush text-center">
+            <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
+            v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
+              <h5 class="text-center">{{announcement.message}}</h5>
+              <div v-if="announcementOpen && announcementIndex == index " class="">
+                <button class="btn btn-primary" type="submit"
+                @click="deleteAnnouncement(announcement.LeagueAnnouncementID)"
+                name="button">Delete Announcement</button>
+              </div>
+            </li>
+          </ul>
+          <div class="card-footer">
+            <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
+              {{announcementErrorMessage}}
+            </div>
+            <div v-if="announcementSuccess" class="alert alert-success" role="alert">
+              {{announcementSuccess}}
+            </div>
+            <form  @submit.prevent="addAnnoucement()">
+            <div class="form-group">
+              <input v-model="newAnnouncement.message" type="text" class="form-control"
+                placeholder="Enter message" required>
+                <br>
+              <button class="btn btn-primary btn-lg"
+                type="submit">Add a new announcement</button>
+            </div>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center row">
+      <div class="col-md-2"></div>
       <div  style="overflow-x:auto" class="col-md-8">
         <table id="rankingsTable" class="table table-hover">
           <thead id="rankingsHeader">
@@ -288,6 +324,9 @@ const UPDATE_FIXTURES_URL = 'https://localhost:3000/league/fixtures/update/updat
 const FETCH_RANKINGS_URL = 'https://localhost:3000/league/rankings/fetch/';
 const FETCH_RESULTS_URL = 'https://localhost:3000/league/results/fetch/';
 const GET_SPORT_URL = 'https://localhost:3000/league/sport';
+const GET_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/selectAll';
+const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/new';
+const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/league/announcements/remove';
 
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
@@ -297,6 +336,17 @@ const updateFixtureSchema = joi.object().keys({
   county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   postcode: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
 });
+
+const addAnnouncementSchema = joi.object().keys({
+  message: joi.string().regex(/^[\w\-\s]{0,200}$/).required(),
+  LeagueID: joi.number().positive().required(),
+});
+
+const deleteAnnouncementSchema = joi.object().keys({
+  AnnouncementID: joi.number().positive().required(),
+  LeagueID: joi.number().positive().required(),
+});
+
 
 export default {
   data: () => ({
@@ -319,6 +369,15 @@ export default {
     resultsInfoOpen: false,
     resultIndex: '',
     showMax: 10,
+    announcements: {},
+    newAnnouncement: {
+      message: '',
+      LeagueID: '',
+    },
+    announcementOpen: false,
+    announcementIndex: '',
+    announcementSuccess: '',
+    announcementErrorMessage: '',
   }),
   watch: {
     fixtures: {
@@ -368,11 +427,23 @@ export default {
         }
       }).then((res) => {
         this.getSport();
+        this.getAnnouncements();
         // get upcoming Fixtures
         this.upcomingFixtures();
       });
   },
   methods: {
+    showAnnouncementInfo(index){
+      if (this.announcementOpen == true && this.announcementIndex == index) {
+        this.announcementOpen = false;
+        this.announcementIndex = index;
+      } else if (this.announcementOpen == true && this.announcementIndex != index) {
+        this.announcementIndex = index;
+        this.announcementOpen = true;
+      } else {
+        this.announcementOpen = !this.announcementOpen;
+      }
+    },
     // show date picker without closing FixtureInfo
     showDatePicker() {
       if (this.fixtureInfoOpen !== true) {
@@ -589,6 +660,108 @@ export default {
             this.splitResults(result);
           }
         });
+    },
+
+    getAnnouncements() {
+      if(this.leagueID) {
+        const body = {
+          LeagueID: this.leagueID
+        };
+        fetch(GET_ANNOUNCEMENT_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result.message) {
+              this.announcementErrorMessage = result.message;
+            } else {
+              console.log(result);
+              this.announcements = result;
+            }
+          });
+      }
+    },
+    addAnnoucement() {
+      this.announcementErrorMessage = '';
+      const body = {
+        message: this.newAnnouncement.message,
+        LeagueID: this.leagueID,
+      };
+      if (this.validAddAnnouncement(body)) {
+        // send the request to the backend
+        fetch(ADD_ANNOUNCEMENT_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(response => response.json())
+        .then((result) => {
+          if (result.message) {
+            this.announcementSuccess = result.message;
+            this.getAnnouncements();
+            this.newAnnouncement.message = '';
+          }
+        }).catch((error) => { // if any errors catch them any display error message
+          this.errorMessage = error.message;
+        });
+      }
+    },
+    deleteAnnouncement(announcementID) {
+      console.log(announcementID);
+      const body = {
+        AnnouncementID: announcementID,
+        LeagueID: this.leagueID,
+      };
+      if(this.validDeleteAnnouncement(body)) {
+        fetch(DELETE_ANNOUNCEMENT_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result.message) {
+              this.announcementSuccess = result.message;
+              this.getAnnouncements();
+            } else {
+              console.log(result);
+            }
+          });
+      }
+    },
+    validAddAnnouncement(body) {
+      const result = joi.validate(body, addAnnouncementSchema);
+      if (result.error === null) {
+        return true;
+      }
+      if (result.error.message.includes('message')) {
+        this.announcementErrorMessage = 'Messsage must be less than 200 characters';
+      }
+      if (result.error.message.includes('LeagueID')) {
+        this.announcementErrorMessage = 'Invlaid league, please refresh the page';
+      }
+      return false;
+    },
+    validDeleteAnnouncement(body) {
+      const result = joi.validate(body, deleteAnnouncementSchema);
+      if (result.error === null) {
+        return true;
+      }
+      if (result.error.message.includes('AnnouncementID')) {
+        this.announcementErrorMessage = 'Invalid announcement please refresh the page';
+      }
+      if (result.error.message.includes('LeagueID')) {
+        this.announcementErrorMessage = 'Invlaid league, please refresh the page';
+      }
+      return false;
     },
   },
 };
