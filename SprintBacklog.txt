@@ -106,7 +106,28 @@ Sprint Backlog
       [x] show error Messsage
       [x] show success message
 
-
+[] dashboard
+  [x] show all users announcements for all leagues/teams they're in
+    [x] db
+      [x] select all league announcements for user
+      [x] select all team announcements for users
+    [x] backend
+      [x] dasboard route
+      [x] get announcements for user
+        [x] team
+        [x] league
+    [x] frontend
+      [x] send requests
+      [x] show announcements
+    [] show all users fixtures on calendar on dashboard
+      [] db
+        [] get all fixtures for a user
+      [] backend
+        [] route
+      [] frontend
+        [] send req
+        [] show all fixtures on calendar
+        
 [x] teamAdmin tailoring
   [x] backend
     [x] get the teams admin
