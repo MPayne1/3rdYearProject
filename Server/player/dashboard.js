@@ -31,7 +31,7 @@ router.post('/TeamAnnouncements', async (req, res, next) => {
       result[0].message;
       res.json(result);
     } catch(e) {
-      res.json({message: "No team announcements"});
+      res.json({message: "No team announcements."});
     }
   });
 });
@@ -44,7 +44,7 @@ router.post('/LeagueAnnouncements', async(req, res, next) => {
       result[0].message;
       res.json(result);
     } catch(e) {
-      res.json({message: "No league announcements"});
+      res.json({message: "No league announcements."});
     }
   });
 });
