@@ -1,14 +1,20 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h1 class="display-3">Dashboard</h1>
-      <h1 class="display-3">Hello {{user.username}}</h1>
+      <h2>Dashboard</h2>
+      <h2>Hello {{user.username}}</h2>
       <button v-if="loggedIn" @click="logout()" class="btn btn-primary btn-lg"
         type="submit">Logout</button>
 
       <button v-if="!loggedIn" @click="login()" class="btn btn-primary btn-lg"
         type="submit">Login</button>
     </div>
+
+    <div class="jumbotron">
+      <h3>You have the following announcements:</h3>
+    </div>
+
+
   </div>
 </template>
 
