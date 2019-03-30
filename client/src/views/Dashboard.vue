@@ -15,6 +15,9 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Your League Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
+            <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
+              {{announcementErrorMessage}}
+            </div>
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="announcement in LeagueAnnouncements" @click="goToLeaguePage(announcement.leaguename)">
               <h5><b>{{announcement.leaguename}}: </b>{{announcement.message}}</h5>
@@ -29,6 +32,9 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Your Team Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
+            <div v-if="TeamErrorMessage" class="alert alert-danger" role="alert">
+              {{TeamErrorMessage}}
+            </div>
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="announcement in TeamAnnouncements" @click="goToTeamPage(announcement.teamname)">
               <h5><b>{{announcement.teamname}}:</b> {{announcement.message}}</h5>
@@ -51,6 +57,8 @@ export default {
     loggedIn: false,
     LeagueAnnouncements: {},
     TeamAnnouncements: {},
+    announcementErrorMessage: '',
+    TeamErrorMessage: '',
   }),
   mounted() {
     // get the authorization header
@@ -101,7 +109,7 @@ export default {
       }).then(res => res.json())
         .then((result) => {
           if (result.message) {
-            this.announcementErrorMessage = result.message;
+            this.TeamErrorMessage = result.message;
           } else {
             console.log(result);
             this.TeamAnnouncements = result;

@@ -10,6 +10,9 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
+            <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
+              {{announcementErrorMessage}}
+            </div>
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
