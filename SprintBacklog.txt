@@ -19,6 +19,10 @@ Sprint Backlog
   [] team/league/user photos
   [] show teams fixtures on teampage?
   [] go over routes get/post/delete when appropiate
+    [] league
+    [] team
+    [] player
+    [] auth
 
 [] attribute loading spinner to loading.io
 
