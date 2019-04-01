@@ -1,0 +1,149 @@
+
+Sprint Backlog
+[x] UI designs
+  [x] general style
+
+[] nice to do
+  [] refactor code, add more methods
+  [] fix navbar when screen small e.g on mobile.
+  [] add league description
+  [] add team description
+  [] leave a team
+  [] transfer teamAdmin
+  [] transfer leagueAdmin
+  [] show teamname rather than home/away in results page
+  [] when add player suggest players, like search
+  [] when searching for league, make so don't need to fill in all bits
+  [] team messaging
+  [] player stats
+  [] team/league/user photos
+
+[x] need to do
+  [x] get league/team admin for frontend only show options of user is
+  [x] update regex to include special characters for match description/announcements/user bio
+  [x] team announcements, team captain
+  [x] league announcements, league admin
+
+[] attribute loading spinner to loading.io
+
+
+[x] add more user details - phone number, bio, share info publicly option
+  [x] db
+    [x] alter user Table
+      [x] phone number
+      [x] bio
+      [x] publicly share info true/false
+    [x] insert new user
+    [x] update phone number
+    [x] update bio
+    [x] update publiclyShow
+  [x] backend
+    [x] alter signup
+      [x] route
+      [x] schema
+    [x] get info for user page if publiclyShow == true and req.user == req.body.userID
+      [x] name, bio, phonenumber, email
+    [x] change phone number
+    [x] change bio
+    [x] change publicly share true/false
+  [x] frontend
+    [x] show user info if logged in as user or publicly show == true
+    [x] edit user info
+      [x] send req to backend
+      [x] show success message
+      [x] form
+
+[x] team announcements
+  [x] db
+    [x] create Table
+    [x] insert new announcement
+    [x] remove announcement
+    [x] select announcement for viewing
+  [x] backend
+    [x] routes
+      [x] team announcement route
+        [x] new
+        [x] remove
+        [x] select all
+          [x] check user is in team
+    [x] check user is team captain
+      [x] add new announcement
+      [x] delete team announcement
+    [x] remove announcement
+    [x] email all team members when new announcement
+  [x] frontend
+    [x] form to add announcement
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+    [x] form to remove announcement
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+
+[x] league announcements
+  [x] db
+    [x]  create table
+    [x] insert new announcement
+    [x] remove announcement
+    [x] select all announcements for viewing
+  [x] backend
+    [x] routes
+      [x] new
+      [x] remove
+      [x] select
+    [x] check user is leagueAdmin
+      [x] add new announcement
+      [x] delete annoucement
+    [x] email everyone in league announcement
+  [x] frontend
+    [x] form to add
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+    [x] form to remove
+      [x] send req
+      [x] show error Messsage
+      [x] show success message
+        
+[x] teamAdmin tailoring
+  [x] backend
+    [x] get the teams admin
+      [x] db
+      [x] route
+  [x] frontend
+    [x] send req for teams admin
+    [x] check user is teams admin
+    [x] show teamadmin things to only team admin
+      [x] add player
+      [x] add announcements
+      [x] remove announcements
+
+[x] teamAdmin/leagueAdmin tailoring
+  [x] backend
+    [x] get the league admin
+      [x] db
+      [x] route
+    [x] get the teamAdmins in league
+      [x] db
+      [x] route
+  [x] frontend
+    [x] send req for teams/league admin
+    [x] check user is teams admin/leagueAdmin
+    [x] show teamadmin things to only team admin
+      [x] update fixture
+    [x] show leagueAdmin things to only leagueAdmin
+      [x] update fixtures
+      [x] add announcement
+      [x] remove announcement
+      [x] start season
+
+[x] fix regex for match description, user bio, announcements
+  [x] include letters numbers symbols spaces
+[x] regex for users phone number
+
+[x] fix signup frontend to include bio, phonenumber, privacy
+
+
+[] unit test everything
+  [] use mocha and chai
