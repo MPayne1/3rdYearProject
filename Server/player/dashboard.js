@@ -56,22 +56,17 @@ router.get('/upcomingFixtures', async(req, res, next) => {
   var fixtures;
   await dbSelectUserUpcomingFixtures(req.user.UserID, async(err, result) => {
     if(err) next(err);
-    try {
       fixtures = result;
-      console.log(fixtures);
       await dbSelectUserAwayFixtures(req.user.UserID, (er, fix) => {
         if(er) next(er);
         try {
           var all = fixtures.concat(fix);
-          console.log(all);
+          all[0].fixtureID;
           res.json(all);
         } catch(e) {
           res.json({message: "No upcoming fixtures"});
         }
       });
-    } catch(e) {
-      res.json({message: "No upcoming fixtures"});
-    }
   });
 });
 
