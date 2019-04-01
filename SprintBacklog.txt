@@ -17,6 +17,8 @@ Sprint Backlog
   [] team messaging
   [] player stats
   [] team/league/user photos
+  [] show teams fixtures on teampage?
+  [] go over routes get/post/delete when appropiate
 
 [] attribute loading spinner to loading.io
 
@@ -36,10 +38,10 @@ Sprint Backlog
       [x] send requests
       [x] show announcements
     [] show all users fixtures on calendar on dashboard
-      [] db
-        [] get all fixtures for a user
-      [] backend
-        [] route
+      [x] db
+        [x] get all fixtures for a user
+      [x] backend
+        [x] route
       [] frontend
         [] send req
         [] show all fixtures on calendar
