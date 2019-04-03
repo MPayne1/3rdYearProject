@@ -48,16 +48,17 @@ Sprint Backlog
         [x] route
       [] frontend
         [x] send req
-        [] show all fixtures on calendar
+        [x] show all fixtures on calendar
+          [] styling
+          [] check when no date/time set
 
-
-[] fixtures
-  [] Date
-  [] starttime
-  [] end time
-  [] fix db Table
-  [] fix update db
-  [] fix select from db
+[x] Update how fixtures date/time is stored
+  [x] Date
+  [x] starttime
+  [x] end time
+  [x] fix db Table
+  [x] fix update db
+  [x] fix select from db
 
 [] unit test everything
   [] use mocha and chai
