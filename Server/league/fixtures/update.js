@@ -37,7 +37,7 @@ const dbSelectFixtureTeams = require('../../db/select/Fixture/selectFixtureTeams
 // schema for updating date/location of fixture
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
-  date: joi.string().min(2).max(12).required(),
+  date: joi.string().min(2).max(30).required(),
   startTime: joi.string().min(2).max(12).required(),
   endTime: joi.string().min(2).max(12).required(),
   address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
