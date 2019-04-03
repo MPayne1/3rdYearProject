@@ -45,29 +45,40 @@
     </div>
     <div class="row">
       <div class="col-md-2"></div>
-      <vue-scheduler class="col-md-8"
-        :min-date="null"
-        :max-date="null"
-        :labels="{
-          today: 'Today',
-          back: 'Back',
-          next: 'Next',
-          month: 'Month',
-          week: 'Week',
-          day: 'Day',
-          all_day: 'All Day'
-        }"
-        :time-range="[0,23]"
-        :available-views="['month', 'week', 'day']"
-        :initial-date= "new Date()"
-        initial-view="month"
-        :use12="false"
-        :show-today-button="true"
-        :show-time-marker="false"
-        :events="fixtures"
-        :disable-dialog="true"
-        :event-display="showFixtureDetais">
-      </vue-scheduler>
+      <div class="col-md-8" id="upcomingFixturesDiv">
+        <div v-if="FixtureErrorMessage" class="alert alert-danger" role="alert">
+          {{FixtureErrorMessage}}
+        </div>
+        <div v-if="!FixtureErrorMessage" >
+          <div class="text-white" id="upcomingFixturesTitle">
+            <h4>Upcoming Fixtures</h4>
+          </div>
+          <vue-scheduler
+            id="calendar"
+            :min-date="null"
+            :max-date="null"
+            :labels="{
+              today: 'Today',
+              back: 'Back',
+              next: 'Next',
+              month: 'Month',
+              week: 'Week',
+              day: 'Day',
+              all_day: 'All Day'
+            }"
+            :time-range="[0,23]"
+            :available-views="['month', 'week', 'day']"
+            :initial-date= "new Date()"
+            initial-view="month"
+            :use12="false"
+            :show-today-button="true"
+            :show-time-marker="false"
+            :events="fixtures"
+            :disable-dialog="true"
+            :event-display="showFixtureDetais">
+          </vue-scheduler>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -116,6 +127,7 @@ export default {
       this.getLeagueAnnouncements();
       this.getTeamAnnouncements();
       this.getUpcomingFixtures();
+
   },
   methods: {
     getLeagueAnnouncements() {
@@ -195,6 +207,33 @@ export default {
 <style>
 button {
   margin-left: 10px;
+}
+#upcomingFixturesDiv {
+  border-color: #00000020;
+  border-style: solid;
+  border-width: 1px;
+  padding-left: 0px;
+  padding-right: 0px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+#upcomingFixturesTitle {
+  background-color: #2C3E50;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.v-cal-content .v-cal-event-item {
+  background-color: #2C3E50;
+  color: #2C3E50;
+}
+
+.v-cal-button.v-cal-button--is-active, .v-cal-button:hover, .v-cal-button:focus{
+  border-color:  #18BC9C;
+  color: #18BC9C;
+}
+
+.v-cal-button.v-cal-button:not(:last-child) {
+  border-right: #18BC9C;
 }
 
 </style>

@@ -62,6 +62,11 @@ router.get('/upcomingFixtures', async(req, res, next) => {
         try {
           var all = fixtures.concat(fix);
           all[0].fixtureID;
+          for(i =0; i< all.length; i++) {
+            if(all[i].date == null || all[i].startTime ==null || all[i].endTime == null) {
+              throw new Error();
+            }
+          }
           res.json(all);
         } catch(e) {
           res.json({message: "No upcoming fixtures"});
