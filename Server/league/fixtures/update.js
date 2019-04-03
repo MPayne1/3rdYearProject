@@ -38,6 +38,8 @@ const dbSelectFixtureTeams = require('../../db/select/Fixture/selectFixtureTeams
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
   date: joi.string().min(2).max(30).required(),
+  startTime: joi.string().min(2).max(30).required(),
+  endTime: joi.string().min(2).max(30).required(),
   address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
@@ -66,6 +68,8 @@ router.post('/updateFixture', async (req, res, next) => {
   var fixtureID  = req.body.fixtureID;
   // format date for adding to db
   var date = req.body.date.slice(0,-3);
+  var startTime = req.body.startTime;
+  var endTime = req.body.endTime;
   var address  = req.body.address;
   var city = req.body.city;
   var county = req.body.county;
@@ -80,7 +84,7 @@ router.post('/updateFixture', async (req, res, next) => {
       try {
         result[0].leagueAdmin;
         // if user is allowed, update the fixture info
-        var update = await dbUpdateFixtureInfo(fixtureID, date, address, city, county, postcode);
+        var update = await dbUpdateFixtureInfo(fixtureID, date, startTime, endTime, address, city, county, postcode);
 
         // get team members of teams
         await dbSelectFixturePlayers(fixtureID, async (err, playerRes) => {
@@ -96,7 +100,7 @@ router.post('/updateFixture', async (req, res, next) => {
                 for(j = 0; j < players.length; j++) {
                   await email.sendFixtureUpdated(players[j].Email,
                     players[j].FirstName, players[j].LastName, teams[0].TeamName,
-                    teams[1].TeamName, date, address, city, county, postcode,
+                    teams[1].TeamName, date, startTime, endTime,address, city, county, postcode,
                     (err, mail) => {
                       if(err) next(err);
                       console.log(mail);

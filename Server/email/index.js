@@ -95,10 +95,11 @@ function sendForgottenPassword(email, firstname, lastname, token, callback) {
 
 // send email with updated fixture info
 function sendFixtureUpdated(email, firstname, lastname, homeTeamName, awayTeamName,
-  date, address, city, county, postcode, callback) {
+  date, startTime, endTime, address, city, county, postcode, callback) {
     var text = `Hello ${firstname} ${lastname},
     The match between ${homeTeamName} vs ${awayTeamName} has been updated to now take place at:
     ${date}
+    From ${startTime} until ${endTime}
     ${address}
     ${city}
     ${county}

@@ -5,13 +5,14 @@ const dbCon  = require('../../connection.js');
 var selectUpcomingFixtures  = async function(UserID, callback) {
   var res;
     var sql = `SELECT HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
-    awayTeam.fixtureID, awayTeam.date,awayTeam.address, awayTeam.city,
+    awayTeam.fixtureID, awayTeam.date, awayTeam.startTime, awayTeam.endTime,
+    awayTeam.address, awayTeam.city,
     awayTeam.county, awayTeam.postcode, awayTeam.Sport
     from (select teamName as HomeTeamName, HometeamID , fixtureID
       from team, fixture, playsFor where HometeamID = playsFor.TeamID and
       playsFor.TeamID = team.TeamID and played = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixtureID,
-       date, address, city, county, postcode, Sport
+       date,startTime, endTime, address, city, county, postcode, Sport
        from team, fixture, playsFor where AwayTeamID = playsFor.TeamID
       and playsFor.TeamID = team.TeamID
       and playsFor.UserID = ${mysql.escape(UserID)}
