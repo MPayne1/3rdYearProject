@@ -28,7 +28,7 @@ Sprint Backlog
 
 
 
-[] dashboard
+[x] dashboard
   [x] show all users announcements for all leagues/teams they're in
     [x] db
       [x] select all league announcements for user
@@ -41,16 +41,16 @@ Sprint Backlog
     [x] frontend
       [x] send requests
       [x] show announcements
-    [] show all users fixtures on calendar on dashboard
+    x[] show all users fixtures on calendar on dashboard
       [x] db
         [x] get all fixtures for a user
       [x] backend
         [x] route
-      [] frontend
+      x[] frontend
         [x] send req
         [x] show all fixtures on calendar
-          [] styling
-          [] check when no date/time set
+          [x] styling
+          [x] check when no date/time set
 
 [x] Update how fixtures date/time is stored
   [x] Date
