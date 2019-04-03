@@ -12,10 +12,12 @@
     "joi": "^14.0.6",
     "v-calendar-scheduler": "^0.7.4",
     "vue": "^2.5.17",
+    "vue-country-region-select": "^2.0.3",
     "vue-country-select": "^0.2.2",
     "vue-ctk-date-time-picker": "^2.0.6",
     "vue-resource": "^1.5.1",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-select": "^2.6.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.1.1",

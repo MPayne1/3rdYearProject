@@ -14,8 +14,12 @@
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="country">Country</label>
+          <!--
           <input v-model="league.country" type="text" class="form-control" id="country"
             placeholder="Enter Country" required>
+            !-->
+          <country-select class="form-control" v-model="league.country" :country="league.country" topCountry="GB" :countryName="true">
+          </country-select>
         </div>
         <div class="form-group col-md-3">
           <label for="county">County/State</label>
@@ -60,6 +64,10 @@
 
 <script>
 import joi from 'joi';
+import Vue from 'vue';
+import vueCountryRegionSelect from 'vue-country-region-select';
+Vue.use(vueCountryRegionSelect);
+
 
 const FIND_URL = 'https://localhost:3000/league/find';
 const API_URL = 'https://localhost:3000/';
