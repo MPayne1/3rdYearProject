@@ -43,13 +43,43 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <vue-scheduler
+        :min-date="null"
+        :max-date="null"
+        :labels="{
+          today: 'Today',
+          back: 'Back',
+          next: 'Next',
+          month: 'Month',
+          week: 'Week',
+          day: 'Day',
+          all_day: 'All Day'
+        }"
+        :time-range="[10,20]"
+        :available-views="['month', 'week', 'day']"
+        :initial-date= "new Date()"
+        initial-view="month"
+        use12
+        :show-today-button="true"
+        :events="fixtures"
+        :disable-dialog="true">
+      </vue-scheduler>
+    </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue';
+import VueScheduler from 'v-calendar-scheduler';
+import  'v-calendar-scheduler/lib/main.css';
+Vue.use(VueScheduler);
+
 const API_URL = 'https://localhost:3000/';
 const GET_LEAGUE_ANNOUNCEMENT_URL = 'https://localhost:3000/player/dashboard/LeagueAnnouncements';
 const GET_TEAM_ANNOUNCEMENT_URL = 'https://localhost:3000/player/dashboard/TeamAnnouncements';
+const GET_USERS_FIXTURES_URL = 'https://localhost:3000/player/dashboard/upcomingFixtures';
+
 
 export default {
   data: () => ({
@@ -59,6 +89,8 @@ export default {
     TeamAnnouncements: {},
     announcementErrorMessage: '',
     TeamErrorMessage: '',
+    FixtureErrorMessage: '',
+    fixtures: [],
   }),
   mounted() {
     // get the authorization header
@@ -80,6 +112,7 @@ export default {
       });
       this.getLeagueAnnouncements();
       this.getTeamAnnouncements();
+      this.getUpcomingFixtures();
   },
   methods: {
     getLeagueAnnouncements() {
@@ -113,6 +146,23 @@ export default {
           } else {
             console.log(result);
             this.TeamAnnouncements = result;
+          }
+        });
+    },
+    getUpcomingFixtures() {
+      fetch(GET_USERS_FIXTURES_URL, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json',
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          if (result.message) {
+            this.FixtureErrorMessage = result.message;
+          } else {
+            console.log(result);
+            this.fixtures = result;
           }
         });
     },
