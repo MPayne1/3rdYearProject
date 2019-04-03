@@ -23,8 +23,10 @@
         </div>
         <div class="form-group col-md-3">
           <label for="county">County/State</label>
+            <!--
           <input v-model="league.county" type="text" class="form-control" id="county"
-            placeholder="Enter County/State" required>
+            placeholder="Enter County/State" required> !-->
+            <region-select class="form-control" v-model="league.county" :country="league.country" :region="league.county" :countryName="true" :regionName="true"> </region-select>
         </div>
         <div class="form-group col-md-3">
           <label for="city">City</label>
