@@ -122,9 +122,46 @@
                   <router-link :to="{ name: `${fixture.Sport}Results`, params: {fixtureID: fixture.fixtureID} }"><h5>{{ fixture.HomeTeamName }} vs. {{ fixture.AwayTeamName }}</h5></router-link>
                 </div>
                 <div v-if="fixtureInfoOpen && index == fixtureIndex">
-                  <!--Show data picker with appropiate label, depending on if date has been entered or not -->
-                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker" @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10) + fixture.date.slice(11,16)" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
-                  <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker" @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date" color="#2C3E50"></VueCtkDateTimePicker>
+                  <h6>Date</h6>
+                  <!--Show date picker with appropiate label, depending on if date has been entered or not -->
+                  <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10)"
+                    v-model="fixture.date" formatted="ll" color="#2C3E50"
+                    :only-date="true">
+                 </VueCtkDateTimePicker>
+                 <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date"
+                    color="#2C3E50" formatted="ll" :only-date="true">
+                  </VueCtkDateTimePicker>
+                  
+                  <!--Show date picker with appropiate label, depending on if date has been entered or not for startTime-->
+                  <h6>Start Time</h6>
+                  <VueCtkDateTimePicker v-if="fixture.startTime != null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true" :format=timeFormat
+                    :formatted=timeFormat :output-format=timeFormat
+                    :label="fixture.startTime" v-model="fixture.startTime"
+                    color="#2C3E50" :only-time="true">
+                  </VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.startTime === null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true" :format=timeFormat
+                    :formatted=timeFormat :output-format=timeFormat
+                    label="Start Time" v-model="fixture.startTime" color="#2C3E50"
+                    :only-time="true">
+                  </VueCtkDateTimePicker>
+
+                  <h6>End Time</h6>
+                  <VueCtkDateTimePicker v-if="fixture.endTime != null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true"  :format=timeFormat :formatted=timeFormat
+                    :output-format=timeFormat :label="fixture.endTime"
+                    v-model="fixture.endTime" color="#2C3E50" :only-time="true">
+                  </VueCtkDateTimePicker>
+                  <VueCtkDateTimePicker v-if="fixture.endTime === null" id="dateTimePicker"
+                    @click="fixtureInfoOpen=true" :format=timeFormat
+                    :formatted=timeFormat :output-format=timeFormat
+                    label="End Time" v-model="fixture.endTime" color="#2C3E50"
+                    :only-time="true">
+                  </VueCtkDateTimePicker>
+
                   <form @submit.prevent="updateFixture(fixtureIndex)">
                     <div class="form-group">
                       <input v-model="fixture.address" type="text" class="form-control"
@@ -333,6 +370,8 @@ const IS_A_TEAM_ADMIN_URL = 'https://localhost:3000/league/isTeamAdmin';
 const updateFixtureSchema = joi.object().keys({
   fixtureID: joi.number().positive().required(),
   date: joi.string().min(2).max(30).required(),
+  startTime: joi.string().min(2).max(30).required(),
+  endTime: joi.string().min(2).max(30).required(),
   address: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   city: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
   county: joi.string().regex(/^[\w\-\s]{2,30}$/).required(),
@@ -353,6 +392,7 @@ const deleteAnnouncementSchema = joi.object().keys({
 export default {
   data: () => ({
     fixtures: [],
+    timeFormat: 'HH:mm',
     fixturesExtra: [],
     isAllFixtures: true,
     user: {},
@@ -480,6 +520,8 @@ export default {
       const body = {
         fixtureID: this.fixtures[index].fixtureID,
         date: this.fixtures[index].date,
+        startTime: this.fixtures[index].startTime,
+        endTime: this.fixtures[index].endTime,
         address: this.fixtures[index].address,
         city: this.fixtures[index].city,
         county: this.fixtures[index].county,
@@ -568,6 +610,7 @@ export default {
           if (result.result != undefined) {
             this.splitFixtures(result.result);
           }
+          console.log(result.result);
         });
     },
 
@@ -838,6 +881,7 @@ export default {
   }
   #dateTimePicker {
     margin-top: 5px;
+    margin-bottom: 5px;
   }
   #fixList, #resultsList{
     background-color: #2C3E50;

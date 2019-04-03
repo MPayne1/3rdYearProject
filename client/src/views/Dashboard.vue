@@ -44,7 +44,8 @@
       </div>
     </div>
     <div class="row">
-      <vue-scheduler
+      <div class="col-md-2"></div>
+      <vue-scheduler class="col-md-8"
         :min-date="null"
         :max-date="null"
         :labels="{
@@ -56,14 +57,16 @@
           day: 'Day',
           all_day: 'All Day'
         }"
-        :time-range="[10,20]"
+        :time-range="[0,23]"
         :available-views="['month', 'week', 'day']"
         :initial-date= "new Date()"
         initial-view="month"
-        use12
+        :use12="false"
         :show-today-button="true"
+        :show-time-marker="false"
         :events="fixtures"
-        :disable-dialog="true">
+        :disable-dialog="true"
+        :event-display="showFixtureDetais">
       </vue-scheduler>
     </div>
   </div>
@@ -180,6 +183,10 @@ export default {
     login() {
       localStorage.removeItem('token');
       this.$router.push('/auth/login');
+    },
+    showFixtureDetais(event){
+      var res = `${event.HomeTeamName} vs  ${event.AwayTeamName}`;
+      return res;
     },
   },
 };
