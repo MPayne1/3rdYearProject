@@ -60,5 +60,10 @@ Sprint Backlog
   [x] fix update db
   [x] fix select from db
 
+[] find league improvements
+  [x] dropdown for country
+  [x] drop down for county/state
+  [] don't require all fields and searh appropiately
+
 [] unit test everything
   [] use mocha and chai
