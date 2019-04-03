@@ -67,7 +67,7 @@ router.post('/updateFixture', async (req, res, next) => {
   var userID = req.user.UserID;
   var fixtureID  = req.body.fixtureID;
   // format date for adding to db
-  var date = req.body.date.slice(0,-3);
+  var date = req.body.date;
   var startTime = req.body.startTime;
   var endTime = req.body.endTime;
   var address  = req.body.address;
