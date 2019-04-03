@@ -47,9 +47,17 @@ Sprint Backlog
       [x] backend
         [x] route
       [] frontend
-        [] send req
+        [x] send req
         [] show all fixtures on calendar
 
+
+[] fixtures
+  [] Date
+  [] starttime
+  [] end time
+  [] fix db Table
+  [] fix update db
+  [] fix select from db
 
 [] unit test everything
   [] use mocha and chai
