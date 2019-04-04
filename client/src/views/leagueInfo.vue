@@ -2,6 +2,7 @@
   <div class="home text-center" @click="fixtureUpdated=false">
     <div class="jumbotron">
       <h2>{{ this.leagueName }}</h2>
+      <h5>{{this.leagueDescription}}</h5>
     </div>
     <div v-if="this.errorMessage" class="alert alert-danger" role="alert">
       {{this.errorMessage}}
@@ -12,6 +13,9 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
+            <div v-if="announcementErrorMessage && !isLeagueAdmin" class="alert alert-danger" role="alert">
+              {{announcementErrorMessage}}
+            </div>
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
@@ -133,7 +137,7 @@
                     @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date"
                     color="#2C3E50" formatted="ll" :only-date="true">
                   </VueCtkDateTimePicker>
-                  
+
                   <!--Show date picker with appropiate label, depending on if date has been entered or not for startTime-->
                   <h6>Start Time</h6>
                   <VueCtkDateTimePicker v-if="fixture.startTime != null" id="dateTimePicker"
@@ -422,6 +426,7 @@ export default {
     announcementErrorMessage: '',
     isLeagueAdmin: false,
     isATeamAdmin: false,
+    leagueDescription: '',
   }),
   watch: {
     fixtures: {
@@ -585,6 +590,7 @@ export default {
         .then((result) => {
           if (result) {
             this.sport = result.result[0].Sport;
+            this.leagueDescription = result.result[0].leagueDescription;
             console.log(this.sport);
 
             this.getRankings();

@@ -62,7 +62,7 @@
               <input v-model="username" type="text" class="form-control"
                 id="username" placeholder="Username" required>
                 <br>
-              <button @click="addPlayer()" class="btn btn-primary btn-lg"
+              <button class="btn btn-primary btn-lg"
                 type="submit">Add a player</button>
             </div>
           </form>

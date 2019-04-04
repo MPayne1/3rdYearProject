@@ -64,6 +64,7 @@ Sprint Backlog
   [x] dropdown for country
   [x] drop down for county/state
   [] don't require all fields and searh appropiately
+  [] also change create league to use same dropdowns
 
 [x] team description
   [x] db

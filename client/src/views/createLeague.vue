@@ -41,8 +41,14 @@
          </div>
        </div>
        <div class="form-row">
+         <label for="description">League Description</label>
+         <textarea v-model="league.leagueDescription" type="text" class="form-control"
+         id="description" placeholder="A short description about the league." required></textarea>
+       </div>
+       <br>
+       <div class="form-row">
          <div class="form-group col-md-6">
-           <label for="maxTeams">Maximum no. of teams</label>
+           <label for="maxTeams">Maximum no. of teams allowed in the league.</label>
            <input v-model.number="league.maxTeams" type="text" class="form-control"
              id="maxTeams" placeholder="Maximum no. of teams" required>
          </div>
@@ -85,13 +91,23 @@
           </div>
           <div class="form-group col-md-4">
             <label for="county">State/County</label>
+            <region-select class="form-control" v-model="league.county"
+            :country="league.country" :region="league.county" :countryName="true"
+            :regionName="true" id="county"> </region-select>
+            <!--
             <input v-model.number="league.county" type="text" class="form-control"
               id="county" placeholder="State/County" required>
+              !-->
           </div>
           <div class="form-group col-md-4">
             <label for="country">Country</label>
+            <country-select class="form-control" v-model="league.country"
+            :country="league.country" topCountry="GB" :countryName="true" id="country">
+            </country-select>
+            <!--
             <input v-model.number="league.country" type="text" class="form-control"
               id="country" placeholder="Country" required>
+              !-->
           </div>
          </div>
       <div class="text-center">
@@ -123,6 +139,7 @@ const schema = joi.object().keys({
   county: joi.string().min(2).max(30).required(),
   country: joi.string().min(2).max(30).required(),
   games: joi.number().positive().required(),
+  leagueDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 export default {
@@ -143,6 +160,7 @@ export default {
       county: '',
       country: '',
       games: '',
+      leagueDescription: '',
     },
     leagueID: '',
   }),
@@ -188,6 +206,7 @@ export default {
           county: this.league.county,
           country: this.league.country,
           games: this.league.games,
+          leagueDescription: this.league.leagueDescription,
         };
         // send the request to the backend
         this.creating = true;
@@ -266,6 +285,9 @@ export default {
       }
       if (result.error.message.includes('country')) {
         this.errorMessage = 'Country name can only contain letters';
+      }
+      if(result.error.message.includes('leagueDescription')) {
+        this.errorMessage = 'League description can only be 300 characters long.';
       }
       if (this.loss > this.win) {
         this.MoreThanWin = 'You will award a loss more points than a win';
