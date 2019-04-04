@@ -39,8 +39,10 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item">
+            <!--
             <router-link  class="nav-link" :to="{ name: 'playerInfo',
-            params: {username: user.username}}">{{user.username}} </router-link> <!--needs :to property -->
+            params: {username: user.username}}">{{user.username}} </router-link> !-->
+            <a class="text-white"v-on:click="userPage(user.username)">{{user.username}}</a>
           </li>
         </ul>
       </div>
@@ -88,12 +90,24 @@ export default {
   },
   methods: {
     teamPage(teamName) {
-      if (this.teams) {
+      if (this.$route.path == '/team/info/') {
+        this.$router.push({ path: '/team/info/', query: { teamName } });
+        location.reload();
+      } else {
         this.$router.push({ path: '/team/info/', query: { teamName } });
       }
     },
     leaguePage(leagueName) {
-      this.$router.push({ path: '/league/info', query: { leagueName } });
+      if(this.$route.path == '/league/info') {
+        this.$router.push({ path: '/league/info', query: { leagueName } });
+        location.reload();
+      } else {
+        this.$router.push({ path: '/league/info', query: { leagueName } });
+      }
+    },
+    userPage(username) {
+      this.$router.push({path: `/player/info/${username}`});
+      location.reload();
     },
     // leagues user playsin
     loadLeagues() {
