@@ -60,11 +60,10 @@ Sprint Backlog
   [x] fix update db
   [x] fix select from db
 
-[] find league improvements
+[x] find league improvements
   [x] dropdown for country
   [x] drop down for county/state
-  [] don't require all fields and searh appropiately
-  [] also change create league to use same dropdowns
+  [x] also change create league to use same dropdowns
 
 [x] team description
   [x] db
@@ -77,16 +76,16 @@ Sprint Backlog
     [x] create team form
     [x] show on team page
 
-[] league description
-  [] db
-    [] alter league Table
-    [] insert into table
-    [] select from table
-  [] backend
-    [] alter create league route
-  [] frontend
-    [] create league form
-    [] show on league page
+[x] league description
+  [x] db
+    [x] alter league Table
+    [x] insert into table
+    [x] select from table
+  [x] backend
+    [x] alter create league route
+  [x] frontend
+    [x] create league form
+    [x] show on league page
 
 [] db normalisation
   [] remove sport from team table
