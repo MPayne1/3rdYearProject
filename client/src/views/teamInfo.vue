@@ -1,8 +1,8 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>TeamInfo</h2>
-      <h4>{{teamName}}</h4>
+      <h2>{{teamName}}</h2>
+      <h5>{{teamDescription}}</h5>
     </div>
     <div class="text-center row">
       <div class="col-md-2"></div>
@@ -10,7 +10,7 @@
         <div id="announcementCard" class="card  bg-secondary">
           <div id="announcementList" class="card-header text-white"><h4>Announcements</h4></div>
           <ul class="list-group list-group-flush text-center">
-            <div v-if="announcementErrorMessage" class="alert alert-danger" role="alert">
+            <div v-if="announcementErrorMessage && !isTeamAdmin" class="alert alert-danger" role="alert">
               {{announcementErrorMessage}}
             </div>
             <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
@@ -260,6 +260,7 @@
       announcementIndex: '',
       announcementSuccess: '',
       isTeamAdmin: false,
+      teamDescription: '',
     }),
     watch: {
       username: {
@@ -404,6 +405,7 @@
           .then((result) => {
             if (result) {
               this.sport = result.result[0].Sport;
+              this.teamDescription = result.result[0].teamDescription;
               console.log(this.sport);
               this.getResults();
             }
@@ -456,6 +458,7 @@
             });
           }).then(() => { // if no errors refresh players list
             this.playerList();
+            this.username = '';
           }).catch((error) => { // if any errors catch them any display error message
             this.errorMessage = error.message;
           });

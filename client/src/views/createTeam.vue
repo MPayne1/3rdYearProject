@@ -13,16 +13,24 @@
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
   </div>
-  <form v-if="!creating" @submit.prevent="create()">
-        <div class="form-group col-sm-4">
-          <label for="teamName">Team Name</label>
-          <input v-model="team.name" type="text" class="form-control"
-            id="teamName" placeholder="Team Name" required>
-        </div>
-      <div class="text-center">
-        <button type="submit" class="btn btn-primary btn-lg">Create team and join League</button>
-      </div>
-  </form>
+  <div class="row">
+    <div class="col-md-4"></div>
+    <div class="col-md-4">
+      <form v-if="!creating" @submit.prevent="create()">
+            <div class="form-group">
+              <label for="teamName">Team Name</label>
+              <input v-model="team.name" type="text" class="form-control"
+                id="teamName" placeholder="Team Name" required>
+                <label for="description">Team Description</label>
+                <textarea v-model="team.teamDescription" type="text" class="form-control"
+                id="description" placeholder="A short description about the team." required></textarea>
+            </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary btn-lg">Create team and join League</button>
+          </div>
+      </form>
+    </div>
+  </div>
 </div>
 </div>
 </template>
@@ -40,6 +48,7 @@ const schema = joi.object().keys({
   sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   admin: joi.required(),
   league: joi.required(),
+  teamDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 export default {
@@ -53,6 +62,7 @@ export default {
       sport: '',
       admin: '',
       league: '',
+      teamDescription: '',
     },
   }),
   watch: {
@@ -97,6 +107,7 @@ export default {
           Sport: this.team.sport,
           TeamAdmin: this.user.UserID,
           LeagueID: this.team.league,
+          teamDescription: this.team.teamDescription,
         };
         // send the request to the backend
         this.creating = true;
@@ -138,6 +149,9 @@ export default {
       }
       if (result.error.message.includes('sport')) {
         this.errorMessage = 'Please find a league to join first';
+      }
+      if (result.error.message.includes('teamDescription')) {
+        this.errorMessage = 'Team description can only be 300 characters';
       }
       return false;
     },
