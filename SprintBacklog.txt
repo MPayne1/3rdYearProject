@@ -41,12 +41,12 @@ Sprint Backlog
     [x] frontend
       [x] send requests
       [x] show announcements
-    x[] show all users fixtures on calendar on dashboard
+    [x] show all users fixtures on calendar on dashboard
       [x] db
         [x] get all fixtures for a user
       [x] backend
         [x] route
-      x[] frontend
+      [x] frontend
         [x] send req
         [x] show all fixtures on calendar
           [x] styling
@@ -65,5 +65,35 @@ Sprint Backlog
   [x] drop down for county/state
   [] don't require all fields and searh appropiately
 
+[] team description
+  [] db
+    [] alter team Table
+    [] insert into table
+    [] select from table
+  [] backend
+    [] alter create team route
+  [] frontend
+    [] create team form
+    [] show on team page
+
+[] league description
+  [] db
+    [] alter league Table
+    [] insert into table
+    [] select from table
+  [] backend
+    [] alter create league route
+  [] frontend
+    [] create league form
+    [] show on league page
+
+[] db normalisation
+  [] remove sport from team table
+    [] fix any db querys
+    [] fix any routes
+  [] remove leagueID from fixture table
+    [] fix any db querys
+    [] fix any routes
+    
 [] unit test everything
   [] use mocha and chai
