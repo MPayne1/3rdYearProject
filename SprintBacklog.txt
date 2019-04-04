@@ -65,16 +65,16 @@ Sprint Backlog
   [x] drop down for county/state
   [] don't require all fields and searh appropiately
 
-[] team description
-  [] db
-    [] alter team Table
-    [] insert into table
-    [] select from table
-  [] backend
-    [] alter create team route
-  [] frontend
-    [] create team form
-    [] show on team page
+[x] team description
+  [x] db
+    [x] alter team Table
+    [x] insert into table
+    [x] select from table
+  [x] backend
+    [x] alter create team route
+  [x] frontend
+    [x] create team form
+    [x] show on team page
 
 [] league description
   [] db
@@ -94,6 +94,6 @@ Sprint Backlog
   [] remove leagueID from fixture table
     [] fix any db querys
     [] fix any routes
-    
+
 [] unit test everything
   [] use mocha and chai
