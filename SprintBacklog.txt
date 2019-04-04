@@ -86,13 +86,13 @@ Sprint Backlog
     [x] create league form
     [x] show on league page
 
-[] db normalisation
-  [] remove sport from team table
-    [] fix any db querys
-    [] fix any routes
-  [] remove leagueID from fixture table
-    [] fix any db querys
-    [] fix any routes
+[x] db normalisation
+  [x] remove sport from team table
+    [x] fix any db querys
+    [x] fix any routes
+  [x] remove leagueID from fixture table
+    [x] fix any db querys
+    [x] fix any routes
 
 [] add player search
   [] db
