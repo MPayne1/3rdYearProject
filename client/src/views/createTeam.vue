@@ -45,7 +45,6 @@ const API_URL = 'https://localhost:3000/';
 const schema = joi.object().keys({
   name: joi.string().alphanum().min(2).max(20)
     .required(),
-  sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   admin: joi.required(),
   league: joi.required(),
   teamDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
@@ -104,7 +103,6 @@ export default {
       if (this.validLeague()) {
         const body = {
           TeamName: this.team.name,
-          Sport: this.team.sport,
           TeamAdmin: this.user.UserID,
           LeagueID: this.team.league,
           teamDescription: this.team.teamDescription,
@@ -146,9 +144,6 @@ export default {
       console.log(result.errorMessage);
       if (result.error.message.includes('teamName')) {
         this.errorMessage = 'Team name is invalid, must be between 2 and 20 characters and not include any symbols';
-      }
-      if (result.error.message.includes('sport')) {
-        this.errorMessage = 'Please find a league to join first';
       }
       if (result.error.message.includes('teamDescription')) {
         this.errorMessage = 'Team description can only be 300 characters';
