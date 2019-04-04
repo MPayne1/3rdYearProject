@@ -19,6 +19,7 @@ const dbSelectAllPlayers = require('../db/select/Team/selectAllPlayers.js');
 const dbSelectTeamID = require('../db/select/Team/selectTeamID.js');
 const dbInsertPlayerTeamname = require('../db/insert/insertPlayerTeamName.js');
 const dbSelectTeamSport = require('../db/select/Team/selectTeamSport.js');
+const dbSelectPossiblePlayers = require('../db/select/Users/selectUsersNotInLeague.js');
 // ------  schemas  ------
 
 const teamSchema = joi.object().keys({
@@ -39,6 +40,10 @@ const addplayerSchema = joi.object().keys({
 
 const allPlayersSchema = joi.object().keys({
   teamName: joi.string().min(2).max(20).required(),
+});
+
+const possibleUsernamesSchema = joi.object().keys({
+    leagueID: joi.number().positive().required(),
 });
 
 // schema to get the sport for the team
@@ -180,6 +185,24 @@ router.post('/addPlayer', async (req, res, next) => {
     });
   } else {
   invalidInput(res, next);
+  }
+});
+
+// route to get all users not in the league for adding a new player to team
+router.post('/possibleUsernames' , async(req, res, next) => {
+  const result = joi.validate(req.body, possibleUsernamesSchema);
+  if(result.error === null) {
+    await dbSelectPossiblePlayers(req.body.leagueID, (err, players) => {
+      if(err) next(err);
+      try {
+        players[0].username;
+        res.json(players);
+      } catch(e) {
+        invalidInput(res, next);
+      }
+    });
+  } else {
+    invalidInput(res, next);
   }
 });
 
