@@ -174,7 +174,7 @@ const schema = joi.object().keys({
   AwayPointsScoredG4: joi.number().min(0).required(),
   HomePointsScoredG5: joi.number().min(0).required(),
   AwayPointsScoredG5: joi.number().min(0).required(),
-  MatchDescription: joi.string().regex(/^[\w\-\s]{0,300}$/).required(),
+  MatchDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
 });
 
 export default {
