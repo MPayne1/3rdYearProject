@@ -1,11 +1,9 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>Dashboard</h2>
       <h2>Hello {{user.username}}</h2>
       <button v-if="loggedIn" @click="logout()" class="btn btn-primary btn-lg"
         type="submit">Logout</button>
-
       <button v-if="!loggedIn" @click="login()" class="btn btn-primary btn-lg"
         type="submit">Login</button>
     </div>
@@ -46,13 +44,13 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8" id="upcomingFixturesDiv">
+        <div class="text-white" id="upcomingFixturesTitle">
+          <h4>Upcoming Fixtures</h4>
+        </div>
         <div v-if="FixtureErrorMessage" class="alert alert-danger" role="alert">
           {{FixtureErrorMessage}}
         </div>
         <div v-if="!FixtureErrorMessage" >
-          <div class="text-white" id="upcomingFixturesTitle">
-            <h4>Upcoming Fixtures</h4>
-          </div>
           <vue-scheduler
             id="calendar"
             :min-date="null"

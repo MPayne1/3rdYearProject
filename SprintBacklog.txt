@@ -11,7 +11,6 @@ Sprint Backlog
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
-  [] show teamname rather than home/away in results page
   [] when add player suggest players, like search
   [] when searching for league, make so don't need to fill in all bits
   [] team messaging
@@ -94,6 +93,18 @@ Sprint Backlog
   [] remove leagueID from fixture table
     [] fix any db querys
     [] fix any routes
+
+[] add player search
+  [] db
+    [] get all usernames not already in team in the league
+      [] select all users and subtract ones that play in the league
+  [] backend
+    [] route for all usernames
+    [] send res
+  [] frontend
+    [] send req
+    [] show select box with all users
+
 
 [] unit test everything
   [] use mocha and chai
