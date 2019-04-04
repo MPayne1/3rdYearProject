@@ -59,8 +59,17 @@
                 {{errorMessage}}
               </div>
               <label for="username">Player's Username</label>
-              <input v-model="username" type="text" class="form-control"
-                id="username" placeholder="Username" required>
+              <!--<input v-model="username" type="text" class="form-control"
+                id="username" placeholder="Username" required> !-->
+              <autocomplete
+                placeholder="Enter Username"
+                :source="possiblePlayers"
+                input-class="form-control"
+                id="username"
+                :results-display="formattedPlayers"
+                @selected="addPlayer"
+                >
+              </autocomplete>
                 <br>
               <button class="btn btn-primary btn-lg"
                 type="submit">Add a player</button>
@@ -207,6 +216,9 @@
 
 <script>
   import joi from 'joi';
+  import Vue from 'vue';
+  import AutoComplete from 'vuejs-auto-complete';
+  Vue.component('autocomplete', AutoComplete);
 
   const API_URL = 'https://localhost:3000/';
   const PLAYERS_URL = 'https://localhost:3000/team/allplayers';
@@ -267,7 +279,9 @@
     watch: {
       username: {
         handler() {
-          this.errorMessage = '';
+          return this.possiblePlayers.filter((item) => {
+            return item.username.startsWith(this.username);
+          });
         },
         deep: true,
       },
@@ -328,10 +342,32 @@
             this.getSport();
             this.getAnnouncements();
             this.getIsTeamAdmin();
+            this.getPossiblePlayers();
           }
         });
     },
     methods: {
+      getPossiblePlayers() {
+        const body = {
+          teamID: this.teamID,
+        };
+        fetch(POSSIBLE_PLAYERS_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              this.possiblePlayers = result;
+            }
+          });
+      },
+      formattedPlayers(result) {
+        return result.username;
+      },
       showAnnouncementInfo(index){
         if (this.announcementOpen == true && this.announcementIndex == index) {
           this.announcementOpen = false;
@@ -434,10 +470,11 @@
             });
         }
       },
-      addPlayer() {
+      addPlayer(username) {
+        console.log(username.display);
         this.errorMessage = '';
         const body = {
-          username: this.username,
+          username: username.display,
           teamID: this.teamID,
         };
         if (this.validAddPlayer(body) && this.isTeamAdmin) {
