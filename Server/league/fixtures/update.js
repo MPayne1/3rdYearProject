@@ -183,7 +183,7 @@ router.post('/startSeason', async(req, res, next) => {
                   // then insert fixtures into db, for each time the teams play each other
                   for(i = 0; i < numTimes; i++) {
                     for(j = 0; j < fixtures.length; j++) {
-                      await dbInsertFixture(leagueID, seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
+                      await dbInsertFixture(seasonID, fixtures[j].HomeTeamID, fixtures[j].AwayTeamID);
                     }
                   }
                   await initialiseRankingsTable(seasonID, teamList);

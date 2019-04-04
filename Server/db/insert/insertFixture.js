@@ -2,11 +2,11 @@ const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
 //insert a new user into the db
-var insertFixture  = async function(leagueID, seasonID, HomeTeamID, AwayTeamID) {
-    var sql = `INSERT INTO fixture(leagueID, seasonID, HomeTeamID,
+var insertFixture  = async function(seasonID, HomeTeamID, AwayTeamID) {
+    var sql = `INSERT INTO fixture(seasonID, HomeTeamID,
       AwayTeamID)
-      VALUES(${mysql.escape(leagueID)}, ${mysql.escape(seasonID)},
-       ${mysql.escape(HomeTeamID)},  ${mysql.escape(AwayTeamID)});`;
+      VALUES(${mysql.escape(seasonID)},${mysql.escape(HomeTeamID)},
+       ${mysql.escape(AwayTeamID)});`;
 	  await dbCon.query(sql , (err, result) => {
 		    if(err) throw err;
         //console.log('fixture added');
