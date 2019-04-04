@@ -9,13 +9,13 @@ var selectUpcomingFixtures  = async function(UserID, callback) {
     hometeam.address, hometeam.city,
     hometeam.county, hometeam.postcode, hometeam.Sport
     from (select teamName as HomeTeamName, HometeamID , fixtureID,
-      date,startTime, endTime, address, city, county, postcode, Sport
-      from team, fixture, playsFor where HometeamID = playsFor.TeamID and
-      playsFor.TeamID = team.TeamID and
+      date,startTime, endTime, address, fixture.city, fixture.county, postcode, Sport
+      from team, fixture, playsFor, league where HometeamID = playsFor.TeamID and
+      playsFor.TeamID = team.TeamID and team.leagueID = league.leagueID and
       playsFor.UserID = ${mysql.escape(UserID)} and played = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixtureID
-       from team, fixture, playsFor where AwayTeamID = playsFor.TeamID
-      and playsFor.TeamID = team.TeamID
+       from team, fixture, playsFor, league where AwayTeamID = playsFor.TeamID
+      and playsFor.TeamID = team.TeamID and team.leagueID = league.leagueID
       and played = 'false') as awayTeam
      where homeTeam.fixtureID = awayTeam.fixtureID;`;
 

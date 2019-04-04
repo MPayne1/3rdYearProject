@@ -40,7 +40,7 @@ async function createLeagueTable(err) {
 async function createTeamTable(err) {
 	if(err) throw err;
 	var sql = "CREATE TABLE Team(TeamID int NOT NULL AUTO_INCREMENT,"+
-	"TeamName VARCHAR(20), TeamAdmin int,LeagueID int, Sport VARCHAR(30), teamDescription VARCHAR(300) "
+	"TeamName VARCHAR(20), TeamAdmin int,LeagueID int, teamDescription VARCHAR(300) "
    +",PRIMARY KEY (TeamID), "+
 	"FOREIGN KEY (LeagueID) REFERENCES League(LeagueID), "+
 	"FOREIGN KEY (TeamAdmin) REFERENCES Users(UserID))";
