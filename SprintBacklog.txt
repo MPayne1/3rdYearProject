@@ -94,6 +94,11 @@ Sprint Backlog
     [x] fix any db querys
     [x] fix any routes
 
+[] navbar when on team/league/user page and go to another one doesn't work
+  [] league
+  [] team
+  [] user
+
 [] add player search
   [] db
     [] get all usernames not already in team in the league
