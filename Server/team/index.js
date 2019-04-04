@@ -25,6 +25,7 @@ const teamSchema = joi.object().keys({
   TeamName: joi.string().min(2).max(20).required(),
   TeamAdmin: joi.number().positive().required(),
   Sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
+  teamDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required(),
   LeagueID: joi.number().positive().required(),
 });
 
@@ -115,6 +116,7 @@ router.post('/create', async(req, res, next) => {
   var TeamAdmin = req.user.UserID;
   var LeagueID = req.body.LeagueID;
   var Sport = req.body.Sport;
+  var teamDescription = req.body.teamDescription;
 
   const result = joi.validate(req.body, teamSchema);
   if(result.error === null) {
@@ -127,7 +129,7 @@ router.post('/create', async(req, res, next) => {
           res.status(409);
           next(error);
       } catch(e) {
-        await dbInsert(TeamName, TeamAdmin, LeagueID, Sport);
+        await dbInsert(TeamName, TeamAdmin, LeagueID, Sport, teamDescription);
         await dbInsertPlayerTeamname(TeamAdmin, TeamName);
         res.json(req.body);
       }
