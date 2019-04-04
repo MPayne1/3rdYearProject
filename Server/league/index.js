@@ -35,7 +35,8 @@ const leagueSchema = joi.object().keys({
   city: joi.string().min(2).max(30).required(),
   county: joi.string().min(2).max(30).required(),
   country: joi.string().min(2).max(30).required(),
-  games: joi.number().positive().required()
+  games: joi.number().positive().required(),
+  leagueDescription: joi.string().regex(/^[_,."£$%^&*(){}@/!'#?-\[\]\w\-\s]{0,300}$/).required()
 });
 
 // schema for searching for a league
@@ -146,6 +147,7 @@ router.post('/create',async (req, res, next) => {
   var city = req.body.city;
   var county = req.body.county;
   var country = req.body.country;
+  var leagueDescription = req.body.leagueDescription;
 
   const result = joi.validate(req.body, leagueSchema);
   if(result.error === null) {
@@ -158,7 +160,7 @@ router.post('/create',async (req, res, next) => {
         next(error);
       } catch(e) {
           await dbInsert(leagueName, leagueAdmin, Sport, maxTeams, loss, draw,
-            win, city, county, country, games);
+            win, city, county, country, games, leagueDescription);
           res.json(req.body);
       }
     })
