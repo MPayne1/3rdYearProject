@@ -100,12 +100,12 @@ Sprint Backlog
   [x] user
 
 [] add player search
-  [] db
-    [] get all usernames not already in team in the league
-      [] select all users and subtract ones that play in the league
-  [] backend
-    [] route for all usernames
-    [] send res
+  [x] db
+    [x] get all usernames not already in team in the league
+      [x] select all users and subtract ones that play in the league
+  [x] backend
+    [x] route for all usernames
+    [x] send res
   [] frontend
     [] send req
     [] show select box with all users
