@@ -6,13 +6,13 @@ Sprint Backlog
 [] nice to do
   [] refactor code, add more methods
   [] fix navbar when screen small e.g on mobile.
-  [] add league description
-  [] add team description
+  [x] add league description
+  [x] add team description
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
-  [] when add player suggest players, like search
-  [] when searching for league, make so don't need to fill in all bits
+  [x] when add player suggest players, like search
+  [~] when searching for league, make so don't need to fill in all bits
   [] team messaging
   [] player stats
   [] team/league/user photos
@@ -99,16 +99,18 @@ Sprint Backlog
   [x] team
   [x] user
 
-[] add player search
+[x] add player search
   [x] db
     [x] get all usernames not already in team in the league
       [x] select all users and subtract ones that play in the league
   [x] backend
     [x] route for all usernames
     [x] send res
-  [] frontend
-    [] send req
-    [] show select box with all users
+  [x] frontend
+    [x] send req
+    [x] autocomplete box
+  [] should allow all users or all users not in league
+    [] if all users not in league do i need to be able to leave a team
 
 
 [] unit test everything
