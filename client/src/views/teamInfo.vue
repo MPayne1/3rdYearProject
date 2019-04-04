@@ -218,6 +218,7 @@
   const ADD_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/new';
   const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/remove';
   const TEAM_ADMIN_URL = 'https://localhost:3000/team/isTeamAdmin';
+  const POSSIBLE_PLAYERS_URL = 'https://localhost:3000/team/possibleUsernames';
 
   const addPlayerSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -261,6 +262,7 @@
       announcementSuccess: '',
       isTeamAdmin: false,
       teamDescription: '',
+      possiblePlayers: [],
     }),
     watch: {
       username: {

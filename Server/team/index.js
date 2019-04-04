@@ -42,10 +42,6 @@ const allPlayersSchema = joi.object().keys({
   teamName: joi.string().min(2).max(20).required(),
 });
 
-const possibleUsernamesSchema = joi.object().keys({
-    leagueID: joi.number().positive().required(),
-});
-
 // schema to get the sport for the team
 const getSportSchema =  joi.object().keys({
   teamID: joi.number().positive().required()
@@ -190,9 +186,9 @@ router.post('/addPlayer', async (req, res, next) => {
 
 // route to get all users not in the league for adding a new player to team
 router.post('/possibleUsernames' , async(req, res, next) => {
-  const result = joi.validate(req.body, possibleUsernamesSchema);
+  const result = joi.validate(req.body, getSportSchema);
   if(result.error === null) {
-    await dbSelectPossiblePlayers(req.body.leagueID, (err, players) => {
+    await dbSelectPossiblePlayers(req.body.teamID, (err, players) => {
       if(err) next(err);
       try {
         players[0].username;
