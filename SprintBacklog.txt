@@ -13,6 +13,7 @@ Sprint Backlog
   [] transfer leagueAdmin
   [x] when add player suggest players, like search
   [~] when searching for league, make so don't need to fill in all bits
+    [x] country/county dropdowns
   [] team messaging
   [] player stats
   [] team/league/user photos
