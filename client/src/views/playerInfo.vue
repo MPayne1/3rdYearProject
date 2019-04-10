@@ -1,9 +1,14 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>Player Information</h2>
-      <h4>{{username}}</h4>
+      <div class="row" id="imageAndName">
+        <div class="crop col-md-12">
+          <img :src="require('../assets/Profile Pictures/Man.jpg')"  alt="Profile Picture">
+          <h2>{{username}}</h2>
+        </div>
+      </div>
     </div>
+
     <div v-if="!showInfo" class="alert alert-warning" role="alert">
       <h4>{{username}} has no information to publicly show.</h4>
     </div>
@@ -473,5 +478,20 @@
 #settingsItem {
   margin-left: auto;
   margin-right: auto;
+}
+
+.crop {
+  height: 200px;
+  width: 200px;
+  overflow: hidden;
+}
+
+.crop img {
+  height: auto;
+  width: 200px
+}
+
+.jumbotron{
+  padding: 2rem;
 }
 </style>
