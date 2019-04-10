@@ -5,7 +5,6 @@ Sprint Backlog
 
 [] nice to do
   [] refactor code, add more methods
-  [] fix navbar when screen small e.g on mobile.
   [x] add league description
   [x] add team description
   [] leave a team
@@ -33,12 +32,13 @@ Sprint Backlog
       [x] send req
     [] show profile pic
       [] navbar
-      [] player list
+      [x] player list
       [x] player page
   [x] db
     [x] modify users table to include path for pic
     [x] update profile pic
 
+[x] fix navbar when screen small e.g on mobile.
 
 [] unit test everything
   [] use mocha and chai
