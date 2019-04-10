@@ -2,4 +2,4 @@ node_modules/
 .env
 Server/certificate/
 Server/testinformation.txt
-Client/assets/Profile Pictures/*
+Client/assets/Profile Pictures/
