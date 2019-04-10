@@ -63,6 +63,7 @@ const forgottonPasswordSchema = joi.object().keys({
 });
 
 const invalidLogin = 'Invalid Login Attempt.';
+const defaultImageName = 'default.jpg'
 
 // ------  routes  ------
 // any route in here is pre-prended with /auth
@@ -92,7 +93,7 @@ router.post('/signup', async (req, res, next) => {
           res.json({username});
           await dbInsert(username, hashedPassword, req.body.LastName,
             req.body.FirstName, req.body.email, req.body.phoneNumber,
-            req.body.Bio, req.body.publiclyShow);
+            req.body.Bio, req.body.publiclyShow, defaultImageName );
           await dbInsertPasswordReset(username);
         });
 
