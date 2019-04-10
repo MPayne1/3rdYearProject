@@ -29,12 +29,12 @@ Sprint Backlog
     [x] add change profile pic route
     [x] on signup save a default pic
   [] frontend
-    [] change profile pic form
-      [] send req
+    [x] change profile pic form
+      [x] send req
     [] show profile pic
       [] navbar
       [] player list
-      [] player page
+      [x] player page
   [x] db
     [x] modify users table to include path for pic
     [x] update profile pic
