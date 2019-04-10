@@ -3,8 +3,8 @@
     <div class="jumbotron">
       <div class="row" id="imageAndName">
         <div class="crop col-md-12">
-          <img :src="require('../assets/Profile Pictures/Man.jpg')"  alt="Profile Picture">
-          <h2>{{username}}</h2>
+        <img style="height: 200px; width:200px" :src="require(`../assets/Profile Pictures/${profile.imagePath}`)" alt="Profile Picture">
+        <h2>{{username}}</h2>
         </div>
       </div>
     </div>
@@ -156,6 +156,33 @@
                   </div>
                 </div>
               </li>
+
+              <li v-if="showEditOptions" class="list-group-item d-flex justify-content-between align-items-center card-body">
+                <div id="settingsItem" class="align-items-center">
+                  <h5 @click="profileImageOpen = !profileImageOpen, openCloseLi()">Change Profile Image</h5>
+                  <div v-if="profileImageOpen && showEditOptions == true" class="">
+                    <form @submit.prevent="changeProfileImage()">
+                    <div class="form-group">
+                      <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                        {{errorMessage}}
+                      </div>
+                      <div v-if="successMessage" class="alert alert-success" role="alert">
+                        {{successMessage}}
+                      </div>
+                      <div class="form-group">
+                         <div>
+                          <input type="file" name="profileImage" v-on:change="onImageUpload($event.target.name, $event.target.files)"class="form-control-file" accept="">
+                          <label for="profileImage">Upload a new Profile Image</label>
+                         </div>
+                       </div>
+                      <button class="btn btn-primary btn-lg"
+                        type="submit">Change Profile Image</button>
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </li>
+
             </ul>
         </div>
       </div>
@@ -174,6 +201,7 @@
   const CHANGE_BIO_URL = 'https://localhost:3000/player/profile/changeInfo/Bio';
   const CHANGE_PHONE_NO_URL = 'https://localhost:3000/player/profile/changeInfo/phoneNumber';
   const CHANGE_PUBLICLY_SHOW_URL = 'https://localhost:3000/player/profile/changeInfo/publiclyShow';
+  const CHANGE_PROFILE_IMAGE_URL =  'https://localhost:3000/player/profile/changeInfo/picture';
 
   const changeEmailSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -219,6 +247,8 @@
       publiclyShowOpen: false,
       showEditOptions: false,
       showInfo: false,
+      profileImageOpen: false,
+      newImage: '',
     }),
     watch: {
       email: {
@@ -259,7 +289,6 @@
 
     },
     methods: {
-
       openCloseLi() {
         this.successMessage = '';
       },
@@ -286,6 +315,41 @@
           }).catch((error) => { // if any errors catch them any display error message
             this.errorMessage = error.message;
           });
+      },
+      onImageUpload(fileName, file) {
+        var imageFile = file[0];
+        if(!imageFile.type.match('image.*')) {
+          this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
+        } else {
+          this.newImage = new FormData();
+          this.newImage.append('profileImage', imageFile);
+          console.log("image selected");
+        }
+      },
+      changeProfileImage() {
+        if(this.newImage) {
+          // send the request to the backend
+          fetch(CHANGE_PROFILE_IMAGE_URL, {
+            method: 'POST',
+            body: this.newImage,
+            headers: {
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(response => response.json())
+          .then((res) =>{
+            if (res.message) {
+              this.successMessage = res.message;
+            }
+            if(res.errorMessage) {
+              this.errorMessage = res.errorMessage;
+            }
+            console.log(res);
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
+          });
+        } else {
+          this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
+        }
       },
       changePubliclyShown() {
         var show = '';
@@ -479,16 +543,18 @@
   margin-left: auto;
   margin-right: auto;
 }
-
+#settingsCard {
+  margin-bottom: 20px;
+}
 .crop {
-  height: 200px;
-  width: 200px;
+  height: auto;
+  width: auto;
   overflow: hidden;
 }
 
 .crop img {
   height: auto;
-  width: 200px
+  width: auto;
 }
 
 .jumbotron{
