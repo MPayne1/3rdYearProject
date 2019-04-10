@@ -25,9 +25,9 @@ Sprint Backlog
 
 
 [] user profile pics
-  [] backend
-    [] add change profile pic route
-    [] on signup save a default pic
+  [x] backend
+    [x] add change profile pic route
+    [x] on signup save a default pic
   [] frontend
     [] change profile pic form
       [] send req
@@ -35,9 +35,9 @@ Sprint Backlog
       [] navbar
       [] player list
       [] player page
-  [] db
+  [x] db
     [x] modify users table to include path for pic
-    [] update profile pic
+    [x] update profile pic
 
 
 [] unit test everything
