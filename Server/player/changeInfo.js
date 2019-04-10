@@ -8,6 +8,7 @@ const joi = require('joi');
 
 const dbUpdatePhoneNumber = require('../db/update/profile/updateUserPhoneNumber.js');
 const dbUpdateBio = require('../db/update/profile/updateUserBio.js');
+const dbUpdateImage = require('../db/update/profile/updateUserImage.js');
 const dbUpdatePubliclyShow = require('../db/update/profile/updatePubliclyShow.js');
 // ------  schemas  ------
 const phoneNumberSchema = joi.object().keys({
@@ -61,6 +62,33 @@ router.post('/Bio', async (req, res, next) => {
   } else {
     res.status(422);
     next(result.error);
+  }
+});
+
+// handle the request to change the users picture
+router.post('/picture', async(req, res, next) => {
+  try{
+    var file = req.files.profileImage;
+    var imageName = req.files.profileImage.name;
+    // check file size smaller than 10MB
+    if(file.size < 10000000) {
+      // check file type
+      if(file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/jpg") {
+        file.mv('Client/src/assets/Profile Pictures/' + imageName, async(err) => {
+          if(err) next(err);
+          await dbUpdateImage(req.user.UserID, imageName);
+          console.log(`profile image ${imageName} uploaded`);
+          res.json({message: "image uploaded"});
+        });
+      } else {
+        throw new Error();
+      }
+    } else {
+      throw new Error();
+    }
+  } catch(e){
+    res.status(422);
+    res.json({message: "Please upload an image in jgp, jpeg or png format smaller than 10MB"})
   }
 });
 
