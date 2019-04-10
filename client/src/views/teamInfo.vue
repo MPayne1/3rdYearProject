@@ -47,7 +47,8 @@
         <div id="playersCard" class="card text-white bg-secondary">
           <div id="playerList" class="card-header"><h4>Players</h4></div>
           <ul class="list-group list-group-flush">
-            <li class="list-group-item d-flex justify-content-between align-items-center card-body" v-for="player in players">
+            <li class="list-group-item d-flex align-items-center card-body" v-for="player in players">
+              <img id="playerImage" :src="require(`../assets/Profile Pictures/${player.imagePath}`)" alt="Profile Picture">
               <router-link :to="{ name: 'playerInfo', params: {username: player.username} }">
                 {{ player.username }}</router-link>
             </li>
@@ -59,8 +60,6 @@
                 {{errorMessage}}
               </div>
               <label for="username">Player's Username</label>
-              <!--<input v-model="username" type="text" class="form-control"
-                id="username" placeholder="Username" required> !-->
               <autocomplete
                 placeholder="Enter Username"
                 :source="possiblePlayers"
@@ -652,5 +651,10 @@
   }
   #playersCard, #announcementCard {
     margin-bottom: 20px;
+  }
+  #playerImage {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
   }
 </style>
