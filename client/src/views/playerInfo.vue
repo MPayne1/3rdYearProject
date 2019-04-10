@@ -343,6 +343,9 @@
             if(res.errorMessage) {
               this.errorMessage = res.errorMessage;
             }
+            if(res.imagePath) {
+              this.profile.imagePath = res.imagePath;
+            }
             console.log(res);
           }).catch((error) => { // if any errors catch them any display error message
             this.errorMessage = error.message;

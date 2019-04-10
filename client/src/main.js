@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import 'bootswatch/dist/flatly/bootstrap.css';
+import 'bootstrap';
 import App from './App.vue';
 import router from './router';
 

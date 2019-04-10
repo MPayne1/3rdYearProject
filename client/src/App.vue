@@ -6,7 +6,7 @@
       <button class="navbar-toggler" type="button" data-toggle="collapse"
           data-target="#navbarColor01" aria-controls="navbarColor01"
           aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon">(current)</span>
+        <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="collapse navbar-collapse" id="navbarColor01">
@@ -37,14 +37,14 @@
             </div>
           </li>
         </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <!--
-            <router-link  class="nav-link" :to="{ name: 'playerInfo',
-            params: {username: user.username}}">{{user.username}} </router-link> !-->
-            <a class="text-white"v-on:click="userPage(user.username)">{{user.username}}</a>
-          </li>
-        </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <!--
+              <router-link  class="nav-link" :to="{ name: 'playerInfo',
+              params: {username: user.username}}">{{user.username}} </router-link>!-->
+              <a class="text-white" v-on:click="userPage(user.username)">{{user.username}}</a>
+            </li>
+          </ul>
       </div>
     </nav>
     <router-view class="container pt-4" />
@@ -55,6 +55,7 @@
 const API_URL = 'https://localhost:3000/';
 const TEAMS_URL = 'https://localhost:3000/team/playsfor';
 const LEAGUES_URL = 'https://localhost:3000/league/playsIn';
+const USER_IMAGE_URL = 'https://localhost:3000/player/profile/profileImage';
 
 export default {
   data: () => ({
@@ -63,6 +64,7 @@ export default {
     teams: [],
     user: {},
     leagues: [],
+    imagePath: '',
   }),
   mounted() {
     // get the authorization header
@@ -76,6 +78,7 @@ export default {
         if (result.user) {
           this.user = result.user;
           console.log(result);
+          this.loadProfileImage();
         } else {
           localStorage.removeItem('token');
         }
@@ -136,6 +139,19 @@ export default {
         .then((result) => {
           if (result) {
             this.teams = result.result;
+          }
+        });
+    },
+    loadProfileImage() {
+      fetch(USER_IMAGE_URL, {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${localStorage.token}`,
+        },
+      }).then(res => res.json())
+        .then((result) => {
+          if (result) {
+            this.imagePath = result[0].imagePath;
           }
         });
     },
