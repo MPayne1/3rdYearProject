@@ -82,9 +82,9 @@ router.post('/picture', async(req, res, next) => {
         file.mv('Client/src/assets/Profile Pictures/' + imageName, async(err) => {
           if(err) next(err);
           await dbUpdateImage(req.user.UserID, imageName);
-          
+
           console.log(`profile image ${imageName} uploaded`);
-          res.json({message: "image uploaded"});
+          res.json({message: "Profile Image Changed"});
         });
       } else {
         throw new Error();
@@ -94,7 +94,7 @@ router.post('/picture', async(req, res, next) => {
     }
   } catch(e){
     res.status(422);
-    res.json({message: "Please upload an image in jgp, jpeg or png format smaller than 10MB"})
+    res.json({errorMessage: "Please upload an image in jgp, jpeg or png format smaller than 10MB"})
   }
 });
 
