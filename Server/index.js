@@ -8,6 +8,7 @@ const fs = require('fs');
 const rateLimiter = require('express-rate-limit');
 const helmet = require('helmet');
 const enforceSSL = require('express-sslify');
+const fileUpload = require('express-fileupload');
 
 const volleyball = require('volleyball'); // shows req/res info in node terminal
 const cors = require('cors');
@@ -79,6 +80,7 @@ app.use(helmet.contentSecurityPolicy({
 // don't allow my application to be used inside frames, only for supported browsers
 app.use(helmet.frameguard({action: 'deny'}));
 
+app.use(fileUpload());
 // ---------  Routes  ---------
 
 // check the users jwt
