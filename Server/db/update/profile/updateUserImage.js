@@ -7,7 +7,7 @@ var updateUserImage  = async function(userID, path) {
     WHERE userID = ${mysql.escape(userID)};`;
 	  await dbCon.query(sql , (err, result) => {
 		    if(err) next(err);
-        console.log('image updated');
+        console.log('image path updated');
     });
 }
 
