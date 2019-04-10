@@ -84,7 +84,7 @@ router.post('/picture', async(req, res, next) => {
           await dbUpdateImage(req.user.UserID, imageName);
 
           console.log(`profile image ${imageName} uploaded`);
-          res.json({message: "Profile Image Changed"});
+          res.json({message: "Profile Image Changed", imagePath: imageName});
         });
       } else {
         throw new Error();

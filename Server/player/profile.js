@@ -9,6 +9,7 @@ const changeInfo = require('./changeInfo.js');
 
 
 const dbSelectUserInfo = require('../db/select/Users/selectUserInfo.js');
+const dbSelectUserImage = require('../db/select/Users/selectUserImage.js');
 // ------  schemas  ------
 
 const viewProfileSchema = joi.object().keys({
@@ -55,6 +56,18 @@ router.post('/view', async (req, res, next) => {
   }
 })
 
+// route to handle req for a users profile image
+router.get('/profileImage', async(req, res, next) => {
+  await dbSelectUserImage(req.user.UserID, (err, result) => {
+    if(err) next(err);
+    try{
+      result[0].imagePath;
+      res.json(result);
+    } catch(e) {
+      res.json({message: 'User has no image'});
+    }
+  });
+});
 
 router.use('/changeInfo', changeInfo);
 module.exports = router;
