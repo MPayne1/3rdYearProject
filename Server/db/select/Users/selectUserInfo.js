@@ -6,7 +6,7 @@ const dbCon  = require('../../connection.js');
 */
 var selectUser  = async function(username, callback) {
   var res;
-    var sql = `SELECT UserID, LastName, FirstName, Email, PhoneNumber, Bio, publiclyShow FROM users WHERE username =  + ${mysql.escape(username)}`;
+    var sql = `SELECT UserID, LastName, FirstName, Email, PhoneNumber, Bio, publiclyShow, imagePath FROM users WHERE username =  + ${mysql.escape(username)}`;
 	  await dbCon.query(sql , (err, result, fields) => {
 		    if(err) throw err;
         res = result;
