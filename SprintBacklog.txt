@@ -36,7 +36,7 @@ Sprint Backlog
       [] player list
       [] player page
   [] db
-    [] modify users table to include path for pic
+    [x] modify users table to include path for pic
     [] update profile pic
 
 

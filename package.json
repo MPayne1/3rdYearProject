@@ -562,6 +562,7 @@
       "version": "2.1.4"
     },
     "express": "^4.16.4",
+    "express-fileupload": "^1.1.4",
     "express-rate-limit": "^3.3.2",
     "express-sslify": "^1.2.0",
     "extend-shallow": {
