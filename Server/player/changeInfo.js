@@ -5,6 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
+const crypto = require('crypto');
 
 const dbUpdatePhoneNumber = require('../db/update/profile/updateUserPhoneNumber.js');
 const dbUpdateBio = require('../db/update/profile/updateUserBio.js');
@@ -74,9 +75,14 @@ router.post('/picture', async(req, res, next) => {
     if(file.size < 10000000) {
       // check file type
       if(file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/jpg") {
+        // add random string to front of name to prevent duplicate names
+        var nameSalt = crypto.randomBytes(20).toString('hex');
+        imageName = nameSalt + imageName;
+
         file.mv('Client/src/assets/Profile Pictures/' + imageName, async(err) => {
           if(err) next(err);
           await dbUpdateImage(req.user.UserID, imageName);
+          
           console.log(`profile image ${imageName} uploaded`);
           res.json({message: "image uploaded"});
         });
