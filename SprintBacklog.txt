@@ -11,9 +11,6 @@ Sprint Backlog
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
-  [x] when add player suggest players, like search
-  [~] when searching for league, make so don't need to fill in all bits
-    [x] country/county dropdowns
   [] team messaging
   [] player stats
   [] team/league/user photos
@@ -27,91 +24,20 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 
 
-
-[x] dashboard
-  [x] show all users announcements for all leagues/teams they're in
-    [x] db
-      [x] select all league announcements for user
-      [x] select all team announcements for users
-    [x] backend
-      [x] dasboard route
-      [x] get announcements for user
-        [x] team
-        [x] league
-    [x] frontend
-      [x] send requests
-      [x] show announcements
-    [x] show all users fixtures on calendar on dashboard
-      [x] db
-        [x] get all fixtures for a user
-      [x] backend
-        [x] route
-      [x] frontend
-        [x] send req
-        [x] show all fixtures on calendar
-          [x] styling
-          [x] check when no date/time set
-
-[x] Update how fixtures date/time is stored
-  [x] Date
-  [x] starttime
-  [x] end time
-  [x] fix db Table
-  [x] fix update db
-  [x] fix select from db
-
-[x] find league improvements
-  [x] dropdown for country
-  [x] drop down for county/state
-  [x] also change create league to use same dropdowns
-
-[x] team description
-  [x] db
-    [x] alter team Table
-    [x] insert into table
-    [x] select from table
-  [x] backend
-    [x] alter create team route
-  [x] frontend
-    [x] create team form
-    [x] show on team page
-
-[x] league description
-  [x] db
-    [x] alter league Table
-    [x] insert into table
-    [x] select from table
-  [x] backend
-    [x] alter create league route
-  [x] frontend
-    [x] create league form
-    [x] show on league page
-
-[x] db normalisation
-  [x] remove sport from team table
-    [x] fix any db querys
-    [x] fix any routes
-  [x] remove leagueID from fixture table
-    [x] fix any db querys
-    [x] fix any routes
-
-[x] navbar when on team/league/user page and go to another one doesn't work
-  [x] league
-  [x] team
-  [x] user
-
-[x] add player search
-  [x] db
-    [x] get all usernames not already in team in the league
-      [x] select all users and subtract ones that play in the league
-  [x] backend
-    [x] route for all usernames
-    [x] send res
-  [x] frontend
-    [x] send req
-    [x] autocomplete box
-  [] should allow all users or all users not in league
-    [] if all users not in league do i need to be able to leave a team
+[] user profile pics
+  [] backend
+    [] add change profile pic route
+    [] on signup save a default pic
+  [] frontend
+    [] change profile pic form
+      [] send req
+    [] show profile pic
+      [] navbar
+      [] player list
+      [] player page
+  [] db
+    [] modify users table to include path for pic
+    [] update profile pic
 
 
 [] unit test everything
