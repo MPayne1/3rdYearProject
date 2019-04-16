@@ -189,7 +189,6 @@ router.post('/find', async (req, res, next) => {
           var error = new Error('No leagues found');
           next(error);
         }
-
       } catch(e) {
         res.status(422);
         var error = new Error('No leagues found');
