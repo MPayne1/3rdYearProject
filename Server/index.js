@@ -38,11 +38,10 @@ var apiAuthLimiter = new rateLimiter({
   message: 'Too many login attempts, please try again later.',
 });
 
-
-// shows req/res nicely in terminal
+// shows req/res nicely in terminal for debugging
 app.use(volleyball);
 
-// only allow client request from this origin, vue server
+// only allow client request from this origin - vue frontend server
 app.use(cors({
   origin: 'http://localhost:8080'
 }));
@@ -97,9 +96,12 @@ app.use('/auth/login', apiAuthLimiter);  // rate limit the login route
 app.use('/auth/changePassword', middlewares.isLoggedIn);
 app.use('/auth/changeEmail', middlewares.isLoggedIn);
 app.use('/auth', auth);
-app.use('/league', middlewares.isLoggedIn, league); //check a user is logged in to access this route
+app.use('/league', middlewares.isLoggedIn, league);
 app.use('/team', middlewares.isLoggedIn, team);
 app.use('/player', middlewares.isLoggedIn, player);
+
+
+// ------  error handling  ------
 
 function notFound(req, res, next) {
   res.status(404);
@@ -118,6 +120,7 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
+// launch server
 https.createServer(options, app).listen(port, () => {
   console.log(`Listening on ${port}`);
 })
