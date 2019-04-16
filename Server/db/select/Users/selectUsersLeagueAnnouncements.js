@@ -1,10 +1,9 @@
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
-/*
-  select everything for a given username
-*/
-var selectUser  = async function(userID, callback) {
+
+// select every league announcement for a given userID
+var selectUser = async function(userID, callback) {
   var res;
     var sql = `SELECT message, leaguename FROM users, playsfor, team, leagueannouncement, league
     WHERE users.UserID = ${mysql.escape(userID)} and users.userID = playsfor.UserID
@@ -15,7 +14,6 @@ var selectUser  = async function(userID, callback) {
         res = result;
           callback(null, res);
     });
-
 }
 
 module.exports = selectUser;
