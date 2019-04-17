@@ -15,7 +15,8 @@ var selectUpcomingFixtures  = async function(leagueID, callback) {
       team.leagueID = ${mysql.escape(leagueID)} and played = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixtureID
        from team, fixture, league, season where AwayTeamID = teamID and
-       fixture.leagueID = team.leagueID and team.leagueID = league.leagueID and
+       fixture.seasonID = season.seasonID and season.leagueID = league.leagueID
+       and team.leagueID = league.leagueID and
        team.leagueID = ${mysql.escape(leagueID)}
       and fixture.seasonID = season.seasonID  and played = 'false') as awayTeam
      where homeTeam.fixtureID = awayTeam.fixtureID;`;
