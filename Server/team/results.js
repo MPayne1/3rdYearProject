@@ -24,7 +24,9 @@ const teamResultSchema = joi.object().keys({
   teamID: joi.number().positive().required(),
 });
 
+// ------  routing  ------
 // all paths are prepended with /team/results
+
 router.get('/', (req, res) => {
   res.json({
     message: 'team results router works'

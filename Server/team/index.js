@@ -7,6 +7,7 @@ const router = express.Router();
 const joi = require('joi');
 const resultsRoute = require('./results.js');
 const announcementsRoute = require('./announcements.js');
+const imageRoute = require('./image.js');
 
 // ------  db operations  ------
 const dbSelectTeamNames = require('../db/select/Team/selectTeamNames.js');
@@ -61,6 +62,9 @@ router.get('/', (req, res) => {
 router.use('/results', resultsRoute);
 // team announcement route
 router.use('/announcements', announcementsRoute);
+// team image route
+router.use('/image', imageRoute);
+
 
 // handle req to check if user is teamAdmin
 router.post('/isTeamAdmin', async(req, res, next) => {
