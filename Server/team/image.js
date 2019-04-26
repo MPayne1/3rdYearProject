@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
 
 // route to handle req for a teams image
 router.post('/teamImage', async(req, res, next) => {
-  const result = joi.validate(req.body, teamSchema);
+  const result = joi.validate(req.body, imageSchema);
 
   if(result.error === null) {
     await dbSelectTeamImage(req.body.TeamID, (err, result) => {

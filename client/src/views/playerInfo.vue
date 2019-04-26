@@ -553,6 +553,8 @@
   height: auto;
   width: auto;
   overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .crop img {

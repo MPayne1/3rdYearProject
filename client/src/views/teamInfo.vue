@@ -1,8 +1,13 @@
 <template>
   <div class="home text-center">
     <div class="jumbotron">
-      <h2>{{teamName}}</h2>
-      <h5>{{teamDescription}}</h5>
+      <div class="row" id="imageAndName">
+        <div class="crop col-md-12">
+        <img style="height: 200px; width:200px" :src="require(`../assets/Team Images/${imagePath}`)" alt="Team Picture">
+        <h2>{{teamName}}</h2>
+        <h5>{{teamDescription}}</h5>
+        </div>
+      </div>
     </div>
     <div class="text-center row">
       <div class="col-md-2"></div>
@@ -210,6 +215,35 @@
       </div>
     </div>
       <div class="col-md-2"></div>
+    <div class="text-center row" v-if="isTeamAdmin">
+      <div class="col-md-4"></div>
+      <div class="col-md-4">
+        <div id="playersCard" class="card text-white bg-secondary">
+          <div id="playerList" class="card-header"><h4>Change Team Image</h4></div>
+          <div class="card-footer" v-if="isTeamAdmin">
+            <form  @submit.prevent="changeTeamImage()">
+              <div class="form-group">
+                <div v-if="errorMessage" class="alert alert-danger" role="alert">
+                  {{errorMessage}}
+                </div>
+                <div v-if="successMessage" class="alert alert-success" role="alert">
+                  {{successMessage}}
+                </div>
+                <div class="form-group">
+                   <div>
+                    <input type="file" name="teamImage" v-on:change="onImageUpload($event.target.name, $event.target.files)"class="form-control-file" accept="">
+                    <label for="teamImage">Upload a new Team Image</label>
+                   </div>
+                 </div>
+                <button class="btn btn-primary btn-lg"
+                  type="submit">Change Team Image</button>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
   </div>
 </template>
 
@@ -230,6 +264,8 @@
   const DELETE_ANNOUNCEMENT_URL = 'https://localhost:3000/team/announcements/remove';
   const TEAM_ADMIN_URL = 'https://localhost:3000/team/isTeamAdmin';
   const POSSIBLE_PLAYERS_URL = 'https://localhost:3000/team/possibleUsernames';
+  const IMAGE_PATH_URL = 'https://localhost:3000/team/image/teamImage';
+  const CHANGE_TEAM_IMAGE_URL = 'https://localhost:3000/team/image/newImage/';
 
   const addPlayerSchema = joi.object().keys({
     username: joi.string().alphanum().min(2).max(20)
@@ -254,6 +290,7 @@
       teamName: '',
       username: '',
       errorMessage: '',
+      successMessage: '',
       announcementErrorMessage: '',
       teamID: '',
       sport: '',
@@ -274,6 +311,8 @@
       isTeamAdmin: false,
       teamDescription: '',
       possiblePlayers: [],
+      imagePath: '',
+      newImage: '',
     }),
     watch: {
       username: {
@@ -342,10 +381,68 @@
             this.getAnnouncements();
             this.getIsTeamAdmin();
             this.getPossiblePlayers();
+            this.getImagePath();
           }
         });
     },
     methods: {
+      getImagePath() {
+        const body = {
+          TeamID: this.teamID,
+        };
+        fetch(IMAGE_PATH_URL, {
+          method: 'POST',
+          body: JSON.stringify(body),
+          headers: {
+            'content-type': 'application/json',
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        }).then(res => res.json())
+          .then((result) => {
+            if (result) {
+              this.imagePath = result[0].imagePath;
+            }
+          });
+      },
+      onImageUpload(fileName, file) {
+        var imageFile = file[0];
+        if(!imageFile.type.match('image.*')) {
+          this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
+        } else {
+          this.newImage = new FormData();
+          this.newImage.append('teamImage', imageFile);
+          console.log("image selected");
+        }
+      },
+      changeTeamImage() {
+        if(this.newImage) {
+          // send the request to the backend
+          var url = CHANGE_TEAM_IMAGE_URL+this.teamID;
+          fetch(url, {
+            method: 'POST',
+            body: this.newImage,
+            headers: {
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          }).then(response => response.json())
+          .then((res) =>{
+            if (res.message) {
+              this.successMessage = res.message;
+            }
+            if(res.errorMessage) {
+              this.errorMessage = res.errorMessage;
+            }
+            if(res.imagePath) {
+              this.imagePath = res.imagePath;
+            }
+            console.log(res);
+          }).catch((error) => { // if any errors catch them any display error message
+            this.errorMessage = error.message;
+          });
+        } else {
+          this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
+        }
+      },
       getPossiblePlayers() {
         const body = {
           teamID: this.teamID,
@@ -657,4 +754,26 @@
     height: 50px;
     margin-right: 10px;
   }
+
+  #imageAndName {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .crop {
+    height: auto;
+    width: auto;
+    overflow: hidden;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .crop img {
+    height: auto;
+    width: auto;
+  }
+
+  .jumbotron{
+    padding: 2rem;
+  }
+
 </style>
