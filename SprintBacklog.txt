@@ -16,7 +16,9 @@ Sprint Backlog
     [] team
     [] player
     [] auth
-
+  [] createdb change to create if not exists
+    [] uncomment all function calls
+    [] have one function to create all tables
 [] attribute loading spinner to loading.io
 
 
