@@ -15,7 +15,8 @@ async function createUsersTable(err) {
 	var sql = "CREATE TABLE users(UserID int NOT NULL AUTO_INCREMENT, " +
 	"username VARCHAR(20), password VARCHAR(255), LastName VARCHAR(255),"+
 	" FirstName VARCHAR(255), Email VARCHAR(50), Bio VARCHAR(200), "+
-  "PhoneNumber VARCHAR(15), publiclyShow ENUM('False', 'True'),PRIMARY KEY (UserID))";
+  "PhoneNumber VARCHAR(15), publiclyShow ENUM('False', 'True'), " +
+  "imagePath VARCHAR(255), PRIMARY KEY (UserID))";
 	await db.query(sql, function(err, result) {
 		if(err) throw err;
 		console.log("Users Table created");
@@ -41,7 +42,7 @@ async function createTeamTable(err) {
 	if(err) throw err;
 	var sql = "CREATE TABLE Team(TeamID int NOT NULL AUTO_INCREMENT,"+
 	"TeamName VARCHAR(20), TeamAdmin int,LeagueID int, teamDescription VARCHAR(300) "
-   +",PRIMARY KEY (TeamID), "+
+   +", imagePath VARCHAR(255), PRIMARY KEY (TeamID), "+
 	"FOREIGN KEY (LeagueID) REFERENCES League(LeagueID), "+
 	"FOREIGN KEY (TeamAdmin) REFERENCES Users(UserID))";
 	await db.query(sql, function(err, result) {
