@@ -82,7 +82,8 @@
           </thead>
           <tbody>
             <tr v-for="team in rankings" @click="goToTeamPage(team.teamname)">
-                <th scope="row">{{ team.teamname }}</th>
+                <th scope="row">  <img id="teamImage" :src="require(`../assets/Team Images/${team.imagePath}`)" alt="Profile Picture">
+                  {{ team.teamname }}</th>
                 <td>{{ team.Played }}</td>
                 <td>{{ team.Wins }}</td>
                 <td>{{ team.Draws }}</td>
@@ -907,5 +908,10 @@ export default {
   }
   #resultCard, #fixtureCard {
     margin-bottom: 20px;
+  }
+  #teamImage {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
   }
 </style>
