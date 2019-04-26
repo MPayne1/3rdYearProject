@@ -21,19 +21,19 @@ Sprint Backlog
 
 
 [] team image pics
-  [] backend
-    [] add change team pic route
-    [] on create team save a default pic
+  [x] backend
+    [x] add change team pic route
+    [x] on create team save a default pic
   [] frontend
     [] change team pic form
       [] send req
     [] show team pic
       [] player list
       [] player page
-  [] db
-    [] modify team table to include path for pic
-    [] update team pic
-    [] select team image
+  [x] db
+    [x] modify team table to include path for pic
+    [x] update team pic
+    [x] select team image
 
 
 [] refactor code, add more methods
