@@ -127,8 +127,7 @@ const LEAGUEID_URL = 'https://localhost:3000/league/leagueID';
 
 
 const schema = joi.object().keys({
-  name: joi.string().alphanum().min(2).max(20)
-    .required(),
+  name: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   admin: joi.required(),
   maxTeams: joi.number().positive().required(),
@@ -266,7 +265,7 @@ export default {
       }
       console.log(result.errorMessage);
       if (result.error.message.includes('name')) {
-        this.errorMessage = 'League name is invalid, must be between 2 and 20 characters and not include any symbols';
+        this.errorMessage = 'League name is invalid, must be between 2 and 30 characters and not include any symbols or numbers';
       }
       if (result.error.message.includes('sport')) {
         this.errorMessage = 'Sport is invalid please select a sport';

@@ -25,7 +25,7 @@ const dbSelectTeamAdminsInLeague = require('../db/select/League/selectTeamAdmins
 
 // schema for input validation
 const leagueSchema = joi.object().keys({
-  leagueName: joi.string().min(2).max(20).required(),
+  leagueName: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   leagueAdmin: joi.number().positive().required(),
   Sport: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
   maxTeams: joi.number().positive().required(),
@@ -49,7 +49,7 @@ const findLeagueSchema  = joi.object().keys({
 
 // schema for getting leagueID from leagueName
 const leagueIDSchema = joi.object().keys({
-  leagueName: joi.string().min(2).max(20).required()
+  leagueName: joi.string().regex(/^[a-zA-Z\s]{3,30}$/).max(30).required(),
 });
 
 // schema to get the sport for the league
