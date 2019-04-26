@@ -9,6 +9,8 @@ const resultsRoute = require('./results.js');
 const announcementsRoute = require('./announcements.js');
 const imageRoute = require('./image.js');
 
+
+const defaultTeamImage = 'defaultTeam.png';
 // ------  db operations  ------
 const dbSelectTeamNames = require('../db/select/Team/selectTeamNames.js');
 const dbInsert = require('../db/insert/createTeam.js');
@@ -132,7 +134,7 @@ router.post('/create', async(req, res, next) => {
           res.status(409);
           next(error);
       } catch(e) {
-        await dbInsert(TeamName, TeamAdmin, LeagueID, teamDescription);
+        await dbInsert(TeamName, TeamAdmin, LeagueID, teamDescription, defaultTeamImage);
         await dbInsertPlayerTeamname(TeamAdmin, TeamName);
         res.json(req.body);
       }

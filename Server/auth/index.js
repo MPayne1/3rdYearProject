@@ -21,7 +21,8 @@ const dbInsertPasswordReset = require('../db/insert/insertPasswordReset.js');
 
 const router = express.Router();
 const hashingRounds = 12;
-
+const invalidLogin = 'Invalid Login Attempt.';
+const defaultImageName = 'default.jpg'
 // ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
@@ -62,8 +63,7 @@ const forgottonPasswordSchema = joi.object().keys({
   email: joi.string().email({minDomainAtoms: 2 }).required(),
 });
 
-const invalidLogin = 'Invalid Login Attempt.';
-const defaultImageName = 'default.jpg'
+
 
 // ------  routes  ------
 // any route in here is pre-prended with /auth
