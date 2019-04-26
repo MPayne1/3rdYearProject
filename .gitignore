@@ -3,3 +3,4 @@ node_modules/
 Server/certificate/
 Server/testinformation.txt
 client/src/assets/Profile Pictures/*
+client/src/assets/Team Images/*
