@@ -4,13 +4,12 @@ Sprint Backlog
   [x] general style
 
 [] nice to do
-  [] refactor code, add more methods
   [] leave a team
   [] transfer teamAdmin
   [] transfer leagueAdmin
   [] team messaging
   [] player stats
-  [] team/league/user photos
+  [] team/user photos
   [] show teams fixtures on teampage?
   [] go over routes get/post/delete when appropiate
     [] league
@@ -37,5 +36,4 @@ Sprint Backlog
     [] select team image
 
 
-[] unit test everything
-  [] use mocha and chai
+[] refactor code, add more methods
