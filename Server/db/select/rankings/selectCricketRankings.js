@@ -8,7 +8,7 @@ var selectCricketRankings  = async function(leagueID, callback) {
   var res;
     var sql = `SELECT cricketRankings.seasonID, cricketRankings.teamID,teamname,
     Played, Wins, Draws, Losses, RunsFor, WicketsFor, RunsAgainst,
-    WicketsAgainst, points FROM cricketRankings, season, team
+    WicketsAgainst, points, imagePath FROM cricketRankings, season, team
     WHERE season.leagueID = ${mysql.escape(leagueID)}
     and season.seasonID = cricketRankings.seasonID and Finished = 'false'
     and team.teamID = cricketRankings.teamID order by points desc`;

@@ -7,7 +7,7 @@ const dbCon  = require('../../connection.js');
 var selectTennisRankings  = async function(leagueID, callback) {
   var res;
     var sql = `SELECT tennisRankings.seasonID, tennisRankings.teamID,
-    teamname, Played, Wins, Draws, Losses, SetsFor, SetsAgainst, points
+    teamname, Played, Wins, Draws, Losses, SetsFor, SetsAgainst, points, imagePath
     FROM tennisRankings, season, team
     WHERE season.leagueID = ${mysql.escape(leagueID)}
     and season.seasonID = tennisRankings.seasonID and Finished = 'false'
