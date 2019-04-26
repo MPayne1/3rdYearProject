@@ -82,8 +82,11 @@
           </thead>
           <tbody>
             <tr v-for="team in rankings" @click="goToTeamPage(team.teamname)">
-                <th scope="row">  <img id="teamImage" :src="require(`../assets/Team Images/${team.imagePath}`)" alt="Profile Picture">
-                  {{ team.teamname }}</th>
+                <th scope="row">
+                  <img id="teamImage" :src="require(`../assets/Team Images/${team.imagePath}`)" alt="Profile Picture">
+                  <br>
+                  {{ team.teamname }}
+                </th>
                 <td>{{ team.Played }}</td>
                 <td>{{ team.Wins }}</td>
                 <td>{{ team.Draws }}</td>
