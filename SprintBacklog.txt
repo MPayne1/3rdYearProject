@@ -22,15 +22,15 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 
 
-[] team image pics
+[x] team image pics
   [x] backend
     [x] add change team pic route
     [x] on create team save a default pic
   [x] frontend
     [x] change team pic form
       [x] send req
-    [] show team pic
-      [] league rankings
+    [x] show team pic
+      [x] league rankings
       [x] team page
   [x] db
     [x] modify team table to include path for pic
