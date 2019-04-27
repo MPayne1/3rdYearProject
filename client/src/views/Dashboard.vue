@@ -166,7 +166,6 @@ export default {
       fetch(GET_USERS_FIXTURES_URL, {
         method: 'GET',
         headers: {
-          'content-type': 'application/json',
           Authorization: `Bearer ${localStorage.token}`,
         },
       }).then(res => res.json())
