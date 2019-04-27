@@ -742,7 +742,7 @@ async function updateTableTennisRanking(req, next) {
         await dbUpdateTableTennisRankings(seasonID, HomeTeamID, 0, 1, 0, HomeSetsWon, AwaySetsWon, draw);
       }
     } catch(e){
-      next(e);
+      console.log(e);
     }
   });
 }
