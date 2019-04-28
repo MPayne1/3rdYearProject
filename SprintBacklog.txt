@@ -37,5 +37,6 @@ Sprint Backlog
     [x] update team pic
     [x] select team image
 
+[] EXPRESS-VALIDATOR ALL USER INPUT STRINGS
 
 [] refactor code, add more methods
