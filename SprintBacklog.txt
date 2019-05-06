@@ -13,5 +13,7 @@ Sprint Backlog
   [x] createdb change to create if not exists
     [x] uncomment all function calls
     [x] have one function to create all tables
+  [x] not show league/team/dashboard/player profile in navbar when not logged in
 
 [] refactor code, add more methods
+[] on exit page, close team/league navbar dropdowns
