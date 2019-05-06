@@ -4,39 +4,14 @@ Sprint Backlog
   [x] general style
 
 [] nice to do
-  [] leave a team
-  [] transfer teamAdmin
-  [] transfer leagueAdmin
-  [] team messaging
-  [] player stats
-  [] team/user photos
-  [] show teams fixtures on teampage?
-  [] go over routes get/post/delete when appropiate
-    [] league
-    [] team
-    [] player
-    [] auth
-  [] createdb change to create if not exists
-    [] uncomment all function calls
-    [] have one function to create all tables
-[] attribute loading spinner to loading.io
+  [x] go over routes get/post/delete when appropiates
+    [x] league
+    [x] team
+    [x] player
+    [x] auth
 
-
-[x] team image pics
-  [x] backend
-    [x] add change team pic route
-    [x] on create team save a default pic
-  [x] frontend
-    [x] change team pic form
-      [x] send req
-    [x] show team pic
-      [x] league rankings
-      [x] team page
-  [x] db
-    [x] modify team table to include path for pic
-    [x] update team pic
-    [x] select team image
-
-[] EXPRESS-VALIDATOR ALL USER INPUT STRINGS
+  [x] createdb change to create if not exists
+    [x] uncomment all function calls
+    [x] have one function to create all tables
 
 [] refactor code, add more methods

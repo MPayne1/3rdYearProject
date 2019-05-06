@@ -1,9 +1,11 @@
-Sprint Backlog
+Sprint Backlog 4
 [x] UI designs
   [x] general style
 
+[x] I want to see all information about a team in one page
   [x] add team homepage
     [x]diplay team info
+[x] As a team captain I want to be able to choos which players to add to a my team.
   [x] add players
     [x] Backend
       [x] add player by username and teamID
@@ -13,6 +15,3 @@ Sprint Backlog
       [x] only allow if team captain
 
 [x] update webpack-dev-server as was found to have a vulnerability
-
-[] unit test everything
-  [] use mocha and chai

@@ -8,16 +8,10 @@ Sprint Backlog
   [] fix navbar when screen small e.g on mobile.
   [x] add league description
   [x] add team description
-  [] leave a team
-  [] transfer teamAdmin
-  [] transfer leagueAdmin
   [x] when add player suggest players, like search
   [~] when searching for league, make so don't need to fill in all bits
     [x] country/county dropdowns
-  [] team messaging
-  [] player stats
   [] team/league/user photos
-  [] show teams fixtures on teampage?
   [] go over routes get/post/delete when appropiate
     [] league
     [] team

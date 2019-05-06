@@ -9,19 +9,15 @@ Sprint Backlog
   [] add league description
   [] add team description
   [] update regex to include special characters for match description
-  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [] email users when the fixture/results info is updated
-  [] show teamname rather than home/away in results page
   [x] move results db files into own folder
-
-[] attribute loading spinner to loading.io
 
 [x] fix odd num teams
   [x] temporarily add one extra team to work out fixtures
   [x] then switch out temp team so the team plays themselves
   [x] redo upcomingfixutres db to work properly
 
-[x] rankings
+[x] I would like to see the league rankings on the league page
   [x] db
     [x] create db tables for each sport
       [x] Football
@@ -46,12 +42,12 @@ Sprint Backlog
       [x] rugby
       [x] cricket
 
-  [] frontend
+  [x] frontend
     [x] send req to backend
-    [] border around table
-    [] fix upcomingFixtures overlap rankings table
+    [x] border around table
+    [x] fix upcomingFixtures overlap rankings table
     [x] round table corners
-      [] fix them
+      [x] fix them
     [x] show rankings in a table
       [x] Football
       [x] Tennis
@@ -95,6 +91,3 @@ Sprint Backlog
       [x] Basketball
       [x] rugby
       [x] cricket
-
-[] unit test everything
-  [] use mocha and chai

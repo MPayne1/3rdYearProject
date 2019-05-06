@@ -1,26 +1,24 @@
-Sprint Backlog
+Sprint Backlog 3
 [x] UI designs
   [x] general style
 
-[] attribute loading spinner to loading.io
-
-[x]create team
+[x] I would like to be able to create a team to join a league
   [x] backend
     [x] add team to db
-    [x]validate inputs
+    [x] validate inputs
     [x] team admin (captain)
     [x] no duplicate teamnames
     [x] check space in league
     [x] only return leagues with space
     [x] add teamadmin to playsfor as well
-  [x]frontend
+  [x] frontend
     [x] first choose which sport play and league want to join
       [x] create team form
       [x] validate form
       [x] send req to backend
-      [x]add league id and sport as url params/query
-        [x]error checking for url params/query
-        [x]redirect if not there
+      [x] add league id and sport as url params/query
+        [x] error checking for url params/query
+        [x] redirect if not there
       [x] show only leagues with space
       [x] redirect to team homepage
       [x] show teams playfor in navbar

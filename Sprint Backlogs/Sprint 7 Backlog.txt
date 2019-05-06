@@ -22,11 +22,10 @@ Sprint Backlog
   [x] when start new season set last season finished to true
   [x] refresh app.vue when logout
 
-[] attribute loading spinner to loading.io
 [] add team with teamID 0 for any bye weeks
   [] might have to change joi schemas
 
-[x] results
+[x] As league/team admin I need to update the results for the fixtures
   [x] backend, for each sport
     [x] db results table for each sport
     [x] add results to correct Table
@@ -58,7 +57,7 @@ Sprint Backlog
         [x] cricket
     [x] update list of sports when searching for league
 
-[] rankings
+[] I would like to see the league rankings on the league page
 
 [] unit test everything
   [] use mocha and chai

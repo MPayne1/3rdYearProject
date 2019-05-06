@@ -3,16 +3,14 @@ Sprint Backlog
 [x] UI designs
   [x] general style
 
-[] attribute loading spinner to loading.io
 [x] teaminfo page, players list card, title same size as upcoming fixtures on league info page
-[] refactor code, add more methods, put db files into folders
+[x] refactor code, add more methods, put db files into folders
 [x] reload app.vue after logging in
-[] go over http status codes
-[] fix navbar when screen small e.g on mobile.
+[x] go over http status codes
 
 [x] update webpack-dev-server as was found to have another vulnerability
 
-[x] security
+[x] I would like SportsBook to be secure
   [x] https
     [x] generate keys using openssl
     [x] reconfigure express()
@@ -30,6 +28,3 @@ Sprint Backlog
   [x] HTTP Strict Transport Security (HSTS),
     [x] browser only make https req
   [x] enforce all req to be from https
-
-[] unit test everything
-  [] use mocha and chai

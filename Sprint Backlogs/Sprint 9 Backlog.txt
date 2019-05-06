@@ -9,22 +9,16 @@ Sprint Backlog
   [] add league description
   [] add team description
   [] update regex to include special characters for match description
-  [] add middleware to routes to check if user is team/league admin, rather than doing it in each route
   [x] email users when the fixture/results info is updated
-  [] leave a team
-  [] transfer teamAdmin
-  [] transfer leagueAdmin
   [] get league/team admin for frontend only show options of user is
-  [] show teamname rather than home/away in results page
   [x] only show 10 upcomgin fixtures
     [x] click button to expand
     [x] click button to reduce again
   [] team announcements, team captain
   [] league announcements, league admin
 
-[] attribute loading spinner to loading.io
 
-[x]show league results
+[x] I want to see the results for matches in the league
   [x] backend
     [x] db select results for each sport
       [x] Football
@@ -65,7 +59,7 @@ Sprint Backlog
       [x] cricket
 
 
-[x]show teams results
+[x] I want to see all the results for my team on the teams page
   [x] backend
     [x] db select results for each sport
       [x] Football
@@ -103,7 +97,7 @@ Sprint Backlog
       [x] rugby
       [x] cricket
 
-[x] player profile page
+[x] I would like to have a profile page with all of my information on
   [x] Backend
     [x] /player route
       [x]/profile route
@@ -131,7 +125,7 @@ Sprint Backlog
       [x] check auth
       [x] send req
 
-[x] forgotten password
+[x] I would like a way to reset my password if I forget it.
   [x] Backend
     [x] db table for reset password info
     [x] create random hash
@@ -140,15 +134,13 @@ Sprint Backlog
     [x] form for new password
     [x] send req with resetToken and new password
 
-[x] on signup add userID to passwordreset table
+  [x] on signup add userID to passwordreset table
+  [x] seed passwordreset with all current users
 
-[x] seed passwordreset with all current users
 [x] change all users email to the test email
 
-[x] email to team members when fixture info updated
-  [x] db get teamnames in fixture
-  [x] db get list of users in both teams
-  [x] send email to each
-
-[] unit test everything
-  [] use mocha and chai
+[x] I would like to get an email to notify me if an upcoming fixtures information is updated
+  [x] email to team members when fixture info updated
+    [x] db get teamnames in fixture
+    [x] db get list of users in both teams
+    [x] send email to each

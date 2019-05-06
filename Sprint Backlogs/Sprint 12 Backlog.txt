@@ -5,13 +5,7 @@ Sprint Backlog
 
 [] nice to do
   [] refactor code, add more methods
-  [] leave a team
-  [] transfer teamAdmin
-  [] transfer leagueAdmin
-  [] team messaging
-  [] player stats
   [] team/league/user photos
-  [] show teams fixtures on teampage?
   [] go over routes get/post/delete when appropiate
     [] league
     [] team
@@ -21,7 +15,7 @@ Sprint Backlog
 [] attribute loading spinner to loading.io
 
 
-[x] user profile pics
+[x] I would like to be able to add and change a profile picture
   [x] backend
     [x] add change profile pic route
     [x] on signup save a default pic
@@ -36,7 +30,20 @@ Sprint Backlog
     [x] modify users table to include path for pic
     [x] update profile pic
 
-[x] fix navbar when screen small e.g on mobile.
 
-[] unit test everything
-  [] use mocha and chai
+[x] As a team admin I would like to be able to add a team photo
+  [x] backend
+    [x] add change team pic route
+    [x] on create team save a default pic
+  [x] frontend
+    [x] change team pic form
+      [x] send req
+    [x] show team pic
+      [x] league rankings
+      [x] team page
+  [x] db
+    [x] modify team table to include path for pic
+    [x] update team pic
+    [x] select team image
+
+[x] fix navbar when screen small e.g on mobile.

@@ -1,48 +1,46 @@
-Sprint Backlog
+Sprint Backlog 1
 [x]UI designs
   [x]general style
 
-[]attribute loading spinner to loading.io
-
-[x]Login
-  [x]frontend
-    [x]create login form
+[x] I would like to be able to securely login with my username and password.
+  [x] frontend
+    [x] create login form
     [x] vlaidate username
-    [x]validate password
-    [x]display any errors
-    [x]POST request to /auth/login
-      [x]diplay errors
-      [x]if succesful login
-        [x]store token in local storage
-        [x]redirect to dashboard
-  [x]if logged in user visits login/signup page, redirect to dashboard
-  [] show username on dashboard
-  [x]if not logged in user goes to dashboard, redirect to login page
+    [x] validate password
+    [x] display any errors
+    [x] POST request to /auth/login
+      [x] diplay errors
+      [x] if succesful login
+        [x] store token in local storage
+        [x] redirect to dashboard
+  [x] if logged in user visits login/signup page, redirect to dashboard
+  [x] show username on dashboard
+  [x] if not logged in user goes to dashboard, redirect to login page
 
-  [x]Backend
-    [x]validate login details
-    [x]check if username in db
-      [x]compare password with hashed password in db
+  [x] Backend
+    [x] validate login details
+    [x] check if username in db
+      [x] compare password with hashed password in db
       [x] create and sign a JWT
-        [x]respond with JWT
-    [x]bcrypt passwords
-    [x]check with database
-    []authorise user with token
+        [x] respond with JWT
+    [x] bcrypt passwords
+    [x] check with database
+    [x] authorise user with token
 
-[x]Register
-  [x]frontend
-    [x]create home page
-      [x]link to signup page
-    [x]create signup page
-      [x]form
-        [x]verify password
+[x] I would like to register for SportsBook without needing to give away unnecessary information.
+  [x] frontend
+    [x] create home page
+      [x] link to signup page
+    [x] create signup page
+      [x] form
+        [x] verify password
       [x] submit form
-        [x]validate username
-          [x]display any error
-        [x]POST request to server
-          [x]display any errors
+        [x] validate username
+          [x] display any error
+        [x] POST request to server
+          [x] display any errors
           [x] Signup
-            [x]redirect to login page
+            [x] redirect to login page
 
   [x]Backend
     [x]create user with POST /auth/signup
@@ -52,23 +50,20 @@ Sprint Backlog
       [x]bcrypt passwords
       [x]add new user to Database
 
-[]Database
-  []Schema
+[x] Database
+  [x] Schema
     [x]players info
     [x]team info
     [x]league info
-    []players stats
-    []team stats
     [x]admins
       [x]captain
       [x]league admin
-  []Normalise
-    []functional dependencies
-    []3nf/bcnf
+  [x]Normalise
+    [x]3nf
   [x]setup Database
     [x]mysql
 
-[]authorise
+[x] I would like to know that SportsBook is secure
   [x]checktoken middleware
     [x]get token from auth header
       [x]if defined
@@ -77,8 +72,5 @@ Sprint Backlog
   [x]is logged in middleware
     [x]if req.user is set continue
     [x]else send error message
-  []on homepage show dashboard instead of signup button
-  []protected routes
-
-[]unit test everything
-  []use mocha and chai
+  [x] on homepage show dashboard instead of signup button
+  [x]protected routes

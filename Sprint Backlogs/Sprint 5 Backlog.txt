@@ -1,15 +1,12 @@
-Sprint Backlog
-Sprint Backlog
+Sprint Backlog 5
 [x] UI designs
   [x] general style
 
-[] attribute loading spinner to loading.io
-[x] populate league dropdown with all leagues the user is in
 [x] add login button to dashboard
   [x] only show logout/login when appropriate
 [x] show username in top right of navbar
 
-[x] add fixtures
+[x] As a league admin I need to add new fixtures for the league.
   [x] Database
     [x] fixture table
       [x] schema: FixtureID, LeagueID, seaosnID, HomeTeamID, AwayTeamID, Date, Address, City, County, Postcode
@@ -27,15 +24,15 @@ Sprint Backlog
     [x] only show button if no more fixtures left in current season
 
 
-[] upcoming Fixtures
+[x] I want to be able to see all the upcoming Fixtures for my league
   [x] Backend
     [x] db query for getting all upcoming fixtures for a league
     [x] route for upcomingFixtures
-  [] frontend
+  [x] frontend
     [x] display list of upcoming Fixtures
-      [] show 10 to start, expand list for all of them
+      [x] show 10 to start, expand list for all of them
 
-[x] add dates, times and locations
+[x] As a league admin I need to add dates, times and locations for the fixtures
   [x] for each fixture in the upcoming list
   [x] frontend
     [x] dropdown to reveal form
@@ -49,6 +46,3 @@ Sprint Backlog
       [x] update db
 
 [x] move add player from its own page to part of the playerslist card on team info page
-
-[] unit test everything
-  [] use mocha and chai
