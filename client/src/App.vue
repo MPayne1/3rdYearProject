@@ -9,7 +9,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarColor01">
+      <div v-if="user" class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link class="nav-link" :to="{name: 'dashboard'}">Dashboard</router-link>
