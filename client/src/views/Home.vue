@@ -15,6 +15,7 @@
         <li>Automatically generate fixtures</li>
         <li>Easily record match results</li>
         <li>Automatically update the league table</li>
+        <li>Receive important email updates</li>
       </ul>
       <hr class="my-4">
       <div class="text-center">
