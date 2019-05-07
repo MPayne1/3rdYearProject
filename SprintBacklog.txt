@@ -19,3 +19,4 @@ Sprint Backlog
 [] refactor code, add more methods
 [] on exit page, close team/league navbar dropdowns
 [x] on create league swap county and country
+[x] rename all similar named files
