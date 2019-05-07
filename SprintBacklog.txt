@@ -15,7 +15,7 @@ Sprint Backlog
     [x] have one function to create all tables
   [x] not show league/team/dashboard/player profile in navbar when not logged in
 
-[] reference loading.io with link below spinner
+[x] reference loading.io with link below spinner
 [] refactor code, add more methods
 [] on exit page, close team/league navbar dropdowns
-[] on create league swap county and country
+[x] on create league swap county and country
