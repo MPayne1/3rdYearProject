@@ -6,6 +6,8 @@
   </div>
   <div v-if="loggingIn" class="text-center">
     <img src="../assets/loading_ring.svg"/>
+    <br>
+    <a href="https://loading.io/">powered by loading.io</a>
   </div>
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}

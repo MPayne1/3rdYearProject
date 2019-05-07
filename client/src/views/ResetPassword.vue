@@ -3,6 +3,7 @@
 <div class="jumbotron">
   <div v-if="loading" class="text-center">
     <img src="../assets/loading_ring.svg"/>
+    <a href="https://loading.io/">powered by loading.io</a>
   </div>
   <div class="text-center">
     <h1>Reset Password</h1>

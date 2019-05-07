@@ -9,6 +9,7 @@
   </div>
   <div v-if="creating" class="text-center">
     <img src="../assets/loading_ring.svg"/>
+    <a href="https://loading.io/">powered by loading.io</a>
   </div>
   <div v-if="errorMessage" class="alert alert-danger" role="alert">
     {{errorMessage}}
@@ -85,29 +86,21 @@
           </div>
         <div id="location" class="form-row">
           <div class="form-group col-md-4">
-            <label for="city">City/Town</label>
-            <input v-model.number="league.city" type="text" class="form-control"
-              id="city" placeholder="City" required>
+            <label for="country">Country</label>
+            <country-select class="form-control" v-model="league.country"
+            :country="league.country" topCountry="GB" :countryName="true" id="country">
+            </country-select>
           </div>
           <div class="form-group col-md-4">
             <label for="county">State/County</label>
             <region-select class="form-control" v-model="league.county"
             :country="league.country" :region="league.county" :countryName="true"
             :regionName="true" id="county"> </region-select>
-            <!--
-            <input v-model.number="league.county" type="text" class="form-control"
-              id="county" placeholder="State/County" required>
-              !-->
           </div>
           <div class="form-group col-md-4">
-            <label for="country">Country</label>
-            <country-select class="form-control" v-model="league.country"
-            :country="league.country" topCountry="GB" :countryName="true" id="country">
-            </country-select>
-            <!--
-            <input v-model.number="league.country" type="text" class="form-control"
-              id="country" placeholder="Country" required>
-              !-->
+            <label for="city">City/Town</label>
+            <input v-model.number="league.city" type="text" class="form-control"
+              id="city" placeholder="City" required>
           </div>
          </div>
       <div class="text-center">
