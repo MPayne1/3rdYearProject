@@ -5,7 +5,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
-const resultsRoute = require('./results.js');
+const resultsRoute = require('./teamResults.js');
 const announcementsRoute = require('./announcements.js');
 const imageRoute = require('./image.js');
 

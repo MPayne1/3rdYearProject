@@ -5,9 +5,9 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
-const resultsRoute = require('./results/index.js');
-const fixturesRoute = require('./fixtures/index.js');
-const rankingsRoute = require('./rankings/index.js');
+const resultsRoute = require('./results/resultsIndex.js');
+const fixturesRoute = require('./fixtures/fixturesIndex.js');
+const rankingsRoute = require('./rankings/rankingsIndex.js');
 const announcementsRoute = require('./LeagueAnnouncements.js');
 // ------  db operations  ------
 

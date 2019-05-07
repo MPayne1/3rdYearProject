@@ -26,10 +26,10 @@ var options = {
 // used when/if i deploy my application
 app.enable('trust proxy');
 
-const auth = require('./auth/index.js');
-const league = require('./league/index.js');
-const team = require('./team/index.js');
-const player = require('./player/index.js');
+const auth = require('./auth/authIndex.js');
+const league = require('./league/leagueIndex.js');
+const team = require('./team/teamIndex.js');
+const player = require('./player/playerIndex.js');
 
 // don't allow more than 10 reqs in 15 mins
 var apiAuthLimiter = new rateLimiter({

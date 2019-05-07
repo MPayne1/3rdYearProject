@@ -5,7 +5,7 @@ const express = require('express');
 const joi = require('joi');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const email = require('../email/index.js');
+const email = require('../email/emailIndex.js');
 const crypto = require('crypto');
 
 const dbSelectUser = require('../db/select/Users/selectUser.js');

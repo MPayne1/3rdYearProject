@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
-const email = require('../email/index.js');
+const email = require('../email/emailIndex.js');
 
 const dbSelectLeagueAdmin = require('../db/select/League/selectLeagueAdmin.js');
 const dbInsertAnnouncement = require('../db/insert/insertLeagueAnnouncement.js');

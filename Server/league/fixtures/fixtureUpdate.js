@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
-const email = require('../../email/index.js');
+const email = require('../../email/emailIndex.js');
 // ------  db operations  ------
 
 const dbSelectUpdateFixtureAdmin = require('../../db/select/Fixture/selectUpdateFixtureAdmin.js');

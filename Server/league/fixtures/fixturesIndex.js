@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const joi = require('joi');
 
-const update = require('./update.js');
+const update = require('./fixtureUpdate.js');
 
 
 // all paths are prepended with /league/fixtures
