@@ -58,7 +58,7 @@ app.use(helmet.hsts({
 }));
 
 // limit the size of the body for requests
-app.use(express.json({limit: '100kb'}));
+app.use(express.json({limit: '10KB'}));
 
 app.use(helmet());
 // only allow content from trusted sources
