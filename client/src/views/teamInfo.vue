@@ -667,6 +667,7 @@
           }).then(res => res.json())
             .then((result) => {
               if (result.message) {
+                this.announcements = '';
                 this.announcementSuccess = result.message;
                 this.getAnnouncements();
               } else {

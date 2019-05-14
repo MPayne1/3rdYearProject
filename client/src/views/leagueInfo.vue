@@ -16,7 +16,7 @@
             <div v-if="announcementErrorMessage && !isLeagueAdmin" class="alert alert-danger" role="alert">
               {{announcementErrorMessage}}
             </div>
-            <li class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
+            <li v-if="announcements"class="list-group-item d-flex justify-content-between align-items-center card-body text-center"
             v-for="(announcement,index) in announcements" @click="showAnnouncementInfo(index)">
               <h5 class="text-center">{{announcement.message}}</h5>
               <div v-if="announcementOpen && announcementIndex == index && isLeagueAdmin" class="">
@@ -363,9 +363,7 @@ import Vue from 'vue';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 import joi from 'joi';
-import DatePicker from 'vuejs-datepicker';
 
-Vue.component('vueDatePicker', DatePicker);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 const API_URL = 'https://localhost:3000/';
@@ -799,6 +797,7 @@ export default {
         }).then(res => res.json())
           .then((result) => {
             if (result.message) {
+              this.announcements = '';
               this.announcementSuccess = result.message;
               this.getAnnouncements();
             } else {
