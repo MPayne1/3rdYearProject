@@ -66,7 +66,7 @@ router.get('/upcomingFixtures', async(req, res, next) => {
           all[0].fixtureID;
           for(i =0; i< all.length; i++) {
             if(all[i].date == null || all[i].startTime ==null || all[i].endTime == null) {
-              throw new Error();
+              all.splice(i,1);
             }
           }
           console.log(all);
