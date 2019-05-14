@@ -117,6 +117,7 @@
         </table>
       </div>
     </div>
+
     <div class="text-center row">
       <div class="col-md-2"></div>
       <div class="col-md-4">
@@ -135,11 +136,11 @@
                   <VueCtkDateTimePicker v-if="fixture.date != null" id="dateTimePicker"
                     @click="fixtureInfoOpen=true" :label="fixture.date.slice(0,10)"
                     v-model="fixture.date" formatted="ll" color="#2C3E50"
-                    :only-date="true">
+                    :only-date="true" button-color="#2C3E50">
                  </VueCtkDateTimePicker>
                  <VueCtkDateTimePicker v-if="fixture.date === null" id="dateTimePicker"
                     @click="fixtureInfoOpen=true" label="Date" v-model="fixture.date"
-                    color="#2C3E50" formatted="ll" :only-date="true">
+                    color="#2C3E50" formatted="ll" :only-date="true" button-color="#2C3E50">
                   </VueCtkDateTimePicker>
 
                   <!--Show date picker with appropiate label, depending on if date has been entered or not for startTime-->
@@ -148,26 +149,27 @@
                     @click="fixtureInfoOpen=true" :format=timeFormat
                     :formatted=timeFormat :output-format=timeFormat
                     :label="fixture.startTime" v-model="fixture.startTime"
-                    color="#2C3E50" :only-time="true">
+                    color="#2C3E50" :only-time="true" button-color="#2C3E50">
                   </VueCtkDateTimePicker>
                   <VueCtkDateTimePicker v-if="fixture.startTime === null" id="dateTimePicker"
                     @click="fixtureInfoOpen=true" :format=timeFormat
                     :formatted=timeFormat :output-format=timeFormat
                     label="Start Time" v-model="fixture.startTime" color="#2C3E50"
-                    :only-time="true">
+                    :only-time="true" button-color="#2C3E50">
                   </VueCtkDateTimePicker>
 
                   <h6>End Time</h6>
                   <VueCtkDateTimePicker v-if="fixture.endTime != null" id="dateTimePicker"
                     @click="fixtureInfoOpen=true"  :format=timeFormat :formatted=timeFormat
                     :output-format=timeFormat :label="fixture.endTime"
-                    v-model="fixture.endTime" color="#2C3E50" :only-time="true">
+                    v-model="fixture.endTime" color="#2C3E50" :only-time="true"
+                    button-color="#2C3E50">
                   </VueCtkDateTimePicker>
                   <VueCtkDateTimePicker v-if="fixture.endTime === null" id="dateTimePicker"
                     @click="fixtureInfoOpen=true" :format=timeFormat
                     :formatted=timeFormat :output-format=timeFormat
                     label="End Time" v-model="fixture.endTime" color="#2C3E50"
-                    :only-time="true">
+                    :only-time="true" button-color="#2C3E50">
                   </VueCtkDateTimePicker>
 
                   <form @submit.prevent="updateFixture(fixtureIndex)">
@@ -187,8 +189,11 @@
                       <input v-model="fixture.postcode" type="text" class="form-control"
                         placeholder="Postcode/ZIP code" required>
                     </div>
-                    <div class="text-center" v-if="isLeagueAdmin || isATeamAdmin">
+                    <div class="text-center" v-if="(isATeamAdmin || isLeagueAdmin)">
                       <button type="submit" class="btn btn-primary">Update Fixture</button>
+                    </div>
+                    <div id="fixtureUpdatedDiv" v-if="FixtureErrorMessage" class="alert alert-danger" role="alert">
+                      {{FixtureErrorMessage}}
                     </div>
                     <div id="fixtureUpdatedDiv" v-if="fixtureUpdated" class="alert alert-success">
                       <h6 class="text-center">
@@ -358,7 +363,9 @@ import Vue from 'vue';
 import VueCtkDateTimePicker from 'vue-ctk-date-time-picker';
 import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';
 import joi from 'joi';
+import DatePicker from 'vuejs-datepicker';
 
+Vue.component('vueDatePicker', DatePicker);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 
 const API_URL = 'https://localhost:3000/';
@@ -431,6 +438,7 @@ export default {
     isLeagueAdmin: false,
     isATeamAdmin: false,
     leagueDescription: '',
+    FixtureErrorMessage: '',
   }),
   watch: {
     fixtures: {
@@ -526,6 +534,7 @@ export default {
     },
     // update fixture info
     updateFixture(index) {
+      console.log(this.fixtures[index].date);
       const body = {
         fixtureID: this.fixtures[index].fixtureID,
         date: this.fixtures[index].date,
@@ -560,19 +569,19 @@ export default {
         return true;
       }
       if (result.error.message.includes('date')) {
-        this.errorMessage = 'Please enter a valid Date';
+        this.FixtureErrorMessage = 'Please enter a valid Date';
       }
       if (result.error.message.includes('address')) {
-        this.errorMessage = 'Please enter a valid Address';
+        this.FixtureErrorMessage = 'Please enter a valid Address';
       }
       if (result.error.message.includes('city')) {
-        this.errorMessage = 'Please enter a valid city';
+        this.FixtureErrorMessage = 'Please enter a valid city';
       }
       if (result.error.message.includes('county')) {
-        this.errorMessage = 'Please enter a valid county';
+        this.FixtureErrorMessage = 'Please enter a valid county';
       }
       if (result.error.message.includes('postcode')) {
-        this.errorMessage = 'Please enter a valid Postcode/ZIP code';
+        this.FixtureErrorMessage = 'Please enter a valid Postcode/ZIP code';
       }
       console.log(result.error.message);
       return false;
@@ -916,5 +925,21 @@ export default {
     width: 50px;
     height: 50px;
     margin-right: 10px;
+  }
+  .vdp-datepicker__calendar .cell.selected,
+  .vdp-datepicker__calendar .cell.selected:hover,
+  .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover {
+    background: #2C3E50;
+    border: #2C3E50;
+    color: white;
+  }
+
+  .month-container {
+    height: auto !important;
+  }
+
+  #DatePicker.datepicker-container
+  .datepicker-days .datepicker-day.enable[data-v-59132e9e] {
+    margin-left: 0px;
   }
 </style>
