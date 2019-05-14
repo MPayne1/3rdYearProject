@@ -15,14 +15,14 @@ var selectTableTennisResults  = async function(teamID, callback) {
       HomePointsScoredG1, HomePointsScoredG2, HomePointsScoredG3, HomePointsScoredG4,
       HomePointsScoredG5, MatchDescription
       from team, fixture, TableTennisResults, season where HomeTeamID = teamID and
-      fixture.leagueID = team.leagueID and played = 'true' and
+      season.leagueID = team.leagueID and played = 'true' and
       TableTennisResults.fixtureID = fixture.fixtureID and
       season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixture.fixtureID,
      AwayPointsScoredG1, AwayPointsScoredG2, AwayPointsScoredG3, AwayPointsScoredG4,
       AwayPointsScoredG5, MatchDescription
        from team, fixture, TableTennisResults, season where AwayTeamID = teamID and
-       fixture.leagueID = team.leagueID and played = 'true' and
+       season.leagueID = team.leagueID and played = 'true' and
         TableTennisResults.fixtureID = fixture.fixtureID and
         season.seasonID = fixture.seasonID and finished = 'false') as awayTeam
      where homeTeam.fixtureID = awayTeam.fixtureID and

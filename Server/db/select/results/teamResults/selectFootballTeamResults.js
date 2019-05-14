@@ -12,13 +12,13 @@ var selectFootballResults  = async function(teamID, callback) {
     from (select teamName as HomeTeamName, HometeamID , fixture.fixtureID,
       HomeGoalsScoredHT, HomeGoalsScoredFT, MatchDescription
       from team, fixture, footballResults, season where
-      HometeamID = TeamID and fixture.leagueID = team.leagueID and played = 'true' and
+      HometeamID = TeamID and season.leagueID = team.leagueID and played = 'true' and
       footballResults.fixtureID = fixture.fixtureID and
       season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixture.fixtureID,
      AwayGoalsScoredHT, AwayGoalsScoredFT, MatchDescription
-       from team, fixture, footballResults, season where AwayteamID = TeamID and 
-       fixture.leagueID = team.leagueID and played = 'true' and
+       from team, fixture, footballResults, season where AwayteamID = TeamID and
+       season.leagueID = team.leagueID and played = 'true' and
         footballResults.fixtureID = fixture.fixtureID and
         season.seasonID = fixture.seasonID and finished = 'false') as awayTeam
      where homeTeam.fixtureID = awayTeam.fixtureID and

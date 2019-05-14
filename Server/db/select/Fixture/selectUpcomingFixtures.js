@@ -44,4 +44,22 @@ WHERE fixture.LeagueID = ${mysql.escape(leagueID)}
 AND Season.SeasonID = fixture.SeasonID
 AND Finished = 'false' AND Played = 'false';`;
 
+
+`SELECT HomeTeamName, AwayTeamName, HomeTeamID, AwayTeamID,
+hometeam.fixtureID, hometeam.date,hometeam.startTime, hometeam.endTime,
+hometeam.address, hometeam.city,
+hometeam.county, hometeam.postcode, hometeam.Sport
+from (select teamName as HomeTeamName, HometeamID , fixtureID,
+  date, startTime, endTime, address, fixture.city, fixture.county, postcode, Sport
+  from team, fixture, league, season where HometeamID = TeamID and team.leagueID = league.leagueID
+  and season.leagueID = team.leagueID and fixture.seasonID = season.seasonID and
+  team.leagueID =  "38" and played = 'false') as HomeTeam,
+ (select teamName as AwayTeamName, AwayteamID , fixtureID
+   from team, fixture, league, season where AwayTeamID = teamID and
+   fixture.seasonID = season.seasonID and season.leagueID = league.leagueID
+   and team.leagueID = league.leagueID and
+   team.leagueID = "38"
+  and fixture.seasonID = season.seasonID  and played = 'false') as awayTeam
+ where homeTeam.fixtureID = awayTeam.fixtureID;
+
 */

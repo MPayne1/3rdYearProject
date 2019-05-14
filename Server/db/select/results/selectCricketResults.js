@@ -14,14 +14,14 @@ var selectCricketResults  = async function(leagueID, callback) {
     from (select teamName as HomeTeamName, HometeamID , fixture.fixtureID,
       HomeRunsI1, HomeRunsI2, HomeWicketsLostI1, HomeWicketsLostI2, MatchDescription
       from team, fixture, cricketResults, season where HometeamID = TeamID and
-      fixture.leagueID = team.leagueID and
+      season.leagueID = team.leagueID and
       team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
       cricketResults.fixtureID = fixture.fixtureID and
       season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
      (select teamName as AwayTeamName, AwayteamID , fixture.fixtureID,
      AwayRunsI1, AwayRunsI2, AwayWicketsLostI1, AwayWicketsLostI2, MatchDescription
        from team, fixture, cricketResults, season where AwayTeamID = teamID and
-       fixture.leagueID = team.leagueID and
+       season.leagueID = team.leagueID and
        team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
         cricketResults.fixtureID = fixture.fixtureID and
         season.seasonID = fixture.seasonID and finished = 'false') as awayTeam

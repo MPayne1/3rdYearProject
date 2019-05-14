@@ -15,7 +15,7 @@ var selectTennisResults  = async function(leagueID, callback) {
       HomePointsScoredS1, HomePointsScoredS2, HomePointsScoredS3, HomePointsScoredS4,
       HomePointsScoredS5, MatchDescription
       from team, fixture, tennisResults, season where HometeamID = TeamID and
-      fixture.leagueID = team.leagueID and
+      season.leagueID = team.leagueID and
       team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
       tennisResults.fixtureID = fixture.fixtureID and
       season.seasonID = fixture.seasonID and finished = 'false') as HomeTeam,
@@ -23,7 +23,7 @@ var selectTennisResults  = async function(leagueID, callback) {
      AwayPointsScoredS1, AwayPointsScoredS2, AwayPointsScoredS3, AwayPointsScoredS4,
       AwayPointsScoredS5, MatchDescription
        from team, fixture, tennisResults, season where AwayTeamID = teamID and
-       fixture.leagueID = team.leagueID and
+       season.leagueID = team.leagueID and
        team.leagueID = ${mysql.escape(leagueID)} and played = 'true' and
         tennisResults.fixtureID = fixture.fixtureID and
         season.seasonID = fixture.seasonID and finished = 'false') as awayTeam
