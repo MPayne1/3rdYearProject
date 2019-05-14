@@ -95,6 +95,11 @@ router.post('/updateFixture', async (req, res, next) => {
               if(er) next(er);
               try {
                 var teams = teamResult;
+                try{
+                  teams[1].TeamName == undefined;
+                }catch(e){
+                  teams[1] = teams[0];
+                }
                 console.log(teams);
                 //send email to users
                 for(j = 0; j < players.length; j++) {
@@ -324,7 +329,6 @@ async function initialiseRankingsTable(seasonID, teams) {
         default:
           console.log("sport not recognised");
       }
-
 
     } catch(e) {
       next(e);
