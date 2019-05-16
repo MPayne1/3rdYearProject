@@ -7,7 +7,8 @@ const router = express.Router();
 const joi = require('joi');
 
 const email = require('../../email/emailIndex.js');
-// ------  db operations  ------
+
+// ------  require db operations  ------
 
 const dbSelectUpdateFixtureAdmin = require('../../db/select/Fixture/selectUpdateFixtureAdmin.js');
 const dbUpdateFixtureInfo = require('../../db/update/updateFixtureInfo.js');
@@ -29,8 +30,6 @@ const dbInsertBasketballRanking = require('../../db/insert/rankings/insertBasket
 const dbInsertCricketRanking = require('../../db/insert/rankings/insertCricketRankings.js');
 const dbSelectFixturePlayers = require('../../db/select/Fixture/selectFixturePlayers.js');
 const dbSelectFixtureTeams = require('../../db/select/Fixture/selectFixtureTeams.js');
-
-
 
 // ------  schemas  ------
 
@@ -262,7 +261,7 @@ function generateFixtures(teamList, seasonID, leagueID, callback) {
   }
   callback(fixtures);
 }
-
+// initialise the rankings 
 async function initialiseRankingsTable(seasonID, teams) {
   // get sport from seasonID
   await dbSelectSportFromSeasonID(seasonID, async (err, sport) => {

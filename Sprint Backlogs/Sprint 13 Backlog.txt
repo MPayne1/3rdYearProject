@@ -3,7 +3,7 @@ Sprint Backlog
 [x] UI designs
   [x] general style
 
-[] nice to do
+[x] nice to do
   [x] go over routes get/post/delete when appropiates
     [x] league
     [x] team
@@ -16,7 +16,5 @@ Sprint Backlog
   [x] not show league/team/dashboard/player profile in navbar when not logged in
 
 [x] reference loading.io with link below spinner
-[] refactor code, add more methods
-[] on exit page, close team/league navbar dropdowns
 [x] on create league swap county and country
 [x] rename all similar named files
