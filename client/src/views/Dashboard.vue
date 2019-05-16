@@ -128,6 +128,7 @@ export default {
 
   },
   methods: {
+    // get the users LeagueAnnouncements
     getLeagueAnnouncements() {
       fetch(GET_LEAGUE_ANNOUNCEMENT_URL, {
         method: 'POST',
@@ -145,6 +146,7 @@ export default {
           }
         });
     },
+    // get the users team announcements
     getTeamAnnouncements() {
       fetch(GET_TEAM_ANNOUNCEMENT_URL, {
         method: 'POST',
@@ -162,6 +164,7 @@ export default {
           }
         });
     },
+    // get all of the user's upcoming fixtures
     getUpcomingFixtures() {
       fetch(GET_USERS_FIXTURES_URL, {
         method: 'GET',
@@ -178,21 +181,26 @@ export default {
           }
         });
     },
+    // navigate to league page
     goToLeaguePage(leagueName) {
         this.$router.push({ path: '/league/info', query: { leagueName } });
     },
+    // navigate to the team page
     goToTeamPage(teamName) {
       this.$router.push({ path: '/team/info', query: { teamName } });
     },
+    // logout the user
     logout() {
       localStorage.removeItem('token');
       location.reload();
       this.$router.push('/auth/login');
     },
+    // navigate to login page
     login() {
       localStorage.removeItem('token');
       this.$router.push('/auth/login');
     },
+    // show the fixture details in the calendar
     showFixtureDetais(event){
       var res = `${event.HomeTeamName} vs  ${event.AwayTeamName}`;
       return res;

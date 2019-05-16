@@ -289,9 +289,11 @@
 
     },
     methods: {
+      // reset message
       openCloseLi() {
         this.successMessage = '';
       },
+      // get the users info
       getProfileInfo() {
           const body = {
             username: this.username,
@@ -316,6 +318,7 @@
             this.errorMessage = error.message;
           });
       },
+      // check image is correct size and format
       onImageUpload(fileName, file) {
         var imageFile = file[0];
         if(!imageFile.type.match('image.*')) {
@@ -326,6 +329,7 @@
           console.log("image selected");
         }
       },
+      // send req to change image
       changeProfileImage() {
         if(this.newImage) {
           // send the request to the backend
@@ -354,6 +358,7 @@
           this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
         }
       },
+      // send req to change privact details
       changePubliclyShown() {
         var show = '';
         console.log(this.profile.publiclyShow);
@@ -383,6 +388,7 @@
           this.errorMessage = error.message;
         });
       },
+      // send req to change phone no.
       changePhoneNo() {
         if(this.profile.PhoneNumber != '') {
           const body = {
@@ -407,6 +413,7 @@
           });
         }
       },
+      // send req to change bio
       changeBio() {
         if(this.profile.Bio != '') {
           const body = {
@@ -431,6 +438,7 @@
           });
         }
       },
+      // send req to change email
       changeEmail() {
         if (this.validEmail()) {
           const body = {
@@ -460,7 +468,7 @@
           });
         }
       },
-
+      // send req to change password
       changePassword() {
         if(this.validPassword()) {
           const body = {

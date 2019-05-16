@@ -15,18 +15,11 @@
       <div class="form-row">
         <div class="form-group col-md-3">
           <label for="country">Country</label>
-          <!--
-          <input v-model="league.country" type="text" class="form-control" id="country"
-            placeholder="Enter Country" required>
-            !-->
           <country-select class="form-control" v-model="league.country" :country="league.country" topCountry="GB" :countryName="true">
           </country-select>
         </div>
         <div class="form-group col-md-3">
           <label for="county">County/State</label>
-            <!--
-          <input v-model="league.county" type="text" class="form-control" id="county"
-            placeholder="Enter County/State" required> !-->
             <region-select class="form-control" v-model="league.county" :country="league.country" :region="league.county" :countryName="true" :regionName="true"> </region-select>
         </div>
         <div class="form-group col-md-3">
@@ -127,6 +120,7 @@ export default {
       });
   },
   methods: {
+    // send req to find leagues
     find() {
       this.errorMessage = '';
       if (this.validLeague()) {
@@ -168,6 +162,7 @@ export default {
         });
       }
     },
+    // check the search params are valid
     validLeague() {
       const result = joi.validate(this.league, schema);
       if (result.error === null) {

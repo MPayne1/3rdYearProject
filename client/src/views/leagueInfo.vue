@@ -494,6 +494,7 @@ export default {
       });
   },
   methods: {
+    // open the announcement item
     showAnnouncementInfo(index){
       if (this.announcementOpen == true && this.announcementIndex == index) {
         this.announcementOpen = false;
@@ -511,6 +512,7 @@ export default {
         this.fixtureInfoOpen = true;
       }
     },
+    // open the results details
     showResultsInfo(index) {
       if (this.resultsInfoOpen == true && this.resultIndex == index) {
         this.resultsInfoOpen = false;
@@ -705,6 +707,7 @@ export default {
           });
       }
     },
+    // navigate to the team page
     goToTeamPage(teamName) {
       this.$router.push({ path: '/team/info/', query: { teamName } });
     },
@@ -729,7 +732,7 @@ export default {
           }
         });
     },
-
+    // send req for the league announcements
     getAnnouncements() {
       if(this.leagueID) {
         const body = {
@@ -753,6 +756,7 @@ export default {
           });
       }
     },
+    // send req to add a new announcement
     addAnnoucement() {
       this.announcementErrorMessage = '';
       const body = {
@@ -780,6 +784,7 @@ export default {
         });
       }
     },
+    // send req to delete announcement
     deleteAnnouncement(announcementID) {
       console.log(announcementID);
       const body = {
@@ -806,7 +811,7 @@ export default {
           });
       }
     },
-
+    // send req to check if user is a league admin
     getIsLeagueAdmin() {
       if(this.leagueID) {
         const body = {
@@ -831,6 +836,7 @@ export default {
           });
       }
     },
+    // send req to check if user is a team captain
     getIsATeamAdmin() {
       if(this.leagueID) {
         const body = {
@@ -855,6 +861,7 @@ export default {
           });
       }
     },
+    // check new announcement is valid
     validAddAnnouncement(body) {
       const result = joi.validate(body, addAnnouncementSchema);
       if (result.error === null) {
@@ -868,6 +875,7 @@ export default {
       }
       return false;
     },
+    // check delete announcement is valid
     validDeleteAnnouncement(body) {
       const result = joi.validate(body, deleteAnnouncementSchema);
       if (result.error === null) {

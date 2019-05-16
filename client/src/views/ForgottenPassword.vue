@@ -66,6 +66,7 @@ export default {
     },
   },
   methods: {
+    // send req to give a user a resest password email
     forgottenPassword() {
       this.errorMessage = '';
       if (this.validPassword()) {
@@ -97,6 +98,7 @@ export default {
         });
       }
     },
+    // check details are valid
     validPassword() {
       const result = joi.validate(this.forgotPassword, schema);
       if (result.error === null) {

@@ -69,6 +69,7 @@ export default {
     },
   },
   methods: {
+    // send req to login
     login() {
       this.errorMessage = '';
       if (this.validUser()) {
@@ -108,6 +109,7 @@ export default {
         });
       }
     },
+    // check login details are valid
     validUser() {
       const result = joi.validate(this.user, schema);
       if (result.error === null) {

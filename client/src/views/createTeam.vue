@@ -99,6 +99,7 @@ export default {
       });
   },
   methods: {
+    // send req to create team
     create() {
       if (this.validLeague()) {
         const body = {

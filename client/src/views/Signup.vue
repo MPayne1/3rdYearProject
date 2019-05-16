@@ -138,6 +138,7 @@ export default {
     },
   },
   methods: {
+    // send req to signup new user
     signup() {
       var show = '';
       if(this.user.publiclyShow == false) {
@@ -183,6 +184,7 @@ export default {
         });
       }
     },
+    // check signup info is valid
     validUser() {
       if (this.user.password !== this.user.confirmPassword) {
         this.errorMessage = 'Passwords must match';

@@ -208,6 +208,7 @@ export default {
     this.results.FixtureID = this.$route.params.fixtureID;
   },
   methods: {
+    // send req to update results
     updateResults() {
       this.errorMessage = '';
       if (this.validResults()) {
@@ -253,6 +254,7 @@ export default {
         });
       }
     },
+    // check results are valid
     validResults() {
       const result = joi.validate(this.results, schema);
       if (result.error === null) {

@@ -39,9 +39,6 @@
         </ul>
           <ul class="navbar-nav">
             <li class="nav-item">
-              <!--
-              <router-link  class="nav-link" :to="{ name: 'playerInfo',
-              params: {username: user.username}}">{{user.username}} </router-link>!-->
               <a class="text-white" v-on:click="userPage(user.username)">{{user.username}}</a>
             </li>
           </ul>
@@ -92,6 +89,7 @@ export default {
       });
   },
   methods: {
+    // navigate to team page
     teamPage(teamName) {
       if (this.$route.path == '/team/info/') {
         this.$router.push({ path: '/team/info/', query: { teamName } });
@@ -100,6 +98,7 @@ export default {
         this.$router.push({ path: '/team/info/', query: { teamName } });
       }
     },
+    // navigate to league page
     leaguePage(leagueName) {
       if(this.$route.path == '/league/info') {
         this.$router.push({ path: '/league/info', query: { leagueName } });
@@ -108,6 +107,7 @@ export default {
         this.$router.push({ path: '/league/info', query: { leagueName } });
       }
     },
+    // navigate to users page
     userPage(username) {
       this.$router.push({path: `/player/info/${username}`});
       location.reload();
@@ -139,19 +139,6 @@ export default {
         .then((result) => {
           if (result) {
             this.teams = result.result;
-          }
-        });
-    },
-    loadProfileImage() {
-      fetch(USER_IMAGE_URL, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${localStorage.token}`,
-        },
-      }).then(res => res.json())
-        .then((result) => {
-          if (result) {
-            this.imagePath = result[0].imagePath;
           }
         });
     },

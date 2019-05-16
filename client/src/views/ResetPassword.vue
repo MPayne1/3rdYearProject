@@ -83,6 +83,7 @@ export default {
     }
   },
   methods: {
+    // send req to reset password
     resetPassword() {
       this.errorMessage = '';
       if (this.validPassword()) {
@@ -118,6 +119,7 @@ export default {
         });
       }
     },
+    // check details are valid
     validPassword() {
       if (this.reset.password !== this.reset.confirmPassword) {
         this.errorMessage = 'Passwords must match';

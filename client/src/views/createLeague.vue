@@ -184,6 +184,7 @@ export default {
       });
   },
   methods: {
+    // send req to create league
     create() {
       if (this.validLeague()) {
         const body = {

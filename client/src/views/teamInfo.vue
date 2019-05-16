@@ -386,6 +386,7 @@
         });
     },
     methods: {
+      // get the team image
       getImagePath() {
         const body = {
           TeamID: this.teamID,
@@ -404,6 +405,7 @@
             }
           });
       },
+      // check image size and type
       onImageUpload(fileName, file) {
         var imageFile = file[0];
         if(!imageFile.type.match('image.*')) {
@@ -414,6 +416,7 @@
           console.log("image selected");
         }
       },
+      // send req to change team image
       changeTeamImage() {
         if(this.newImage) {
           // send the request to the backend
@@ -443,6 +446,7 @@
           this.errorMessage = "Please upload a jpg, jpeg or png image smaller than 10MB.";
         }
       },
+      // get list of all players not in a team in the league
       getPossiblePlayers() {
         const body = {
           teamID: this.teamID,
@@ -461,9 +465,11 @@
             }
           });
       },
+      // formated username for add player
       formattedPlayers(result) {
         return result.username;
       },
+      // show announcements details
       showAnnouncementInfo(index){
         if (this.announcementOpen == true && this.announcementIndex == index) {
           this.announcementOpen = false;
@@ -475,6 +481,7 @@
           this.announcementOpen = !this.announcementOpen;
         }
       },
+      // show results details
       showResultsInfo(index) {
         if (this.resultsInfoOpen == true && this.resultIndex == index) {
           this.resultsInfoOpen = false;
@@ -566,6 +573,7 @@
             });
         }
       },
+      // send req to add player to a team
       addPlayer(username) {
         console.log(username.display);
         this.errorMessage = '';
@@ -599,7 +607,7 @@
           });
         }
       },
-
+      // send req for all team announcements
       getAnnouncements() {
         if(this.teamID) {
           const body = {
@@ -623,6 +631,7 @@
             });
         }
       },
+      // send req to add new announcement
       addAnnoucement() {
         this.announcementErrorMessage = '';
         const body = {
@@ -651,6 +660,7 @@
           });
         }
       },
+      // send req to delete announcement
       deleteAnnouncement(announcementID) {
         const body = {
           AnnouncementID: announcementID,
@@ -676,7 +686,7 @@
             });
         }
       },
-
+      // check user is team admin
       getIsTeamAdmin() {
         if(this.teamID) {
           const body= {
@@ -699,7 +709,7 @@
             });
         }
       },
-
+      // check add player is valid
       validAddPlayer(body) {
         const result = joi.validate(body, addPlayerSchema);
         if (result.error === null) {
@@ -713,6 +723,7 @@
         }
         return false;
       },
+      // check announcement is valid
       validAddAnnouncement(body) {
         const result = joi.validate(body, addAnnouncementSchema);
         if (result.error === null) {
@@ -726,6 +737,7 @@
         }
         return false;
       },
+      // check delete Announcement is valid
       validDeleteAnnouncement(body) {
         const result = joi.validate(body, deleteAnnouncementSchema);
         if (result.error === null) {
