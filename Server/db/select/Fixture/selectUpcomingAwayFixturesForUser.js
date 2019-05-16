@@ -1,4 +1,4 @@
-// select all upcoming fixtures
+// select all upcoming fixtures where team is the away team
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 

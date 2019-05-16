@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
 /*
-  select everything for a given username
+  select info for reset password
 */
 var selectUser  = async function(token, callback) {
   var res;

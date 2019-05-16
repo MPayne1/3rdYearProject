@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
-//insert a new announcement
+// insert a new announcement
 var insertTeamAnnouncement  = async function(TeamID, message) {
     var sql = `INSERT INTO teamAnnouncement(TeamID, message)
       VALUES(${mysql.escape(TeamID)}, ${mysql.escape(message)});`;

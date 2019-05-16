@@ -1,9 +1,6 @@
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
-/*
-  select everything for a given username
-*/
 var selectPlaysFor  = async function(userID, TeamID, callback) {
   var res;
     var sql = `SELECT team.TeamID FROM playsfor, team WHERE userID =

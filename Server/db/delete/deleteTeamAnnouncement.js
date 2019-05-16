@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
-//delete a team announcement
+// delete a team announcement
 var deleteTeamAnnouncement  = async function(AnnouncementID) {
     var sql = `DELETE FROM  teamAnnouncement
     WHERE AnnouncementID = ${mysql.escape(AnnouncementID)};`;

@@ -1,4 +1,4 @@
-// select all upcoming fixtures
+// select all upcoming fixtures for user where team is home team
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 

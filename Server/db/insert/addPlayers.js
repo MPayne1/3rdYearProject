@@ -1,8 +1,5 @@
-// handles all mysql insert queries
-
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
-
 
 //insert a new player into team db
 var insertPlayer  = async function(username, teamID, callback) {

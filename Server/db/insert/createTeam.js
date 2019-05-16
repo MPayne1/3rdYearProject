@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
-//insert a new user into the db
+// insert a new user into the db
 var insertTeam  = async function(TeamName, TeamAdmin, LeagueID, teamDescription, path) {
     var sql = `INSERT INTO Team(TeamName, TeamAdmin,LeagueID, teamDescription, imagePath)
       VALUES(${mysql.escape(TeamName)}, ${mysql.escape(TeamAdmin)},

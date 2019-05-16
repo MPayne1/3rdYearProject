@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
-//insert a new user into the db
+// update cricket rankings
 var updateCricketRanking = async function(seasonID, teamID, wins , draw, loss,
   RunsFor, WicketsFor, RunsAgainst, WicketsAgainst, points) {
     var sql = `UPDATE CricketRankings SET played = played + 1,

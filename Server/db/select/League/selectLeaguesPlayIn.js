@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
 /*
-  select everything for a given username
+  select all leagues a user plays in
 */
 var selectLeaguesPlayIn  = async function(userID, callback) {
   var res;

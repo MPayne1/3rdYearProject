@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
-// update users email
+// update users password reset token
 var updateUserEmail  = async function(userID, token, expires) {
     var sql = `UPDATE passwordreset SET resetToken = ${mysql.escape(token)},
     resetExpires = ${mysql.escape(expires)}

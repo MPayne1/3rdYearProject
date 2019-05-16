@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const dbCon  = require('../connection.js');
 
-//insert a new user into the db
+// update fixture details
 var updateFixture  = async function(fixtureID, date, startTime, endTime, address, city, county, postcode) {
     var sql = `UPDATE fixture SET date = ${mysql.escape(date)},
     address = ${mysql.escape(address)}, city = ${mysql.escape(city)},

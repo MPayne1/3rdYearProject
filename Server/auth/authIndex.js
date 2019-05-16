@@ -1,4 +1,4 @@
-//Handles the backend of auth
+// Handles the backend of auth
 
 // require in modules
 const express = require('express');
@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken');
 const email = require('../email/emailIndex.js');
 const crypto = require('crypto');
 
+// require in db modules
 const dbSelectUser = require('../db/select/Users/selectUser.js');
 const dbSelectUserNames = require('../db/select/Users/selectUserNames.js');
 const dbInsert = require('../db/insert/insertUser.js');
@@ -18,11 +19,11 @@ const dbSelectResetPasswordInfo = require('../db/select/Users/selectResetPasswor
 const dbUpdateResetPasswordInfo = require('../db/update/updateUserForgottenPassword.js');
 const dbInsertPasswordReset = require('../db/insert/insertPasswordReset.js');
 
-
 const router = express.Router();
 const hashingRounds = 12;
 const invalidLogin = 'Invalid Login Attempt.';
 const defaultImageName = 'default.jpg'
+
 // ------  schemas  ------
 const signUpSchema = joi.object().keys({
   username: joi.string().alphanum().min(2).max(20).required(),
@@ -262,7 +263,7 @@ router.post('/forgottenPassword', async(req, res, next) => {
 
 });
 
-
+// handle req to reset password
 router.post('/resetPassword', async(req, res, next) => {
   // check resetToken matches db
   const result = joi.validate(req.body, resetPasswordSchema);

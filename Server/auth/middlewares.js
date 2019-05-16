@@ -22,6 +22,7 @@ function checkTokenSetUser(req, res, next) {
   }
 }
 
+// check is user making req is logged in
 function isLoggedIn(req, res, next) {
   if(req.user) {
     next();

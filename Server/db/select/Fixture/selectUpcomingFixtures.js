@@ -1,4 +1,4 @@
-// select all upcoming fixtures
+// select all upcoming fixtures in league
 const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 

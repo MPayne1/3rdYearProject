@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const dbCon  = require('../../connection.js');
 
 /*
-  select all leagues for a city
+  select all leagues for a city,county, country
 */
 var selectLeagues  = async function(city, county, country, sport, callback) {
   var res;
